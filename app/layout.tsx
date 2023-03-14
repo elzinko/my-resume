@@ -8,7 +8,7 @@ export default async function RootLayout({
   return (
     <html lang="fr">
       <body>
-        <div className="min-h-screen">
+        <div className="container mx-auto min-h-screen p-8">
           <main>{children}</main>
         </div>
       </body>

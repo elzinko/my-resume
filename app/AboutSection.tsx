@@ -21,7 +21,7 @@ async function getData() {
 export default async function AboutSection() {
   const data: any = await getData();
   return (
-    <section id={data?.about?.id}>
+    <section id={data?.about?.id} className="mt-10">
       <h2 className="border-b pb-1 text-2xl font-semibold">
         {data?.about?.title}
       </h2>

@@ -23,8 +23,8 @@ async function getData() {
 export default async function SkillsSection() {
   const data: any = await getData();
   return (
-    <section id="skills" className="mt-20">
-      <div className="flex w-full columns-3 flex-row">
+    <section id="skills" className="mt-10">
+      <div className="flex w-full columns-1 flex-col  md:columns-3 md:flex-row md:space-x-6">
         {data?.allSkillsModels?.map((skill: any) => (
           <Skill skill={skill} key={skill.id} />
         ))}
