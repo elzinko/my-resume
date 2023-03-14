@@ -2,6 +2,19 @@ This is my own resume using [Next.js](https://nextjs.org/) project bootstrapped 
 
 ## Getting Started
 
+### 1 - create Datocms project
+
+Create a [datocms](https://www.datocms.com/) project using this [structure](./datocms.pdf)
+
+### 2 - configure environment variables
+
+Create an .env file and set your Datocms variable :
+
+```
+DATOCMS_API_URL=https://graphql.datocms.com/
+DATOCMS_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
 First, run the development server:
 
 ```bash
@@ -12,7 +25,7 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## expose localy using ngrok
+## Expose localy using ngrok
 
 The easiest way to expose your dev webapp to the world is to use ngrok.
 Forst [install it](https://dashboard.ngrok.com/get-started/setup) then expose your local server using :
