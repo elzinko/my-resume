@@ -25,6 +25,9 @@
     ],
     "baseUrl": ".",
     "paths": {
+      "@/*": [
+        "./*"
+      ],
       "@/components/*": [
         "components/*"
       ],

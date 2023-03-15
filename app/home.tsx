@@ -1,7 +1,8 @@
-import "../styles/globals.css";
-import AboutSection from "./AboutSection";
-import Headers from "./header";
-import SkillsSection from "./SkillsSection";
+import '../styles/globals.css';
+
+import About from '@/app/about';
+import Headers from '@/app/header';
+import Skills from '@/app/skills';
 
 export default function HomePage({ data }: any): JSX.Element {
   return (
@@ -9,9 +10,9 @@ export default function HomePage({ data }: any): JSX.Element {
       {/* @ts-expect-error Server Component */}
       <Headers />
       {/* @ts-expect-error Server Component */}
-      <AboutSection />
+      <About />
       {/* @ts-expect-error Server Component */}
-      <SkillsSection />
+      <Skills />
     </>
   );
 }

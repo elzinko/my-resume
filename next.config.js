@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-      domains: ['www.datocms-assets.com','www.kindacode.com'],
+      domains: ['www.datocms-assets.com'],
   },
   experimental: {
     appDir: true,

@@ -1,6 +1,6 @@
-import { graphQLClient } from "@/lib/graphql-client";
-import { gql } from "graphql-request";
-import React from "react";
+import { graphQLClient } from '@/lib/graphql-client';
+import { gql } from 'graphql-request';
+import React from 'react';
 
 const query = gql`
   {
@@ -18,7 +18,7 @@ async function getData() {
   return data;
 }
 
-export default async function AboutSection() {
+export default async function About() {
   const data: any = await getData();
   return (
     <section id={data?.about?.id} className="mt-10">

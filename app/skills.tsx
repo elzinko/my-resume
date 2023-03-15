@@ -1,7 +1,7 @@
-import { graphQLClient } from "@/lib/graphql-client";
-import { gql } from "graphql-request";
-import React from "react";
-import Skill from "@/components/Skill";
+import { graphQLClient } from '@/lib/graphql-client';
+import { gql } from 'graphql-request';
+import React from 'react';
+import Skill from '@/components/Skill';
 
 const query = gql`
   {
@@ -20,7 +20,7 @@ async function getData() {
   return data;
 }
 
-export default async function SkillsSection() {
+export default async function Skills() {
   const data: any = await getData();
   return (
     <section id="skills" className="mt-10">
