@@ -44,7 +44,6 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx",
-    "app/AboutSection.js",
   ],
   "exclude": [
     "node_modules"
