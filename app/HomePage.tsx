@@ -1,7 +1,7 @@
 import "../styles/globals.css";
-import AboutSection from "@/app/aboutSection";
-import Headers from "@/app/header";
-import SkillsSection from "@/app/skillsSection";
+import AboutSection from "./aboutSection";
+import Headers from "./header";
+import SkillsSection from "./skillsSection";
 
 export default function HomePage({ data }: any): JSX.Element {
   return (
