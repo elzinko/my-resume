@@ -1,7 +1,6 @@
 import React from 'react';
 import { graphQLClient } from '@/lib/graphql-client';
 import { gql } from 'graphql-request';
-import MainSkill from '@/components/skill';
 import Framework from '@/components/framework';
 
 const query = gql`
