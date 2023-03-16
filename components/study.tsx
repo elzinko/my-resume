@@ -1,7 +1,5 @@
 'use client';
 
-import StudyInterface from '@/common/types/interfaces';
-
 import React from 'react';
 
 export default function study({ study }: any) {

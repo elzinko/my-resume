@@ -1,6 +1,4 @@
-// import { StudyType } from '@/common/types/types';
 import Study from '@/components/study';
-import StudyInterface from '@/common/types/interfaces';
 import { graphQLClient } from '@/lib/graphql-client';
 import { gql } from 'graphql-request';
 import React from 'react';
@@ -30,7 +28,7 @@ export default async function studies() {
     <section id="studies">
       <h2 className="mt-12 border-b pb-1 text-2xl font-semibold">Studies</h2>
       <ul className="mt-4">
-        {data?.allStudiesModels?.map((study: StudyInterface) => (
+        {data?.allStudiesModels?.map((study: any) => (
           <li key={study.id} className="pt-2">
             <Study study={study} />
           </li>

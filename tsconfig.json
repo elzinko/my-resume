@@ -25,23 +25,17 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./*"
-      ],
-      "@/components/*": [
-        "components/*"
-      ],
       "@/app/*": [
         "app/*"
       ],
       "@/common /*": [
         "common/*"
       ],
+      "@/components/*": [
+        "components/*"
+      ],
       "@/lib/*": [
         "lib/*"
-      ],
-      "@/pages/*": [
-        "pages/*"
       ]
     }
   },

@@ -1,5 +1,5 @@
 
-interface StudyInterface {
+export interface StudyInterface {
     id: string;
     name: string;
     startDate: Date;
@@ -7,6 +7,3 @@ interface StudyInterface {
     establishment: string;
     location: string;
 };
-
-
-export default StudyInterface;
