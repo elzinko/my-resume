@@ -1,13 +1,15 @@
-import Link from '@/components/link';
+import CustomLink from '@/components/customLink';
 import { graphQLClient } from '@/lib/graphql-client';
 import { gql } from 'graphql-request';
 import React from 'react';
 
 const query = gql`
-  allLearningsModels {
-    id
-    name
-    link
+  {
+    allLearningsModels {
+      id
+      name
+      link
+    }
   }
 `;
 
@@ -23,9 +25,9 @@ export default async function learnings() {
     <>
       <strong className="text-xl font-medium">Currently learning</strong>
       <ul className="mt-2 mb-10">
-        {data.allLearningsModels.map((learning: any) => (
+        {data?.allLearningsModels.map((learning: any) => (
           <li className="mt-1 px-2" key={learning.id}>
-            <Link name={learning?.name} link={learning?.link} />
+            <CustomLink name={learning.name} link={learning.link} />
           </li>
         ))}
       </ul>

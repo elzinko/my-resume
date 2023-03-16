@@ -4,13 +4,13 @@ import About from '@/app/about';
 import Headers from '@/app/header';
 import Github from './github';
 import Contact from './contact';
-import Learnings from './learnings';
 import Interests from './interests';
 import Projects from './projects';
 import Experiences from './experiences';
 import Studies from './studies';
 import Frameworks from './frameworks';
 import Skills from './skills';
+import Learnings from './learnings';
 
 export default function HomePage() {
   return (
@@ -30,9 +30,10 @@ export default function HomePage() {
           <Github />
           {/* @ts-expect-error Server Component */}
           <Frameworks />
+          {/* @ts-expect-error Server Component */}
+          <Learnings />
 
-          {/* <Learnings /> */}
-          <Interests />
+          {/* <Interests /> */}
         </div>
         <div id="main" className="w-4/6">
           <Projects />

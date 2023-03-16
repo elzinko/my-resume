@@ -2,6 +2,6 @@
 
 import React from 'react';
 
-export default function link({ link, name }: any) {
+export default function customLink({ link, name }: any) {
   return <a href={link}>{name}</a>;
 }

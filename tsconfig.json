@@ -44,6 +44,7 @@
     ".next/types/**/*.ts",
     "** /*.ts",
     "**/*.tsx",
+    "app/learnings.tsx.back",
   ],
   "exclude": [
     "node_modules"
