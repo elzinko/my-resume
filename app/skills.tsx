@@ -1,15 +1,15 @@
+import Skill from '@/components/skill';
 import { graphQLClient } from '@/lib/graphql-client';
 import { gql } from 'graphql-request';
 import React from 'react';
-import Skill from '@/components/Skill';
 
 const query = gql`
   {
     allSkillsModels {
       id
-      __typename
-      skillTitle
-      skillDescription
+      name
+      description
+      position
     }
   }
 `;
@@ -20,13 +20,13 @@ async function getData() {
   return data;
 }
 
-export default async function Skills() {
-  const data: any = await getData();
+export default async function skills() {
+  const data = await getData();
   return (
     <section id="skills" className="mt-10">
       <div className="flex w-full columns-1 flex-col  md:columns-3 md:flex-row md:space-x-6">
         {data?.allSkillsModels?.map((skill: any) => (
-          <Skill skill={skill} key={skill.id} />
+          <Skill key={skill.id} skill={skill} />
         ))}
       </div>
     </section>
