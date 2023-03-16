@@ -36,7 +36,7 @@ export default async function Header() {
           <LogoMalt />
         </li>
       </ul>
-      <div className="flex items-center justify-between py-20">
+      <div className="flex items-center justify-between py-14 md:py-20">
         <div className="grid justify-items-end">
           <h1 className="text-4xl font-extrabold md:text-5xl lg:text-7xl">
             {data?.header?.name}

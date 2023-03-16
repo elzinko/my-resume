@@ -22,8 +22,11 @@ async function getData() {
 export default async function interests() {
   const data: any = await getData();
   return (
-    <>
-      <strong className="text-xl font-medium">Interests & Hobbies</strong>
+    <section id="interests" className="mt-10">
+      <h2 className="border-b pb-1 text-2xl font-semibold">
+        Interests & Hobbies
+      </h2>
+      {/* <strong className="text-xl font-medium">Interests & Hobbies</strong> */}
       <ul className="mt-2">
         {data.allHobbiesModels.map((hobby: any) => (
           <li className="mt-1 px-2" key={hobby.id}>
@@ -31,6 +34,6 @@ export default async function interests() {
           </li>
         ))}
       </ul>
-    </>
+    </section>
   );
 }

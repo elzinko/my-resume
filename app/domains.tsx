@@ -25,7 +25,7 @@ export default async function domains() {
   const data = await getData();
   return (
     <section id="skills" className="mt-10">
-      <div className="flex w-full columns-1 flex-col  md:columns-3 md:flex-row md:space-x-6">
+      <div className="flex w-full columns-1 flex-col md:columns-3 md:flex-row md:space-x-6">
         {data?.allDomainsModels?.map((domain: any) => (
           <Domain key={domain.id} domain={domain} />
         ))}

@@ -25,8 +25,8 @@ async function getData() {
 export default async function studies() {
   const data = await getData();
   return (
-    <section id="studies">
-      <h2 className="mt-12 border-b pb-1 text-2xl font-semibold">Studies</h2>
+    <section id="studies" className="mt-10">
+      <h2 className="border-b pb-1 text-2xl font-semibold">Studies</h2>
       <ul className="mt-4">
         {data?.allStudiesModels?.map((study: any) => (
           <li key={study.id} className="pt-2">
