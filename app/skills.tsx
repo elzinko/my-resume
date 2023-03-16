@@ -1,4 +1,4 @@
-import Skill from '@/components/skill';
+import Skill from '@/app/skill';
 import { graphQLClient } from '@/lib/graphql-client';
 import { gql } from 'graphql-request';
 import React from 'react';
