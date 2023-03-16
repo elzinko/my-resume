@@ -1,29 +1,35 @@
+import CustomLink from '@/components/customLink';
+import { graphQLClient } from '@/lib/graphql-client';
+import { gql } from 'graphql-request';
 import React from 'react';
 
-export default function interests() {
+const query = gql`
+  {
+    allHobbiesModels {
+      id
+      name
+      link
+    }
+  }
+`;
+
+async function getData() {
+  const data: any = await graphQLClient.request(query);
+  console.log(data);
+  return data;
+}
+
+export default async function interests() {
+  const data: any = await getData();
   return (
     <>
       <strong className="text-xl font-medium">Interests & Hobbies</strong>
       <ul className="mt-2">
-        <li className="mt-1 px-2">
-          <a href="https://soundcloud.com/zebra-music-459073993/sets/la-base">
-            Creating music
-          </a>
-        </li>
-        <li className="mt-1 px-2">
-          <a href="https://hoopstudy.com/">Crossovers</a>
-        </li>
-        <li className="mt-1 px-2">
-          <a href="https://www.passportesdusoleil.com/">Riding the hills</a>
-        </li>
-        <li className="mt-1 px-2">
-          <a href="https://www.chess.com/fr">London system or Caro-Kann</a>
-        </li>
-        <li className="mt-1 px-2">
-          <a href="https://earth.google.com/web/@31.19328514,32.69290533,5218.72664913a,23683694.81628657d,35y,0h,0t,0r?hl=fr">
-            Travelling
-          </a>
-        </li>
+        {data.allHobbiesModels.map((hobby: any) => (
+          <li className="mt-1 px-2" key={hobby.id}>
+            <CustomLink name={hobby.name} link={hobby.link} />
+          </li>
+        ))}
       </ul>
     </>
   );

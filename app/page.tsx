@@ -5,9 +5,10 @@ import Headers from '@/app/header';
 import Github from './github';
 import Contact from './contact';
 import Studies from './studies';
-import Frameworks from './frameworks';
 import Skills from './skills';
+import Domains from './domains';
 import Learnings from './learnings';
+import Interests from './interests';
 
 export default async function Page() {
   return (
@@ -17,7 +18,7 @@ export default async function Page() {
       {/* @ts-expect-error Server Component */}
       <About />
       {/* @ts-expect-error Server Component */}
-      <Skills />
+      <Domains />
 
       <div className="mt-20 flex">
         <div id="left" className="w-1/3 pr-10">
@@ -26,11 +27,11 @@ export default async function Page() {
           {/* @ts-expect-error Server Component */}
           <Github />
           {/* @ts-expect-error Server Component */}
-          <Frameworks />
+          <Skills />
           {/* @ts-expect-error Server Component */}
           <Learnings />
-
-          {/* <Interests /> */}
+          {/* @ts-expect-error Server Component */}
+          <Interests />
         </div>
         <div id="main" className="w-4/6">
           {/* <Projects /> */}
