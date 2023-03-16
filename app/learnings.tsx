@@ -23,11 +23,11 @@ export default async function learnings() {
     <>
       <strong className="text-xl font-medium">Currently learning</strong>
       <ul className="mt-2 mb-10">
-        {/* {data.allLearningsModels.map((learning: any) => (
+        {data.allLearningsModels.map((learning: any) => (
           <li className="mt-1 px-2" key={learning.id}>
             <Link name={learning?.name} link={learning?.link} />
           </li>
-        ))} */}
+        ))}
       </ul>
     </>
   );
