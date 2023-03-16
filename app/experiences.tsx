@@ -1,5 +1,5 @@
+import Experience from '@/components/experience';
 import React from 'react';
-import Experience from './experience';
 
 export default function experiences() {
   return (
