@@ -2,16 +2,16 @@ import '../styles/globals.css';
 
 import About from '@/app/about';
 import Headers from '@/app/header';
-import Github from './github';
 import Contact from './contact';
 import Studies from './studies';
 import Skills from './skills';
 import Domains from './domains';
 import Learnings from './learnings';
-import Interests from './interests';
-import { setTimeout } from 'timers/promises';
+import Hobbies from './hobbies';
 import Experiences from './experiences';
 import Projects from './projects';
+
+import { setTimeout } from 'timers/promises';
 
 const waitFunction = async () => {
   await setTimeout(2000);
@@ -33,15 +33,15 @@ export default async function Page() {
         <div id="left" className="order-last md:order-first md:w-1/3 md:pr-10">
           {/* @ts-expect-error Server Component */}
           <Contact />
-          {/* <Github /> */}
           {/* @ts-expect-error Server Component */}
           <Skills />
           {/* @ts-expect-error Server Component */}
           <Learnings />
           {/* @ts-expect-error Server Component */}
-          <Interests />
+          <Hobbies />
         </div>
         <div id="main" className="md:w-4/6">
+          {/* @ts-expect-error Server Component */}
           <Projects />
           <Experiences />
           {/* @ts-expect-error Server Component */}

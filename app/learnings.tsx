@@ -23,10 +23,7 @@ export default async function learnings() {
   const data: any = await getData();
   return (
     <section id="learning" className="mt-10">
-      <h2 className="border-b pb-1 text-2xl font-semibold">
-        Currently learning
-      </h2>
-      {/* <strong className="text-xl font-medium">Currently learning</strong> */}
+      <h2 className="border-b pb-1 text-2xl font-semibold">Learning</h2>
       <ul className="mt-2">
         {data?.allLearningsModels.map((learning: any) => (
           <li className="mt-1 px-2" key={learning.id}>

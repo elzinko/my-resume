@@ -18,7 +18,7 @@ export default function experience() {
         <li>text 2</li>
       </ul>
       <ul className="my-4 flex">
-        <li className="mr-1 rounded bg-blue-600 px-2 py-1 text-xs text-white">
+        <li className="mr-1 rounded bg-blue-400 px-2 py-1 text-xs text-white">
           J2EE 5
         </li>
       </ul>

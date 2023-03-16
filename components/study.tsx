@@ -7,9 +7,6 @@ export default function study({ study }: any) {
     <>
       <p className="flex justify-between text-sm">
         <strong className="text-base">{study.name}</strong>
-        {/* <strong>
-          {study.startDate.getFullYear()}-{study.endDate.getFullYear()}
-        </strong> */}
       </p>
       <p className="flex justify-between text-sm">
         {study.location}
