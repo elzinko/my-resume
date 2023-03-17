@@ -31,7 +31,7 @@ export default function project({ project }: any) {
           </a>
         </strong>
         <strong>
-          <span className="flex flex-wrap justify-end text-sm">{dates}</span>
+          <span className="flex flex-wrap justify-end">{dates}</span>
         </strong>
       </div>
       <ul className="mb-4 flex">
