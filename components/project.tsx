@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import formatDate from 'intl-dateformat';
 import formatDates from '@/lib/date';
 
 export default function project({ project }: any) {

@@ -8,8 +8,7 @@ const query = gql`
     allProjectsModels {
       id
       name
-      client
-      location
+      link
       startDate
       endDate
       description
