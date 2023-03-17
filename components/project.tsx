@@ -49,7 +49,7 @@ export default function project({ project }: any) {
           <li key={bullet.id}>{bullet.text}</li>
         ))}
       </ul>
-      <p className="mt-2 flex flex-wrap gap-x-2 gap-y-2 whitespace-nowrap py-2">
+      <p className="mt-4 flex flex-wrap gap-x-2 gap-y-2 whitespace-nowrap py-2">
         {project?.frameworks?.map((framework: any) => (
           <span
             key={framework.id}

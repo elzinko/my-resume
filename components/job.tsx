@@ -22,15 +22,16 @@ export default function job({ job: job }: any) {
         ))}
       </ul>
 
-      <ul className="my-4 flex">
+      <p className="mt-4 flex flex-wrap gap-x-2 gap-y-2 whitespace-nowrap py-2">
         {job?.frameworks?.map((framework: any) => (
-          <li key={framework.id}>
-            <span className="mt-2 mr-1 flex flex-wrap gap-x-2 gap-y-2 whitespace-nowrap rounded bg-blue-400 px-2 py-1 text-xs text-white">
-              {framework.name}
-            </span>
-          </li>
+          <span
+            key={framework.id}
+            className="rounded bg-gray-400 px-2 py-1 text-xs text-white"
+          >
+            {framework.name}
+          </span>
         ))}
-      </ul>
+      </p>
     </>
   );
 }
