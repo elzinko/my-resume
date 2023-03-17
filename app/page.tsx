@@ -8,7 +8,7 @@ import Skills from './skills';
 import Domains from './domains';
 import Learnings from './learnings';
 import Hobbies from './hobbies';
-import Experiences from './experiences';
+import Jobs from './jobs';
 import Projects from './projects';
 
 import { setTimeout } from 'timers/promises';
@@ -42,8 +42,9 @@ export default async function Page() {
         </div>
         <div id="main" className="md:w-4/6">
           {/* @ts-expect-error Server Component */}
+          <Jobs />
+          {/* @ts-expect-error Server Component */}
           <Projects />
-          <Experiences />
           {/* @ts-expect-error Server Component */}
           <Studies />
         </div>

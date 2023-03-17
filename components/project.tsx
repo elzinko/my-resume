@@ -44,7 +44,7 @@ export default function project({ project }: any) {
         ))}
       </ul>
       <p className="text-xs">{project?.description}</p>
-      <ul className="mx-4 list-disc text-xs">
+      <ul className="mx-4 my-2 list-disc text-xs">
         {project?.bullets?.map((bullet: any) => (
           <li key={bullet.id}>{bullet.text}</li>
         ))}

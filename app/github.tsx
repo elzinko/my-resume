@@ -26,7 +26,7 @@ export default async function Github() {
           <li className="mt-2 w-3/12 rounded-tl-lg rounded-bl-lg bg-pink-600 px-2 text-center text-white">
             BACK
           </li>
-          <li className="mt-2 w-3/12 bg-blue-600 px-2 text-center text-white">
+          <li className="mt-2 w-3/12 bg-blue-400 px-2 text-center text-white">
             FRONT
           </li>
           <li className="mt-2 w-3/12 rounded-tr-lg rounded-br-lg bg-yellow-500 px-2 text-center text-white">
