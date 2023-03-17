@@ -2,22 +2,10 @@
 
 import React from 'react';
 import formatDate from 'intl-dateformat';
+import formatDates from '@/lib/date';
 
 export default function project({ project }: any) {
-  const startDate = project.startDate
-    ? formatDate(new Date(project.startDate), 'MM / YYYY')
-    : null;
-  const endDate = project.endDate
-    ? formatDate(new Date(project.endDate), 'MM / YYYY')
-    : null;
-
-  const dates =
-    startDate && endDate
-      ? startDate + ' - ' + endDate
-      : project.endDate
-      ? endDate
-      : null;
-
+  const dates = formatDates(project.startDate, project.endDate);
   return (
     <>
       <div className="my-1 flex justify-between">
