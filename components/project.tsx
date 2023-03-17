@@ -6,8 +6,8 @@ import formatDates from '@/lib/date';
 export default function project({ project }: any) {
   const dates = formatDates(project.startDate, project.endDate);
   return (
-    <>
-      <div className="my-1 flex justify-between">
+    <section id="projects">
+      <div className="mx-1 flex justify-between">
         <strong>
           <a href={project.link ? project.link : '#'}>
             {project.name ? project.name : null}
@@ -31,21 +31,30 @@ export default function project({ project }: any) {
         ))}
       </ul>
       <p className="text-xs">{project?.description}</p>
-      <ul className="mx-4 my-2 list-disc text-xs">
-        {project?.bullets?.map((bullet: any) => (
-          <li key={bullet.id}>{bullet.text}</li>
-        ))}
-      </ul>
-      <p className="mt-4 flex flex-wrap gap-x-2 gap-y-2 whitespace-nowrap py-2">
-        {project?.frameworks?.map((framework: any) => (
-          <span
-            key={framework.id}
-            className="rounded bg-gray-400 px-2 py-1 text-xs text-white"
-          >
-            {framework.name.toLowerCase()}
-          </span>
-        ))}
-      </p>
-    </>
+      {project?.bullets?.length > 0 ? (
+        <ul className="mx-4 my-2 list-disc text-xs">
+          {project?.bullets?.map((bullet: any) => (
+            <li key={bullet.id}>{bullet.text}</li>
+          ))}
+        </ul>
+      ) : (
+        ''
+      )}
+
+      {project?.frameworks?.length > 0 ? (
+        <p className="flex flex-wrap gap-x-2 gap-y-2 whitespace-nowrap py-2">
+          {project?.frameworks?.map((framework: any) => (
+            <span
+              key={framework.id}
+              className="rounded bg-gray-400 px-2 py-1 text-xs text-white"
+            >
+              {framework.name.toLowerCase()}
+            </span>
+          ))}
+        </p>
+      ) : (
+        ''
+      )}
+    </section>
   );
 }

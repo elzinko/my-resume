@@ -16,22 +16,30 @@ export default function job({ job: job }: any) {
         <small>{job.location}</small>
       </p>
       <p className="text-justify text-xs">{job.description}</p>
-      <ul className="mx-4 my-2 list-disc text-xs">
-        {job?.bullets?.map((bullet: any) => (
-          <li key={bullet.id}>{bullet.text}</li>
-        ))}
-      </ul>
+      {job?.bullets?.length > 0 ? (
+        <ul className="mx-4 my-2 list-disc text-xs">
+          {job?.bullets?.map((bullet: any) => (
+            <li key={bullet.id}>{bullet.text}</li>
+          ))}
+        </ul>
+      ) : (
+        ''
+      )}
 
-      <p className="mt-4 flex flex-wrap gap-x-2 gap-y-2 whitespace-nowrap py-2">
-        {job?.frameworks?.map((framework: any) => (
-          <span
-            key={framework.id}
-            className="rounded bg-gray-400 px-2 py-1 text-xs text-white"
-          >
-            {framework.name.toLowerCase()}
-          </span>
-        ))}
-      </p>
+      {job?.frameworks?.length > 0 ? (
+        <p className="flex flex-wrap gap-x-2 gap-y-2 whitespace-nowrap py-2">
+          {job?.frameworks?.map((framework: any) => (
+            <span
+              key={framework.id}
+              className="rounded bg-gray-400 px-2 py-1 text-xs text-white"
+            >
+              {framework.name.toLowerCase()}
+            </span>
+          ))}
+        </p>
+      ) : (
+        ''
+      )}
     </>
   );
 }
