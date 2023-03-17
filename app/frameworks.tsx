@@ -23,7 +23,7 @@ export default async function frameworks() {
   return (
     <>
       <strong className="text-xl font-medium">Skills</strong>
-      <ul className="mt-2 mb-10">
+      <ul className="mt-4 mb-10">
         {data?.allFrameworksModels.map((framework: any) => (
           <li className="mt-1 px-2" key={framework.id}>
             <Framework framework={framework} key={framework.id} />

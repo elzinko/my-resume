@@ -22,14 +22,14 @@ export default async function Github() {
     <>
       <strong className="text-xl font-medium">Github</strong>
       <a href={data.github?.url}>
-        <ul className="mt-2 mb-10 flex w-full">
-          <li className="mt-2 w-3/12 rounded-tl-lg rounded-bl-lg bg-pink-600 px-2 text-center text-white">
+        <ul className="mt-4 mb-10 flex w-full">
+          <li className="mt-4 w-3/12 rounded-tl-lg rounded-bl-lg bg-pink-600 px-2 text-center text-white">
             BACK
           </li>
-          <li className="mt-2 w-3/12 bg-blue-400 px-2 text-center text-white">
+          <li className="mt-4 w-3/12 bg-blue-400 px-2 text-center text-white">
             FRONT
           </li>
-          <li className="mt-2 w-3/12 rounded-tr-lg rounded-br-lg bg-yellow-500 px-2 text-center text-white">
+          <li className="mt-4 w-3/12 rounded-tr-lg rounded-br-lg bg-yellow-500 px-2 text-center text-white">
             DEVOPS
           </li>
         </ul>
