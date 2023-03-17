@@ -40,7 +40,7 @@ export default async function Page() {
           {/* @ts-expect-error Server Component */}
           <Hobbies />
         </div>
-        <div id="main" className="md:w-4/6">
+        <div id="main" className="md:w-2/3">
           {/* @ts-expect-error Server Component */}
           <Jobs />
           {/* @ts-expect-error Server Component */}

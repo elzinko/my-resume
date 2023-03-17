@@ -38,7 +38,7 @@ export default async function Header() {
       </ul>
       <div className="flex items-center justify-between py-14 md:py-20">
         <div className="grid justify-items-end">
-          <h1 className="text-4xl font-extrabold md:text-5xl lg:text-7xl">
+          <h1 className="text-4xl font-extrabold text-blue-600 md:text-5xl lg:text-7xl">
             {data?.header?.name}
           </h1>
           <p className="mt-5 text-xl">{data?.header?.role}</p>
