@@ -28,7 +28,7 @@ export default function job({ job: job }: any) {
             key={framework.id}
             className="rounded bg-gray-400 px-2 py-1 text-xs text-white"
           >
-            {framework.name}
+            {framework.name.toLowerCase()}
           </span>
         ))}
       </p>
