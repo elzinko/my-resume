@@ -1,5 +1,7 @@
 import '../styles/globals.css';
 
+import { setTimeout } from 'timers/promises';
+
 import About from '@/app/about';
 import Headers from '@/app/header';
 import Contact from './contact';
@@ -10,8 +12,6 @@ import Learnings from './learnings';
 import Hobbies from './hobbies';
 import Jobs from './jobs';
 import Projects from './projects';
-
-import { setTimeout } from 'timers/promises';
 
 const waitFunction = async () => {
   await setTimeout(2000);
