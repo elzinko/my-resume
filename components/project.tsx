@@ -18,7 +18,7 @@ export default function project({ project }: any) {
           </a>
         </strong>
         <strong>
-          <span className="text-sx flex flex-wrap justify-end">{dates}</span>
+          <span className="flex flex-wrap justify-end text-xs">{dates}</span>
         </strong>
       </div>
       <ul className="mb-4 flex">
