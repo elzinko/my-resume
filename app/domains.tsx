@@ -11,6 +11,11 @@ const query = gql`
       name
       description
       position
+      competencies {
+        id
+        name
+        link
+      }
     }
   }
 `;
