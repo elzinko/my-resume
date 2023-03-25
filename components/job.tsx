@@ -31,7 +31,7 @@ export default function job({ job: job }: any) {
           {job?.frameworks?.map((framework: any) => (
             <span
               key={framework.id}
-              className="rounded bg-gray-400 px-2 py-1 text-xs text-white"
+              className="rounded bg-gray-300 px-2 py-1 text-xs text-white"
             >
               {framework.name.toLowerCase()}
             </span>

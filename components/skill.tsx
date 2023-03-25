@@ -7,7 +7,7 @@ export default function skill({ skill: skill }: any) {
     <a
       href={skill?.link}
       className="w-28 rounded-lg 
-      bg-blue-400 py-1 text-center text-white md:text-sm"
+      bg-gradient-to-r from-cyan-500 to-blue-500 py-1 text-center text-white md:text-sm"
     >
       {skill?.name}
     </a>

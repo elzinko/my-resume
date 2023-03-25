@@ -26,7 +26,7 @@ export default async function hobbies() {
       <h2 className="border-b pb-1 text-2xl font-semibold">Hobbies</h2>
       <ul className="mt-4">
         {data.allHobbiesModels.map((hobby: any) => (
-          <li className="mt-1 px-2" key={hobby.id}>
+          <li className="mt-1" key={hobby.id}>
             <CustomLink name={hobby.name} link={hobby.link} />
           </li>
         ))}
