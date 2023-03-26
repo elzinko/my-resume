@@ -23,7 +23,9 @@ export default async function hobbies() {
   const data: any = await getData();
   return (
     <section id="hobbies" className="mt-10">
-      <h2 className="border-b pb-1 text-2xl font-semibold">Hobbies</h2>
+      <h2 className="border-b pb-1 text-2xl font-semibold text-orange-300">
+        Hobbies
+      </h2>
       <ul className="mt-4">
         {data.allHobbiesModels.map((hobby: any) => (
           <li className="mt-1" key={hobby.id}>

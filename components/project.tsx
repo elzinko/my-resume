@@ -7,8 +7,8 @@ export default function project({ project }: any) {
   const dates = formatDates(project.startDate, project.endDate);
   return (
     <section id="projects">
-      <div className="mx-1 flex justify-between">
-        <strong>
+      <div className="flex justify-between">
+        <strong className="text-blue-300">
           <a href={project.link ? project.link : '#'}>
             {project.name ? project.name : null}
             {project.client ? <span> - </span> : null}
@@ -17,19 +17,9 @@ export default function project({ project }: any) {
             {project.location ? project.location : ''}
           </a>
         </strong>
-        <strong>
-          <span className="flex flex-wrap justify-end text-xs">{dates}</span>
-        </strong>
+        <small className="text-gray-500">{dates}</small>
       </div>
-      <ul className="mb-4 flex">
-        {project?.tags?.map((tag: any) => (
-          <li key={tag.id}>
-            <span className="mr-1 rounded bg-blue-400 px-2 py-1 text-sm text-white">
-              {tag.name}
-            </span>
-          </li>
-        ))}
-      </ul>
+
       <p className="text-xs">{project?.description}</p>
       {project?.bullets?.length > 0 ? (
         <ul className="mx-4 my-2 list-disc text-xs">
@@ -46,7 +36,7 @@ export default function project({ project }: any) {
           {project?.frameworks?.map((framework: any) => (
             <span
               key={framework.id}
-              className="rounded bg-gray-400 px-2 py-1 text-xs text-white"
+              className="rounded bg-blue-200 px-2 py-1 text-xs text-white"
             >
               {framework.name.toLowerCase()}
             </span>

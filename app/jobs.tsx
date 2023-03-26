@@ -39,10 +39,12 @@ export default async function jobs() {
   return (
     <>
       <section id="jobs" className="mt-10 break-before-page">
-        <h2 className="mt-12 border-b pb-1 text-2xl font-semibold">Jobs</h2>
+        <h2 className="mt-12 border-b pb-1 text-2xl font-semibold text-pink-300">
+          Jobs
+        </h2>
         <ul className="mt-4">
           {data?.allJobsModels?.map((job: any) => (
-            <li key={job.id} className="py-2">
+            <li key={job.id} className="py-4">
               <Job job={job} />
             </li>
           ))}

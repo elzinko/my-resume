@@ -40,7 +40,9 @@ export default async function projects() {
   return (
     <>
       <section id="projects" className="mt-10 break-before-page">
-        <h2 className="border-b pb-1 text-2xl font-semibold">Projects</h2>
+        <h2 className="border-b pb-1 text-2xl font-semibold text-blue-300">
+          Projects
+        </h2>
         <ul className="mt-4">
           {data?.allProjectsModels?.map((project: any) => (
             <li key={project.id} className="py-2">

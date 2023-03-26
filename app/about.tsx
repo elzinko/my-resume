@@ -22,7 +22,7 @@ export default async function About() {
   const data: any = await getData();
   return (
     <section id="about" className="mt-10">
-      <h2 className="border-b pb-1 text-2xl font-semibold">
+      <h2 className="border-b pb-1 text-2xl font-semibold text-teal-300">
         {data?.about?.title}
       </h2>
       <p className="mt-4">{data?.about?.text}</p>

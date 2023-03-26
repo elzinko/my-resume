@@ -22,8 +22,10 @@ async function getData() {
 export default async function contact() {
   const data: any = await getData();
   return (
-    <section id="contact" className="mt-10">
-      <h2 className="border-b pb-1 text-2xl font-semibold">Contact</h2>
+    <section id="contact" className="mt-10 ">
+      <h2 className="border-b pb-1 text-2xl font-semibold text-pink-300">
+        Contact
+      </h2>
       <ul className="mt-4 mb-10 mr-1">
         <li className="mt-1">
           <strong>Phone </strong>

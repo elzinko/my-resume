@@ -6,14 +6,14 @@ import formatDates from '@/lib/date';
 export default function job({ job: job }: any) {
   const dates = formatDates(job.startDate, job.endDate);
   return (
-    <>
-      <p className="flex justify-between text-sm">
-        <strong className="text-base">{job.client}</strong>
-        <strong className="text-xs">{dates}</strong>
-      </p>
-      <p className="flex justify-between pb-2 text-base">
-        {job.role?.name}
-        <small>{job.location}</small>
+    <div id={job.id}>
+      <div className="flex justify-between">
+        <strong className="text-sky-300">{job.client}</strong>
+        <small className="text-sky-300">{dates}</small>
+      </div>
+      <p className="flex justify-between pb-2">
+        <small className="text-teal-300">{job.role?.name}</small>
+        <small className="text-fuchsia-300">{job.location}</small>
       </p>
       <p className="text-justify text-xs">{job.description}</p>
       {job?.bullets?.length > 0 ? (
@@ -31,7 +31,7 @@ export default function job({ job: job }: any) {
           {job?.frameworks?.map((framework: any) => (
             <span
               key={framework.id}
-              className="rounded bg-gray-300 px-2 py-1 text-xs text-white"
+              className="rounded bg-fuchsia-200 px-2 py-1 text-xs text-white"
             >
               {framework.name.toLowerCase()}
             </span>
@@ -40,6 +40,6 @@ export default function job({ job: job }: any) {
       ) : (
         ''
       )}
-    </>
+    </div>
   );
 }

@@ -41,7 +41,9 @@ export default async function Header() {
           <h1 className="text-4xl font-extrabold text-blue-600 md:text-5xl lg:text-7xl">
             {data?.header?.name}
           </h1>
-          <p className="mt-5 text-xl">{data?.header?.role}</p>
+          <p className="mt-5 text-2xl text-teal-300 md:text-3xl">
+            {data?.header?.role}
+          </p>
         </div>
       </div>
     </header>
