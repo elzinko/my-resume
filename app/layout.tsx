@@ -1,5 +1,5 @@
 import React from 'react';
-// import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from '@vercel/analytics/react';
 
 export default async function RootLayout({
   children,
@@ -12,7 +12,7 @@ export default async function RootLayout({
         <div className="container mx-auto min-h-screen p-8">
           <main>{children}</main>
         </div>
-        {/* <Analytics mode={'production'} /> */}
+        <Analytics />
       </body>
     </html>
   );

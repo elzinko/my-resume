@@ -45,7 +45,7 @@ export default async function projects() {
         </h2>
         <ul className="mt-4">
           {data?.allProjectsModels?.map((project: any) => (
-            <li key={project.id} className="py-2">
+            <li key={project.id} className="py-4">
               <Project project={project} />
             </li>
           ))}
