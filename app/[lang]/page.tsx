@@ -29,9 +29,9 @@ export default function Page({
       {/* @ts-expect-error Server Component */}
       <Headers locale={lang}/>
       {/* @ts-expect-error Server Component */}
-      <About locale="fr-FR" />
+      <About locale={lang} />
       {/* @ts-expect-error Server Component */}
-      <Domains locale="fr-FR" />
+      <Domains locale={lang} />
 
       <div className="mt-10 flex columns-1 flex-col md:columns-2 md:flex-row">
         <div id="left" className="order-last md:order-first md:w-1/3 md:pr-10">
