@@ -1,5 +1,10 @@
 import React from 'react';
+import { i18n } from '../../i18n-config'
 import { Analytics } from '@vercel/analytics/react';
+
+export async function generateStaticParams() {
+  return i18n.locales.map((locale) => ({ lang: locale }))
+}
 
 export default async function RootLayout({
   children,

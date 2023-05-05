@@ -3,11 +3,12 @@ import LogoLinkedin from '@/components/LogoLinkedin';
 import LogoMalt from '@/components/logoMalt';
 import { graphQLClient } from '@/lib/graphql-client';
 import { gql } from 'graphql-request';
+import { i18n, Locale } from 'i18n-config';
 import React from 'react';
 
 const query = gql`
-  {
-    header {
+  query getHeader($lang: SiteLocale) {
+    header(locale: $lang) {
       id
       name
       role
@@ -15,14 +16,23 @@ const query = gql`
   }
 `;
 
-async function getData() {
-  const data: any = await graphQLClient.request(query);
+async function getData(locale: any) {
+  // get   locale from i18n
+  // const locale = i18n.locale;
+  // get string value from locale parameter
+  // const locale = localeVar.locale;
+  const loc = locale.locale;
+  const variables = {
+    'lang': loc,
+  };
+  const data: any = await graphQLClient.request(query, variables);
   console.log(data);
   return data;
 }
 
-export default async function Header() {
-  const data: any = await getData();
+export default async function Header(locale : Locale) {
+  const data: any = await getData(locale);
+  // console.log('lang : ' + lang);
   return (
     <header>
       <ul className="flex flex-wrap justify-end gap-2">
