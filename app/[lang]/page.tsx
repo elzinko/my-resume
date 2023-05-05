@@ -12,7 +12,6 @@ import Learnings from './learnings';
 import Hobbies from './hobbies';
 import Jobs from './jobs';
 import Projects from './projects';
-import LocaleSwitcher from '@/components/locale-switcher';
 
 const waitFunction = async () => {
   await setTimeout(2000);
@@ -27,8 +26,6 @@ export default function Page({
   console.debug("new lang clicked : " + lang)
   return (
     <>
-      <LocaleSwitcher />
-      <p>Current locale: {lang}</p>
       {/* @ts-expect-error Server Component */}
       <Headers locale={lang}/>
       {/* @ts-expect-error Server Component */}

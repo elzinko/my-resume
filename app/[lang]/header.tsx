@@ -1,6 +1,5 @@
-import LogoGithub from '@/components/logoGithub';
-import LogoLinkedin from '@/components/LogoLinkedin';
-import LogoMalt from '@/components/logoMalt';
+import LocaleSwitcher from '@/components/locale-switcher';
+import Logos from '@/components/logos';
 import { graphQLClient } from '@/lib/graphql-client';
 import { gql } from 'graphql-request';
 import { i18n, Locale } from 'i18n-config';
@@ -17,35 +16,23 @@ const query = gql`
 `;
 
 async function getData(locale: any) {
-  // get   locale from i18n
-  // const locale = i18n.locale;
-  // get string value from locale parameter
-  // const locale = localeVar.locale;
-  const loc = locale.locale;
   const variables = {
-    'lang': loc,
+    'lang': locale.locale,
   };
   const data: any = await graphQLClient.request(query, variables);
-  console.log(data);
+  // console.log(data);
   return data;
 }
 
 export default async function Header(locale : Locale) {
   const data: any = await getData(locale);
-  // console.log('lang : ' + lang);
   return (
     <header>
-      <ul className="flex flex-wrap justify-end gap-2">
-        <li>
-          <LogoLinkedin />
-        </li>
-        <li>
-          <LogoGithub />
-        </li>
-        <li>
-          <LogoMalt />
-        </li>
-      </ul>
+      <div className='flex flex-row justify-between align-middle'>
+        <LocaleSwitcher lang={locale}/>
+        <Logos  />
+      </div>
+      
       <div className="flex items-center justify-between py-14 md:py-20">
         <div className="grid justify-items-end">
           <h1 className="text-4xl font-extrabold text-blue-600 md:text-5xl lg:text-7xl">
