@@ -55,6 +55,12 @@ jobs:
         with:
           node-version: '16'
           cache: ${{ steps.detect-package-manager.outputs.manager }}
+
+      - name: Test Env variables access Mask
+        run: |
+          echo "::add-mask::${{ secrets.DATOCMS_API_URL }}"
+          echo "::add-mask::${{ secrets.DATOCMS_API_KEY }}"
+
       - name: Setup Pages
         uses: actions/configure-pages@v3
         env:
