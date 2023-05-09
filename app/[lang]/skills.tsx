@@ -1,11 +1,12 @@
 import Skill from '@/components/skill';
-import { graphQLClient } from '@/lib/graphql-client';
+import { getDataWithLocal, graphQLClient } from '@/lib/graphql-client';
 import { gql } from 'graphql-request';
+import { Locale } from 'i18n-config';
 import React from 'react';
 
 const query = gql`
-  {
-    allSkillsModels {
+  query getAllSkills($lang: SiteLocale) {
+    allSkillsModels(locale: $lang) {
       id
       name
       link
@@ -13,14 +14,8 @@ const query = gql`
   }
 `;
 
-async function getData() {
-  const data: any = await graphQLClient.request(query);
-  console.log(data);
-  return data;
-}
-
-export default async function skills() {
-  const data = await getData();
+export default async function skills(locale: Locale) {
+  const data = await getDataWithLocal(locale, query);
   return (
     <section id="skills" className="mt-10">
       <h2 className="border-b pb-1 text-2xl font-semibold text-blue-300">

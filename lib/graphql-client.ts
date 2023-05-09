@@ -11,3 +11,18 @@ export const graphQLClient = new GraphQLClient(
     },
   }
 );
+
+export async function getData(query: any) {
+  const data: any = await graphQLClient.request(query);
+  console.log(data);
+  return data;
+}
+
+export async function getDataWithLocal(locale: any, query: any) {
+  const variables = {
+    lang: locale.locale,
+  };
+  const data: any = await graphQLClient.request(query, variables);
+  console.log(data);
+  return data;
+}

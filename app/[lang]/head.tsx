@@ -1,10 +1,11 @@
 import React from 'react';
 import { gql } from 'graphql-request';
-import { graphQLClient } from '@/lib/graphql-client';
+import { getDataWithLocal } from '@/lib/graphql-client';
+import { Locale } from 'i18n-config';
 
 const query = gql`
-  {
-    head {
+  query getHead($lang: SiteLocale) {
+    head(locale: $lang) {
       url
       name
       locale
@@ -16,14 +17,8 @@ const query = gql`
   }
 `;
 
-async function getData() {
-  const data = await graphQLClient.request(query);
-  console.log(data);
-  return data;
-}
-
-export default async function Head() {
-  const data: any = await getData();
+export default async function Head(locale: Locale) {
+  const data: any = await getDataWithLocal(locale, query);
   const date = new Date();
   return (
     <>

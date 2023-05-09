@@ -1,11 +1,12 @@
 import Study from '@/components/study';
-import { graphQLClient } from '@/lib/graphql-client';
+import { getDataWithLocal, graphQLClient } from '@/lib/graphql-client';
 import { gql } from 'graphql-request';
+import { Locale } from 'i18n-config';
 import React from 'react';
 
 const query = gql`
-  {
-    allStudiesModels {
+  query getAllStudies($lang: SiteLocale) {
+    allStudiesModels(locale: $lang) {
       id
       name
       startDate
@@ -16,14 +17,8 @@ const query = gql`
   }
 `;
 
-async function getData() {
-  const data: any = await graphQLClient.request(query);
-  console.log(data);
-  return data;
-}
-
-export default async function studies() {
-  const data = await getData();
+export default async function studies(locale: Locale) {
+  const data = await getDataWithLocal(locale, query);
   return (
     <section id="studies" className="mt-10 break-before-page">
       <h2 className="border-b pb-1 text-2xl font-semibold text-teal-300">
