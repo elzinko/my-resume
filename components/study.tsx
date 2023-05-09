@@ -6,11 +6,12 @@ export default function study({ study }: any) {
   return (
     <>
       <p className="flex justify-between">
-        <strong className="text-base text-teal-200">{study.name}</strong>
-        <small className="text-gray-500">{study.location}</small>
+        <strong className="text-base text-teal-300">{study.name}</strong>
       </p>
-      <p className=" flex justify-between text-sm text-gray-500">
-        {study.establishment}
+      <p className=" flex text-sm text-gray-300">
+        <small>
+          {study.location} / {study.establishment}
+        </small>
       </p>
     </>
   );

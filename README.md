@@ -1,3 +1,6 @@
+![](https://api.checklyhq.com/v1/badges/checks/62d26efa-af80-41e7-ab7b-470b93755513?style=flat&theme=default&responseTime=true)
+
+
 This is my own resume using [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) and prettied using [TailwindCSS](https://tailwindcss.com/docs/).
 
 ## Getting Started

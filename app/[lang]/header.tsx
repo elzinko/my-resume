@@ -19,12 +19,12 @@ export default async function Header(locale: Locale) {
   const data: any = await getDataWithLocal(locale, query);
   return (
     <header>
-      <div className="flex flex-row justify-between align-middle">
+      <div className="flex flex-row justify-between">
         <LocaleSwitcher lang={locale} />
         <Logos />
       </div>
 
-      <div className="flex items-center justify-between py-14 md:py-20">
+      <div className="flex justify-between py-14 md:py-20">
         <div className="grid justify-items-end">
           <h1 className="text-4xl font-extrabold text-blue-600 md:text-5xl lg:text-7xl">
             {data?.header?.name}

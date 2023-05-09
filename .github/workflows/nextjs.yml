@@ -1,5 +1,3 @@
-# This cicd action needs nextjs 13 to be ready for 'next export' command. See https://beta.nextjs.org/docs/app-directory-roadmap#configuration
-
 # Sample workflow for building and deploying a Next.js site to GitHub Pages
 #
 # To get started with Next.js see: https://nextjs.org/docs/getting-started
@@ -88,16 +86,21 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           path: ./out
+      - name: Download all workflow run artifacts
+        uses: actions/download-artifact@v3
 
   # Deployment job
   deploy:
     # execute only on main branch
     if: github.ref == 'refs/heads/main'
+
+    needs: build
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build
+
     steps:
       - name: Deploy to GitHub Pages
         id: deployment

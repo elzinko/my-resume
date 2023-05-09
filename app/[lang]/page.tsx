@@ -36,7 +36,7 @@ export default function Page({
       <div className="mt-10 flex columns-1 flex-col md:columns-2 md:flex-row">
         <div id="left" className="order-last md:order-first md:w-1/3 md:pr-10">
           {/* @ts-expect-error Server Component */}
-          <Contact />
+          <Contact locale={lang} />
           {/* @ts-expect-error Server Component */}
           <Skills locale={lang} />
           {/* @ts-expect-error Server Component */}

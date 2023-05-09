@@ -5,8 +5,9 @@ import formatDates from '@/lib/date';
 
 export default function project({ project }: any) {
   const dates = formatDates(project.startDate, project.endDate);
+  const id: any = 'project-' + project?.id;
   return (
-    <section id="projects">
+    <section id={id}>
       <div className="flex justify-between">
         <strong className="text-blue-300">
           <a href={project.link ? project.link : '#'}>

@@ -1,5 +1,4 @@
 import Domain from '@/components/domain';
-import Skill from '@/components/domain';
 import { getDataWithLocal } from '@/lib/graphql-client';
 import { gql } from 'graphql-request';
 import { Locale } from 'i18n-config';
