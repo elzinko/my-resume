@@ -1,12 +1,13 @@
 import Domain from '@/components/domain';
 import Skill from '@/components/domain';
-import { graphQLClient } from '@/lib/graphql-client';
+import { getDataWithLocal } from '@/lib/graphql-client';
 import { gql } from 'graphql-request';
+import { Locale } from 'i18n-config';
 import React from 'react';
 
 const query = gql`
-  {
-    allDomainsModels {
+  query getAllDomains($lang: SiteLocale) {
+    allDomainsModels(locale: $lang) {
       id
       name
       description
@@ -20,14 +21,8 @@ const query = gql`
   }
 `;
 
-async function getData() {
-  const data: any = await graphQLClient.request(query);
-  console.log(data);
-  return data;
-}
-
-export default async function domains() {
-  const data = await getData();
+export default async function domains(locale: Locale) {
+  const data = await getDataWithLocal(locale, query);
   return (
     <section id="skills" className="mt-10">
       <div className="flex w-full columns-1 flex-col md:columns-3 md:flex-row md:space-x-6">

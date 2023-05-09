@@ -1,11 +1,12 @@
 import Project from '@/components/project';
-import { graphQLClient } from '@/lib/graphql-client';
+import { getDataWithLocal } from '@/lib/graphql-client';
 import { gql } from 'graphql-request';
+import { Locale } from 'i18n-config';
 import React from 'react';
 
 const query = gql`
-  {
-    allProjectsModels {
+  query getAllProjects($lang: SiteLocale) {
+    allProjectsModels(locale: $lang) {
       id
       name
       link
@@ -29,14 +30,8 @@ const query = gql`
   }
 `;
 
-async function getData() {
-  const data: any = await graphQLClient.request(query);
-  console.log(data);
-  return data;
-}
-
-export default async function projects() {
-  const data = await getData();
+export default async function projects(locale: Locale) {
+  const data = await getDataWithLocal(locale, query);
   return (
     <>
       <section id="projects" className="mt-10 break-before-page">

@@ -1,29 +1,23 @@
 import React from 'react';
-import { graphQLClient } from '@/lib/graphql-client';
+import { getData } from '@/lib/graphql-client';
 import { gql } from 'graphql-request';
 import Framework from '@/components/framework';
 
 const query = gql`
-  {
-    allFrameworksModels {
+  query getAllFrameworks($lang: SiteLocale) {
+    allFrameworksModels(locale: $lang) {
       name
       link
     }
   }
 `;
 
-async function getData() {
-  const data: any = await graphQLClient.request(query);
-  console.log(data);
-  return data;
-}
-
 export default async function frameworks() {
-  const data: any = await getData();
+  const data: any = await getData(query);
   return (
     <>
       <strong className="text-xl font-medium">Skills</strong>
-      <ul className="mt-4 mb-10">
+      <ul className="mb-10 mt-4">
         {data?.allFrameworksModels.map((framework: any) => (
           <li className="mt-1 px-2" key={framework.id}>
             <Framework framework={framework} key={framework.id} />

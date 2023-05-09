@@ -3,7 +3,7 @@ import '../../styles/globals.css';
 import { setTimeout } from 'timers/promises';
 import About from '@/app/[lang]/about';
 import Headers from '@/app/[lang]/header';
-import { Locale } from '../../i18n-config'
+import { Locale } from '../../i18n-config';
 import Contact from './contact';
 import Studies from './studies';
 import Skills from './skills';
@@ -21,13 +21,13 @@ const waitFunction = async () => {
 export default function Page({
   params: { lang },
 }: {
-  params: { lang: Locale }
+  params: { lang: Locale };
 }) {
-  console.debug("new lang clicked : " + lang)
+  console.debug('new lang clicked : ' + lang);
   return (
     <>
       {/* @ts-expect-error Server Component */}
-      <Headers locale={lang}/>
+      <Headers locale={lang} />
       {/* @ts-expect-error Server Component */}
       <About locale={lang} />
       {/* @ts-expect-error Server Component */}
@@ -38,19 +38,19 @@ export default function Page({
           {/* @ts-expect-error Server Component */}
           <Contact />
           {/* @ts-expect-error Server Component */}
-          <Skills />
+          <Skills locale={lang} />
           {/* @ts-expect-error Server Component */}
           <Learnings />
           {/* @ts-expect-error Server Component */}
-          <Hobbies />
+          <Hobbies locale={lang} />
         </div>
-        <div id="main" className="md:w-2/3">
+        <div id="main" className="md:w-2/3 md:pr-10">
           {/* @ts-expect-error Server Component */}
-          <Jobs />
+          <Jobs locale={lang} />
           {/* @ts-expect-error Server Component */}
-          <Projects />
+          <Projects locale={lang} />
           {/* @ts-expect-error Server Component */}
-          <Studies />
+          <Studies locale={lang} />
         </div>
       </div>
     </>

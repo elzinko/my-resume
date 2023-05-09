@@ -1,11 +1,12 @@
 import Job from '@/components/job';
-import { graphQLClient } from '@/lib/graphql-client';
+import { getDataWithLocal, graphQLClient } from '@/lib/graphql-client';
 import { gql } from 'graphql-request';
+import { Locale } from 'i18n-config';
 import React from 'react';
 
 const query = gql`
-  {
-    allJobsModels {
+  query getAllJobs($lang: SiteLocale) {
+    allJobsModels(locale: $lang) {
       client
       location
       startDate
@@ -28,18 +29,12 @@ const query = gql`
   }
 `;
 
-async function getData() {
-  const data: any = await graphQLClient.request(query);
-  console.log(data);
-  return data;
-}
-
-export default async function jobs() {
-  const data = await getData();
+export default async function jobs(locale: Locale) {
+  const data = await getDataWithLocal(locale, query);
   return (
     <>
       <section id="jobs" className="mt-10 break-before-page">
-        <h2 className="mt-12 border-b pb-1 text-2xl font-semibold text-pink-300">
+        <h2 className="mt-4 border-b pb-1 text-2xl font-semibold text-pink-300">
           Jobs
         </h2>
         <ul className="mt-4">
