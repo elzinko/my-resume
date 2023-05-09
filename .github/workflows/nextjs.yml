@@ -9,7 +9,7 @@ name: Deploy Next.js site to Pages
 on:
   # # Runs on pushes targeting the default branch
   push:
-    branches: ['*']
+    branches: ['main']
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -57,6 +57,9 @@ jobs:
           cache: ${{ steps.detect-package-manager.outputs.manager }}
       - name: Setup Pages
         uses: actions/configure-pages@v3
+        env:
+          DATOCMS_API_URL: ${{ secrets.DATOCMS_API_URL }}
+          DATOCMS_API_KEY: ${{ secrets.DATOCMS_API_KEY }}
         with:
           #   # Automatically inject basePath in your Next.js configuration file and disable
           #   # server side image optimization (https://nextjs.org/docs/api-reference/next/image#unoptimized).
