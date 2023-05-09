@@ -4,7 +4,8 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-      domains: ['www.datocms-assets.com','vitals.vercel-insights.com'],
+    unoptimized: true,
+    domains: ['www.datocms-assets.com','vitals.vercel-insights.com'],
   },
   experimental: {
     appDir: true,
