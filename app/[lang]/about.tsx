@@ -6,7 +6,6 @@ import React from 'react';
 const query = gql`
   query getAbout($lang: SiteLocale) {
     about(locale: $lang) {
-      id
       title
       text
     }

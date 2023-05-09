@@ -9,6 +9,9 @@ const query = gql`
       name
       link
     }
+    frameworksTitle(locale: $lang) {
+      title
+    }
   }
 `;
 
@@ -16,7 +19,9 @@ export default async function frameworks() {
   const data: any = await getData(query);
   return (
     <>
-      <strong className="text-xl font-medium">Skills</strong>
+      <strong className="text-xl font-medium">
+        {data?.frameworksTitle?.title}
+      </strong>
       <ul className="mb-10 mt-4">
         {data?.allFrameworksModels.map((framework: any) => (
           <li className="mt-1 px-2" key={framework.id}>

@@ -24,7 +24,7 @@ const query = gql`
 export default async function domains(locale: Locale) {
   const data = await getDataWithLocal(locale, query);
   return (
-    <section id="skills" className="mt-10">
+    <section id="domains" className="mt-10">
       <div className="flex w-full columns-1 flex-col md:columns-3 md:flex-row md:space-x-6">
         {data?.allDomainsModels?.map((domain: any) => (
           <Domain key={domain.id} domain={domain} />
