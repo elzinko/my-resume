@@ -56,16 +56,8 @@ jobs:
           node-version: '16'
           cache: ${{ steps.detect-package-manager.outputs.manager }}
 
-      - name: Test Env variables access Mask
-        run: |
-          echo "DATOCMS_API_URL : ${{ secrets.DATOCMS_API_URL }}"
-          echo "DATOCMS_API_KEY : ${{ secrets.DATOCMS_API_KEY }}"
-
       - name: Setup Pages
         uses: actions/configure-pages@v3
-        env:
-          DATOCMS_API_URL: ${{ secrets.DATOCMS_API_URL }}
-          DATOCMS_API_KEY: ${{ secrets.DATOCMS_API_KEY }}
         # with:
         #   # Automatically inject basePath in your Next.js configuration file and disable
         #   # server side image optimization (https://nextjs.org/docs/api-reference/next/image#unoptimized).
@@ -90,7 +82,7 @@ jobs:
           DATOCMS_API_URL: ${{ secrets.DATOCMS_API_URL }}
           DATOCMS_API_KEY: ${{ secrets.DATOCMS_API_KEY }}
       - name: Static HTML export with Next.js
-        run: ${{ steps.detect-package-manager.outputs.runner }} next export
+        run: ${{ steps.detect-package-manager.outputs.runner }} next output
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
