@@ -6,6 +6,9 @@ import React from 'react';
 
 const query = gql`
   query getAllHobbies($lang: SiteLocale) {
+    hobbiesTitle(locale: $lang) {
+      title
+    }
     allHobbiesModels(locale: $lang) {
       id
       name
@@ -19,7 +22,7 @@ export default async function hobbies(locale: Locale) {
   return (
     <section id="hobbies" className="mt-10">
       <h2 className="border-b pb-1 text-2xl font-semibold text-orange-300">
-        Hobbies
+        {data?.hobbiesTitle?.title}
       </h2>
       <ul className="mt-4">
         {data.allHobbiesModels.map((hobby: any) => (

@@ -6,6 +6,9 @@ import React from 'react';
 
 const query = gql`
   query getAllJobs($lang: SiteLocale) {
+    jobsTitle(locale: $lang) {
+      title
+    }
     allJobsModels(locale: $lang) {
       client
       location
@@ -35,7 +38,7 @@ export default async function jobs(locale: Locale) {
     <>
       <section id="jobs" className="mt-10 break-before-page">
         <h2 className="mt-4 border-b pb-1 text-2xl font-semibold text-pink-300">
-          Jobs
+          {data?.jobsTitle?.title}
         </h2>
         <ul className="mt-4">
           {data?.allJobsModels?.map((job: any) => (

@@ -40,7 +40,7 @@ export default function Page({
           {/* @ts-expect-error Server Component */}
           <Skills locale={lang} />
           {/* @ts-expect-error Server Component */}
-          <Learnings />
+          <Learnings locale={lang} />
           {/* @ts-expect-error Server Component */}
           <Hobbies locale={lang} />
         </div>

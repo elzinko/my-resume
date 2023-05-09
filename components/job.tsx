@@ -8,7 +8,7 @@ export default function job({ job: job }: any) {
   return (
     <div id={job.id}>
       <div className="flex justify-between">
-        <strong className="text-sky-300">{job.client}</strong>
+        <small className="font-bold text-sky-300">{job.client}</small>
         <small className="min-w-max text-sky-300">{dates}</small>
       </div>
       <p className="flex justify-between pb-2">

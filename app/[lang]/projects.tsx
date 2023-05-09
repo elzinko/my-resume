@@ -6,6 +6,9 @@ import React from 'react';
 
 const query = gql`
   query getAllProjects($lang: SiteLocale) {
+    projectsTitle(locale: $lang) {
+      title
+    }
     allProjectsModels(locale: $lang) {
       id
       name

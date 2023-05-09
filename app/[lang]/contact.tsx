@@ -5,7 +5,7 @@ import React from 'react';
 const query = gql`
   {
     contact {
-      id
+      title
       phone
       email
       location
