@@ -41,7 +41,7 @@ export default function Page({
           <Skills locale={lang} />
           {/* @ts-expect-error Server Component */}
           <Learnings locale={lang} />
-          {/* @ts-expect-error Server Component */}
+          {/* @ts-expect-error Server Compone nt */}
           <Hobbies locale={lang} />
         </div>
         <div id="main" className="md:w-2/3 md:pr-10">
