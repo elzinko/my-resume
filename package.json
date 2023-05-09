@@ -14,7 +14,8 @@
     "test": "yarn prettier:check && yarn lint",
     "clean": "rm -rf node_modules",
     "reinstall": "npm run clean && npm install",
-    "rebuild": "npm run clean && npm install && npm run build"
+    "rebuild": "npm run clean && npm install && npm run build",
+    "export": "next export"
   },
   "dependencies": {
     "@vercel/analytics": "0.1.11",
