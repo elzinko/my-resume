@@ -58,6 +58,9 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
+        env:
+          DATOCMS_API_URL: ${{ secrets.DATOCMS_API_URL }}
+          DATOCMS_API_KEY: ${{ secrets.DATOCMS_API_KEY }}
         # with:
         #   # Automatically inject basePath in your Next.js configuration file and disable
         #   # server side image optimization (https://nextjs.org/docs/api-reference/next/image#unoptimized).
@@ -76,13 +79,11 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-      - name: Build with Next.js
+      - name: Build with Next.js and generate export out folder for static hosting
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
         env:
           DATOCMS_API_URL: ${{ secrets.DATOCMS_API_URL }}
           DATOCMS_API_KEY: ${{ secrets.DATOCMS_API_KEY }}
-      - name: Static HTML export with Next.js
-        run: ${{ steps.detect-package-manager.outputs.manager }} run output
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:

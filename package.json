@@ -14,8 +14,7 @@
     "test": "yarn prettier:check && yarn lint",
     "clean": "rm -rf node_modules",
     "reinstall": "npm run clean && npm install",
-    "rebuild": "npm run clean && npm install && npm run build",
-    "output": "export"
+    "rebuild": "npm run clean && npm install && npm run build"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "0.2.32",
