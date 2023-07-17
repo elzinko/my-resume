@@ -83,7 +83,7 @@ jobs:
           DATOCMS_API_URL: ${{ secrets.DATOCMS_API_URL }}
           DATOCMS_API_KEY: ${{ secrets.DATOCMS_API_KEY }}
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v2
         with:
           path: ./out
       - name: Download all workflow run artifacts
