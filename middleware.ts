@@ -18,35 +18,52 @@ function getLocale(request: NextRequest): string | undefined {
     return matchLocale(languages, locales, i18n.defaultLocale)
 }
 
+// export function middleware(request: NextRequest) {
+//     const pathname = request.nextUrl.pathname;
+//     const hostname = request.nextUrl.hostname;
+
+//     let basePath = '';
+
+//     // Detect platform and set basePath accordingly (e.g. GitHub Pages)
+//     if (hostname.includes('github.io')) {
+//         basePath = '/my-resume';
+//     } else if (hostname.includes('vercel.app')) {
+//         basePath = '';
+//     }
+
+//     // Delete basePath from pathname if present
+//     const adjustedPathname = pathname.replace(new RegExp(`^${basePath}/(en|fr)/`), '');
+
+//     // Check if a Locale is present in the pathname
+//     const pathnameIsMissingLocale = i18n.locales.every(
+//         (locale) => !pathname.startsWith(`${basePath}/${locale}/`) && pathname !== `${basePath}/${locale}`
+//     );
+
+//     // Redirect if missing locale
+//     if (pathnameIsMissingLocale) {
+//         const locale = getLocale(request);
+
+//         // Build new URL
+//         const newUrl = new URL(`${basePath}/${locale}/${adjustedPathname}`, request.url);
+
+//         return NextResponse.redirect(newUrl);
+//     }
+// }
 export function middleware(request: NextRequest) {
-    const pathname = request.nextUrl.pathname;
-    const hostname = request.nextUrl.hostname;
+    const pathname = request.nextUrl.pathname
 
-    let basePath = '';
-
-    // Detect platform and set basePath accordingly (e.g. GitHub Pages)
-    if (hostname.includes('github.io')) {
-        basePath = '/my-resume';
-    } else if (hostname.includes('vercel.app')) {
-        basePath = '';
-    }
-
-    // Delete basePath from pathname if present
-    const adjustedPathname = pathname.replace(new RegExp(`^${basePath}/(en|fr)/`), '');
-
-    // Check if a Locale is present in the pathname
+    // Check if there is any supported locale in the pathname
     const pathnameIsMissingLocale = i18n.locales.every(
-        (locale) => !pathname.startsWith(`${basePath}/${locale}/`) && pathname !== `${basePath}/${locale}`
-    );
+        (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
+    )
 
-    // Redirect if missing locale
+    // Redirect if there is no locale
     if (pathnameIsMissingLocale) {
-        const locale = getLocale(request);
+        const locale = getLocale(request)
 
-        // Build new URL
-        const newUrl = new URL(`${basePath}/${locale}/${adjustedPathname}`, request.url);
-
-        return NextResponse.redirect(newUrl);
+        // e.g. incoming request is /products
+        // The new URL is now /en-US/products
+        return NextResponse.redirect(new URL(`/${locale}/${pathname}`, request.url))
     }
 }
 

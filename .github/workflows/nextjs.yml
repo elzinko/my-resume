@@ -99,7 +99,7 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-      - name: Build with Next.js and generate export ${{env.NEXT_PUBLIC_EXPORT}} folder for static hosting
+      - name: Build with Next.js and generate ${{env.NEXT_PUBLIC_EXPORT}} folder for static hosting
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
       - name: DEBUG - Print current directory
         run: pwd
