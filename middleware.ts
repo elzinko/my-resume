@@ -20,19 +20,26 @@ function getLocale(request: NextRequest): string | undefined {
 
 export function middleware(request: NextRequest) {
     const pathname = request.nextUrl.pathname
+    const basePath = request.nextUrl.basePath // Obtenez le basePath
 
-    // Check if there is any supported locale in the pathname
+    // Vérifiez si le basePath est présent dans le pathname
+    const adjustedPathname = basePath ? pathname.replace(basePath, '') : pathname;
+
+    // Vérifiez si une locale prise en charge est présente dans le pathname ajusté
     const pathnameIsMissingLocale = i18n.locales.every(
-        (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
+        (locale) => !adjustedPathname.startsWith(`/${locale}/`) && adjustedPathname !== `/${locale}`
     )
 
-    // Redirect if there is no locale
+    // Redirigez s'il n'y a pas de locale
     if (pathnameIsMissingLocale) {
         const locale = getLocale(request)
 
-        // e.g. incoming request is /products
-        // The new URL is now /en/products
-        return NextResponse.redirect(new URL(`/${locale}/${pathname}`, request.url))
+        // Construisez la nouvelle URL en fonction du basePath
+        const newUrl = basePath
+            ? new URL(`/${locale}${adjustedPathname}`, request.url)
+            : new URL(`/${locale}/${adjustedPathname}`, request.url);
+
+        return NextResponse.redirect(newUrl)
     }
 }
 
