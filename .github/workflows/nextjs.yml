@@ -2,7 +2,7 @@
 #
 # To get started with Next.js see: https://nextjs.org/docs/getting-started
 #
-name: Deploy Next.js site to Pages
+name: Build and deploy my Next.js resume to Github Pages
 
 on:
   # # Runs on pushes targeting the default branch
@@ -37,17 +37,14 @@ jobs:
     outputs:
       should_run: ${{ steps.check.outputs.should_run }}
     steps:
-      - name: Environment variables
-        run: env
       - name: Github context
         run: echo "$GITHUB_CONTEXT"
-      - name: Check NEXT_PUBLIC_EXPORT variable
+      - name: Check NEXT_PUBLIC_EXPORT environment variable exists
         id: check
         run: |
           if [[ -z "${{ env.NEXT_PUBLIC_EXPORT }}" ]]; then
-            echo "should_run=false" >> $GITHUB_ENV
-          else
-            echo "should_run=true" >> $GITHUB_ENV
+            echo "La variable d'environnement NEXT_PUBLIC_EXPORT n'existe pas ou est vide."
+            exit 1
           fi
 
   # Build job
@@ -104,12 +101,14 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Build with Next.js and generate export ${{env.NEXT_PUBLIC_EXPORT}} folder for static hosting
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
-      - name: List contents of ${{ env.NEXT_PUBLIC_EXPORT }} directory
-        run: ls -al ${{ env.NEXT_PUBLIC_EXPORT }}
+      - name: DEBUG - Print current directory
+        run: pwd
+      - name: DEBUG - Print current directory files
+        run: ls -al
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: ./${{ env.NEXT_PUBLIC_EXPORT }}
+          path: ./out
       - name: Download all workflow run artifacts
         uses: actions/download-artifact@v3
 
@@ -126,10 +125,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: List contents of deployment directory
-        env:
-          NEXT_PUBLIC_EXPORT: ${{ env.NEXT_PUBLIC_EXPORT }}
-        run: ls -al ${{ env.NEXT_PUBLIC_EXPORT }}
+      - name: DEBUG - Print current directory
+        run: pwd
+      - name: DEBUG - Print current directory files
+        run: ls -al
+      # - name: List contents of deployment directory
+      #   env:
+      #     NEXT_PUBLIC_EXPORT: ${{ env.NEXT_PUBLIC_EXPORT }}
+      #   run: ls -al ${{ env.NEXT_PUBLIC_EXPORT }}
 
       - name: Deploy to GitHub Pages
         id: deployment
