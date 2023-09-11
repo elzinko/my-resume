@@ -24,11 +24,39 @@ concurrency:
   group: 'pages'
   cancel-in-progress: false
 
+env: # Définition des variables d'environnement au niveau du job
+  DATOCMS_API_URL: ${{ secrets.DATOCMS_API_URL }}
+  DATOCMS_API_KEY: ${{ secrets.DATOCMS_API_KEY }}
+  NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH }}
+  NEXT_PUBLIC_EXPORT: ${{ vars.NEXT_PUBLIC_EXPORT }}
+
 jobs:
+  # Preliminary job to check NEXT_PUBLIC_EXPORT
+  check_var:
+    runs-on: ubuntu-latest
+    outputs:
+      should_run: ${{ steps.check.outputs.should_run }}
+    steps:
+      - name: Environment variables
+        run: env
+      - name: Github context
+        run: echo "$GITHUB_CONTEXT"
+      - name: Check NEXT_PUBLIC_EXPORT variable
+        id: check
+        run: |
+          if [[ -z "${{ env.NEXT_PUBLIC_EXPORT }}" ]]; then
+            echo "should_run=false" >> $GITHUB_ENV
+          else
+            echo "should_run=true" >> $GITHUB_ENV
+          fi
+
   # Build job
   build:
     runs-on: ubuntu-latest
+    needs: check_var
     steps:
+      - name: Check environment variable
+        run: echo 'NEXT_PUBLIC_EXPORT=' ${{ env.NEXT_PUBLIC_EXPORT }} && echo 'NEXT_PUBLIC_BASE_PATH=' ${{ env.NEXT_PUBLIC_BASE_PATH }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Detect package manager
@@ -56,9 +84,6 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
-        env:
-          DATOCMS_API_URL: ${{ secrets.DATOCMS_API_URL }}
-          DATOCMS_API_KEY: ${{ secrets.DATOCMS_API_KEY }}
         # with:
         #   # Automatically inject basePath in your Next.js configuration file and disable
         #   # server side image optimization (https://nextjs.org/docs/api-reference/next/image#unoptimized).
@@ -77,15 +102,14 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-      - name: Build with Next.js and generate export out folder for static hosting
+      - name: Build with Next.js and generate export ${{env.NEXT_PUBLIC_EXPORT}} folder for static hosting
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
-        env:
-          DATOCMS_API_URL: ${{ secrets.DATOCMS_API_URL }}
-          DATOCMS_API_KEY: ${{ secrets.DATOCMS_API_KEY }}
+      - name: List contents of ${{ env.NEXT_PUBLIC_EXPORT }} directory
+        run: ls -al ${{ env.NEXT_PUBLIC_EXPORT }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: ./out
+          path: ./${{ env.NEXT_PUBLIC_EXPORT }}
       - name: Download all workflow run artifacts
         uses: actions/download-artifact@v3
 
@@ -102,6 +126,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: List contents of deployment directory
+        env:
+          NEXT_PUBLIC_EXPORT: ${{ env.NEXT_PUBLIC_EXPORT }}
+        run: ls -al ${{ env.NEXT_PUBLIC_EXPORT }}
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
