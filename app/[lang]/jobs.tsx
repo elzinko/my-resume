@@ -9,7 +9,7 @@ const query = gql`
     jobsTitle(locale: $lang) {
       title
     }
-    allJobsModels(locale: $lang) {
+    allJobsModels(locale: $lang, filter: { visible: { eq: true } }) {
       client
       location
       startDate
