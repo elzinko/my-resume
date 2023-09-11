@@ -12,13 +12,15 @@ const nextConfig = {
     // Optional: Change the output directory `out` -> `dist`
     // distDir: 'dist',
     // Add basePath
-    // basePath should be set using NEXT_PUBLIC_BASE_PATH environment variable
-  basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
 }
 
 // Vérifiez si la variable d'environnement OUTPUT_PATH existe
 if (process.env.NEXT_PUBLIC_EXPORT) {
   nextConfig.output = process.env.NEXT_PUBLIC_EXPORT;
+}
+
+if (process.env.NEXT_PUBLIC_BASE_PATH) {
+  nextConfig.basePath = process.env.NEXT_PUBLIC_BASE_PATH;
 }
 
 module.exports = nextConfig

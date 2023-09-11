@@ -5,6 +5,7 @@ import { i18n } from './i18n-config'
 
 import { match as matchLocale } from '@formatjs/intl-localematcher'
 import Negotiator from 'negotiator'
+import { it } from 'node:test'
 
 function getLocale(request: NextRequest): string | undefined {
     // Negotiator expects plain object so we need to transform headers
@@ -18,54 +19,61 @@ function getLocale(request: NextRequest): string | undefined {
     return matchLocale(languages, locales, i18n.defaultLocale)
 }
 
-// export function middleware(request: NextRequest) {
-//     const pathname = request.nextUrl.pathname;
-//     const hostname = request.nextUrl.hostname;
-
-//     let basePath = '';
-
-//     // Detect platform and set basePath accordingly (e.g. GitHub Pages)
-//     if (hostname.includes('github.io')) {
-//         basePath = '/my-resume';
-//     } else if (hostname.includes('vercel.app')) {
-//         basePath = '';
-//     }
-
-//     // Delete basePath from pathname if present
-//     const adjustedPathname = pathname.replace(new RegExp(`^${basePath}/(en|fr)/`), '');
-
-//     // Check if a Locale is present in the pathname
-//     const pathnameIsMissingLocale = i18n.locales.every(
-//         (locale) => !pathname.startsWith(`${basePath}/${locale}/`) && pathname !== `${basePath}/${locale}`
-//     );
-
-//     // Redirect if missing locale
-//     if (pathnameIsMissingLocale) {
-//         const locale = getLocale(request);
-
-//         // Build new URL
-//         const newUrl = new URL(`${basePath}/${locale}/${adjustedPathname}`, request.url);
-
-//         return NextResponse.redirect(newUrl);
-//     }
-// }
 export function middleware(request: NextRequest) {
-    const pathname = request.nextUrl.pathname
+    const pathname = request.nextUrl.pathname;
+    console.log('pathname', pathname);
+    const hostname = request.nextUrl.hostname;
+    console.log('hostname', hostname);
 
-    // Check if there is any supported locale in the pathname
+    let basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
+    // // Detect platform and set basePath accordingly (e.g. GitHub Pages)
+    // if (hostname.includes('github.io')) {
+    //     basePath = 'my-resume';
+    // } else if (hostname.includes('vercel.app')) {
+    //     basePath = '';
+    // }
+    console.log('basePath', basePath);
+
+    // Delete basePath from pathname if present
+    const adjustedPathname = pathname.replace(new RegExp(`^${basePath}/(en|fr)/`), '');
+    console.log('adjustedPathname', adjustedPathname);
+
+    // Check if a Locale is present in the pathname
     const pathnameIsMissingLocale = i18n.locales.every(
-        (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
-    )
+        (locale) => !pathname.startsWith(`${basePath}/${locale}/`) && pathname !== `${basePath}/${locale}`
+    );
+    console.log('pathnameIsMissingLocale', pathnameIsMissingLocale);
 
-    // Redirect if there is no locale
+    // Redirect if missing locale
     if (pathnameIsMissingLocale) {
-        const locale = getLocale(request)
+        const locale = getLocale(request);
+        console.log('locale', locale);
 
-        // e.g. incoming request is /products
-        // The new URL is now /en-US/products
-        return NextResponse.redirect(new URL(`/${locale}/${pathname}`, request.url))
+        // Build new URL
+        const newUrl = new URL(`${basePath}/${locale}/${adjustedPathname}`, request.url);
+        console.log('newUrl', newUrl);
+
+        return NextResponse.redirect(newUrl);
     }
 }
+// export function middleware(request: NextRequest) {
+//     const pathname = request.nextUrl.pathname
+
+//     // Check if there is any supported locale in the pathname
+//     const pathnameIsMissingLocale = i18n.locales.every(
+//         (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
+//     )
+
+//     // Redirect if there is no locale
+//     if (pathnameIsMissingLocale) {
+//         const locale = getLocale(request)
+
+//         // e.g. incoming request is /products
+//         // The new URL is now /en-US/products
+//         return NextResponse.redirect(new URL(`/${locale}/${pathname}`, request.url))
+//     }
+// }
 
 export const config = {
     // Matcher ignoring `/_next/` and `/api/`
