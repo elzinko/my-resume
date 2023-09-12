@@ -6,11 +6,15 @@ import { i18n } from '../i18n-config';
 
 export default function LocaleSwitcher(lang: any) {
   const pathName = usePathname();
+  console.log('LS : pathName : ' + pathName);
   const redirectedPathName = (locale: string) => {
     if (!pathName) return '/';
+    console.log('LS : no path => return / ');
     const segments = pathName.split('/');
     segments[1] = locale;
-    return segments.join('/');
+    const newPathName = segments.join('/');
+    console.log('LS : existing path => new path = ' + newPathName);
+    return newPathName;
   };
 
   return (

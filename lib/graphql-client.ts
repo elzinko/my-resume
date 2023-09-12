@@ -14,7 +14,9 @@ export const graphQLClient = new GraphQLClient(
 
 export async function getData(query: any) {
   const data: any = await graphQLClient.request(query);
-  console.log(data);
+  if (process.env.NODE_ENV === "development") {
+    console.log(data);
+  }
   return data;
 }
 
@@ -23,6 +25,8 @@ export async function getDataWithLocal(locale: any, query: any) {
     lang: locale.locale,
   };
   const data: any = await graphQLClient.request(query, variables);
-  console.log(data);
+  if (process.env.NODE_ENV === "development") {
+    console.log(data);
+  }
   return data;
 }

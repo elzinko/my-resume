@@ -11,7 +11,6 @@ const nextConfig = {
     // trailingSlash: true,
     // Optional: Change the output directory `out` -> `dist`
     // distDir: 'dist',
-    // Add basePath
 }
 
 // Vérifiez si la variable d'environnement OUTPUT_PATH existe
