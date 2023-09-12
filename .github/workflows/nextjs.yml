@@ -29,6 +29,7 @@ env: # Définition des variables d'environnement au niveau du job
   DATOCMS_API_KEY: ${{ secrets.DATOCMS_API_KEY }}
   NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH }}
   NEXT_PUBLIC_EXPORT: ${{ vars.NEXT_PUBLIC_EXPORT }}
+  STATIC_DEPLOYMENT: ${{ vars.STATIC_DEPLOYMENT }}
 
 jobs:
   # Preliminary job to check NEXT_PUBLIC_EXPORT
