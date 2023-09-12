@@ -19,37 +19,29 @@ function getLocale(request: NextRequest): string | undefined {
 }
 
 export function middleware(request: NextRequest) {
-    console.log('mw : request.url = ', request.url);
-    console.log('mw : request.nextUrl = ', request.nextUrl.href);
-
     const pathname = request.nextUrl.pathname;
     const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
-    console.log('mw : path = ', pathname);
-    console.log('mw : base = ', basePath);
 
-    // Cas où l'URL est exactement le basePath ou le basePath suivi d'un "/"
+    // Case where the user is accessing the root path
     if (pathname === '' || pathname === '/') {
         const locale = getLocale(request);
         const newUrl = new URL(`${basePath}/${locale}/`, request.url);
-        console.log('mw : path is root => redirect to newUrl ', newUrl.toString());
         return NextResponse.redirect(newUrl);
     }
 
-    // Vérifiez si une locale prise en charge est déjà présente dans le pathname
+    // Check if the pathname already has a locale
     const pathnameHasLocale = i18n.locales.some(
         (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
     );
 
-    // Si la locale est déjà présente, ne faites rien
+    // If locale is already present in the pathname, do nothing
     if (pathnameHasLocale) {
-        console.log('mw : path has locale => do nothing');
         return;
     }
 
-    // Sinon, ajoutez la locale à l'URL
+    // Otherwise, redirect to the same path with the best locale
     const locale = getLocale(request);
     const newUrl = new URL(`${basePath}/${locale}${pathname}`, request.url);
-    console.log('mw : path has NO locale => build and redirect to newUrl = ', newUrl.toString());
     return NextResponse.redirect(newUrl);
 }
 

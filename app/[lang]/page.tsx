@@ -15,7 +15,6 @@ import Projects from './projects';
 
 const waitFunction = async () => {
   await setTimeout(2000);
-  console.log('Waited 5s');
 };
 
 export default function Page({
