@@ -8,7 +8,9 @@ This is my own resume using [Next.js](https://nextjs.org/) project bootstrapped 
 
 ### 1 - create Datocms project
 
-Create a [datocms](https://www.datocms.com/) project using this button [![Clone DatoCMS project](https://dashboard.datocms.com/clone/button.svg)](https://dashboard.datocms.com/clone?projectId=96311&name=cv-thomas-couderc)
+Want to create a [datocms](https://www.datocms.com/) similar project ?
+
+[![Clone DatoCMS project](https://dashboard.datocms.com/clone/button.svg)](https://dashboard.datocms.com/clone?projectId=96311&name=cv-thomas-couderc)
 
 ### 2 - configure environment variables
 
@@ -25,6 +27,8 @@ If the website is deployed staticaly, then you should remove Analytics using env
 STATIC_DEPLOYMENT=true
 ```
 
+### 3 - run in dev mode
+
 First, run the development server:
 
 ```bash
@@ -33,11 +37,10 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Expose localy using ngrok
+### 3 - build for production
 
-The easiest way to expose your dev webapp to the world is to use ngrok.
-Forst [install it](https://dashboard.ngrok.com/get-started/setup) then expose your local server using :
+First, run the development server:
 
 ```bash
-npm run ngrok
+npm run build
 ```
