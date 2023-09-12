@@ -19,6 +19,12 @@ DATOCMS_API_URL=https://graphql.datocms.com/
 DATOCMS_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
+If the website is deployed staticaly, then you should remove Analytics using environment variable :
+
+```env
+STATIC_DEPLOYMENT=true
+```
+
 First, run the development server:
 
 ```bash

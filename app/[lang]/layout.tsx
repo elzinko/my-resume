@@ -12,7 +12,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   console.log('NEXT_PUBLIC_VERCEL_ENV = ' + process.env.NEXT_PUBLIC_VERCEL_ENV);
-  console.log('NEXT_PUBLIC_EXPORT = ' + process.env.NEXT_PUBLIC_EXPORT);
   let enableAnalitycs = true;
   if (process.env.STATIC_DEPLOYMENT) {
     if (process.env.STATIC_DEPLOYMENT === 'true') {
