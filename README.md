@@ -1,6 +1,6 @@
 # MY RESUME
 
-![](https://api.checklyhq.com/v1/badges/checks/62d26efa-af80-41e7-ab7b-470b93755513?style=flat&theme=default&responseTime=true)
+![checkly](https://api.checklyhq.com/v1/badges/checks/b0fd8907-eae6-4c3f-8c79-f52d0da2667a?style=flat&theme=light)
 
 This is my own resume using [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) using [DatoCMS](https://www.datocms.com/) for data and prettied using [TailwindCSS](https://tailwindcss.com/docs/).
 
