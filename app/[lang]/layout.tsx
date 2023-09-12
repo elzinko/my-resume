@@ -11,10 +11,12 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  console.log('NEXT_PUBLIC_VERCEL_ENV = ' + process.env.NEXT_PUBLIC_VERCEL_ENV);
+  console.log('NEXT_PUBLIC_EXPORT = ' + process.env.NEXT_PUBLIC_EXPORT);
   let debug = true;
   if (
     process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' ||
-    process.env.NEXT_PUBLIC_EXPORT != ''
+    process.env.NEXT_PUBLIC_EXPORT !== ''
   ) {
     debug = false;
   }

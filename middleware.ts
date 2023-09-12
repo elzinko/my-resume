@@ -53,67 +53,6 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(newUrl);
 }
 
-
-// export function middleware(request: NextRequest) {
-//     const pathname = request.nextUrl.pathname;
-//     console.log('pathname', pathname);
-//     const hostname = request.nextUrl.hostname;
-//     console.log('hostname', hostname);
-
-//     let basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
-//     console.log('basePath', basePath);
-
-//     // Delete basePath from pathname if present
-//     const locales = i18n.locales.join('|');
-//     const regex = new RegExp(`^/(${locales})`);
-//     console.log('regex', regex);
-//     const adjustedPathname = pathname.replace(regex, '');
-//     console.log('adjustedPathname', adjustedPathname);
-
-//     // Check if a Locale is present in the pathname
-//     const pathnameIsMissingLocale = i18n.locales.every(
-//         (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
-//     );
-//     console.log('pathnameIsMissingLocale', pathnameIsMissingLocale);
-
-//     // Redirect if missing locale
-//     if (pathnameIsMissingLocale) {
-//         const locale = getLocale(request);
-//         console.log('locale', locale);
-
-//         // Build new URL
-//         const newUrl = new URL(`${basePath}/${locale}/${adjustedPathname}`, request.url);
-//         console.log('newUrl', newUrl);
-
-//         return NextResponse.redirect(newUrl);
-//     } else {
-//         return NextRequest
-//     }
-// }
-// export function middleware(request: NextRequest) {
-//     const pathname = request.nextUrl.pathname
-//     let basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
-
-//     console.log('basePath', basePath);
-//     console.log('pathname', pathname);
-
-//     // Check if there is any supported locale in the pathname
-//     const pathnameIsMissingLocale = i18n.locales.every(
-//         (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
-//     )
-//     console.log('pathnameIsMissingLocale', pathnameIsMissingLocale);
-
-//     // Redirect if there is no locale
-//     if (pathnameIsMissingLocale) {
-//         const locale = getLocale(request)
-
-//         console.log('locale', locale);
-//         // e.g. incoming request is /products
-//         // The new URL is now /en-US/products
-//         return NextResponse.redirect(new URL(`/${locale}/${pathname}`, request.url))
-//     }
-// }
-
 export const config = {
     matcher: [
         /*
