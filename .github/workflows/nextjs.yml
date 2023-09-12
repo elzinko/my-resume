@@ -100,12 +100,8 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-      - name: Build with Next.js and generate ${{env.NEXT_PUBLIC_EXPORT}} folder for static hosting
+      - name: Build with Next.js and generate out folder for static hosting
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
-      - name: DEBUG - Print current directory
-        run: pwd
-      - name: DEBUG - Print current directory files
-        run: ls -al
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
@@ -126,15 +122,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: DEBUG - Print current directory
-        run: pwd
-      - name: DEBUG - Print current directory files
-        run: ls -al
-      # - name: List contents of deployment directory
-      #   env:
-      #     NEXT_PUBLIC_EXPORT: ${{ env.NEXT_PUBLIC_EXPORT }}
-      #   run: ls -al ${{ env.NEXT_PUBLIC_EXPORT }}
-
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
