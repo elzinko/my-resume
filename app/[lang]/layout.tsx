@@ -13,22 +13,20 @@ export default async function RootLayout({
 }) {
   console.log('NEXT_PUBLIC_VERCEL_ENV = ' + process.env.NEXT_PUBLIC_VERCEL_ENV);
   console.log('NEXT_PUBLIC_EXPORT = ' + process.env.NEXT_PUBLIC_EXPORT);
-  let debug = true;
-  if (
-    process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' ||
-    process.env.NEXT_PUBLIC_EXPORT !== ''
-  ) {
-    debug = false;
+  let enableAnalitycs = true;
+  if (process.env.STATIC_DEPLOYMENT) {
+    if (process.env.STATIC_DEPLOYMENT === 'true') {
+      enableAnalitycs = false;
+    }
   }
-  console.log('Analytics debug = ' + debug);
+  console.log('Analytics = ' + enableAnalitycs);
   return (
     <html lang="fr">
       <body>
         <div className="container mx-auto min-h-screen p-8">
           <main>{children}</main>
         </div>
-        {/* if debug is true, then add Analytics */}
-        if (debug) {<Analytics debug={debug} />}
+        {enableAnalitycs ? <Analytics /> : ''}
       </body>
     </html>
   );
