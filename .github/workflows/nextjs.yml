@@ -56,7 +56,7 @@ jobs:
       - name: Check environment variable
         run: echo 'NEXT_PUBLIC_EXPORT=' ${{ env.NEXT_PUBLIC_EXPORT }} && echo 'NEXT_PUBLIC_BASE_PATH=' ${{ env.NEXT_PUBLIC_BASE_PATH }}
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Detect package manager
         id: detect-package-manager
         run: |
