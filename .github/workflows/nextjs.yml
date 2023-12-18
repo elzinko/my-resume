@@ -107,7 +107,7 @@ jobs:
         with:
           path: ./out
       - name: Download all workflow run artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
 
   # Deployment job
   deploy:
