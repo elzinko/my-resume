@@ -103,7 +103,7 @@ jobs:
       - name: Build with Next.js and generate out folder for static hosting
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
       - name: Download all workflow run artifacts
