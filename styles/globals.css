@@ -6,3 +6,55 @@ html {
   scroll-behavior: smooth;
   font-family: "Raleway", sans-serif;
 }
+
+/* Print and PDF export styles */
+@media print {
+  body {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .print\:hidden {
+    display: none !important;
+  }
+
+  /* Ensure the two-column layout is maintained in print */
+  #left,
+  #main {
+    break-inside: avoid;
+  }
+
+  /* Reduce spacing for print */
+  .py-14 {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+
+  .py-20 {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+
+  .mt-10 {
+    margin-top: 1rem !important;
+  }
+
+  /* Smaller text for PDF */
+  h1 {
+    font-size: 2rem !important;
+  }
+
+  h2 {
+    font-size: 1.25rem !important;
+  }
+
+  p,
+  li {
+    font-size: 0.875rem !important;
+  }
+
+  /* Hide job details to fit on one page */
+  .job-details {
+    display: none !important;
+  }
+}
