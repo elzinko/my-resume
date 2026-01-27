@@ -24,7 +24,7 @@ export default async function skills(locale: Locale) {
       <h2 className="border-b pb-1 text-2xl font-semibold text-blue-300">
         {data?.skillsTitle?.title}
       </h2>
-      <div className="mt-4 flex flex-wrap gap-2 md:flex-col md:gap-3">
+      <div className="mt-4 flex flex-wrap gap-2">
         {data?.allSkillsModels?.map((skill: any) => (
           <Skill key={skill.id} skill={skill} />
         ))}
