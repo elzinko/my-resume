@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import formatDates from '@/lib/date';
 
 export interface CompactCvData {
   header: {
@@ -97,18 +96,6 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
               <p className="mt-1 text-xs text-gray-300 print:mt-0.5 print:text-[9px] print:leading-tight">
                 {domain.description}
               </p>
-              {domain.tags.length > 0 && (
-                <div className="mt-1.5 flex flex-wrap gap-1 print:mt-1">
-                  {domain.tags.slice(0, 6).map((tag, tagIdx) => (
-                    <span
-                      key={tagIdx}
-                      className="whitespace-nowrap rounded bg-orange-300 px-1.5 py-0.5 text-[10px] text-white print:px-1 print:py-0 print:text-[7px]"
-                    >
-                      {tag.toLowerCase()}
-                    </span>
-                  ))}
-                </div>
-              )}
             </div>
           ))}
         </div>
@@ -161,26 +148,20 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
             <h2 className="border-b border-teal-300/50 pb-1 text-lg font-semibold text-teal-300 print:text-sm">
               {t.education}
             </h2>
-            <ul className="mt-2 space-y-1.5 print:mt-1 print:space-y-1">
+            <ul className="mt-2 space-y-1 print:mt-1 print:space-y-0.5">
               {data.studies.map((study) => {
-                const dates = study.startDate || study.endDate
-                  ? formatDates(study.startDate || '', study.endDate || '')
-                  : null;
+                // Extract year from endDate (format: YYYY-MM-DD or similar)
+                const endYear = study.endDate ? new Date(study.endDate).getFullYear() : null;
                 return (
-                  <li key={study.id}>
-                    <div className="flex items-start justify-between gap-2">
-                      <span className="text-xs font-medium text-teal-300 print:text-[10px]">
-                        {study.name}
-                      </span>
-                      {dates && (
-                        <span className="whitespace-nowrap text-[10px] text-gray-400 print:text-[8px]">
-                          {dates}
-                        </span>
-                      )}
-                    </div>
-                    <span className="text-[10px] text-gray-400 print:text-[8px]">
-                      {study.establishment}
+                  <li key={study.id} className="flex items-start justify-between gap-2">
+                    <span className="text-xs text-teal-300 print:text-[10px]">
+                      {study.name}
                     </span>
+                    {endYear && (
+                      <span className="whitespace-nowrap text-[10px] text-gray-400 print:text-[8px]">
+                        {endYear}
+                      </span>
+                    )}
                   </li>
                 );
               })}
