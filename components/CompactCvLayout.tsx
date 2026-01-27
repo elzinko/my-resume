@@ -131,7 +131,7 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
         <div className="md:w-1/3 print:w-1/3">
           {/* Contact */}
           <section className="mb-6 print:mb-4">
-            <h2 className="border-b border-pink-300/50 pb-1 text-xl font-semibold text-pink-300 print:text-sm">
+            <h2 className="border-b pb-1 text-2xl font-semibold text-pink-300 print:text-sm">
               {t.contact}
             </h2>
             <ul className="mt-2 space-y-0.5 print:mt-1">
@@ -152,7 +152,7 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
 
           {/* Skills - Simple style without gradient */}
           <section className="mb-6 print:mb-4">
-            <h2 className="border-b border-blue-300/50 pb-1 text-xl font-semibold text-blue-300 print:text-sm">
+            <h2 className="border-b pb-1 text-2xl font-semibold text-blue-300 print:text-sm">
               {t.skills}
             </h2>
             <div className="mt-2 flex flex-wrap gap-1.5 print:mt-1 print:gap-1">
@@ -169,7 +169,7 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
 
           {/* Education - Complete with dates */}
           <section>
-            <h2 className="border-b border-teal-300/50 pb-1 text-xl font-semibold text-teal-300 print:text-sm">
+            <h2 className="border-b pb-1 text-2xl font-semibold text-teal-300 print:text-sm">
               {t.education}
             </h2>
             <ul className="mt-2 space-y-1 print:mt-1 print:space-y-0.5">
@@ -197,7 +197,7 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
         <div className="md:w-2/3 print:w-2/3">
           {/* Experience */}
           <section>
-            <h2 className="border-b border-pink-300/50 pb-1 text-xl font-semibold text-pink-300 print:text-sm">
+            <h2 className="border-b pb-1 text-2xl font-semibold text-pink-300 print:text-sm">
               {t.experience}
             </h2>
             <ul className="mt-2 space-y-3 print:mt-1 print:space-y-2">
