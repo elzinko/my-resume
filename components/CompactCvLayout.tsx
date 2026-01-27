@@ -99,25 +99,25 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
 
   return (
     <div className="print:p-0">
-      {/* About - Full width section */}
-      <section className="mb-8 print:mb-4">
-        <h2 className="border-b border-teal-300/50 pb-1 text-2xl font-semibold text-teal-300 print:text-base">
+      {/* About - Full width section (same style as full CV) */}
+      <section className="mt-10 print:mt-4">
+        <h2 className="border-b pb-1 text-2xl font-semibold text-teal-300 print:text-base">
           {t.about}
         </h2>
-        <p className="mt-3 text-sm print:mt-2 print:text-[10px]">
+        <p className="mt-4 print:mt-2 print:text-[10px]">
           {data.about}
         </p>
       </section>
 
-      {/* Domains - Full width, like main CV but compact */}
-      <section className="mb-10 print:mb-5">
-        <div className="flex w-full flex-col gap-4 md:flex-row md:gap-6 print:flex-row print:gap-4">
+      {/* Domains - Full width (same style as full CV) */}
+      <section className="mt-10 print:mt-4">
+        <div className="flex w-full flex-col md:flex-row md:space-x-6 print:flex-row print:space-x-4">
           {data.domains.map((domain, idx) => (
-            <div key={idx} className="flex-1">
-              <h3 className="border-b border-blue-500/50 pb-1 text-xl font-semibold text-blue-500 print:text-sm">
+            <div key={idx} className="mt-4 flex-1 print:mt-2">
+              <h2 className="border-b pb-1 text-2xl font-semibold text-blue-500 print:text-sm">
                 {domain.title}
-              </h3>
-              <p className="mt-2 text-xs print:mt-1 print:text-[9px] print:leading-tight">
+              </h2>
+              <p className="mt-4 print:mt-2 print:text-[9px] print:leading-tight">
                 {domain.description}
               </p>
             </div>
@@ -126,7 +126,7 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
       </section>
 
       {/* Two column layout */}
-      <div className="flex flex-col gap-6 md:flex-row md:gap-10 print:flex-row print:gap-6">
+      <div className="mt-10 flex flex-col gap-6 md:flex-row md:gap-10 print:mt-4 print:flex-row print:gap-6">
         {/* Left Column */}
         <div className="md:w-1/3 print:w-1/3">
           {/* Contact */}
