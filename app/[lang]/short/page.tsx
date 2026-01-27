@@ -39,6 +39,7 @@ const compactDataQuery = gql`
     allSkillsModels(locale: $lang) {
       id
       name
+      link
     }
     allDomainsModels(locale: $lang) {
       id

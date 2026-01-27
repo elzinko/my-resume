@@ -23,7 +23,7 @@ export interface CompactCvData {
     location: string;
   };
   about: string;
-  skills: Array<{ id: string; name: string }>;
+  skills: Array<{ id: string; name: string; link?: string }>;
   domains: Array<{
     title: string;
     description: string;
@@ -117,7 +117,7 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
               <h3 className="border-b border-blue-500/50 pb-1 text-xl font-semibold text-blue-500 print:text-sm">
                 {domain.title}
               </h3>
-              <p className="mt-2 text-xs text-gray-300 print:mt-1 print:text-[9px] print:leading-tight">
+              <p className="mt-2 text-xs print:mt-1 print:text-[9px] print:leading-tight">
                 {domain.description}
               </p>
             </div>
@@ -211,10 +211,10 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
                       {job.location}
                     </span>
                   </div>
-                  <div className="text-xs text-sky-300/70 print:text-[10px]">
+                  <div className="text-xs text-sky-300 print:text-[10px]">
                     {job.startDate} - {job.endDate || t.present}
                   </div>
-                  <p className="mt-1 text-xs text-gray-300 print:text-[10px]">
+                  <p className="mt-1 text-xs print:text-[10px]">
                     {job.description}
                   </p>
                   {job.frameworks.length > 0 && (
@@ -222,7 +222,7 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
                       {job.frameworks.slice(0, 5).map((fw) => (
                         <span
                           key={fw.id}
-                          className="whitespace-nowrap rounded bg-fuchsia-300/80 px-1 py-0.5 text-[9px] text-white print:text-[8px]"
+                          className="whitespace-nowrap rounded bg-fuchsia-200 px-1 py-0.5 text-[9px] text-white print:text-[8px]"
                         >
                           {fw.name.toLowerCase()}
                         </span>
