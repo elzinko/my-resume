@@ -88,11 +88,11 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
         {/* Left Column */}
         <div className="md:w-1/3 print:w-1/3">
           {/* Contact */}
-          <section className="mb-8 print:mb-5">
+          <section className="mb-6 print:mb-4">
             <h2 className="border-b border-pink-300/30 pb-2 text-xl font-semibold text-pink-300 md:text-2xl print:text-lg">
               {t.contact}
             </h2>
-            <ul className="mt-4 space-y-2 print:mt-3">
+            <ul className="mt-3 space-y-1 print:mt-2">
               <li className="text-sm text-pink-200 md:text-base print:text-sm">
                 <strong>Tél.</strong>
                 <span className="ml-2">{data.contact.phone}</span>
@@ -108,12 +108,29 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
             </ul>
           </section>
 
+          {/* Domains - simplified, titles only */}
+          <section className="mb-6 print:mb-4">
+            <h2 className="border-b border-blue-500/30 pb-2 text-xl font-semibold text-blue-500 md:text-2xl print:text-lg">
+              {t.expertise}
+            </h2>
+            <div className="mt-3 flex flex-wrap gap-2 print:mt-2 print:gap-1.5">
+              {data.domains.map((domain, idx) => (
+                <span
+                  key={idx}
+                  className="text-sm font-semibold text-blue-400 md:text-base print:text-sm"
+                >
+                  {domain.title}{idx < data.domains.length - 1 ? ' · ' : ''}
+                </span>
+              ))}
+            </div>
+          </section>
+
           {/* Skills */}
-          <section className="mb-8 print:mb-5">
+          <section>
             <h2 className="border-b border-blue-300/30 pb-2 text-xl font-semibold text-blue-300 md:text-2xl print:text-lg">
               {t.skills}
             </h2>
-            <div className="mt-4 flex flex-wrap gap-2 print:mt-3 print:gap-1.5">
+            <div className="mt-3 flex flex-wrap gap-2 print:mt-2 print:gap-1.5">
               {data.skills.slice(0, 10).map((skill) => (
                 <span
                   key={skill.id}
@@ -124,84 +141,38 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
               ))}
             </div>
           </section>
-
-          {/* Domains */}
-          <section className="mb-8 print:mb-5">
-            <h2 className="border-b border-blue-500/30 pb-2 text-xl font-semibold text-blue-500 md:text-2xl print:text-lg">
-              {t.expertise}
-            </h2>
-            <div className="mt-4 space-y-4 print:mt-3 print:space-y-3">
-              {data.domains.map((domain, idx) => (
-                <div key={idx}>
-                  <h3 className="text-sm font-semibold text-blue-400 md:text-base print:text-sm">
-                    {domain.title}
-                  </h3>
-                  <div className="mt-1 flex flex-wrap gap-1">
-                    {domain.tags.slice(0, 4).map((tag, tagIdx) => (
-                      <span
-                        key={tagIdx}
-                        className="text-xs text-gray-400 md:text-sm print:text-xs"
-                      >
-                        {tag}{tagIdx < Math.min(domain.tags.length, 4) - 1 ? ',' : ''}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Education */}
-          <section>
-            <h2 className="border-b border-teal-300/30 pb-2 text-xl font-semibold text-teal-300 md:text-2xl print:text-lg">
-              {t.education}
-            </h2>
-            <ul className="mt-4 space-y-3 print:mt-3">
-              {data.studies.slice(0, 3).map((study) => (
-                <li key={study.id}>
-                  <strong className="text-sm text-teal-300 md:text-base print:text-sm">
-                    {study.name}
-                  </strong>
-                  <span className="block text-xs text-gray-400 md:text-sm print:text-xs">
-                    {study.establishment}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </section>
         </div>
 
         {/* Right Column */}
         <div className="md:w-2/3 print:w-2/3">
-          {/* Experience */}
+          {/* Experience - simplified without role */}
           <section>
             <h2 className="border-b border-pink-300/30 pb-2 text-xl font-semibold text-pink-300 md:text-2xl print:text-lg">
               {t.experience}
             </h2>
-            <ul className="mt-4 space-y-5 print:mt-3 print:space-y-3">
+            <ul className="mt-3 space-y-4 print:mt-2 print:space-y-2">
               {recentJobs.map((job, idx) => (
-                <li key={idx} className="print:pb-2">
+                <li key={idx} className="print:pb-1">
                   <div className="flex justify-between">
                     <span className="font-bold text-sky-300 md:text-lg print:text-sm">
                       {job.client}
                     </span>
-                    <span className="text-sm text-sky-300 md:text-base print:text-sm">
-                      {job.startDate} - {job.endDate || t.present}
+                    <span className="text-xs text-fuchsia-300 md:text-sm print:text-xs">
+                      {job.location}
                     </span>
                   </div>
-                  <p className="flex justify-between">
-                    <span className="text-sm text-teal-300 md:text-base print:text-sm">{job.role}</span>
-                    <span className="text-sm text-fuchsia-300 md:text-base print:text-sm">{job.location}</span>
-                  </p>
-                  <p className="mt-2 text-sm text-gray-300 md:text-base print:text-sm">
+                  <div className="text-xs text-sky-300 md:text-sm print:text-xs">
+                    {job.startDate} - {job.endDate || t.present}
+                  </div>
+                  <p className="mt-1 text-sm text-gray-300 md:text-base print:text-xs">
                     {job.description}
                   </p>
                   {job.frameworks.length > 0 && (
-                    <div className="mt-3 flex flex-wrap gap-1.5">
+                    <div className="mt-2 flex flex-wrap gap-1">
                       {job.frameworks.slice(0, 5).map((fw) => (
                         <span
                           key={fw.id}
-                          className="whitespace-nowrap rounded bg-fuchsia-200 px-1.5 py-0.5 text-[10px] text-white md:px-2 md:text-xs print:px-1.5 print:text-[10px]"
+                          className="whitespace-nowrap rounded bg-fuchsia-200 px-1 py-0.5 text-[9px] text-white md:px-1.5 md:text-[10px] print:text-[8px]"
                         >
                           {fw.name.toLowerCase()}
                         </span>
@@ -213,12 +184,26 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
             </ul>
 
             {/* More experience note */}
-            <div className="mt-6 border-l-4 border-teal-300 pl-4 print:mt-4">
-              <p className="text-sm text-gray-400 md:text-base print:text-sm">
+            <div className="mt-4 border-l-4 border-teal-300 pl-3 print:mt-3">
+              <p className="text-xs text-gray-400 md:text-sm print:text-xs">
                 <strong className="text-teal-300">{t.moreExperience}</strong>{' '}
                 en développement fullstack et DevOps. {t.moreClients}
               </p>
             </div>
+
+            {/* Education - inline after experience */}
+            <section className="mt-5 print:mt-3">
+              <h2 className="border-b border-teal-300/30 pb-1 text-lg font-semibold text-teal-300 md:text-xl print:text-base">
+                {t.education}
+              </h2>
+              <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 print:mt-1">
+                {data.studies.map((study, idx) => (
+                  <span key={study.id} className="text-xs text-teal-300 md:text-sm print:text-xs">
+                    {study.name}{idx < data.studies.length - 1 ? ' · ' : ''}
+                  </span>
+                ))}
+              </div>
+            </section>
           </section>
         </div>
       </div>
