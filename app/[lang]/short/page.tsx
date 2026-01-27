@@ -99,7 +99,11 @@ export default async function ShortPage({
   };
 
   return (
-    <ShortPageWrapper lang={lang}>
+    <ShortPageWrapper 
+      lang={lang} 
+      headerName={data?.header?.name || ''} 
+      headerRole={data?.header?.role || ''}
+    >
       <CompactCvLayout data={compactData} lang={lang as 'fr' | 'en'} />
     </ShortPageWrapper>
   );

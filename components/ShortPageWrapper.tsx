@@ -6,22 +6,25 @@ import LogoPrint from './logoPrint';
 import LogoLinkedin from './LogoLinkedin';
 import LogoGithub from './logoGithub';
 import LogoMalt from './logoMalt';
+import HeaderContent from './HeaderContent';
 import Link from 'next/link';
 
 interface ShortPageWrapperProps {
   children: ReactNode;
   lang: string;
+  headerName: string;
+  headerRole: string;
 }
 
-export default function ShortPageWrapper({ children, lang }: ShortPageWrapperProps) {
+export default function ShortPageWrapper({ children, lang, headerName, headerRole }: ShortPageWrapperProps) {
   const handlePrint = () => {
     window.print();
   };
 
   return (
     <>
-      <header className="print:hidden">
-        <div className="flex flex-row justify-between">
+      <header className="print:mb-2">
+        <div className="flex flex-row justify-between print:hidden">
           <LocaleSwitcher lang={{ locale: lang } as any} />
           <div className="flex flex-wrap items-center justify-end gap-3">
             <Link
@@ -31,7 +34,7 @@ export default function ShortPageWrapper({ children, lang }: ShortPageWrapperPro
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4"
+                className="h-5 w-5"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -61,10 +64,9 @@ export default function ShortPageWrapper({ children, lang }: ShortPageWrapperPro
             </ul>
           </div>
         </div>
+        <HeaderContent name={headerName} role={headerRole} />
       </header>
-      <main className="mt-6 print:mt-0">
-        {children}
-      </main>
+      {children}
     </>
   );
 }

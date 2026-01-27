@@ -73,16 +73,6 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
 
   return (
     <div className="print:p-0">
-      {/* Header - Same style as main site */}
-      <div className="mb-8 py-8 md:mb-10 md:py-12 print:mb-6 print:py-4">
-        <h1 className="text-4xl font-extrabold text-blue-600 md:text-6xl lg:text-7xl print:text-4xl">
-          {data.header.name}
-        </h1>
-        <p className="mt-3 text-2xl text-teal-300 md:mt-4 md:text-4xl print:mt-2 print:text-2xl">
-          {data.header.role}
-        </p>
-      </div>
-
       {/* Two column layout */}
       <div className="flex flex-col gap-8 md:flex-row md:gap-10 print:flex-row print:gap-6">
         {/* Left Column */}
