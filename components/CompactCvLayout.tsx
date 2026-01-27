@@ -126,7 +126,7 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
           </section>
 
           {/* Skills */}
-          <section>
+          <section className="mb-6 print:mb-4">
             <h2 className="border-b border-blue-300/30 pb-2 text-xl font-semibold text-blue-300 md:text-2xl print:text-lg">
               {t.skills}
             </h2>
@@ -140,6 +140,20 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
                 </span>
               ))}
             </div>
+          </section>
+
+          {/* Education - compact in left column */}
+          <section>
+            <h2 className="border-b border-teal-300/30 pb-2 text-xl font-semibold text-teal-300 md:text-2xl print:text-lg">
+              {t.education}
+            </h2>
+            <ul className="mt-3 space-y-2 print:mt-2 print:space-y-1">
+              {data.studies.slice(0, 4).map((study) => (
+                <li key={study.id} className="text-sm text-teal-300 md:text-base print:text-xs">
+                  {study.name}
+                </li>
+              ))}
+            </ul>
           </section>
         </div>
 
@@ -190,20 +204,6 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
                 en développement fullstack et DevOps. {t.moreClients}
               </p>
             </div>
-
-            {/* Education - inline after experience */}
-            <section className="mt-5 print:mt-3">
-              <h2 className="border-b border-teal-300/30 pb-1 text-lg font-semibold text-teal-300 md:text-xl print:text-base">
-                {t.education}
-              </h2>
-              <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 print:mt-1">
-                {data.studies.map((study, idx) => (
-                  <span key={study.id} className="text-xs text-teal-300 md:text-sm print:text-xs">
-                    {study.name}{idx < data.studies.length - 1 ? ' · ' : ''}
-                  </span>
-                ))}
-              </div>
-            </section>
           </section>
         </div>
       </div>
