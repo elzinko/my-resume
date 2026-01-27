@@ -11,6 +11,43 @@ import Learnings from './learnings';
 import Hobbies from './hobbies';
 import Jobs from './jobs';
 import Projects from './projects';
+import { getDataWithLocal } from '@/lib/graphql-client';
+import { gql } from 'graphql-request';
+import type { Metadata } from 'next';
+
+// Query to fetch header for metadata
+const headerQuery = gql`
+  query getHeader($lang: SiteLocale) {
+    header(locale: $lang) {
+      name
+    }
+  }
+`;
+
+// Helper to generate document title (developer style: lowercase with underscores)
+function generateDocumentTitle(name: string, lang: string, mode: 'full' | 'short'): string {
+  const prefix = lang === 'fr' ? 'cv' : 'resume';
+  const modeLabel = lang === 'fr' 
+    ? (mode === 'full' ? 'complet' : 'court') 
+    : mode;
+  const date = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+  const safeName = name.toLowerCase().replace(/\s+/g, '_');
+  return `${prefix}_${safeName}_${modeLabel}_${date}`;
+}
+
+// Generate dynamic metadata for PDF title
+export async function generateMetadata({
+  params: { lang },
+}: {
+  params: { lang: Locale };
+}): Promise<Metadata> {
+  const data: any = await getDataWithLocal({ locale: lang } as any, headerQuery);
+  const name = data?.header?.name || 'CV';
+  
+  return {
+    title: generateDocumentTitle(name, lang, 'full'),
+  };
+}
 
 export default async function Page({
   params: { lang },

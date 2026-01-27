@@ -3,6 +3,9 @@
 import React from 'react';
 import Skill from './skill';
 import Domain from './domain';
+import ContactDisplay from './ContactDisplay';
+import JobDisplay from './JobDisplay';
+import StudyDisplay from './StudyDisplay';
 
 export interface CompactCvData {
   header: {
@@ -127,28 +130,15 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
       </section>
 
       {/* Two column layout */}
-      <div className="mt-10 flex flex-col gap-6 md:flex-row md:gap-10 print:mt-4 print:flex-row print:gap-6">
+      <div className="mt-14 flex flex-col gap-6 md:flex-row md:gap-10 print:mt-6 print:flex-row print:gap-6">
         {/* Left Column */}
         <div className="md:w-1/3 print:w-1/3">
-          {/* Contact */}
+          {/* Contact - Reusing ContactDisplay component */}
           <section className="mb-6 print:mb-4">
             <h2 className="border-b pb-1 text-2xl font-semibold text-pink-300 print:text-sm">
               {t.contact}
             </h2>
-            <ul className="mt-2 space-y-0.5 print:mt-1">
-              <li className="text-sm text-pink-200 print:text-xs">
-                <strong className="text-pink-300">{data.contact.phoneTitle || 'Tél.'}</strong>
-                <span className="ml-2">{data.contact.phone}</span>
-              </li>
-              <li className="text-sm text-pink-200 print:text-xs">
-                <strong className="text-pink-300">{data.contact.emailTitle || 'Email'}</strong>
-                <span className="ml-2">{data.contact.email}</span>
-              </li>
-              <li className="text-sm text-pink-200 print:text-xs">
-                <strong className="text-pink-300">{data.contact.locationTitle || 'Lieu'}</strong>
-                <span className="ml-2">{data.contact.location}</span>
-              </li>
-            </ul>
+            <ContactDisplay contact={data.contact} compact={true} />
           </section>
 
           {/* Skills - Reusing Skill component in compact mode */}
@@ -163,35 +153,22 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
             </div>
           </section>
 
-          {/* Education - Complete with dates */}
+          {/* Education - Reusing StudyDisplay component */}
           <section>
             <h2 className="border-b pb-1 text-2xl font-semibold text-teal-300 print:text-sm">
               {t.education}
             </h2>
             <ul className="mt-2 space-y-1 print:mt-1 print:space-y-0.5">
-              {data.studies.map((study) => {
-                // Extract year from endDate (format: YYYY-MM-DD or similar)
-                const endYear = study.endDate ? new Date(study.endDate).getFullYear() : null;
-                return (
-                  <li key={study.id} className="flex items-start justify-between gap-2">
-                    <span className="text-xs text-teal-300 print:text-[10px]">
-                      {study.name}
-                    </span>
-                    {endYear && (
-                      <span className="whitespace-nowrap text-[10px] text-gray-400 print:text-[8px]">
-                        {endYear}
-                      </span>
-                    )}
-                  </li>
-                );
-              })}
+              {data.studies.map((study) => (
+                <StudyDisplay key={study.id} study={study} compact={true} />
+              ))}
             </ul>
           </section>
         </div>
 
         {/* Right Column */}
         <div className="md:w-2/3 print:w-2/3">
-          {/* Experience */}
+          {/* Experience - Reusing JobDisplay component */}
           <section>
             <h2 className="border-b pb-1 text-2xl font-semibold text-pink-300 print:text-sm">
               {t.experience}
@@ -199,32 +176,12 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
             <ul className="mt-2 space-y-3 print:mt-1 print:space-y-2">
               {recentJobs.map((job, idx) => (
                 <li key={idx}>
-                  <div className="flex items-start justify-between">
-                    <span className="font-bold text-sky-300 print:text-xs">
-                      {job.client}
-                    </span>
-                    <span className="text-xs text-fuchsia-300 print:text-[10px]">
-                      {job.location}
-                    </span>
-                  </div>
-                  <div className="text-xs text-sky-300 print:text-[10px]">
-                    {job.startDate} - {job.endDate || t.present}
-                  </div>
-                  <p className="mt-1 text-xs print:text-[10px]">
-                    {job.description}
-                  </p>
-                  {job.frameworks.length > 0 && (
-                    <div className="mt-1.5 flex flex-wrap gap-1">
-                      {job.frameworks.slice(0, 5).map((fw) => (
-                        <span
-                          key={fw.id}
-                          className="whitespace-nowrap rounded bg-fuchsia-200 px-1 py-0.5 text-[9px] text-white print:text-[8px]"
-                        >
-                          {fw.name.toLowerCase()}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+                  <JobDisplay 
+                    job={job} 
+                    compact={true} 
+                    presentLabel={t.present}
+                    maxFrameworks={5}
+                  />
                 </li>
               ))}
             </ul>
