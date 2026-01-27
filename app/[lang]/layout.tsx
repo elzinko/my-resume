@@ -1,6 +1,7 @@
 import React from 'react';
 import { i18n } from '../../i18n-config';
 import { Analytics } from '@vercel/analytics/react';
+import { CvModeProvider } from '@/components/CvModeContext';
 
 export async function generateStaticParams() {
   return i18n.locales.map((locale) => ({ lang: locale }));
@@ -20,9 +21,11 @@ export default async function RootLayout({
   return (
     <html lang="fr">
       <body>
-        <div className="container mx-auto min-h-screen p-8">
-          <main>{children}</main>
-        </div>
+        <CvModeProvider>
+          <div className="container mx-auto min-h-screen p-8 print:p-4">
+            <main>{children}</main>
+          </div>
+        </CvModeProvider>
         {enableAnalitycs ? <Analytics /> : ''}
       </body>
     </html>

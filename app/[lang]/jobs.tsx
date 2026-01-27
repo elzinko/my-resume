@@ -41,8 +41,8 @@ export default async function jobs(locale: Locale) {
           {data?.jobsTitle?.title}
         </h2>
         <ul className="mt-4">
-          {data?.allJobsModels?.map((job: any) => (
-            <li key={job.id} className="py-4">
+          {data?.allJobsModels?.map((job: any, index: number) => (
+            <li key={job.client + index} className="py-4">
               <Job job={job} />
             </li>
           ))}

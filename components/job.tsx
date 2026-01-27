@@ -27,11 +27,11 @@ export default function job({ job: job }: any) {
       )}
 
       {job?.frameworks?.length > 0 ? (
-        <p className="flex flex-wrap gap-x-2 gap-y-2 whitespace-nowrap py-2">
+        <p className="flex flex-wrap gap-1.5 py-2 md:gap-2">
           {job?.frameworks?.map((framework: any) => (
             <span
               key={framework.id}
-              className="rounded bg-fuchsia-200 px-2 py-1 text-xs text-white"
+              className="whitespace-nowrap rounded bg-fuchsia-200 px-1.5 py-0.5 text-[10px] text-white md:px-2 md:py-1 md:text-xs"
             >
               {framework.name.toLowerCase()}
             </span>
