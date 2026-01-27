@@ -73,6 +73,16 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
 
   return (
     <div className="print:p-0">
+      {/* About - Full width section */}
+      <section className="mb-8 print:mb-5">
+        <h2 className="border-b border-teal-300/30 pb-2 text-xl font-semibold text-teal-300 md:text-2xl print:text-lg">
+          {t.about}
+        </h2>
+        <p className="mt-4 text-sm md:text-base print:mt-3 print:text-sm">
+          {data.about}
+        </p>
+      </section>
+
       {/* Two column layout */}
       <div className="flex flex-col gap-8 md:flex-row md:gap-10 print:flex-row print:gap-6">
         {/* Left Column */}
@@ -209,16 +219,6 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
                 en développement fullstack et DevOps. {t.moreClients}
               </p>
             </div>
-          </section>
-
-          {/* About */}
-          <section className="mt-8 print:mt-5">
-            <h2 className="border-b border-teal-300/30 pb-2 text-xl font-semibold text-teal-300 md:text-2xl print:text-lg">
-              {t.about}
-            </h2>
-            <p className="mt-4 text-sm md:text-base print:mt-3 print:text-sm">
-              {data.about}
-            </p>
           </section>
         </div>
       </div>
