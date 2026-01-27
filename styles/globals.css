@@ -45,30 +45,4 @@ html {
     text-decoration: none !important;
     color: inherit !important;
   }
-
-  /* Mobile print: show compact version, hide full version */
-  @media (max-width: 767px) {
-    .full-version {
-      display: none !important;
-    }
-    .print-compact-version {
-      display: block !important;
-    }
-    .header-content {
-      display: none !important;
-    }
-  }
-
-  /* Desktop print: show full version, hide compact version */
-  @media (min-width: 768px) {
-    .full-version {
-      display: block !important;
-    }
-    .print-compact-version {
-      display: none !important;
-    }
-    .header-content {
-      display: flex !important;
-    }
-  }
 }
