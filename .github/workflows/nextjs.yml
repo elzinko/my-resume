@@ -9,6 +9,9 @@ on:
   push:
     branches: ['main']
 
+  pull_request:
+    branches: ['main']
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -28,30 +31,13 @@ env: # Définition des variables d'environnement au niveau du job
   DATOCMS_API_URL: ${{ secrets.DATOCMS_API_URL }}
   DATOCMS_API_KEY: ${{ secrets.DATOCMS_API_KEY }}
   NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH }}
-  NEXT_PUBLIC_EXPORT: ${{ vars.NEXT_PUBLIC_EXPORT }}
+  NEXT_PUBLIC_EXPORT: ${{ vars.NEXT_PUBLIC_EXPORT || 'export' }}
   STATIC_DEPLOYMENT: ${{ vars.STATIC_DEPLOYMENT }}
 
 jobs:
-  # Preliminary job to check NEXT_PUBLIC_EXPORT
-  check_var:
-    runs-on: ubuntu-latest
-    outputs:
-      should_run: ${{ steps.check.outputs.should_run }}
-    steps:
-      - name: Github context
-        run: echo "$GITHUB_CONTEXT"
-      - name: Check NEXT_PUBLIC_EXPORT environment variable exists
-        id: check
-        run: |
-          if [[ -z "${{ env.NEXT_PUBLIC_EXPORT }}" ]]; then
-            echo "La variable d'environnement NEXT_PUBLIC_EXPORT n'existe pas ou est vide."
-            exit 1
-          fi
-
   # Build job
   build:
     runs-on: ubuntu-latest
-    needs: check_var
     steps:
       - name: Check environment variable
         run: echo 'NEXT_PUBLIC_EXPORT=' ${{ env.NEXT_PUBLIC_EXPORT }} && echo 'NEXT_PUBLIC_BASE_PATH=' ${{ env.NEXT_PUBLIC_BASE_PATH }}
@@ -77,7 +63,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: '20'
           cache: ${{ steps.detect-package-manager.outputs.manager }}
 
       - name: Setup Pages
@@ -125,3 +111,17 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  deploy_preview:
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    needs: build
+    environment:
+      name: github-pages-preview
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy preview to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        with:
+          preview: true
