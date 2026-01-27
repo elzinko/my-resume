@@ -23,7 +23,7 @@ export default function CvModeToggle({
   return (
     <Link
       href={targetUrl}
-      className="flex items-center gap-1 rounded bg-blue-600 p-2 text-sm font-medium text-white transition-all hover:bg-blue-700 md:gap-2 md:px-3 md:py-1.5 print:hidden"
+      className="flex items-center gap-1 rounded bg-blue-600 p-2 text-sm font-medium text-white transition-all hover:bg-blue-700 md:gap-2 md:px-3 print:hidden"
       title={label}
     >
       {/* Icon */}
