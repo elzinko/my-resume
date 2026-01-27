@@ -1,10 +1,16 @@
 'use client';
 
 import { useState, useCallback } from 'react';
+import { createRoot } from 'react-dom/client';
 import LogoLinkedin from './LogoLinkedin';
 import LogoGithub from './logoGithub';
 import LogoMalt from './logoMalt';
 import LogoPdf from './logoPdf';
+import PdfCvLayout, { PdfCvData } from './pdf/PdfCvLayout';
+import {
+  extractCvDataFromPage,
+  getCurrentLang,
+} from './pdf/pdfExportService';
 
 export default function Logos() {
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
@@ -16,34 +22,35 @@ export default function Logos() {
       // Dynamic import to avoid SSR issues
       const html2pdf = (await import('html2pdf.js')).default;
 
-      // Get the main content element
-      const element = document.querySelector('main');
-      if (!element) {
-        console.error('Main element not found');
-        return;
-      }
+      // Extract data from current page
+      const cvData = extractCvDataFromPage();
+      const lang = getCurrentLang();
 
-      // Clone the element to apply PDF-specific styles
-      const clone = element.cloneNode(true) as HTMLElement;
-
-      // Remove the locale switcher and social icons from the PDF
-      const headerNav = clone.querySelector('header > div:first-child');
-      if (headerNav) {
-        headerNav.remove();
-      }
-
-      // Create a temporary container
+      // Create a temporary container for PDF rendering
       const container = document.createElement('div');
-      container.appendChild(clone);
+      container.id = 'pdf-render-container';
       container.style.position = 'absolute';
       container.style.left = '-9999px';
       container.style.top = '0';
-      container.style.width = '210mm'; // A4 width
       document.body.appendChild(container);
+
+      // Render the PDF layout
+      const root = createRoot(container);
+      root.render(<PdfCvLayout data={cvData} lang={lang} />);
+
+      // Wait for render to complete
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      // Get the rendered element
+      const pdfElement = document.getElementById('pdf-cv-layout');
+      if (!pdfElement) {
+        console.error('PDF layout element not found');
+        return;
+      }
 
       // Configure html2pdf options for high quality single page
       const opt = {
-        margin: [5, 8, 5, 8] as [number, number, number, number], // top, right, bottom, left in mm
+        margin: 0,
         filename: 'Thomas_Couderc_CV.pdf',
         image: { type: 'jpeg' as const, quality: 0.98 },
         html2canvas: {
@@ -51,6 +58,8 @@ export default function Logos() {
           useCORS: true,
           logging: false,
           letterRendering: true,
+          width: 794, // A4 width in pixels at 96 DPI
+          height: 1123, // A4 height in pixels at 96 DPI
         },
         jsPDF: {
           unit: 'mm',
@@ -60,9 +69,10 @@ export default function Logos() {
         pagebreak: { mode: 'avoid-all' },
       };
 
-      await html2pdf().set(opt).from(clone).save();
+      await html2pdf().set(opt).from(pdfElement).save();
 
       // Cleanup
+      root.unmount();
       document.body.removeChild(container);
     } catch (error) {
       console.error('Error generating PDF:', error);
