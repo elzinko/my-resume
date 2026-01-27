@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import formatDates from '@/lib/date';
 
 export interface CompactCvData {
   header: {
@@ -32,6 +33,8 @@ export interface CompactCvData {
     id: string;
     name: string;
     establishment: string;
+    startDate?: string;
+    endDate?: string;
   }>;
 }
 
@@ -74,67 +77,78 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
   return (
     <div className="print:p-0">
       {/* About - Full width section */}
-      <section className="mb-8 print:mb-5">
-        <h2 className="border-b border-teal-300/30 pb-2 text-xl font-semibold text-teal-300 md:text-2xl print:text-lg">
+      <section className="mb-5 print:mb-2">
+        <h2 className="border-b border-teal-300/50 pb-1 text-xl font-semibold text-teal-300 print:text-sm">
           {t.about}
         </h2>
-        <p className="mt-4 text-sm md:text-base print:mt-3 print:text-sm">
+        <p className="mt-2 text-sm print:mt-1 print:text-[10px]">
           {data.about}
         </p>
       </section>
 
+      {/* Domains - Full width, like main CV but compact */}
+      <section className="mb-5 print:mb-2">
+        <div className="flex w-full flex-col gap-3 md:flex-row md:gap-4 print:flex-row print:gap-3">
+          {data.domains.map((domain, idx) => (
+            <div key={idx} className="flex-1">
+              <h3 className="border-b border-blue-500/50 pb-1 text-base font-semibold text-blue-500 print:text-xs">
+                {domain.title}
+              </h3>
+              <p className="mt-1 text-xs text-gray-300 print:mt-0.5 print:text-[9px] print:leading-tight">
+                {domain.description}
+              </p>
+              {domain.tags.length > 0 && (
+                <div className="mt-1.5 flex flex-wrap gap-1 print:mt-1">
+                  {domain.tags.slice(0, 6).map((tag, tagIdx) => (
+                    <span
+                      key={tagIdx}
+                      className="whitespace-nowrap rounded bg-orange-300 px-1.5 py-0.5 text-[10px] text-white print:px-1 print:py-0 print:text-[7px]"
+                    >
+                      {tag.toLowerCase()}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Two column layout */}
-      <div className="flex flex-col gap-8 md:flex-row md:gap-10 print:flex-row print:gap-6">
+      <div className="flex flex-col gap-6 md:flex-row md:gap-8 print:flex-row print:gap-6">
         {/* Left Column */}
         <div className="md:w-1/3 print:w-1/3">
           {/* Contact */}
-          <section className="mb-6 print:mb-4">
-            <h2 className="border-b border-pink-300/30 pb-2 text-xl font-semibold text-pink-300 md:text-2xl print:text-lg">
+          <section className="mb-5 print:mb-3">
+            <h2 className="border-b border-pink-300/50 pb-1 text-lg font-semibold text-pink-300 print:text-sm">
               {t.contact}
             </h2>
-            <ul className="mt-3 space-y-1 print:mt-2">
-              <li className="text-sm text-pink-200 md:text-base print:text-sm">
-                <strong>Tél.</strong>
+            <ul className="mt-2 space-y-0.5 print:mt-1">
+              <li className="text-sm text-pink-200 print:text-xs">
+                <strong className="text-pink-300">Tél.</strong>
                 <span className="ml-2">{data.contact.phone}</span>
               </li>
-              <li className="text-sm text-pink-200 md:text-base print:text-sm">
-                <strong>Email</strong>
+              <li className="text-sm text-pink-200 print:text-xs">
+                <strong className="text-pink-300">Email</strong>
                 <span className="ml-2">{data.contact.email}</span>
               </li>
-              <li className="text-sm text-pink-200 md:text-base print:text-sm">
-                <strong>Lieu</strong>
+              <li className="text-sm text-pink-200 print:text-xs">
+                <strong className="text-pink-300">Lieu</strong>
                 <span className="ml-2">{data.contact.location}</span>
               </li>
             </ul>
           </section>
 
-          {/* Domains - simplified, titles only */}
-          <section className="mb-6 print:mb-4">
-            <h2 className="border-b border-blue-500/30 pb-2 text-xl font-semibold text-blue-500 md:text-2xl print:text-lg">
-              {t.expertise}
-            </h2>
-            <div className="mt-3 flex flex-wrap gap-2 print:mt-2 print:gap-1.5">
-              {data.domains.map((domain, idx) => (
-                <span
-                  key={idx}
-                  className="text-sm font-semibold text-blue-400 md:text-base print:text-sm"
-                >
-                  {domain.title}{idx < data.domains.length - 1 ? ' · ' : ''}
-                </span>
-              ))}
-            </div>
-          </section>
-
-          {/* Skills */}
-          <section className="mb-6 print:mb-4">
-            <h2 className="border-b border-blue-300/30 pb-2 text-xl font-semibold text-blue-300 md:text-2xl print:text-lg">
+          {/* Skills - Simple style without gradient */}
+          <section className="mb-5 print:mb-3">
+            <h2 className="border-b border-blue-300/50 pb-1 text-lg font-semibold text-blue-300 print:text-sm">
               {t.skills}
             </h2>
-            <div className="mt-3 flex flex-wrap gap-2 print:mt-2 print:gap-1.5">
+            <div className="mt-2 flex flex-wrap gap-1.5 print:mt-1 print:gap-1">
               {data.skills.slice(0, 10).map((skill) => (
                 <span
                   key={skill.id}
-                  className="whitespace-nowrap rounded bg-gradient-to-r from-cyan-500 to-blue-500 px-2 py-1 text-xs text-white md:px-3 md:text-sm print:px-2 print:py-0.5 print:text-xs"
+                  className="whitespace-nowrap rounded border border-blue-400/50 px-2 py-0.5 text-xs text-blue-300 print:px-1.5 print:text-[10px]"
                 >
                   {skill.name}
                 </span>
@@ -142,51 +156,68 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
             </div>
           </section>
 
-          {/* Education - compact in left column */}
+          {/* Education - Complete with dates */}
           <section>
-            <h2 className="border-b border-teal-300/30 pb-2 text-xl font-semibold text-teal-300 md:text-2xl print:text-lg">
+            <h2 className="border-b border-teal-300/50 pb-1 text-lg font-semibold text-teal-300 print:text-sm">
               {t.education}
             </h2>
-            <ul className="mt-3 space-y-2 print:mt-2 print:space-y-1">
-              {data.studies.slice(0, 4).map((study) => (
-                <li key={study.id} className="text-sm text-teal-300 md:text-base print:text-xs">
-                  {study.name}
-                </li>
-              ))}
+            <ul className="mt-2 space-y-1.5 print:mt-1 print:space-y-1">
+              {data.studies.map((study) => {
+                const dates = study.startDate || study.endDate
+                  ? formatDates(study.startDate || '', study.endDate || '')
+                  : null;
+                return (
+                  <li key={study.id}>
+                    <div className="flex items-start justify-between gap-2">
+                      <span className="text-xs font-medium text-teal-300 print:text-[10px]">
+                        {study.name}
+                      </span>
+                      {dates && (
+                        <span className="whitespace-nowrap text-[10px] text-gray-400 print:text-[8px]">
+                          {dates}
+                        </span>
+                      )}
+                    </div>
+                    <span className="text-[10px] text-gray-400 print:text-[8px]">
+                      {study.establishment}
+                    </span>
+                  </li>
+                );
+              })}
             </ul>
           </section>
         </div>
 
         {/* Right Column */}
         <div className="md:w-2/3 print:w-2/3">
-          {/* Experience - simplified without role */}
+          {/* Experience */}
           <section>
-            <h2 className="border-b border-pink-300/30 pb-2 text-xl font-semibold text-pink-300 md:text-2xl print:text-lg">
+            <h2 className="border-b border-pink-300/50 pb-1 text-lg font-semibold text-pink-300 print:text-sm">
               {t.experience}
             </h2>
-            <ul className="mt-3 space-y-4 print:mt-2 print:space-y-2">
+            <ul className="mt-2 space-y-3 print:mt-1 print:space-y-2">
               {recentJobs.map((job, idx) => (
-                <li key={idx} className="print:pb-1">
-                  <div className="flex justify-between">
-                    <span className="font-bold text-sky-300 md:text-lg print:text-sm">
+                <li key={idx}>
+                  <div className="flex items-start justify-between">
+                    <span className="font-bold text-sky-300 print:text-xs">
                       {job.client}
                     </span>
-                    <span className="text-xs text-fuchsia-300 md:text-sm print:text-xs">
+                    <span className="text-xs text-fuchsia-300 print:text-[10px]">
                       {job.location}
                     </span>
                   </div>
-                  <div className="text-xs text-sky-300 md:text-sm print:text-xs">
+                  <div className="text-xs text-sky-300/70 print:text-[10px]">
                     {job.startDate} - {job.endDate || t.present}
                   </div>
-                  <p className="mt-1 text-sm text-gray-300 md:text-base print:text-xs">
+                  <p className="mt-1 text-xs text-gray-300 print:text-[10px]">
                     {job.description}
                   </p>
                   {job.frameworks.length > 0 && (
-                    <div className="mt-2 flex flex-wrap gap-1">
+                    <div className="mt-1.5 flex flex-wrap gap-1">
                       {job.frameworks.slice(0, 5).map((fw) => (
                         <span
                           key={fw.id}
-                          className="whitespace-nowrap rounded bg-fuchsia-200 px-1 py-0.5 text-[9px] text-white md:px-1.5 md:text-[10px] print:text-[8px]"
+                          className="whitespace-nowrap rounded bg-fuchsia-300/80 px-1 py-0.5 text-[9px] text-white print:text-[8px]"
                         >
                           {fw.name.toLowerCase()}
                         </span>
@@ -198,8 +229,8 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
             </ul>
 
             {/* More experience note */}
-            <div className="mt-4 border-l-4 border-teal-300 pl-3 print:mt-3">
-              <p className="text-xs text-gray-400 md:text-sm print:text-xs">
+            <div className="mt-4 border-l-4 border-teal-300/50 pl-3 print:mt-2">
+              <p className="text-xs text-gray-400 print:text-[10px]">
                 <strong className="text-teal-300">{t.moreExperience}</strong>{' '}
                 en développement fullstack et DevOps. {t.moreClients}
               </p>

@@ -29,6 +29,7 @@ const compactDataQuery = gql`
     allDomainsModels(locale: $lang) {
       id
       name
+      description
       competencies {
         id
         name
@@ -52,6 +53,8 @@ const compactDataQuery = gql`
       id
       name
       establishment
+      startDate
+      endDate
     }
   }
 `;
@@ -79,7 +82,7 @@ export default async function ShortPage({
     skills: data?.allSkillsModels || [],
     domains: (data?.allDomainsModels || []).map((d: any) => ({
       title: d.name,
-      description: '',
+      description: d.description || '',
       tags: (d.competencies || []).map((c: any) => c.name),
     })),
     jobs: (data?.allJobsModels || []).map((j: any) => {
@@ -95,7 +98,18 @@ export default async function ShortPage({
         frameworks: j.frameworks || [],
       };
     }),
-    studies: data?.allStudiesModels || [],
+    studies: (data?.allStudiesModels || [])
+      .map((s: any) => ({
+        ...s,
+        startDate: s.startDate,
+        endDate: s.endDate,
+      }))
+      .sort((a: any, b: any) => {
+        // Sort by endDate descending (most recent first)
+        const dateA = a.endDate || a.startDate || '';
+        const dateB = b.endDate || b.startDate || '';
+        return dateB.localeCompare(dateA);
+      }),
   };
 
   return (
