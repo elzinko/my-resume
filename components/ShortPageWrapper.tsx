@@ -26,7 +26,8 @@ export default function ShortPageWrapper({ children, lang }: ShortPageWrapperPro
           <div className="flex flex-wrap items-center justify-end gap-3">
             <Link
               href={`/${lang}`}
-              className="flex items-center gap-2 rounded bg-blue-600 px-3 py-1.5 text-sm font-medium text-white transition-all hover:bg-blue-700"
+              className="flex items-center gap-1 rounded bg-blue-600 p-2 text-sm font-medium text-white transition-all hover:bg-blue-700 md:gap-2 md:px-3 md:py-1.5"
+              title="Version complète"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +43,7 @@ export default function ShortPageWrapper({ children, lang }: ShortPageWrapperPro
                   d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
                 />
               </svg>
-              <span>Version complète</span>
+              <span className="hidden md:inline">Version complète</span>
             </Link>
             <ul className="flex flex-wrap gap-2">
               <li>
