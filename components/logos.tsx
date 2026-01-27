@@ -19,7 +19,7 @@ export default function Logos() {
       <CvModeToggle 
         labels={{ 
           full: 'Version complète', 
-          compact: 'Version courte (1 page)' 
+          compact: 'Version courte' 
         }} 
       />
       <ul className="flex flex-wrap gap-2">
