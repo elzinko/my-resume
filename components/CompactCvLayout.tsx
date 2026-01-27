@@ -76,24 +76,24 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
   return (
     <div className="print:p-0">
       {/* About - Full width section */}
-      <section className="mb-5 print:mb-2">
-        <h2 className="border-b border-teal-300/50 pb-1 text-xl font-semibold text-teal-300 print:text-sm">
+      <section className="mb-8 print:mb-4">
+        <h2 className="border-b border-teal-300/50 pb-1 text-2xl font-semibold text-teal-300 print:text-base">
           {t.about}
         </h2>
-        <p className="mt-2 text-sm print:mt-1 print:text-[10px]">
+        <p className="mt-3 text-sm print:mt-2 print:text-[10px]">
           {data.about}
         </p>
       </section>
 
       {/* Domains - Full width, like main CV but compact */}
-      <section className="mb-5 print:mb-2">
-        <div className="flex w-full flex-col gap-3 md:flex-row md:gap-4 print:flex-row print:gap-3">
+      <section className="mb-10 print:mb-5">
+        <div className="flex w-full flex-col gap-4 md:flex-row md:gap-6 print:flex-row print:gap-4">
           {data.domains.map((domain, idx) => (
             <div key={idx} className="flex-1">
-              <h3 className="border-b border-blue-500/50 pb-1 text-base font-semibold text-blue-500 print:text-xs">
+              <h3 className="border-b border-blue-500/50 pb-1 text-xl font-semibold text-blue-500 print:text-sm">
                 {domain.title}
               </h3>
-              <p className="mt-1 text-xs text-gray-300 print:mt-0.5 print:text-[9px] print:leading-tight">
+              <p className="mt-2 text-xs text-gray-300 print:mt-1 print:text-[9px] print:leading-tight">
                 {domain.description}
               </p>
             </div>
@@ -102,12 +102,12 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
       </section>
 
       {/* Two column layout */}
-      <div className="flex flex-col gap-6 md:flex-row md:gap-8 print:flex-row print:gap-6">
+      <div className="flex flex-col gap-6 md:flex-row md:gap-10 print:flex-row print:gap-6">
         {/* Left Column */}
         <div className="md:w-1/3 print:w-1/3">
           {/* Contact */}
-          <section className="mb-5 print:mb-3">
-            <h2 className="border-b border-pink-300/50 pb-1 text-lg font-semibold text-pink-300 print:text-sm">
+          <section className="mb-6 print:mb-4">
+            <h2 className="border-b border-pink-300/50 pb-1 text-xl font-semibold text-pink-300 print:text-sm">
               {t.contact}
             </h2>
             <ul className="mt-2 space-y-0.5 print:mt-1">
@@ -127,8 +127,8 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
           </section>
 
           {/* Skills - Simple style without gradient */}
-          <section className="mb-5 print:mb-3">
-            <h2 className="border-b border-blue-300/50 pb-1 text-lg font-semibold text-blue-300 print:text-sm">
+          <section className="mb-6 print:mb-4">
+            <h2 className="border-b border-blue-300/50 pb-1 text-xl font-semibold text-blue-300 print:text-sm">
               {t.skills}
             </h2>
             <div className="mt-2 flex flex-wrap gap-1.5 print:mt-1 print:gap-1">
@@ -145,7 +145,7 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
 
           {/* Education - Complete with dates */}
           <section>
-            <h2 className="border-b border-teal-300/50 pb-1 text-lg font-semibold text-teal-300 print:text-sm">
+            <h2 className="border-b border-teal-300/50 pb-1 text-xl font-semibold text-teal-300 print:text-sm">
               {t.education}
             </h2>
             <ul className="mt-2 space-y-1 print:mt-1 print:space-y-0.5">
@@ -173,7 +173,7 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
         <div className="md:w-2/3 print:w-2/3">
           {/* Experience */}
           <section>
-            <h2 className="border-b border-pink-300/50 pb-1 text-lg font-semibold text-pink-300 print:text-sm">
+            <h2 className="border-b border-pink-300/50 pb-1 text-xl font-semibold text-pink-300 print:text-sm">
               {t.experience}
             </h2>
             <ul className="mt-2 space-y-3 print:mt-1 print:space-y-2">
