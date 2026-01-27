@@ -29,7 +29,7 @@ export default function Domain({ domain, showTags = true, compact = false }: Dom
       }>
         {domain.description}
       </p>
-      {showTags && domain?.competencies?.length > 0 && (
+      {showTags && domain?.competencies && domain.competencies.length > 0 && (
         <p className="flex flex-wrap gap-x-2 gap-y-2 whitespace-nowrap py-2">
           {domain.competencies.map((competency) => (
             <span
