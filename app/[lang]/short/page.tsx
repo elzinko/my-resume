@@ -15,12 +15,26 @@ const compactDataQuery = gql`
       role
     }
     contact(locale: $lang) {
+      title
+      phoneTitle
       phone
+      emailTitle
       email
+      locationTitle
       location
     }
     about(locale: $lang) {
+      title
       text
+    }
+    skillsTitle(locale: $lang) {
+      title
+    }
+    studiesTitle(locale: $lang) {
+      title
+    }
+    jobsTitle(locale: $lang) {
+      title
     }
     allSkillsModels(locale: $lang) {
       id
@@ -73,9 +87,19 @@ export default async function ShortPage({
       name: data?.header?.name || '',
       role: data?.header?.role || '',
     },
+    titles: {
+      about: data?.about?.title || '',
+      skills: data?.skillsTitle?.title || '',
+      contact: data?.contact?.title || '',
+      education: data?.studiesTitle?.title || '',
+      experience: data?.jobsTitle?.title || '',
+    },
     contact: {
+      phoneTitle: data?.contact?.phoneTitle || '',
       phone: data?.contact?.phone || '',
+      emailTitle: data?.contact?.emailTitle || '',
       email: data?.contact?.email || '',
+      locationTitle: data?.contact?.locationTitle || '',
       location: data?.contact?.location || '',
     },
     about: data?.about?.text || '',

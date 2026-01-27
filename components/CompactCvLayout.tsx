@@ -7,9 +7,19 @@ export interface CompactCvData {
     name: string;
     role: string;
   };
+  titles: {
+    about: string;
+    skills: string;
+    contact: string;
+    education: string;
+    experience: string;
+  };
   contact: {
+    phoneTitle: string;
     phone: string;
+    emailTitle: string;
     email: string;
+    locationTitle: string;
     location: string;
   };
   about: string;
@@ -43,7 +53,8 @@ interface CompactCvLayoutProps {
 }
 
 export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
-  const labels = {
+  // Fallback labels if DatoCMS titles are empty
+  const fallbackLabels = {
     fr: {
       skills: 'Compétences',
       experience: 'Expériences',
@@ -68,10 +79,23 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
     },
   };
 
-  const t = labels[lang];
+  const fallback = fallbackLabels[lang];
+  
+  // Use DatoCMS titles with fallback
+  const t = {
+    about: data.titles.about || fallback.about,
+    skills: data.titles.skills || fallback.skills,
+    contact: data.titles.contact || fallback.contact,
+    education: data.titles.education || fallback.education,
+    experience: data.titles.experience || fallback.experience,
+    expertise: fallback.expertise,
+    present: fallback.present,
+    moreExperience: fallback.moreExperience,
+    moreClients: fallback.moreClients,
+  };
 
-  // Only show 4 most recent jobs
-  const recentJobs = data.jobs.slice(0, 4);
+  // Only show 5 most recent jobs
+  const recentJobs = data.jobs.slice(0, 5);
 
   return (
     <div className="print:p-0">
@@ -112,15 +136,15 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
             </h2>
             <ul className="mt-2 space-y-0.5 print:mt-1">
               <li className="text-sm text-pink-200 print:text-xs">
-                <strong className="text-pink-300">Tél.</strong>
+                <strong className="text-pink-300">{data.contact.phoneTitle || 'Tél.'}</strong>
                 <span className="ml-2">{data.contact.phone}</span>
               </li>
               <li className="text-sm text-pink-200 print:text-xs">
-                <strong className="text-pink-300">Email</strong>
+                <strong className="text-pink-300">{data.contact.emailTitle || 'Email'}</strong>
                 <span className="ml-2">{data.contact.email}</span>
               </li>
               <li className="text-sm text-pink-200 print:text-xs">
-                <strong className="text-pink-300">Lieu</strong>
+                <strong className="text-pink-300">{data.contact.locationTitle || 'Lieu'}</strong>
                 <span className="ml-2">{data.contact.location}</span>
               </li>
             </ul>
