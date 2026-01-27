@@ -50,21 +50,21 @@ export default function Logos() {
 
       // Configure html2pdf options for high quality single page
       const opt = {
-        margin: 0,
+        margin: [0, 0, 0, 0] as [number, number, number, number],
         filename: 'Thomas_Couderc_CV.pdf',
-        image: { type: 'jpeg' as const, quality: 0.98 },
+        image: { type: 'jpeg' as const, quality: 0.95 },
         html2canvas: {
           scale: 2,
           useCORS: true,
           logging: false,
           letterRendering: true,
-          width: 794, // A4 width in pixels at 96 DPI
-          height: 1123, // A4 height in pixels at 96 DPI
+          windowWidth: 794, // A4 width in pixels at 96 DPI
         },
         jsPDF: {
-          unit: 'mm',
-          format: 'a4',
+          unit: 'px',
+          format: [794, 1123] as [number, number], // A4 in pixels at 96 DPI
           orientation: 'portrait' as const,
+          hotfixes: ['px_scaling'],
         },
         pagebreak: { mode: 'avoid-all' },
       };

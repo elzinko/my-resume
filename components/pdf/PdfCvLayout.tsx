@@ -39,123 +39,146 @@ interface PdfCvLayoutProps {
   lang: 'fr' | 'en';
 }
 
+// Main technologies to highlight (filter from frameworks)
+const MAIN_TECHS = [
+  'react',
+  'vue.js',
+  'angular',
+  'typescript',
+  'java',
+  'spring boot',
+  'kotlin',
+  'go',
+  'python',
+  'rust',
+  'kubernetes',
+  'docker',
+  'aws',
+  'gcp',
+  'azure',
+  'terraform',
+];
+
 export default function PdfCvLayout({ data, lang }: PdfCvLayoutProps) {
   const labels = {
     fr: {
-      contact: 'Contact',
       skills: 'Technologies',
-      experience: 'Expériences',
+      experience: 'Expériences clés',
       education: 'Formation',
       expertise: 'Expertise',
+      clients: 'Clients',
     },
     en: {
-      contact: 'Contact',
       skills: 'Technologies',
-      experience: 'Experience',
+      experience: 'Key Experience',
       education: 'Education',
       expertise: 'Expertise',
+      clients: 'Clients',
     },
   };
 
   const t = labels[lang];
 
-  // Limit to fit on ONE A4 page - only show 5 recent jobs
-  const recentJobs = data.jobs.slice(0, 5);
-  // Only 2 studies
-  const mainStudies = data.studies.slice(0, 2);
+  // Only 3 most recent jobs for 1 page
+  const recentJobs = data.jobs.slice(0, 3);
+
+  // Filter main technologies from job frameworks
+  const filterMainTechs = (frameworks: string[]) => {
+    return frameworks
+      .filter((fw) => MAIN_TECHS.some((tech) => fw.toLowerCase().includes(tech)))
+      .slice(0, 4);
+  };
 
   return (
     <div
       id="pdf-cv-layout"
       style={{
         fontFamily: "'Segoe UI', Roboto, Arial, sans-serif",
-        fontSize: '8pt',
-        lineHeight: '1.25',
+        fontSize: '7pt',
+        lineHeight: '1.15',
         color: '#1f2937',
         backgroundColor: '#ffffff',
-        width: '210mm',
-        height: '297mm',
-        overflow: 'hidden',
+        width: '794px', // A4 at 96 DPI
+        maxHeight: '1123px', // A4 at 96 DPI
         boxSizing: 'border-box',
+        padding: '0',
       }}
     >
-      {/* Compact Header */}
+      {/* Header - compact */}
       <div
         style={{
           backgroundColor: '#0f172a',
           color: 'white',
-          padding: '8mm 10mm 6mm 10mm',
+          padding: '12px 20px 10px 20px',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
         }}
       >
         <div>
-          <h1
-            style={{
-              fontSize: '20pt',
-              fontWeight: '700',
-              margin: '0',
-              letterSpacing: '0.3px',
-            }}
-          >
+          <h1 style={{ fontSize: '22px', fontWeight: '700', margin: '0' }}>
             {data.header.name}
           </h1>
-          <p
-            style={{
-              fontSize: '10pt',
-              margin: '1mm 0 0 0',
-              color: '#38bdf8',
-              fontWeight: '500',
-            }}
-          >
+          <p style={{ fontSize: '11px', margin: '2px 0 0 0', color: '#38bdf8', fontWeight: '500' }}>
             {data.header.role}
           </p>
         </div>
-        <div style={{ textAlign: 'right', fontSize: '7.5pt', color: '#e2e8f0' }}>
+        <div style={{ textAlign: 'right', fontSize: '9px', color: '#e2e8f0' }}>
           <p style={{ margin: '0' }}>{data.contact.phone}</p>
-          <p style={{ margin: '0.5mm 0' }}>{data.contact.email}</p>
+          <p style={{ margin: '1px 0' }}>{data.contact.email}</p>
           <p style={{ margin: '0' }}>{data.contact.location}</p>
         </div>
       </div>
 
       {/* Two Column Layout */}
-      <div style={{ display: 'flex', height: 'calc(297mm - 32mm)' }}>
-        {/* Left Sidebar - narrower */}
+      <div style={{ display: 'flex' }}>
+        {/* Left Sidebar */}
         <div
           style={{
-            width: '58mm',
+            width: '200px',
             backgroundColor: '#f8fafc',
-            padding: '4mm 5mm',
+            padding: '8px 10px',
             borderRight: '1px solid #e2e8f0',
           }}
         >
+          {/* About - compact */}
+          <p
+            style={{
+              fontSize: '8px',
+              color: '#475569',
+              margin: '0 0 8px 0',
+              lineHeight: '1.2',
+              fontStyle: 'italic',
+            }}
+          >
+            {data.about.length > 120 ? data.about.substring(0, 120) + '...' : data.about}
+          </p>
+
           {/* Skills/Technologies */}
-          <section style={{ marginBottom: '4mm' }}>
+          <section style={{ marginBottom: '8px' }}>
             <h2
               style={{
-                fontSize: '8pt',
+                fontSize: '9px',
                 fontWeight: '700',
                 color: '#0f172a',
-                borderBottom: '1.5px solid #0f172a',
-                paddingBottom: '1mm',
-                marginBottom: '2mm',
+                borderBottom: '1px solid #0f172a',
+                paddingBottom: '2px',
+                marginBottom: '4px',
                 textTransform: 'uppercase',
-                letterSpacing: '0.5px',
               }}
             >
               {t.skills}
             </h2>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1mm' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2px' }}>
               {data.skills.map((skill, idx) => (
                 <span
                   key={idx}
                   style={{
                     backgroundColor: '#0f172a',
                     color: 'white',
-                    padding: '0.8mm 2mm',
-                    borderRadius: '1.5mm',
-                    fontSize: '6pt',
+                    padding: '1px 4px',
+                    borderRadius: '2px',
+                    fontSize: '7px',
                     fontWeight: '500',
                   }}
                 >
@@ -166,222 +189,182 @@ export default function PdfCvLayout({ data, lang }: PdfCvLayoutProps) {
           </section>
 
           {/* Expertise Domains */}
-          <section style={{ marginBottom: '4mm' }}>
+          <section style={{ marginBottom: '8px' }}>
             <h2
               style={{
-                fontSize: '8pt',
+                fontSize: '9px',
                 fontWeight: '700',
                 color: '#0f172a',
-                borderBottom: '1.5px solid #0f172a',
-                paddingBottom: '1mm',
-                marginBottom: '2mm',
+                borderBottom: '1px solid #0f172a',
+                paddingBottom: '2px',
+                marginBottom: '4px',
                 textTransform: 'uppercase',
-                letterSpacing: '0.5px',
               }}
             >
               {t.expertise}
             </h2>
             {data.domains.map((domain, idx) => (
-              <div key={idx} style={{ marginBottom: '2mm' }}>
-                <h3
-                  style={{
-                    fontSize: '7pt',
-                    fontWeight: '600',
-                    color: '#334155',
-                    margin: '0 0 0.5mm 0',
-                  }}
-                >
-                  {domain.title}
-                </h3>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.8mm' }}>
-                  {domain.tags.slice(0, 4).map((tag, tagIdx) => (
-                    <span
-                      key={tagIdx}
-                      style={{
-                        backgroundColor: '#e2e8f0',
-                        color: '#475569',
-                        padding: '0.3mm 1.5mm',
-                        borderRadius: '1mm',
-                        fontSize: '5.5pt',
-                      }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+              <div key={idx} style={{ marginBottom: '3px' }}>
+                <span style={{ fontSize: '8px', fontWeight: '600', color: '#334155' }}>
+                  {domain.title}:{' '}
+                </span>
+                <span style={{ fontSize: '7px', color: '#64748b' }}>
+                  {domain.tags.slice(0, 3).join(', ')}
+                </span>
               </div>
             ))}
           </section>
 
-          {/* Education - compact */}
-          <section>
+          {/* Education */}
+          <section style={{ marginBottom: '8px' }}>
             <h2
               style={{
-                fontSize: '8pt',
+                fontSize: '9px',
                 fontWeight: '700',
                 color: '#0f172a',
-                borderBottom: '1.5px solid #0f172a',
-                paddingBottom: '1mm',
-                marginBottom: '2mm',
+                borderBottom: '1px solid #0f172a',
+                paddingBottom: '2px',
+                marginBottom: '4px',
                 textTransform: 'uppercase',
-                letterSpacing: '0.5px',
               }}
             >
               {t.education}
             </h2>
-            {mainStudies.map((study, idx) => (
-              <div key={idx} style={{ marginBottom: '1.5mm' }}>
-                <p
-                  style={{
-                    fontSize: '6.5pt',
-                    fontWeight: '600',
-                    color: '#334155',
-                    margin: '0',
-                    lineHeight: '1.2',
-                  }}
-                >
-                  {study.name}
-                </p>
-                <p
-                  style={{
-                    fontSize: '5.5pt',
-                    color: '#64748b',
-                    margin: '0',
-                  }}
-                >
-                  {study.establishment}
-                </p>
-              </div>
-            ))}
+            <p style={{ fontSize: '7px', color: '#334155', margin: '0', lineHeight: '1.3' }}>
+              • Licence Pro Systèmes Info.
+              <br />• DUT Informatique
+              <br />• Machine Learning (Stanford)
+            </p>
+          </section>
+
+          {/* Clients */}
+          <section>
+            <h2
+              style={{
+                fontSize: '9px',
+                fontWeight: '700',
+                color: '#0f172a',
+                borderBottom: '1px solid #0f172a',
+                paddingBottom: '2px',
+                marginBottom: '4px',
+                textTransform: 'uppercase',
+              }}
+            >
+              {t.clients}
+            </h2>
+            <p style={{ fontSize: '7px', color: '#64748b', margin: '0', lineHeight: '1.3' }}>
+              BlablaCar, SNCF, LeBonCoin, Thales, JCDecaux, FDJ, BNP, Renault...
+            </p>
           </section>
         </div>
 
         {/* Main Content */}
-        <div style={{ flex: 1, padding: '4mm 6mm', overflow: 'hidden' }}>
-          {/* About - very compact */}
-          <p
-            style={{
-              fontSize: '7pt',
-              color: '#475569',
-              margin: '0 0 3mm 0',
-              lineHeight: '1.3',
-              fontStyle: 'italic',
-              borderLeft: '2px solid #38bdf8',
-              paddingLeft: '2mm',
-            }}
-          >
-            {data.about}
-          </p>
-
+        <div style={{ flex: 1, padding: '8px 12px' }}>
           {/* Experience */}
           <h2
             style={{
-              fontSize: '8pt',
+              fontSize: '10px',
               fontWeight: '700',
               color: '#0f172a',
               borderBottom: '1.5px solid #0f172a',
-              paddingBottom: '1mm',
-              marginBottom: '2mm',
+              paddingBottom: '2px',
+              marginBottom: '6px',
               textTransform: 'uppercase',
-              letterSpacing: '0.5px',
             }}
           >
             {t.experience}
           </h2>
 
-          {recentJobs.map((job, idx) => (
-            <div
-              key={idx}
-              style={{
-                marginBottom: '2mm',
-                paddingBottom: '1.5mm',
-                borderBottom:
-                  idx < recentJobs.length - 1
-                    ? '0.5px solid #e5e7eb'
-                    : 'none',
-              }}
-            >
+          {recentJobs.map((job, idx) => {
+            const mainFrameworks = filterMainTechs(job.frameworks);
+            return (
               <div
+                key={idx}
                 style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'baseline',
+                  marginBottom: '6px',
+                  paddingBottom: '4px',
+                  borderBottom:
+                    idx < recentJobs.length - 1 ? '0.5px solid #e5e7eb' : 'none',
                 }}
               >
-                <div style={{ flex: 1 }}>
-                  <span
-                    style={{
-                      fontSize: '7.5pt',
-                      fontWeight: '700',
-                      color: '#0f172a',
-                    }}
-                  >
-                    {job.client}
-                  </span>
-                  <span
-                    style={{
-                      fontSize: '6.5pt',
-                      color: '#0891b2',
-                      marginLeft: '2mm',
-                      fontWeight: '500',
-                    }}
-                  >
-                    {job.role}
-                  </span>
-                </div>
-                <span
-                  style={{
-                    fontSize: '6pt',
-                    color: '#64748b',
-                    flexShrink: 0,
-                  }}
-                >
-                  {job.startDate}
-                  {job.endDate ? ` - ${job.endDate}` : ''} | {job.location}
-                </span>
-              </div>
-
-              <p
-                style={{
-                  fontSize: '6pt',
-                  color: '#4b5563',
-                  margin: '0.3mm 0',
-                  lineHeight: '1.2',
-                }}
-              >
-                {job.description.length > 100
-                  ? job.description.substring(0, 100) + '...'
-                  : job.description}
-              </p>
-
-              {job.frameworks.length > 0 && (
                 <div
                   style={{
                     display: 'flex',
-                    flexWrap: 'wrap',
-                    gap: '0.8mm',
-                    marginTop: '0.8mm',
+                    justifyContent: 'space-between',
+                    alignItems: 'baseline',
                   }}
                 >
-                  {job.frameworks.slice(0, 6).map((fw, fwIdx) => (
+                  <div>
+                    <span style={{ fontSize: '10px', fontWeight: '700', color: '#0f172a' }}>
+                      {job.client}
+                    </span>
                     <span
-                      key={fwIdx}
                       style={{
-                        backgroundColor: '#fef3c7',
-                        color: '#92400e',
-                        padding: '0.3mm 1.5mm',
-                        borderRadius: '1mm',
-                        fontSize: '5pt',
+                        fontSize: '8px',
+                        color: '#0891b2',
+                        marginLeft: '6px',
                         fontWeight: '500',
                       }}
                     >
-                      {fw}
+                      {job.role}
                     </span>
-                  ))}
+                  </div>
+                  <span style={{ fontSize: '7px', color: '#64748b' }}>
+                    {job.startDate}
+                    {job.endDate ? ` - ${job.endDate}` : ''}
+                  </span>
                 </div>
-              )}
-            </div>
-          ))}
+
+                <p
+                  style={{
+                    fontSize: '8px',
+                    color: '#4b5563',
+                    margin: '2px 0 3px 0',
+                    lineHeight: '1.2',
+                  }}
+                >
+                  {job.description.length > 80
+                    ? job.description.substring(0, 80) + '...'
+                    : job.description}
+                </p>
+
+                {mainFrameworks.length > 0 && (
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2px' }}>
+                    {mainFrameworks.map((fw, fwIdx) => (
+                      <span
+                        key={fwIdx}
+                        style={{
+                          backgroundColor: '#fef3c7',
+                          color: '#92400e',
+                          padding: '1px 4px',
+                          borderRadius: '2px',
+                          fontSize: '6px',
+                          fontWeight: '600',
+                        }}
+                      >
+                        {fw}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+
+          {/* Summary */}
+          <div
+            style={{
+              marginTop: '6px',
+              padding: '6px',
+              backgroundColor: '#f1f5f9',
+              borderRadius: '3px',
+            }}
+          >
+            <p style={{ fontSize: '8px', color: '#475569', margin: '0', lineHeight: '1.25' }}>
+              <strong>+20 ans d&apos;expérience</strong> en développement fullstack et DevOps.
+              Autres clients : Edelia (EDF), Médiamétrie, Thales, Médiapost, SFR...
+            </p>
+          </div>
         </div>
       </div>
     </div>
