@@ -106,9 +106,10 @@ export default async function ShortPage({
     about: data?.about?.text || '',
     skills: data?.allSkillsModels || [],
     domains: (data?.allDomainsModels || []).map((d: any) => ({
-      title: d.name,
+      id: d.id,
+      name: d.name,
       description: d.description || '',
-      tags: (d.competencies || []).map((c: any) => c.name),
+      competencies: d.competencies || [],
     })),
     jobs: (data?.allJobsModels || []).map((j: any) => {
       const dates = formatDates(j.startDate, j.endDate);

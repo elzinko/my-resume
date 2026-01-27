@@ -1,6 +1,8 @@
 'use client';
 
 import React from 'react';
+import Skill from './skill';
+import Domain from './domain';
 
 export interface CompactCvData {
   header: {
@@ -25,9 +27,10 @@ export interface CompactCvData {
   about: string;
   skills: Array<{ id: string; name: string; link?: string }>;
   domains: Array<{
-    title: string;
+    id?: string;
+    name: string;
     description: string;
-    tags: string[];
+    competencies?: Array<{ id: string; name: string }>;
   }>;
   jobs: Array<{
     client: string;
@@ -109,18 +112,16 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
         </p>
       </section>
 
-      {/* Domains - Full width (same style as full CV) */}
+      {/* Domains - Full width (same style as full CV, reusing Domain component) */}
       <section className="mt-10 print:mt-4">
         <div className="flex w-full flex-col md:flex-row md:space-x-6 print:flex-row print:space-x-4">
-          {data.domains.map((domain, idx) => (
-            <div key={idx} className="mt-4 flex-1 print:mt-2">
-              <h2 className="border-b pb-1 text-2xl font-semibold text-blue-500 print:text-sm">
-                {domain.title}
-              </h2>
-              <p className="mt-4 print:mt-2 print:text-[9px] print:leading-tight">
-                {domain.description}
-              </p>
-            </div>
+          {data.domains.map((domain) => (
+            <Domain 
+              key={domain.id || domain.name} 
+              domain={domain} 
+              showTags={false} 
+              compact={true} 
+            />
           ))}
         </div>
       </section>
@@ -150,19 +151,14 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
             </ul>
           </section>
 
-          {/* Skills - Simple style without gradient */}
+          {/* Skills - Reusing Skill component in compact mode */}
           <section className="mb-6 print:mb-4">
             <h2 className="border-b pb-1 text-2xl font-semibold text-blue-300 print:text-sm">
               {t.skills}
             </h2>
             <div className="mt-2 flex flex-wrap gap-1.5 print:mt-1 print:gap-1">
               {data.skills.slice(0, 10).map((skill) => (
-                <span
-                  key={skill.id}
-                  className="whitespace-nowrap rounded border border-blue-400/50 px-2 py-0.5 text-xs text-blue-300 print:px-1.5 print:text-[10px]"
-                >
-                  {skill.name}
-                </span>
+                <Skill key={skill.id} skill={skill} compact={true} />
               ))}
             </div>
           </section>
