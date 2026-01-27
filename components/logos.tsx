@@ -26,7 +26,7 @@ export default function Logos() {
       const cvData = extractCvDataFromPage();
       const lang = getCurrentLang();
 
-      // Create a temporary container for PDF rendering
+      // Create a temporary container for PDF rendering (hidden)
       const container = document.createElement('div');
       container.id = 'pdf-render-container';
       container.style.position = 'absolute';

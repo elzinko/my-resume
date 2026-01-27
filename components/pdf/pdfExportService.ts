@@ -6,15 +6,26 @@ import { PdfCvData } from './PdfCvLayout';
 export function extractCvDataFromPage(): PdfCvData {
   // Extract header info
   const nameEl = document.querySelector('h1');
-  const roleEl = document.querySelector('header p');
+  const roleEl = nameEl?.nextElementSibling;
 
-  // Extract contact info
-  const phoneLink = document.querySelector('a[href^="tel:"]');
-  const emailLink = document.querySelector('a[href^="mailto:"]');
-  const locationEl = document.querySelector('#contact ul li:last-child span');
+  // Extract contact info - look in #contact section
+  const contactSection = document.querySelector('#contact');
+  const phoneLink = contactSection?.querySelector('a[href^="tel:"]');
+  const emailLink = contactSection?.querySelector('a[href^="mailto:"]');
+  const contactItems = contactSection?.querySelectorAll('li');
+  let locationText = 'Paris, France';
+  contactItems?.forEach((li) => {
+    const strong = li.querySelector('strong');
+    if (strong?.textContent?.toLowerCase().includes('emplacement') || 
+        strong?.textContent?.toLowerCase().includes('location')) {
+      const span = li.querySelector('span');
+      locationText = span?.textContent?.trim() || locationText;
+    }
+  });
 
   // Extract about text
-  const aboutSection = document.querySelector('#about p');
+  const aboutSection = document.querySelector('#about');
+  const aboutText = aboutSection?.querySelector('p')?.textContent?.trim() || '';
 
   // Extract skills
   const skillsSection = document.querySelector('#skills');
@@ -28,11 +39,6 @@ export function extractCvDataFromPage(): PdfCvData {
 
   // Extract domains (Agile, Dev, Ops sections)
   const domains: PdfCvData['domains'] = [];
-  const domainSections = document.querySelectorAll(
-    'section:has(h2):not(#about):not(#contact):not(#skills):not(#jobs):not(#studies):not(#learnings):not(#hobbies):not(#projects)'
-  );
-
-  // Try to get Agile, Dev, Ops sections specifically
   const mainContent = document.querySelector('main');
   if (mainContent) {
     const allH2s = mainContent.querySelectorAll('h2');
@@ -40,12 +46,11 @@ export function extractCvDataFromPage(): PdfCvData {
       const title = h2.textContent?.trim() || '';
       if (['Agile', 'Dev', 'Ops'].includes(title)) {
         const parent = h2.parentElement;
-        const description =
-          parent?.querySelector('p:not(:last-child)')?.textContent?.trim() ||
-          '';
-        const tagsContainer = parent?.querySelector('p:last-child');
+        const paragraphs = parent?.querySelectorAll('p') || [];
+        const description = paragraphs[0]?.textContent?.trim() || '';
         const tags: string[] = [];
-        tagsContainer?.querySelectorAll('span').forEach((span) => {
+        const lastP = paragraphs[paragraphs.length - 1];
+        lastP?.querySelectorAll('span').forEach((span) => {
           if (span.textContent) {
             tags.push(span.textContent.trim());
           }
@@ -55,40 +60,65 @@ export function extractCvDataFromPage(): PdfCvData {
     });
   }
 
-  // Extract jobs
+  // Extract jobs - updated selectors to match job.tsx structure
   const jobsSection = document.querySelector('#jobs');
   const jobItems = jobsSection?.querySelectorAll('ul > li') || [];
   const jobs: PdfCvData['jobs'] = [];
 
   jobItems.forEach((item) => {
-    const clientEl = item.querySelector('div > div > span:first-child');
-    const dateEl = item.querySelector('div > div > span:last-child');
-    const roleEl = item.querySelector('p span:first-child');
-    const locationEl = item.querySelector('p span:last-child');
-    const descEl = item.querySelectorAll('p')[1];
-    const frameworksContainer = item.querySelector('p:last-child');
-    const frameworks: string[] = [];
+    const jobDiv = item.querySelector('div');
+    if (!jobDiv) return;
 
-    frameworksContainer?.querySelectorAll('span').forEach((span) => {
-      if (span.textContent) {
-        frameworks.push(span.textContent.trim());
+    // Get client and dates from first inner div
+    const headerDiv = jobDiv.querySelector('div');
+    const smalls = headerDiv?.querySelectorAll('small') || [];
+    const clientText = smalls[0]?.textContent?.trim() || '';
+    const dateText = smalls[1]?.textContent?.trim() || '';
+
+    // Get role and location from first p
+    const firstP = jobDiv.querySelector('p');
+    const pSmalls = firstP?.querySelectorAll('small') || [];
+    const roleText = pSmalls[0]?.textContent?.trim() || '';
+    const locationText2 = pSmalls[1]?.textContent?.trim() || '';
+
+    // Get description - it's a p with class text-justify or the second p
+    const allPs = jobDiv.querySelectorAll('p');
+    let descText = '';
+    allPs.forEach((p) => {
+      if (p.classList.contains('text-justify') || p.classList.contains('text-xs')) {
+        if (!p.querySelector('small') && !p.querySelector('span')) {
+          descText = p.textContent?.trim() || '';
+        }
       }
     });
 
-    const dateText = dateEl?.textContent?.trim() || '';
+    // Get frameworks from last p with spans
+    const frameworks: string[] = [];
+    const lastP = allPs[allPs.length - 1];
+    if (lastP) {
+      lastP.querySelectorAll('span').forEach((span) => {
+        if (span.textContent) {
+          frameworks.push(span.textContent.trim());
+        }
+      });
+    }
+
+    // Parse dates
     const [startDate, endDate] = dateText.includes(' - ')
       ? dateText.split(' - ')
       : [dateText, undefined];
 
-    jobs.push({
-      client: clientEl?.textContent?.trim() || '',
-      role: roleEl?.textContent?.trim() || '',
-      location: locationEl?.textContent?.trim() || '',
-      startDate,
-      endDate,
-      description: descEl?.textContent?.trim() || '',
-      frameworks,
-    });
+    if (clientText) {
+      jobs.push({
+        client: clientText,
+        role: roleText,
+        location: locationText2,
+        startDate,
+        endDate,
+        description: descText,
+        frameworks,
+      });
+    }
   });
 
   // Extract studies
@@ -98,7 +128,8 @@ export function extractCvDataFromPage(): PdfCvData {
 
   studyItems.forEach((item) => {
     const nameEl = item.querySelector('strong');
-    const establishmentEl = item.querySelector('p:last-child span');
+    const paragraphs = item.querySelectorAll('p');
+    const establishmentEl = paragraphs[paragraphs.length - 1]?.querySelector('span');
     studies.push({
       name: nameEl?.textContent?.trim() || '',
       establishment: establishmentEl?.textContent?.trim() || '',
@@ -111,11 +142,11 @@ export function extractCvDataFromPage(): PdfCvData {
       role: roleEl?.textContent?.trim() || 'Développeur Fullstack',
     },
     contact: {
-      phone: phoneLink?.textContent?.trim() || '',
-      email: emailLink?.textContent?.trim() || '',
-      location: locationEl?.textContent?.trim() || '',
+      phone: phoneLink?.textContent?.trim() || '+33661412725',
+      email: emailLink?.textContent?.trim() || 'thomas.couderc@gmail.com',
+      location: locationText,
     },
-    about: aboutSection?.textContent?.trim() || '',
+    about: aboutText,
     skills,
     domains,
     jobs,
