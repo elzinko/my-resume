@@ -1,6 +1,7 @@
 'use client';
 
-import { useCvMode } from './CvModeContext';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 interface CvModeToggleProps {
   labels?: {
@@ -10,15 +11,20 @@ interface CvModeToggleProps {
 }
 
 export default function CvModeToggle({ 
-  labels = { full: 'Version complète', compact: 'CV 1 page' } 
+  labels = { full: 'Version complète', compact: 'Version courte' } 
 }: CvModeToggleProps) {
-  const { mode, toggleMode } = useCvMode();
+  const pathname = usePathname();
+  const lang = pathname?.split('/')[1] || 'fr';
+  const isShortMode = pathname?.includes('/short');
+  
+  const targetUrl = isShortMode ? `/${lang}` : `/${lang}/short`;
+  const label = isShortMode ? labels.full : labels.compact;
 
   return (
-    <button
-      onClick={toggleMode}
+    <Link
+      href={targetUrl}
       className="hidden items-center gap-2 rounded bg-blue-600 px-3 py-1.5 text-sm font-medium text-white transition-all hover:bg-blue-700 md:flex print:hidden"
-      title={mode === 'full' ? labels.compact : labels.full}
+      title={label}
     >
       {/* Icon */}
       <svg
@@ -29,15 +35,15 @@ export default function CvModeToggle({
         stroke="currentColor"
         strokeWidth={2}
       >
-        {mode === 'full' ? (
-          // Compress icon - file/document
+        {!isShortMode ? (
+          // Document icon for compact mode
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
             d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
           />
         ) : (
-          // Expand icon - grid/full view
+          // Grid icon for full view
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -45,7 +51,7 @@ export default function CvModeToggle({
           />
         )}
       </svg>
-      <span>{mode === 'full' ? labels.compact : labels.full}</span>
-    </button>
+      <span>{label}</span>
+    </Link>
   );
 }

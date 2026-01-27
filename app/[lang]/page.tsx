@@ -11,13 +11,13 @@ import Learnings from './learnings';
 import Hobbies from './hobbies';
 import Jobs from './jobs';
 import Projects from './projects';
-import CvContent from '@/components/CvContent';
+import PrintCompactVersion from '@/components/PrintCompactVersion';
 import { getDataWithLocal } from '@/lib/graphql-client';
 import { gql } from 'graphql-request';
 import { CompactCvData } from '@/components/CompactCvLayout';
 import formatDates from '@/lib/date';
 
-// Query to fetch all data for compact view
+// Query to fetch all data for compact view (used for mobile print)
 const compactDataQuery = gql`
   query getCompactData($lang: SiteLocale) {
     header(locale: $lang) {
@@ -71,7 +71,7 @@ export default async function Page({
 }: {
   params: { lang: Locale };
 }) {
-  // Fetch data for compact view
+  // Fetch data for compact view (for mobile print)
   const data: any = await getDataWithLocal({ locale: lang } as any, compactDataQuery);
   
   // Transform data for compact layout
@@ -113,15 +113,15 @@ export default async function Page({
       {/* @ts-expect-error Server Component */}
       <Headers locale={lang} />
       
-      <CvContent compactData={compactData} lang={lang as 'fr' | 'en'}>
-        {/* Full version content */}
+      {/* Full version content - visible on screen, hidden on mobile print */}
+      <div className="full-version">
         {/* @ts-expect-error Server Component */}
         <About locale={lang} />
         {/* @ts-expect-error Server Component */}
         <Domains locale={lang} />
 
-        <div className="mt-10 flex columns-1 flex-col md:columns-2 md:flex-row print:mt-4 print:flex-row">
-          <div id="left" className="order-last md:order-first md:w-1/3 md:pr-10 print:order-first print:w-1/3 print:pr-4">
+        <div className="mt-10 flex columns-1 flex-col md:columns-2 md:flex-row">
+          <div id="left" className="order-last md:order-first md:w-1/3 md:pr-10">
             {/* @ts-expect-error Server Component */}
             <Contact locale={lang} />
             {/* @ts-expect-error Server Component */}
@@ -131,7 +131,7 @@ export default async function Page({
             {/* @ts-expect-error Server Component */}
             <Hobbies locale={lang} />
           </div>
-          <div id="main" className="md:w-2/3 md:pr-10 print:w-2/3 print:pr-4">
+          <div id="main" className="md:w-2/3 md:pr-10">
             {/* @ts-expect-error Server Component */}
             <Jobs locale={lang} />
             {/* @ts-expect-error Server Component */}
@@ -140,7 +140,10 @@ export default async function Page({
             <Studies locale={lang} />
           </div>
         </div>
-      </CvContent>
+      </div>
+
+      {/* Compact version - hidden on screen, visible on mobile print */}
+      <PrintCompactVersion data={compactData} lang={lang as 'fr' | 'en'} />
     </>
   );
 }

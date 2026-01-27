@@ -5,11 +5,8 @@ import LogoGithub from './logoGithub';
 import LogoMalt from './logoMalt';
 import LogoPrint from './logoPrint';
 import CvModeToggle from './CvModeToggle';
-import { useCvMode } from './CvModeContext';
 
 export default function Logos() {
-  const { isCompact } = useCvMode();
-  
   const handlePrint = () => {
     window.print();
   };

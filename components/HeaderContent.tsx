@@ -1,22 +1,13 @@
 'use client';
 
-import { useCvMode } from './CvModeContext';
-
 interface HeaderContentProps {
   name: string;
   role: string;
 }
 
 export default function HeaderContent({ name, role }: HeaderContentProps) {
-  const { isCompact } = useCvMode();
-
-  // Hide header content when in compact mode (compact CV has its own header)
-  if (isCompact) {
-    return null;
-  }
-
   return (
-    <div className="flex justify-between py-14 md:py-20 print:py-4">
+    <div className="header-content flex justify-between py-14 md:py-20 print:py-4">
       <div className="grid justify-items-end">
         <h1 className="text-4xl font-extrabold text-blue-600 md:text-5xl lg:text-7xl print:text-3xl">
           {name}
