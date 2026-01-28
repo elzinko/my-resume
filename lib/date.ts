@@ -1,6 +1,6 @@
 import formatDate from 'intl-dateformat';
 
-function formatDates(date1: string, date2: string): string | null {
+function formatDates(date1: string, date2?: string): string | null {
     const startDate = date1
         ? formatDate(new Date(date1), 'MM/YYYY')
         : null;

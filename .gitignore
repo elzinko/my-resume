@@ -41,3 +41,6 @@ next-env.d.ts
 
 #others
 backups
+
+# playwright
+.playwright-mcp/
