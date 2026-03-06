@@ -5,7 +5,7 @@ import React from 'react';
 export default function logoLinkedin() {
   return (
     <a
-      href="https://www.linkedin.com/in/thomas-couderc-matiere-web/"
+      href="https://www.linkedin.com/in/thomas-couderc-product-builder/"
       className="inline-flex items-center space-x-2 rounded bg-blue-600 p-2 font-semibold text-white"
       target="”_blank”"
     >
