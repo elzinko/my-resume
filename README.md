@@ -44,3 +44,10 @@ First, run the development server:
 ```bash
 npm run build
 ```
+
+## CV personnalisé par annonce (URL dynamique + LLM)
+
+- **Paramètres lisibles dans l’URL** : `/{lang}/offer/match?company=…&requirement=Libellé:mots` (voir la doc).
+- **JSON compact base64** : `/{lang}/offer/custom?spec=…`
+
+Détails, exemples et limites : **[docs/OFFER_CUSTOM_ENDPOINT.md](docs/OFFER_CUSTOM_ENDPOINT.md)**.

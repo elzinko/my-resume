@@ -1,9 +1,5 @@
-import '../../../../styles/globals.css';
-
 import About from '@/app/[lang]/about';
 import Headers from '@/app/[lang]/header';
-import { Locale } from '../../../../i18n-config';
-import { i18n } from '../../../../i18n-config';
 import Contact from '@/app/[lang]/contact';
 import Studies from '@/app/[lang]/studies';
 import Skills from '@/app/[lang]/skills';
@@ -13,61 +9,22 @@ import Hobbies from '@/app/[lang]/hobbies';
 import Jobs from '@/app/[lang]/jobs';
 import Projects from '@/app/[lang]/projects';
 import EducationLevel from '@/components/EducationLevel';
-import TechMatch from './tech-match';
-import { getCvData } from '@/lib/cv-data';
-import { getEducationLevelContent } from '@/lib/education-level-content';
-import { getAllOfferIds, getOffer } from '@/data/offers';
-import { notFound } from 'next/navigation';
-import type { Metadata } from 'next';
+import type { EducationLevelContent } from '@/lib/education-level-content';
+import type { Locale } from 'i18n-config';
+import type { ReactNode } from 'react';
 
-function generateOfferTitle(
-  name: string,
-  lang: string,
-  company: string,
-): string {
-  const prefix = lang === 'fr' ? 'cv' : 'resume';
-  const date = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-  const safeName = name.toLowerCase().replace(/\s+/g, '_');
-  const safeCompany = company.toLowerCase().replace(/\s+/g, '_');
-  return `${prefix}_${safeName}_${safeCompany}_${date}`;
-}
-
-export async function generateStaticParams() {
-  const offerIds = getAllOfferIds();
-  return offerIds.flatMap((offerId) =>
-    i18n.locales.map((lang) => ({ lang, offerId })),
-  );
-}
-
-export async function generateMetadata({
-  params: { lang, offerId },
+/**
+ * Mise en page commune des pages CV « sur mesure » (custom / match).
+ */
+export default function OfferTailoredShell({
+  lang,
+  educationLevel,
+  matchSection,
 }: {
-  params: { lang: Locale; offerId: string };
-}): Promise<Metadata> {
-  const data: any = await getCvData(lang);
-  const name = data?.header?.name || 'CV';
-  const offer = getOffer(offerId);
-  const company = offer?.company || offerId;
-
-  return {
-    title: generateOfferTitle(name, lang, company),
-  };
-}
-
-export default async function OfferPage({
-  params: { lang, offerId },
-}: {
-  params: { lang: Locale; offerId: string };
+  lang: Locale;
+  educationLevel: EducationLevelContent;
+  matchSection: ReactNode;
 }) {
-  const offer = getOffer(offerId);
-  if (!offer) notFound();
-
-  const data: Record<string, unknown> = (await getCvData(lang)) as Record<
-    string,
-    unknown
-  >;
-  const educationLevel = getEducationLevelContent(data, lang);
-
   return (
     <>
       {/* @ts-expect-error Server Component */}
@@ -78,8 +35,7 @@ export default async function OfferPage({
       {/* @ts-expect-error Server Component */}
       <Domains locale={lang} />
 
-      {/* @ts-expect-error Server Component */}
-      <TechMatch locale={lang} offerId={offerId} />
+      {matchSection}
 
       <div className="flex flex-col print:flex-row md:flex-row">
         <div
