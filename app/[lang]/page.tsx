@@ -10,6 +10,7 @@ import Domains from './domains';
 import Learnings from './learnings';
 import Hobbies from './hobbies';
 import Jobs from './jobs';
+import EducationLevel from '@/components/EducationLevel';
 import Projects from './projects';
 import { getDataWithLocal } from '@/lib/graphql-client';
 import { gql } from 'graphql-request';
@@ -70,6 +71,7 @@ export default async function Page({
           <Contact locale={lang} />
           {/* @ts-expect-error Server Component */}
           <Skills locale={lang} />
+          <EducationLevel lang={lang} />
           {/* @ts-expect-error Server Component */}
           <Learnings locale={lang} />
           {/* @ts-expect-error Server Component */}
