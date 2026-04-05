@@ -1,49 +1,30 @@
 import Project from '@/components/project';
-import { getDataWithLocal } from '@/lib/graphql-client';
-import { gql } from 'graphql-request';
+import { getCvData } from '@/lib/cv-data';
+import {
+  byEndThenStart,
+  sortChronologicalDesc,
+} from '@/lib/sort-chronological';
 import { Locale } from 'i18n-config';
 import React from 'react';
 
-const query = gql`
-  query getAllProjects($lang: SiteLocale) {
-    projectsTitle(locale: $lang) {
-      title
-    }
-    allProjectsModels(locale: $lang) {
-      id
-      name
-      link
-      startDate
-      endDate
-      description
-      frameworks {
-        id
-        name
-        link
-      }
-      bullets {
-        id
-        text
-      }
-      tags {
-        id
-        name
-      }
-    }
-  }
-`;
-
-export default async function projects(locale: Locale) {
-  const data = await getDataWithLocal(locale, query);
+export default async function projects({ locale }: { locale: Locale }) {
+  const data: any = await getCvData(locale);
+  const visibleProjects = (data?.allProjectsModels || []).filter(
+    (p: { display?: boolean }) => p.display !== false,
+  );
+  const projectsOrdered = sortChronologicalDesc(
+    visibleProjects,
+    byEndThenStart,
+  );
   return (
     <>
-      <section id="projects" className="mt-10 break-before-page">
-        <h2 className="border-b pb-1 text-2xl font-semibold text-blue-300">
-          Projects
+      <section id="projects" className="mt-10">
+        <h2 className="border-b pb-1 text-2xl font-semibold text-cv-tag-text">
+          {data?.projectsTitle?.title ?? 'Projects'}
         </h2>
-        <ul className="mt-4">
-          {data?.allProjectsModels?.map((project: any) => (
-            <li key={project.id} className="py-4">
+        <ul className="cv-section-simple-list">
+          {projectsOrdered.map((project: any) => (
+            <li key={project.id}>
               <Project project={project} />
             </li>
           ))}

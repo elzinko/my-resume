@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -25,21 +21,11 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/app/*": [
-        "app/*"
-      ],
-      "@/common /*": [
-        "common/*"
-      ],
-      "@/components/*": [
-        "components/*"
-      ],
-      "@/lib/*": [
-        "lib/*"
-      ],
-      "@/data/*": [
-        "data/*"
-      ]
+      "@/app/*": ["app/*"],
+      "@/common /*": ["common/*"],
+      "@/components/*": ["components/*"],
+      "@/lib/*": ["lib/*"],
+      "@/data/*": ["data/*"]
     }
   },
   "include": [
@@ -50,7 +36,5 @@
     ".next/types/**/*.ts",
     "app/[lang]/frameworks.tsx.backup"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

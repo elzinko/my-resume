@@ -1,0 +1,2079 @@
+{
+  "github": {
+    "url": "https://github.com/elzinko"
+  },
+  "header": {
+    "id": "78726119",
+    "name": "Thomas Couderc",
+    "role": "Développeur fullstack"
+  },
+  "contact": {
+    "title": "Coordonnées",
+    "phoneTitle": "téléphone",
+    "phone": "+33661412725",
+    "emailTitle": "e-mail",
+    "email": "thomas.couderc@gmail.com",
+    "locationTitle": "emplacement",
+    "location": "Paris, France"
+  },
+  "about": {
+    "title": "Profile",
+    "text": "Je suis un consultant informatique fullstack agile passionné par les technologies open source frontend et backend. J'aime développer des logiciels à l'aide de solutions cloud, le tout dans la lignée du mouvement Devops."
+  },
+  "skillsTitle": {
+    "title": "Compétences"
+  },
+  "studiesTitle": {
+    "title": "Études"
+  },
+  "jobsTitle": {
+    "title": "Missions"
+  },
+  "projectsTitle": {
+    "title": "Projets"
+  },
+  "hobbiesTitle": {
+    "title": "Loisirs"
+  },
+  "learningsTitle": {
+    "title": "Apprentissages"
+  },
+  "educationLevel": {
+    "title": "Niveau de formation",
+    "levelPrimary": "Bac+5",
+    "effectiveLevelDetail": "Valorisé par 20 ans d'expérience professionnelle",
+    "diploma": "Bac +3",
+    "diplomaDetail": "Licence Pro Systèmes Informatiques et Logiciels",
+    "additionalTraining": "Formations complémentaires",
+    "trainingThemes": "Microélectronique / Traitement du signal / ML / LLM"
+  },
+  "head": {
+    "url": "https://elzinko.github.io/my-resume/en",
+    "name": "Le CV de Thomas Couderc",
+    "locale": "fr_FR",
+    "seo": {
+      "description": "Voici mon CV professionnel",
+      "title": "Le CV de Thomas Couderc"
+    }
+  },
+  "allSkillsModels": [
+    {
+      "id": "IeJ_h33KR_-n15lH_ynqpQ",
+      "name": "Typescript",
+      "link": "https://www.typescriptlang.org/"
+    },
+    {
+      "id": "81820957",
+      "name": "Java",
+      "link": "https://docs.oracle.com/en/java/javase/21/"
+    },
+    {
+      "id": "81821031",
+      "name": "Spring Boot",
+      "link": "https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/"
+    },
+    {
+      "id": "81821032",
+      "name": "React",
+      "link": "https://react.dev/learn"
+    },
+    {
+      "id": "81821038",
+      "name": "Kubernetes",
+      "link": "https://kubernetes.io/docs/home/"
+    },
+    {
+      "id": "81821052",
+      "name": "Clouds",
+      "link": "https://aws.amazon.com/"
+    },
+    {
+      "id": "81821048",
+      "name": "12 Factor",
+      "link": "https://12factor.net/"
+    }
+  ],
+  "allDomainsModels": [
+    {
+      "id": "78726113",
+      "name": "Agile",
+      "description": "Je sais mettre à profit mes multiples expériences d'agilité au service d'une équipe afin d'aboutir à un produit proche du besoin avec une philosophie Craftmanship.",
+      "position": 1,
+      "competencies": [
+        {
+          "id": "82627943",
+          "name": "Scrum",
+          "link": "https://www.scrum.org/"
+        },
+        {
+          "id": "90601528",
+          "name": "SAFe certified",
+          "link": "https://scaledagile.com/"
+        },
+        {
+          "id": "90606153",
+          "name": "Scrum master",
+          "link": "https://www.youtube.com/watch?v=KgfAQZU3ETY"
+        },
+        {
+          "id": "90601526",
+          "name": "Kanban",
+          "link": "https://fr.wikipedia.org/wiki/Kanban_(d%C3%A9veloppement)"
+        },
+        {
+          "id": "90601512",
+          "name": "Lean",
+          "link": "https://fr.wikipedia.org/wiki/Lean_(production)"
+        }
+      ]
+    },
+    {
+      "id": "78726111",
+      "name": "Dev",
+      "description": "J'aime développer des composants réutilisables dans un environnement clusterisé en utilisant des concepts tels que API REST, microservices, robustesse, observabilité, clean code.",
+      "position": 2,
+      "competencies": [
+        {
+          "id": "90601531",
+          "name": "Java",
+          "link": "https://www.java.com/fr/"
+        },
+        {
+          "id": "78848797",
+          "name": "Spring Boot",
+          "link": ""
+        },
+        {
+          "id": "82456008",
+          "name": "Typescript",
+          "link": ""
+        },
+        {
+          "id": "82522197",
+          "name": "Python",
+          "link": "https://www.python.org/"
+        },
+        {
+          "id": "82456107",
+          "name": "Go",
+          "link": "https://go.dev/"
+        },
+        {
+          "id": "an8YW0VVTf2JuZZZo1W0pw",
+          "name": "Vue.js",
+          "link": "https://vuejs.org/"
+        },
+        {
+          "id": "82456019",
+          "name": "React",
+          "link": ""
+        },
+        {
+          "id": "82456012",
+          "name": "Angular",
+          "link": ""
+        },
+        {
+          "id": "90628555",
+          "name": "microservices",
+          "link": ""
+        },
+        {
+          "id": "90768298",
+          "name": "DDD",
+          "link": "https://en.wikipedia.org/wiki/Domain-driven_design"
+        },
+        {
+          "id": "90628554",
+          "name": "Architecture",
+          "link": ""
+        }
+      ]
+    },
+    {
+      "id": "78855347",
+      "name": "Ops",
+      "description": "Je souhaite collaborer avec les équipes opérationnelles en pratiquant le déploiement continue et ainsi produire de la valeur pour l'entreprise en réduisant les frictions organisationnelles.",
+      "position": 3,
+      "competencies": [
+        {
+          "id": "82456127",
+          "name": "Docker",
+          "link": ""
+        },
+        {
+          "id": "82456128",
+          "name": "Kubernetes",
+          "link": ""
+        },
+        {
+          "id": "82522207",
+          "name": "Terraform",
+          "link": ""
+        },
+        {
+          "id": "90601547",
+          "name": "Vagrant",
+          "link": "https://www.vagrantup.com/"
+        },
+        {
+          "id": "82627329",
+          "name": "AWS",
+          "link": ""
+        },
+        {
+          "id": "82609060",
+          "name": "gcp",
+          "link": ""
+        },
+        {
+          "id": "82522206",
+          "name": "azure",
+          "link": ""
+        }
+      ]
+    }
+  ],
+  "allJobsModels": [
+    {
+      "client": "JPB Système",
+      "location": "Montereau-sur-le-Jard",
+      "startDate": "2024-06-10",
+      "endDate": "2025-08-31",
+      "description": "Développements fullstack IOT de la partie logicielle du KeyVibe",
+      "bullets": [
+        {
+          "id": "XxV3fZOUT2GMkhDbF72t9Q",
+          "text": "Développement de fonctionnalités clés pour solution IoT industrielle"
+        },
+        {
+          "id": "RTgGunzXTq-rf3n-F8KPfA",
+          "text": "Conception et mise en œuvre d’un mécanisme de détection de production multi‑seuils embarqué sur Raspberry Pi 3 & 4, utilisant Python et Node.js, pour analyser en temps réel les variations d’état machine."
+        },
+        {
+          "id": "c6-yORxqRjuvj9_z8GvfoQ",
+          "text": "Intégration complète de la connectivité Ethernet, configuration de DHCPD et communication MQTT vers AWS IoT Core & AWS Lambda, assurant fiabilité, faible latence et montée en charge."
+        }
+      ],
+      "frameworks": [
+        {
+          "id": "an8YW0VVTf2JuZZZo1W0pw",
+          "name": "Vue.js",
+          "link": "https://vuejs.org/"
+        },
+        {
+          "id": "82456008",
+          "name": "Typescript",
+          "link": ""
+        },
+        {
+          "id": "82522197",
+          "name": "Python",
+          "link": "https://www.python.org/"
+        },
+        {
+          "id": "82627329",
+          "name": "AWS",
+          "link": ""
+        },
+        {
+          "id": "82459500",
+          "name": "AWS lambda",
+          "link": ""
+        },
+        {
+          "id": "82522582",
+          "name": "iot hub",
+          "link": ""
+        }
+      ],
+      "role": {
+        "name": "Développeur IOT",
+        "id": "FUxO3DDtSpirVhE2ecFudw"
+      }
+    },
+    {
+      "client": "BlablaCar",
+      "location": "Paris",
+      "startDate": "2023-10-01",
+      "endDate": "2023-12-31",
+      "description": "Création d'un nouveau module de remboursement pour les bus opérés BlablaCar",
+      "bullets": [
+        {
+          "id": "BloJe9keTU-1zSaCVJfbMA",
+          "text": "Creation d'un nouveau service java Spring Boot"
+        },
+        {
+          "id": "YvKpB3bPQuaFmBRbX_LUmQ",
+          "text": "Création d'un nouveau module de remboursement  pour une application Zendesk en React"
+        }
+      ],
+      "frameworks": [
+        {
+          "id": "82456019",
+          "name": "React",
+          "link": ""
+        },
+        {
+          "id": "78848797",
+          "name": "Spring Boot",
+          "link": ""
+        },
+        {
+          "id": "82456128",
+          "name": "Kubernetes",
+          "link": ""
+        }
+      ],
+      "role": {
+        "name": "Consultant Full Stack",
+        "id": "81994135"
+      }
+    },
+    {
+      "client": "Smartch",
+      "location": "Paris",
+      "startDate": "2023-05-01",
+      "endDate": "2023-09-04",
+      "description": "Plateforme Sass pour de l'e-learning",
+      "bullets": [
+        {
+          "id": "197839471",
+          "text": "developpement d'une API Graphql"
+        },
+        {
+          "id": "197839489",
+          "text": "cicd"
+        }
+      ],
+      "frameworks": [
+        {
+          "id": "82455959",
+          "name": "Kotlin",
+          "link": ""
+        },
+        {
+          "id": "197839492",
+          "name": "Ktor",
+          "link": "https://ktor.io/"
+        },
+        {
+          "id": "197839497",
+          "name": "Exposed",
+          "link": "https://github.com/JetBrains/Exposed"
+        },
+        {
+          "id": "90733900",
+          "name": "Hexagonal architecture",
+          "link": "https://en.wikipedia.org/wiki/Hexagonal_architecture_(software)"
+        },
+        {
+          "id": "82459504",
+          "name": "confluence",
+          "link": ""
+        },
+        {
+          "id": "82456091",
+          "name": "Jira",
+          "link": ""
+        }
+      ],
+      "role": {
+        "name": "Consultant Backend",
+        "id": "82089336"
+      }
+    },
+    {
+      "client": "SNCF Réseaux - DGEX Solutions",
+      "location": "Saint-Denis",
+      "startDate": "2022-05-01",
+      "endDate": "2023-02-01",
+      "description": "Stratégie de développement et de croissance des équipes dans le cadre du projet open source OSRD hébergé. Gestion de la qualité des livrables et amélioration continue dans le cadre de a méthodologie SAFe. Gestion du backlog technique transverse.",
+      "bullets": [
+        {
+          "id": "82089445",
+          "text": "SAFe"
+        },
+        {
+          "id": "82089446",
+          "text": "Opensource"
+        },
+        {
+          "id": "82089447",
+          "text": "Ferroviaire"
+        }
+      ],
+      "frameworks": [
+        {
+          "id": "82456109",
+          "name": "Rust",
+          "link": "https://www.rust-lang.org/fr"
+        },
+        {
+          "id": "82459421",
+          "name": "Java 17",
+          "link": ""
+        },
+        {
+          "id": "82522195",
+          "name": "typescript",
+          "link": ""
+        },
+        {
+          "id": "82522197",
+          "name": "Python",
+          "link": "https://www.python.org/"
+        },
+        {
+          "id": "81826176",
+          "name": "Github",
+          "link": ""
+        },
+        {
+          "id": "82456128",
+          "name": "Kubernetes",
+          "link": ""
+        },
+        {
+          "id": "82456063",
+          "name": "VSCode",
+          "link": ""
+        },
+        {
+          "id": "82456200",
+          "name": "Debian",
+          "link": ""
+        },
+        {
+          "id": "82592399",
+          "name": "gohugo",
+          "link": ""
+        },
+        {
+          "id": "82456040",
+          "name": "Git",
+          "link": ""
+        },
+        {
+          "id": "82593991",
+          "name": "postgreSQL",
+          "link": ""
+        },
+        {
+          "id": "82593992",
+          "name": "fastapi",
+          "link": ""
+        },
+        {
+          "id": "82456127",
+          "name": "Docker",
+          "link": ""
+        },
+        {
+          "id": "82594135",
+          "name": "docker-compose",
+          "link": ""
+        }
+      ],
+      "role": {
+        "name": "Architecte Système",
+        "id": "82089432"
+      }
+    },
+    {
+      "client": "LeBonCoin",
+      "location": "Paris",
+      "startDate": "2021-08-01",
+      "endDate": "2022-05-01",
+      "description": "Participation à la refonte du système de paiement à la conception d'un projet de portefeuille numérique.",
+      "bullets": [
+        {
+          "id": "90815151",
+          "text": "architecture hexagonale dans un environnement monorepo"
+        },
+        {
+          "id": "90815152",
+          "text": "architecture orientée événements"
+        },
+        {
+          "id": "90815153",
+          "text": "monitoring de production"
+        }
+      ],
+      "frameworks": [
+        {
+          "id": "82456107",
+          "name": "Go",
+          "link": "https://go.dev/"
+        },
+        {
+          "id": "82456101",
+          "name": "kafka",
+          "link": ""
+        },
+        {
+          "id": "82456042",
+          "name": "Gitlab",
+          "link": ""
+        },
+        {
+          "id": "82456063",
+          "name": "VSCode",
+          "link": ""
+        },
+        {
+          "id": "82456128",
+          "name": "Kubernetes",
+          "link": ""
+        },
+        {
+          "id": "82456127",
+          "name": "Docker",
+          "link": ""
+        },
+        {
+          "id": "82456200",
+          "name": "Debian",
+          "link": ""
+        },
+        {
+          "id": "82459493",
+          "name": "elk",
+          "link": ""
+        },
+        {
+          "id": "82456211",
+          "name": "Datadog",
+          "link": ""
+        },
+        {
+          "id": "82456118",
+          "name": "Postman",
+          "link": ""
+        },
+        {
+          "id": "82456116",
+          "name": "Swagger",
+          "link": ""
+        }
+      ],
+      "role": {
+        "name": "Consultant Backend",
+        "id": "82089336"
+      }
+    },
+    {
+      "client": "Celsius Energy",
+      "location": "Clamart",
+      "startDate": "2020-12-01",
+      "endDate": "2021-08-01",
+      "description": "Logging et monitoring de capteurs IoT pour une solution géothermique.",
+      "bullets": [
+        {
+          "id": "82548179",
+          "text": "contribution à la conception d'une architecture évolutive pour les tableaux de bord en temps réel pour surveiller les appareils IoT"
+        },
+        {
+          "id": "82548180",
+          "text": "utilisation de la méthodologie agile Scrum "
+        },
+        {
+          "id": "82548181",
+          "text": "builds et déploiements automatisés avec tests unitaires, tests d'intégration et e2e"
+        }
+      ],
+      "frameworks": [
+        {
+          "id": "82522195",
+          "name": "typescript",
+          "link": ""
+        },
+        {
+          "id": "82522197",
+          "name": "Python",
+          "link": "https://www.python.org/"
+        },
+        {
+          "id": "82456012",
+          "name": "Angular",
+          "link": ""
+        },
+        {
+          "id": "82522206",
+          "name": "azure",
+          "link": ""
+        },
+        {
+          "id": "82522207",
+          "name": "Terraform",
+          "link": ""
+        },
+        {
+          "id": "82522582",
+          "name": "iot hub",
+          "link": ""
+        },
+        {
+          "id": "82522583",
+          "name": "iot edge",
+          "link": ""
+        },
+        {
+          "id": "82522585",
+          "name": "stream analytics",
+          "link": ""
+        },
+        {
+          "id": "82522586",
+          "name": "function app",
+          "link": ""
+        },
+        {
+          "id": "82522595",
+          "name": "databricks",
+          "link": ""
+        },
+        {
+          "id": "82539592",
+          "name": "cosmodb",
+          "link": ""
+        },
+        {
+          "id": "82539593",
+          "name": "signalr",
+          "link": ""
+        },
+        {
+          "id": "82539595",
+          "name": "azure devops",
+          "link": ""
+        },
+        {
+          "id": "82539596",
+          "name": "key vault",
+          "link": ""
+        },
+        {
+          "id": "82539599",
+          "name": "backup vault",
+          "link": ""
+        }
+      ],
+      "role": {
+        "name": "Consultant Full Stack",
+        "id": "81994135"
+      }
+    },
+    {
+      "client": "RelevanC",
+      "location": "Paris",
+      "startDate": "2020-08-01",
+      "endDate": "2020-12-02",
+      "description": "Initialisation de la refonte de l'outil de couponning multitenant Coupilo",
+      "bullets": [
+        {
+          "id": "82089404",
+          "text": "architecture hexagonale"
+        },
+        {
+          "id": "82089405",
+          "text": "scrum"
+        }
+      ],
+      "frameworks": [
+        {
+          "id": "82455956",
+          "name": "Java 11",
+          "link": ""
+        },
+        {
+          "id": "78848797",
+          "name": "Spring Boot",
+          "link": ""
+        },
+        {
+          "id": "82456116",
+          "name": "Swagger",
+          "link": ""
+        },
+        {
+          "id": "82456118",
+          "name": "Postman",
+          "link": ""
+        },
+        {
+          "id": "82609058",
+          "name": "jhipster",
+          "link": ""
+        },
+        {
+          "id": "82609060",
+          "name": "gcp",
+          "link": ""
+        }
+      ],
+      "role": {
+        "name": "Consultant Full Stack",
+        "id": "81994135"
+      }
+    },
+    {
+      "client": "Ecocea",
+      "location": "Paris",
+      "startDate": "2019-10-01",
+      "endDate": "2020-05-01",
+      "description": "Transformation de l'usine Logicielle pour le site ecommerce de Manutan.",
+      "bullets": [],
+      "frameworks": [
+        {
+          "id": "82455939",
+          "name": "Java 8",
+          "link": ""
+        },
+        {
+          "id": "82456129",
+          "name": "gitlab flow",
+          "link": ""
+        },
+        {
+          "id": "82609066",
+          "name": "jenkins",
+          "link": ""
+        },
+        {
+          "id": "82456042",
+          "name": "Gitlab",
+          "link": ""
+        },
+        {
+          "id": "82609074",
+          "name": "websphere commerce",
+          "link": ""
+        },
+        {
+          "id": "82456133",
+          "name": "Ubuntu",
+          "link": ""
+        },
+        {
+          "id": "82456019",
+          "name": "React",
+          "link": ""
+        },
+        {
+          "id": "82456048",
+          "name": "Gradle",
+          "link": ""
+        }
+      ],
+      "role": {
+        "name": "Consultant Devops",
+        "id": "82089385"
+      }
+    },
+    {
+      "client": "Edelia",
+      "location": "Nanterre",
+      "startDate": "2016-04-01",
+      "endDate": "2019-06-01",
+      "description": "Conception et développements de systèmes et applications en lien avec la consommation d'électricité, d'eau et de gaz.",
+      "bullets": [
+        {
+          "id": "82089371",
+          "text": "Conception et développement d'une solution backend de calcul pour les thermostat connectés Sowee"
+        },
+        {
+          "id": "82089372",
+          "text": "Participation au chantier de transformation digitale sur la partie Devops"
+        },
+        {
+          "id": "82089373",
+          "text": "Conception et développement fullstack de l'application mobile hybride Mon Eco Service"
+        }
+      ],
+      "frameworks": [
+        {
+          "id": "82455939",
+          "name": "Java 8",
+          "link": ""
+        },
+        {
+          "id": "82455956",
+          "name": "Java 11",
+          "link": ""
+        },
+        {
+          "id": "82456127",
+          "name": "Docker",
+          "link": ""
+        },
+        {
+          "id": "82594135",
+          "name": "docker-compose",
+          "link": ""
+        },
+        {
+          "id": "82459406",
+          "name": "Rancher",
+          "link": ""
+        },
+        {
+          "id": "82459407",
+          "name": "Openshift",
+          "link": ""
+        },
+        {
+          "id": "82456128",
+          "name": "Kubernetes",
+          "link": ""
+        },
+        {
+          "id": "82460432",
+          "name": "cucumber",
+          "link": ""
+        },
+        {
+          "id": "82456051",
+          "name": "MySQL",
+          "link": ""
+        },
+        {
+          "id": "82459496",
+          "name": "ECS",
+          "link": ""
+        },
+        {
+          "id": "82459498",
+          "name": "ECR",
+          "link": ""
+        },
+        {
+          "id": "82459497",
+          "name": "EKS",
+          "link": ""
+        },
+        {
+          "id": "82459488",
+          "name": "ec2",
+          "link": ""
+        },
+        {
+          "id": "82456054",
+          "name": "RDS",
+          "link": ""
+        },
+        {
+          "id": "82459489",
+          "name": "s3",
+          "link": ""
+        },
+        {
+          "id": "82456110",
+          "name": "Oauth2",
+          "link": ""
+        },
+        {
+          "id": "78848797",
+          "name": "Spring Boot",
+          "link": ""
+        },
+        {
+          "id": "82460428",
+          "name": "Spring Security",
+          "link": ""
+        },
+        {
+          "id": "82456202",
+          "name": "Lombok",
+          "link": ""
+        },
+        {
+          "id": "82613282",
+          "name": "devcontainer",
+          "link": ""
+        },
+        {
+          "id": "82456014",
+          "name": "Ionic",
+          "link": ""
+        },
+        {
+          "id": "82456203",
+          "name": "Wiremock",
+          "link": ""
+        },
+        {
+          "id": "82456113",
+          "name": "Liquibase",
+          "link": ""
+        },
+        {
+          "id": "82456055",
+          "name": "Cassandra",
+          "link": ""
+        },
+        {
+          "id": "82456059",
+          "name": "Spark",
+          "link": ""
+        },
+        {
+          "id": "82456057",
+          "name": "MongoDB",
+          "link": ""
+        },
+        {
+          "id": "78726310",
+          "name": "Apache",
+          "link": ""
+        },
+        {
+          "id": "82456116",
+          "name": "Swagger",
+          "link": ""
+        },
+        {
+          "id": "82456118",
+          "name": "Postman",
+          "link": ""
+        },
+        {
+          "id": "82456209",
+          "name": "Sonar",
+          "link": ""
+        },
+        {
+          "id": "82456043",
+          "name": "JenkinsX",
+          "link": ""
+        },
+        {
+          "id": "82456210",
+          "name": "Crashlytics",
+          "link": ""
+        },
+        {
+          "id": "82459405",
+          "name": "Nexus",
+          "link": ""
+        },
+        {
+          "id": "82459408",
+          "name": "Minishift",
+          "link": ""
+        },
+        {
+          "id": "82456064",
+          "name": "IntelliJ",
+          "link": ""
+        },
+        {
+          "id": "82456063",
+          "name": "VSCode",
+          "link": ""
+        },
+        {
+          "id": "82456040",
+          "name": "Git",
+          "link": ""
+        },
+        {
+          "id": "82456199",
+          "name": "Gitflow",
+          "link": ""
+        },
+        {
+          "id": "82456042",
+          "name": "Gitlab",
+          "link": ""
+        },
+        {
+          "id": "82456091",
+          "name": "Jira",
+          "link": ""
+        },
+        {
+          "id": "82459409",
+          "name": "Fastlane",
+          "link": ""
+        },
+        {
+          "id": "82627329",
+          "name": "AWS",
+          "link": ""
+        },
+        {
+          "id": "82456131",
+          "name": "OSX",
+          "link": ""
+        },
+        {
+          "id": "82456200",
+          "name": "Debian",
+          "link": ""
+        },
+        {
+          "id": "82459411",
+          "name": "iOS",
+          "link": ""
+        },
+        {
+          "id": "82459412",
+          "name": "Android",
+          "link": ""
+        }
+      ],
+      "role": {
+        "name": "Consultant Full Stack",
+        "id": "81994135"
+      }
+    },
+    {
+      "client": "JCDecaux",
+      "location": "Plaisir",
+      "startDate": "2015-01-01",
+      "endDate": "2016-03-01",
+      "description": "Développement d'applications mobiles à destination de la maintenance des mobiliers urbains du groupe.",
+      "bullets": [
+        {
+          "id": "82089354",
+          "text": "Méthodologie Scrum"
+        }
+      ],
+      "frameworks": [
+        {
+          "id": "82455939",
+          "name": "Java 8",
+          "link": ""
+        },
+        {
+          "id": "78848797",
+          "name": "Spring Boot",
+          "link": ""
+        },
+        {
+          "id": "82456051",
+          "name": "MySQL",
+          "link": ""
+        },
+        {
+          "id": "78726310",
+          "name": "Apache",
+          "link": ""
+        },
+        {
+          "id": "82459423",
+          "name": "undertow",
+          "link": ""
+        },
+        {
+          "id": "82456040",
+          "name": "Git",
+          "link": ""
+        },
+        {
+          "id": "82456042",
+          "name": "Gitlab",
+          "link": ""
+        },
+        {
+          "id": "82456091",
+          "name": "Jira",
+          "link": ""
+        },
+        {
+          "id": "82456133",
+          "name": "Ubuntu",
+          "link": ""
+        },
+        {
+          "id": "82627329",
+          "name": "AWS",
+          "link": ""
+        },
+        {
+          "id": "82459488",
+          "name": "ec2",
+          "link": ""
+        }
+      ],
+      "role": {
+        "name": "Consultant Full Stack",
+        "id": "81994135"
+      }
+    },
+    {
+      "client": "Lotsys Filiale FDJ",
+      "location": "Suresnes",
+      "startDate": "2014-04-01",
+      "endDate": "2014-12-01",
+      "description": "Activités d'études et développement pour le backend de la Française des jeux.",
+      "bullets": [
+        {
+          "id": "82627548",
+          "text": "sessions dans un environnement clusterisé"
+        },
+        {
+          "id": "82627549",
+          "text": "développement d'API REST"
+        }
+      ],
+      "frameworks": [
+        {
+          "id": "82459502",
+          "name": "Java 7",
+          "link": ""
+        },
+        {
+          "id": "82456022",
+          "name": "spring",
+          "link": ""
+        },
+        {
+          "id": "82460522",
+          "name": "oracle",
+          "link": ""
+        },
+        {
+          "id": "82459503",
+          "name": "Mercurial",
+          "link": ""
+        },
+        {
+          "id": "82459504",
+          "name": "confluence",
+          "link": ""
+        },
+        {
+          "id": "82459506",
+          "name": "bamboo",
+          "link": ""
+        },
+        {
+          "id": "82459507",
+          "name": "fisheye",
+          "link": ""
+        },
+        {
+          "id": "82459508",
+          "name": "stash",
+          "link": ""
+        },
+        {
+          "id": "82456062",
+          "name": "Hazelcast",
+          "link": ""
+        },
+        {
+          "id": "82456061",
+          "name": "zookeeper",
+          "link": ""
+        },
+        {
+          "id": "82459628",
+          "name": "saltstack",
+          "link": ""
+        },
+        {
+          "id": "82459630",
+          "name": "eclipse",
+          "link": ""
+        },
+        {
+          "id": "82459633",
+          "name": "sql developer",
+          "link": ""
+        },
+        {
+          "id": "82459631",
+          "name": "advanced rest client,",
+          "link": ""
+        },
+        {
+          "id": "82459634",
+          "name": "cygwin",
+          "link": ""
+        }
+      ],
+      "role": {
+        "name": "Consultant Backend",
+        "id": "82089336"
+      }
+    },
+    {
+      "client": "Mediametrie",
+      "location": "Levallois-Perret",
+      "startDate": "2013-04-01",
+      "endDate": "2014-03-01",
+      "description": "Conception et développement d'API dans le cadre d'un système de mesure d'audience.",
+      "bullets": [
+        {
+          "id": "82627570",
+          "text": "activités de recherches et développement dans un cadre Scrum"
+        },
+        {
+          "id": "82627571",
+          "text": "POC on an audience tag tagging quality measurement tool"
+        },
+        {
+          "id": "82627572",
+          "text": "development of an Internet nomenclature integrator as part of a global project"
+        }
+      ],
+      "frameworks": [
+        {
+          "id": "82459502",
+          "name": "Java 7",
+          "link": ""
+        },
+        {
+          "id": "82460480",
+          "name": "gwt 2.5",
+          "link": ""
+        },
+        {
+          "id": "82460423",
+          "name": "spring framework 3.2.8",
+          "link": ""
+        },
+        {
+          "id": "82460427",
+          "name": "spring data jpa 1.5.2",
+          "link": ""
+        },
+        {
+          "id": "82460428",
+          "name": "Spring Security",
+          "link": ""
+        },
+        {
+          "id": "82460432",
+          "name": "cucumber",
+          "link": ""
+        },
+        {
+          "id": "82460431",
+          "name": "Selenium",
+          "link": ""
+        },
+        {
+          "id": "82459640",
+          "name": "nutch 2",
+          "link": ""
+        },
+        {
+          "id": "82459641",
+          "name": "htmlunit",
+          "link": ""
+        },
+        {
+          "id": "82459642",
+          "name": "gora",
+          "link": ""
+        },
+        {
+          "id": "82459645",
+          "name": "hbase",
+          "link": ""
+        },
+        {
+          "id": "82873833",
+          "name": "hadoop",
+          "link": ""
+        },
+        {
+          "id": "82459646",
+          "name": "mapreduce",
+          "link": ""
+        },
+        {
+          "id": "82593991",
+          "name": "postgreSQL",
+          "link": ""
+        },
+        {
+          "id": "82870012",
+          "name": "tomcat",
+          "link": ""
+        },
+        {
+          "id": "82456040",
+          "name": "Git",
+          "link": ""
+        },
+        {
+          "id": "82456042",
+          "name": "Gitlab",
+          "link": ""
+        },
+        {
+          "id": "82609066",
+          "name": "jenkins",
+          "link": ""
+        },
+        {
+          "id": "82456209",
+          "name": "Sonar",
+          "link": ""
+        },
+        {
+          "id": "82627329",
+          "name": "AWS",
+          "link": ""
+        },
+        {
+          "id": "82459488",
+          "name": "ec2",
+          "link": ""
+        }
+      ],
+      "role": {
+        "name": "Consultant Backend",
+        "id": "82089336"
+      }
+    },
+    {
+      "client": "Thales communications",
+      "location": "Gennevilliers",
+      "startDate": "2012-01-01",
+      "endDate": "2013-01-01",
+      "description": "Activités de développement d'une plateforme d'analyse d'information et de renseignement sur des données de type sources ouvertes, axée autour de traitements d'analyses de réseaux sociaux et d'analyse d'opinions. Projet au sein de l'équipe R&D du laboratoire d'Etudes Amont CenTAI de THALES",
+      "bullets": [
+        {
+          "id": "82627895",
+          "text": "Audit de performances / Optimisation de la chaîne de traitement"
+        },
+        {
+          "id": "82627896",
+          "text": "Developpement d'un service scalable de preuve Internet"
+        },
+        {
+          "id": "82627897",
+          "text": "Participation à l'intégration d'une solution de loadbalancing pour un outil de NLP"
+        },
+        {
+          "id": "82627898",
+          "text": "Développement d'interfaces GWT"
+        },
+        {
+          "id": "82627899",
+          "text": "Mise en place de templates de machines virtuelles"
+        }
+      ],
+      "frameworks": [
+        {
+          "id": "82459502",
+          "name": "Java 7",
+          "link": ""
+        },
+        {
+          "id": "82460480",
+          "name": "gwt 2.5",
+          "link": ""
+        },
+        {
+          "id": "82456022",
+          "name": "spring",
+          "link": ""
+        },
+        {
+          "id": "82870008",
+          "name": "spring data jpa",
+          "link": ""
+        },
+        {
+          "id": "82460485",
+          "name": "spring social",
+          "link": ""
+        },
+        {
+          "id": "82456051",
+          "name": "MySQL",
+          "link": ""
+        },
+        {
+          "id": "82870012",
+          "name": "tomcat",
+          "link": ""
+        },
+        {
+          "id": "82456040",
+          "name": "Git",
+          "link": ""
+        },
+        {
+          "id": "82456047",
+          "name": "Maven",
+          "link": ""
+        },
+        {
+          "id": "82456057",
+          "name": "MongoDB",
+          "link": ""
+        },
+        {
+          "id": "82460458",
+          "name": "selenium grid",
+          "link": ""
+        },
+        {
+          "id": "82460442",
+          "name": "jmeter",
+          "link": ""
+        },
+        {
+          "id": "82460443",
+          "name": "jprofiler",
+          "link": ""
+        },
+        {
+          "id": "82456096",
+          "name": "Camel",
+          "link": ""
+        },
+        {
+          "id": "82460487",
+          "name": "maven 3.0.4",
+          "link": ""
+        },
+        {
+          "id": "82460486",
+          "name": "blogger api v3",
+          "link": ""
+        },
+        {
+          "id": "82609066",
+          "name": "jenkins",
+          "link": ""
+        },
+        {
+          "id": "82460494",
+          "name": "cloudstack",
+          "link": ""
+        },
+        {
+          "id": "82460502",
+          "name": "vmware",
+          "link": ""
+        }
+      ],
+      "role": {
+        "name": "Consultant Full Stack",
+        "id": "81994135"
+      }
+    },
+    {
+      "client": "Médiapost",
+      "location": "Montrouge",
+      "startDate": "2011-04-01",
+      "endDate": "2012-01-01",
+      "description": "Activités d'études et développement d'un outil intranet de contractualisation des produits de type imprimés publicitaires proposés par LA POSTE dans ses établissements",
+      "bullets": [
+        {
+          "id": "82089294",
+          "text": "POC d'une solution de test via Selenium Hub"
+        },
+        {
+          "id": "82089295",
+          "text": "Planification des sprints, revues, rétrospectives, facilitation des mêlées quotidiennes"
+        },
+        {
+          "id": "82089296",
+          "text": "Réalisation de présentations fonctionnelles et techniques pour l'équipe"
+        }
+      ],
+      "frameworks": [
+        {
+          "id": "82460503",
+          "name": "java 5",
+          "link": ""
+        },
+        {
+          "id": "78726170",
+          "name": "Maven 2",
+          "link": ""
+        },
+        {
+          "id": "82456040",
+          "name": "Git",
+          "link": ""
+        },
+        {
+          "id": "82460504",
+          "name": "tomcat 5",
+          "link": ""
+        },
+        {
+          "id": "82609066",
+          "name": "jenkins",
+          "link": ""
+        },
+        {
+          "id": "82460505",
+          "name": "sybase",
+          "link": ""
+        },
+        {
+          "id": "82460506",
+          "name": "jasper report",
+          "link": ""
+        },
+        {
+          "id": "82460431",
+          "name": "Selenium",
+          "link": ""
+        },
+        {
+          "id": "82627943",
+          "name": "Scrum",
+          "link": "https://www.scrum.org/"
+        },
+        {
+          "id": "82627944",
+          "name": "tdd",
+          "link": ""
+        },
+        {
+          "id": "82627945",
+          "name": "pair programming",
+          "link": ""
+        }
+      ],
+      "role": {
+        "name": "Consultant Full Stack",
+        "id": "81994135"
+      }
+    },
+    {
+      "client": "Renault / BNP Paribas / La compagnie 1818 / DGFIP / SFR",
+      "location": "Paris",
+      "startDate": "2004-09-01",
+      "endDate": "2011-03-01",
+      "description": "Toutes mes précédentes missions dont je peux fournir le détail sur demande",
+      "bullets": [],
+      "frameworks": [],
+      "role": {
+        "name": "Consultant Full Stack",
+        "id": "81994135"
+      }
+    }
+  ],
+  "allStudiesModels": [
+    {
+      "id": "78731519",
+      "name": "Baccalauréat S - Spécialité mathématiques",
+      "startDate": "1999-01-01",
+      "endDate": "1999-01-01",
+      "establishment": "Francois 1er high school",
+      "location": "Fontainebleau"
+    },
+    {
+      "id": "82548346",
+      "name": "Control of Mobile Robots & Digital Signal Processing",
+      "startDate": "2011-09-01",
+      "endDate": "2013-07-01",
+      "establishment": "Coursera",
+      "location": "Stanford"
+    },
+    {
+      "id": "78786280",
+      "name": "Classes préparatoires grandes écoles - PTSI/PSI",
+      "startDate": "1999-09-01",
+      "endDate": "2002-07-01",
+      "establishment": "Lafayette high school",
+      "location": "Champagne-sur-Seine"
+    },
+    {
+      "id": "82479432",
+      "name": "Apprentissage automatique - ML",
+      "startDate": "2011-09-01",
+      "endDate": "2013-07-01",
+      "establishment": "Coursera",
+      "location": "Stanford"
+    },
+    {
+      "id": "82551736",
+      "name": "processeurs de signaux et logique programmable",
+      "startDate": "2011-09-01",
+      "endDate": "2012-06-01",
+      "establishment": "Conservatoire National des Arts et Métiers",
+      "location": "Paris"
+    },
+    {
+      "id": "82475538",
+      "name": "Programmation avancée des micro-contrôleurs",
+      "startDate": "2011-09-01",
+      "endDate": "2012-06-01",
+      "establishment": "Conservatoire National des Arts et Métiers",
+      "location": "Paris"
+    },
+    {
+      "id": "82475531",
+      "name": "Licence Pro Systèmes Informatiques et Logiciels",
+      "startDate": "2005-08-01",
+      "endDate": "2006-08-01",
+      "establishment": "IUT",
+      "location": "Fontainebleau"
+    },
+    {
+      "id": "82475518",
+      "name": "DUT Informatique",
+      "startDate": "2003-08-01",
+      "endDate": "2005-06-01",
+      "establishment": "IUT",
+      "location": "Fontainebleau"
+    }
+  ],
+  "allProjectsModels": [
+    {
+      "id": "cvproj-shopify-assistant",
+      "name": "shopify-plugin-product-assistant",
+      "title": "Assistant Shopify",
+      "link": "https://github.com/elzinko/shopify-plugin-product-assistant",
+      "startDate": "2025-12-01",
+      "endDate": null,
+      "description": "Extension Shopify d’assistance produit (recommandations, fiches, parcours d’achat). En cours de développement.",
+      "frameworks": [
+        {
+          "id": "81826170",
+          "name": "NextJS",
+          "link": ""
+        },
+        {
+          "id": "82456019",
+          "name": "React",
+          "link": ""
+        }
+      ],
+      "bullets": [],
+      "tags": [
+        {
+          "id": "cvtag-shopify-dev",
+          "name": "code"
+        }
+      ]
+    },
+    {
+      "id": "cvproj-cop1-2026",
+      "display": false,
+      "name": "cop1",
+      "link": "https://github.com/elzinko/cop1",
+      "startDate": "2026-02-15",
+      "endDate": null,
+      "description": "Projet COP1 — développement mené en 2026.",
+      "frameworks": [
+        {
+          "id": "81826170",
+          "name": "NextJS",
+          "link": ""
+        },
+        {
+          "id": "82456019",
+          "name": "React",
+          "link": ""
+        }
+      ],
+      "bullets": [],
+      "tags": [
+        {
+          "id": "cvtag-cop1",
+          "name": "code"
+        }
+      ]
+    },
+    {
+      "id": "cvproj-iamthelaw-2026",
+      "display": false,
+      "name": "iamthelaw",
+      "link": "https://github.com/elzinko/iamthelaw",
+      "startDate": "2026-02-01",
+      "endDate": null,
+      "description": "Projet I Am The Law — développé en 2026.",
+      "frameworks": [
+        {
+          "id": "81826170",
+          "name": "NextJS",
+          "link": ""
+        },
+        {
+          "id": "82456019",
+          "name": "React",
+          "link": ""
+        }
+      ],
+      "bullets": [],
+      "tags": [
+        {
+          "id": "cvtag-iatl",
+          "name": "code"
+        }
+      ]
+    },
+    {
+      "id": "cvproj-lifefindsaway-2026",
+      "display": false,
+      "name": "lifefindsaway",
+      "link": "https://github.com/elzinko/lifefindsaway",
+      "startDate": "2026-02-01",
+      "endDate": null,
+      "description": "Projet LifeFindsAway — développé en 2026.",
+      "frameworks": [
+        {
+          "id": "81826170",
+          "name": "NextJS",
+          "link": ""
+        },
+        {
+          "id": "82456019",
+          "name": "React",
+          "link": ""
+        }
+      ],
+      "bullets": [],
+      "tags": [
+        {
+          "id": "cvtag-lfa",
+          "name": "code"
+        }
+      ]
+    },
+    {
+      "id": "cvproj-realizator-2026",
+      "name": "realizator",
+      "link": "https://github.com/elzinko/realizator",
+      "startDate": "2026-01-15",
+      "endDate": null,
+      "description": "Projet Realizator — développé en 2026.",
+      "frameworks": [
+        {
+          "id": "81826170",
+          "name": "NextJS",
+          "link": ""
+        },
+        {
+          "id": "82456019",
+          "name": "React",
+          "link": ""
+        }
+      ],
+      "bullets": [],
+      "tags": [
+        {
+          "id": "cvtag-realizator",
+          "name": "code"
+        }
+      ]
+    },
+    {
+      "id": "cvproj-livestreamz-2026",
+      "name": "livestreamz",
+      "link": "https://github.com/elzinko/livestreamz",
+      "startDate": "2026-01-15",
+      "endDate": null,
+      "description": "Projet autour du live streaming — développé en 2026.",
+      "frameworks": [
+        {
+          "id": "81826170",
+          "name": "NextJS",
+          "link": ""
+        },
+        {
+          "id": "82456019",
+          "name": "React",
+          "link": ""
+        }
+      ],
+      "bullets": [],
+      "tags": [
+        {
+          "id": "cvtag-livestreamz",
+          "name": "code"
+        }
+      ]
+    },
+    {
+      "id": "cvproj-muti-2026",
+      "name": "MUTI",
+      "link": "https://www.muti.app/",
+      "startDate": "2026-01-01",
+      "endDate": null,
+      "description": "MUTI — Motion Orchestration Engine : moteur d’orchestration pour enchaîner et piloter des flux motion / créatifs. Développement début 2026.",
+      "frameworks": [
+        {
+          "id": "81826170",
+          "name": "NextJS",
+          "link": ""
+        },
+        {
+          "id": "82456019",
+          "name": "React",
+          "link": ""
+        }
+      ],
+      "bullets": [],
+      "tags": [
+        {
+          "id": "cvtag-muti",
+          "name": "product"
+        }
+      ]
+    },
+    {
+      "id": "81826200",
+      "name": "Curriculum Vitae",
+      "link": "https://github.com/elzinko/my-resume",
+      "startDate": null,
+      "endDate": "2023-03-16",
+      "description": "Mon cv professionnel actualisé fait avec amour",
+      "frameworks": [
+        {
+          "id": "81826170",
+          "name": "NextJS",
+          "link": ""
+        },
+        {
+          "id": "81826172",
+          "name": "Tailwind CSS",
+          "link": ""
+        },
+        {
+          "id": "81826186",
+          "name": "DatoCMS",
+          "link": ""
+        },
+        {
+          "id": "81826176",
+          "name": "Github",
+          "link": ""
+        },
+        {
+          "id": "81826185",
+          "name": "Copilot",
+          "link": ""
+        },
+        {
+          "id": "81826173",
+          "name": "Vercel",
+          "link": ""
+        }
+      ],
+      "bullets": [
+        {
+          "id": "81826198",
+          "text": "design réalisé avec Tailwind CSS"
+        },
+        {
+          "id": "81826199",
+          "text": "conception réactive"
+        }
+      ],
+      "tags": [
+        {
+          "id": "81981928",
+          "name": "code"
+        }
+      ]
+    },
+    {
+      "id": "82518980",
+      "name": "Matière Web",
+      "link": "https://matiere-web.com/",
+      "startDate": "2020-06-01",
+      "endDate": null,
+      "description": "Co-fondateur et directeur de l'agence web Matière Web",
+      "frameworks": [
+        {
+          "id": "90902399",
+          "name": "Wordpress",
+          "link": "https://wordpress.com/"
+        },
+        {
+          "id": "90902400",
+          "name": "Elementor",
+          "link": "https://elementor.com/"
+        },
+        {
+          "id": "81826170",
+          "name": "NextJS",
+          "link": ""
+        },
+        {
+          "id": "82456019",
+          "name": "React",
+          "link": ""
+        },
+        {
+          "id": "82456012",
+          "name": "Angular",
+          "link": ""
+        },
+        {
+          "id": "81826186",
+          "name": "DatoCMS",
+          "link": ""
+        },
+        {
+          "id": "90902401",
+          "name": "CTO",
+          "link": ""
+        }
+      ],
+      "bullets": [],
+      "tags": [
+        {
+          "id": "82972442",
+          "name": "pro"
+        },
+        {
+          "id": "82972454",
+          "name": "business"
+        }
+      ]
+    },
+    {
+      "id": "82932189",
+      "name": "Déploiement Octobot",
+      "link": "https://github.com/elzinko/octobot",
+      "startDate": null,
+      "endDate": "2023-02-01",
+      "description": "Déployez gratuitement une instance Octobot sur le cloud Oracle.",
+      "frameworks": [
+        {
+          "id": "82456127",
+          "name": "Docker",
+          "link": ""
+        },
+        {
+          "id": "82594135",
+          "name": "docker-compose",
+          "link": ""
+        },
+        {
+          "id": "82522197",
+          "name": "Python",
+          "link": "https://www.python.org/"
+        },
+        {
+          "id": "90902398",
+          "name": "Oracle cloud",
+          "link": "https://www.oracle.com/fr/cloud/"
+        }
+      ],
+      "bullets": [],
+      "tags": [
+        {
+          "id": "82932186",
+          "name": "octobot"
+        },
+        {
+          "id": "82932187",
+          "name": "cicd"
+        },
+        {
+          "id": "82932188",
+          "name": "crypto"
+        }
+      ]
+    },
+    {
+      "id": "82933230",
+      "name": "Fizzbuzz en Go",
+      "link": "https://github.com/elzinko/go-fizzbuzz",
+      "startDate": null,
+      "endDate": "2021-01-09",
+      "description": "Fizzbuzz en Go",
+      "frameworks": [
+        {
+          "id": "82456107",
+          "name": "Go",
+          "link": "https://go.dev/"
+        },
+        {
+          "id": "82456127",
+          "name": "Docker",
+          "link": ""
+        },
+        {
+          "id": "82459635",
+          "name": "rest",
+          "link": ""
+        },
+        {
+          "id": "82456116",
+          "name": "Swagger",
+          "link": ""
+        },
+        {
+          "id": "82933040",
+          "name": "Gin",
+          "link": ""
+        }
+      ],
+      "bullets": [],
+      "tags": [
+        {
+          "id": "82933051",
+          "name": "dev"
+        },
+        {
+          "id": "82933052",
+          "name": "fun"
+        }
+      ]
+    }
+  ],
+  "allHobbiesModels": [
+    {
+      "id": "81779577",
+      "name": "Créer du son",
+      "link": "https://soundcloud.com/zebra-music-459073993/sets/la-base"
+    },
+    {
+      "id": "81779962",
+      "name": "Crossovers",
+      "link": "https://hoopstudy.com/"
+    },
+    {
+      "id": "81780862",
+      "name": "Rider",
+      "link": "https://www.passportesdusoleil.com/"
+    },
+    {
+      "id": "81781610",
+      "name": "Le système de Londres",
+      "link": "https://www.chess.com/fr"
+    }
+  ],
+  "allLearningsModels": [
+    {
+      "id": "cnZskAq6SqSbkXAmAB0KIQ",
+      "name": "LLM",
+      "link": "https://www.langchain.com/"
+    },
+    {
+      "id": "Taq3bWZ6Stu5rt42dP1_WQ",
+      "name": "AWS Bedrock",
+      "link": "https://aws.amazon.com/fr/bedrock/agents/"
+    },
+    {
+      "id": "UsM_i8jNSFK12ePhrc0x0g",
+      "name": "MCP",
+      "link": "https://modelcontextprotocol.io/specification/2025-06-18"
+    },
+    {
+      "id": "learn-langchain-stack",
+      "name": "LangChain",
+      "link": "https://docs.langchain.com/"
+    },
+    {
+      "id": "learn-openrag",
+      "name": "OpenRAG",
+      "link": "https://docs.openr.ag/"
+    },
+    {
+      "id": "learn-bmad-method",
+      "name": "BMAD",
+      "link": "https://docs.bmad-method.org/"
+    }
+  ]
+}

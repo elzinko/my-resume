@@ -2,9 +2,94 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  /**
+   * Liste sous titre de section (Learnings, Hobbies, Projects, Studies, …).
+   * Même écart vertical partout (space-y-1 = 0.25rem), mobile comme desktop.
+   */
+  .cv-section-simple-list {
+    @apply mt-4 space-y-1;
+  }
+
+  /**
+   * Bloc « Niveau de formation » : EducationLevel utilise toujours heading / primary / muted ci-dessous
+   * (CV court inclus). Les classes `*-compact` restent disponibles pour d’autres écrans si besoin.
+   */
+  .cv-education-muted {
+    @apply text-sm leading-snug text-gray-400 print:text-xs;
+  }
+
+  .cv-education-muted-compact {
+    @apply text-xs leading-snug text-gray-400 print:text-[10px];
+  }
+
+  /** Colonne gauche : lignes « fortes » (Bac+5, diplôme, titre d’étude) — même corps partout. */
+  .cv-education-primary {
+    @apply text-base leading-snug text-purple-300 print:text-sm;
+  }
+
+  .cv-education-primary-compact {
+    @apply text-sm leading-snug text-purple-300 print:text-xs;
+  }
+
+  /* Même corps que .cv-education-primary (Bac+5 aligné sur Bac +3). */
+  .cv-education-heading {
+    @apply text-base font-normal leading-snug text-purple-300 print:text-sm;
+  }
+
+  .cv-education-heading-compact {
+    @apply text-sm font-normal leading-snug text-purple-300 print:text-xs;
+  }
+
+  /**
+   * Études (StudyDisplay) — titres au même corps que le bloc Niveau de formation (primary).
+   */
+  .cv-study-title {
+    @apply text-base font-normal leading-snug text-cv-section print:text-sm;
+  }
+
+  .cv-study-meta {
+    @apply text-sm font-normal leading-snug text-gray-400 print:text-xs;
+  }
+
+  .cv-study-year {
+    @apply text-sm font-normal tabular-nums leading-snug text-cv-section print:text-xs;
+  }
+
+  .cv-study-title-compact {
+    @apply text-sm font-normal leading-snug text-cv-section print:text-xs;
+  }
+
+  .cv-study-year-compact {
+    @apply text-xs font-normal tabular-nums leading-snug text-gray-400 print:text-[10px];
+  }
+
+  /**
+   * Corps de mission : même taille que .cv-education-muted (ex. « Backed by 20 years… »).
+   */
+  .cv-job-description {
+    @apply text-left text-sm leading-snug text-cv-body-muted md:text-justify print:text-justify print:text-xs;
+  }
+
+  /**
+   * Ligne titre (gauche) + date ou méta (droite) : alignement bas du flex.
+   * Les spans de droite portent en plus `self-end` (JobDisplay, project) pour le rendu mobile / WebKit.
+   */
+  .cv-row-with-side-meta {
+    @apply flex items-end justify-between gap-2;
+  }
+
+  /**
+   * Études : année à droite sur la 1re ligne (baseline) si le diplôme revient à la ligne.
+   */
+  .cv-row-study-title-year {
+    @apply flex items-baseline justify-between gap-2;
+  }
+}
+
 html {
   scroll-behavior: smooth;
-  font-family: "Raleway", sans-serif;
+  font-family: 'Raleway', sans-serif;
 }
 
 /* Print styles */

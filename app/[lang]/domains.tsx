@@ -1,30 +1,13 @@
 import Domain from '@/components/domain';
-import { getDataWithLocal } from '@/lib/graphql-client';
-import { gql } from 'graphql-request';
+import { getCvData } from '@/lib/cv-data';
 import { Locale } from 'i18n-config';
 import React from 'react';
 
-const query = gql`
-  query getAllDomains($lang: SiteLocale) {
-    allDomainsModels(locale: $lang) {
-      id
-      name
-      description
-      position
-      competencies {
-        id
-        name
-        link
-      }
-    }
-  }
-`;
-
-export default async function domains(locale: Locale) {
-  const data = await getDataWithLocal(locale, query);
+export default async function domains({ locale }: { locale: Locale }) {
+  const data: any = await getCvData(locale);
   return (
     <section id="domains" className="mt-10">
-      <div className="flex w-full columns-1 flex-col md:columns-3 md:flex-row md:space-x-6">
+      <div className="flex w-full flex-col gap-4 md:flex-row md:gap-0 md:space-x-6">
         {data?.allDomainsModels?.map((domain: any) => (
           <Domain key={domain.id} domain={domain} />
         ))}

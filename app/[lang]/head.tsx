@@ -1,24 +1,9 @@
 import React from 'react';
-import { gql } from 'graphql-request';
-import { getDataWithLocal } from '@/lib/graphql-client';
+import { getCvData } from '@/lib/cv-data';
 import { Locale } from 'i18n-config';
 
-const query = gql`
-  query getHead($lang: SiteLocale) {
-    head(locale: $lang) {
-      url
-      name
-      locale
-      seo {
-        description
-        title
-      }
-    }
-  }
-`;
-
-export default async function Head(locale: Locale) {
-  const data: any = await getDataWithLocal(locale, query);
+export default async function Head({ locale }: { locale: Locale }) {
+  const data: any = await getCvData(locale);
   const date = new Date();
   return (
     <>

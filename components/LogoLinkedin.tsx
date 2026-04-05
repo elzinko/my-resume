@@ -1,16 +1,24 @@
 'use client';
 
 import React from 'react';
+import { cvHeaderIconBtn } from '@/lib/cv-header-toolbar';
 
-export default function logoLinkedin() {
+type LogoLinkedinProps = {
+  onNavigate?: () => void;
+};
+
+export default function logoLinkedin({ onNavigate }: LogoLinkedinProps) {
   return (
     <a
       href="https://www.linkedin.com/in/thomas-couderc-product-builder/"
-      className="inline-flex items-center space-x-2 rounded bg-blue-600 p-2 font-semibold text-white"
-      target="”_blank”"
+      className={cvHeaderIconBtn.linkedin}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="LinkedIn"
+      onClick={() => onNavigate?.()}
     >
       <svg
-        className="h-5 w-5 fill-current"
+        className="h-4 w-4 fill-current md:h-5 md:w-5"
         role="img"
         viewBox="0 0 256 256"
         xmlns="http://www.w3.org/2000/svg"

@@ -2,34 +2,38 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { cvHeaderModeBtn } from '@/lib/cv-header-toolbar';
 
 interface CvModeToggleProps {
   labels?: {
     full: string;
     compact: string;
   };
+  onNavigate?: () => void;
 }
 
-export default function CvModeToggle({ 
-  labels = { full: 'Version complète', compact: 'Version courte' } 
+export default function CvModeToggle({
+  labels = { full: 'Version complète', compact: 'Version courte' },
+  onNavigate,
 }: CvModeToggleProps) {
   const pathname = usePathname();
   const lang = pathname?.split('/')[1] || 'fr';
   const isShortMode = pathname?.includes('/short');
-  
+
   const targetUrl = isShortMode ? `/${lang}` : `/${lang}/short`;
   const label = isShortMode ? labels.full : labels.compact;
 
   return (
     <Link
       href={targetUrl}
-      className="flex items-center gap-1 rounded bg-blue-600 p-2 text-sm font-medium text-white transition-all hover:bg-blue-700 md:gap-2 md:px-3 print:hidden"
+      className={`${cvHeaderModeBtn} print:hidden`}
       title={label}
+      onClick={() => onNavigate?.()}
     >
       {/* Icon */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="h-5 w-5"
+        className="h-4 w-4 md:h-5 md:w-5"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"

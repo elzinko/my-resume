@@ -1,17 +1,9 @@
-import { getData } from '@/lib/graphql-client';
-import { gql } from 'graphql-request';
+import { getCvData } from '@/lib/cv-data';
+import { i18n } from '../../i18n-config';
 import React from 'react';
 
-const query = gql`
-  {
-    github {
-      url
-    }
-  }
-`;
-
 export default async function Github() {
-  const data: any = await getData(query);
+  const data: any = await getCvData(i18n.defaultLocale);
   return (
     <>
       <strong className="text-xl font-medium">Github</strong>

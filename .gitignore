@@ -42,5 +42,8 @@ next-env.d.ts
 #others
 backups
 
-# playwright
+# playwright (captures MCP / locale, non versionnés)
 .playwright-mcp/
+/playwright/
+playwright-report/
+test-results/

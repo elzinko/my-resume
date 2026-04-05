@@ -1,25 +1,10 @@
-import { getDataWithLocal } from '@/lib/graphql-client';
-import { gql } from 'graphql-request';
+import { getCvData } from '@/lib/cv-data';
 import { Locale } from 'i18n-config';
 import React from 'react';
 import ContactDisplay from '@/components/ContactDisplay';
 
-const query = gql`
-  query getContact($lang: SiteLocale) {
-    contact(locale: $lang) {
-      title
-      phoneTitle
-      phone
-      emailTitle
-      email
-      locationTitle
-      location
-    }
-  }
-`;
-
-export default async function Contact(locale: Locale) {
-  const data: any = await getDataWithLocal(locale, query);
+export default async function Contact({ locale }: { locale: Locale }) {
+  const data: any = await getCvData(locale);
   const contactData = {
     title: data?.contact?.title,
     phoneTitle: data?.contact?.phoneTitle || '',
@@ -32,7 +17,7 @@ export default async function Contact(locale: Locale) {
 
   return (
     <section id="contact" className="mt-10">
-      <h2 className="border-b pb-1 text-2xl font-semibold text-pink-300">
+      <h2 className="border-b pb-1 text-2xl font-semibold text-cv-jobs">
         {contactData.title || 'Contact'}
       </h2>
       <ContactDisplay contact={contactData} />

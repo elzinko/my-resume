@@ -1,20 +1,28 @@
 'use client';
 
 import React from 'react';
+import { cvHeaderIconBtn } from '@/lib/cv-header-toolbar';
 
-export default function logoGithub() {
+type LogoGithubProps = {
+  onNavigate?: () => void;
+};
+
+export default function logoGithub({ onNavigate }: LogoGithubProps) {
   return (
     <a
       href="https://github.com/elzinko/"
-      className="inline-flex items-center space-x-2 rounded bg-gray-700 p-2 font-medium text-white"
-      target="”_blank”"
+      className={cvHeaderIconBtn.github}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="GitHub"
+      onClick={() => onNavigate?.()}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
         aria-hidden="true"
         role="img"
-        className="w-5"
+        className="h-4 w-4 md:h-5 md:w-5"
         preserveAspectRatio="xMidYMid meet"
         viewBox="0 0 24 24"
       >
