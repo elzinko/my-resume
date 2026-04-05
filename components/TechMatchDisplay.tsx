@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { slugifyClient } from '@/lib/slug';
+import MatchClientPill from './MatchClientPill';
 
 export interface MatchEntry {
   label: string;
@@ -48,7 +48,7 @@ export default function TechMatchDisplay({ data, lang }: TechMatchDisplayProps) 
   const t = labels[lang];
 
   return (
-    <section className="mt-6 print:mt-3">
+    <section id="profile-match" className="mt-6 print:mt-3">
       <h2 className="border-b pb-1 text-2xl font-semibold text-orange-300">
         {t.sectionTitle}
       </h2>
@@ -84,13 +84,7 @@ export default function TechMatchDisplay({ data, lang }: TechMatchDisplayProps) 
               {hasMatches && (
                 <div className="mt-1.5 flex flex-wrap gap-1 print:mt-0.5">
                   {entry.matchedClients.map((match) => (
-                    <a
-                      key={match.client}
-                      href={`#${slugifyClient(match.client)}`}
-                      className="whitespace-nowrap rounded bg-orange-300/20 px-1.5 py-0.5 text-[10px] text-orange-200 transition-colors hover:bg-orange-300/40 print:text-[8px]"
-                    >
-                      {match.client}
-                    </a>
+                    <MatchClientPill key={match.client} client={match.client} />
                   ))}
                 </div>
               )}
