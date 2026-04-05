@@ -17,6 +17,7 @@ import TechMatch from './tech-match';
 import { getDataWithLocal } from '@/lib/graphql-client';
 import { gql } from 'graphql-request';
 import { getAllOfferIds, getOffer } from '@/data/offers';
+import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 
 const headerQuery = gql`
@@ -69,6 +70,9 @@ export default async function OfferPage({
 }: {
   params: { lang: Locale; offerId: string };
 }) {
+  const offer = getOffer(offerId);
+  if (!offer) notFound();
+
   return (
     <>
       {/* @ts-expect-error Server Component */}

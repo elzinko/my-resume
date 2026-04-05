@@ -47,7 +47,8 @@ function jobMatchesRequirement(
   job: JobForMatching,
   keywords: string[]
 ): boolean {
-  const frameworkMatch = job.frameworks.some((fw) => {
+  const frameworks = job.frameworks || [];
+  const frameworkMatch = frameworks.some((fw) => {
     const name = fw.name.toLowerCase();
     return keywords.some((kw) => name.includes(kw) || kw.includes(name));
   });
