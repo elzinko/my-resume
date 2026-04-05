@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { cvHeaderIconBtn } from '@/lib/cv-header-toolbar';
 
 interface LogoPrintProps {
   onClick: () => void;
@@ -9,14 +10,15 @@ interface LogoPrintProps {
 export default function LogoPrint({ onClick }: LogoPrintProps) {
   return (
     <button
+      type="button"
       onClick={onClick}
-      className="inline-flex items-center space-x-2 rounded bg-gray-600 p-2 font-medium text-white transition-all hover:bg-gray-700"
+      className={cvHeaderIconBtn.print}
       title="Imprimer / Exporter en PDF"
       aria-label="Imprimer ou exporter en PDF"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="h-5 w-5"
+        className="h-4 w-4 md:h-5 md:w-5"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"

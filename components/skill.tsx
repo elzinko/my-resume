@@ -12,10 +12,11 @@ interface SkillProps {
 }
 
 export default function Skill({ skill, compact = false }: SkillProps) {
-  const baseClasses = "whitespace-nowrap rounded border border-blue-400/50 text-blue-300";
-  
-  const normalClasses = `${baseClasses} px-2 py-1 text-xs transition-colors hover:border-blue-300 hover:text-blue-200 md:px-3 md:text-sm`;
-  
+  const baseClasses =
+    'whitespace-nowrap rounded border border-cv-tag-border/50 text-cv-tag-text';
+
+  const normalClasses = `${baseClasses} px-2 py-1 text-xs transition-colors hover:border-cv-tag-text hover:text-cv-tag-text-hover md:px-3 md:text-sm`;
+
   const compactClasses = `${baseClasses} px-2 py-0.5 text-xs print:px-1.5 print:text-[10px]`;
 
   // In compact mode or if no link, render as span
@@ -28,10 +29,7 @@ export default function Skill({ skill, compact = false }: SkillProps) {
   }
 
   return (
-    <a
-      href={skill.link}
-      className={normalClasses}
-    >
+    <a href={skill.link} className={normalClasses}>
       {skill.name}
     </a>
   );

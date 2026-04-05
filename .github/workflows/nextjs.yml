@@ -86,6 +86,13 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+      - name: Export CV JSON from DatoCMS
+        run: |
+          if [ -f "${{ github.workspace }}/yarn.lock" ]; then
+            yarn export:datocms
+          else
+            npm run export:datocms
+          fi
       - name: Build with Next.js and generate out folder for static hosting
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
       - name: Upload artifact

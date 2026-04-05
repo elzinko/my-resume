@@ -2,50 +2,46 @@
 
 import React from 'react';
 import formatDates from '@/lib/date';
+import { capitalizeFirstLetter } from '@/lib/capitalize-first';
+
+function projectPrimaryLabel(project: {
+  title?: string | null;
+  name?: string | null;
+}): string | null {
+  const title = typeof project.title === 'string' ? project.title.trim() : '';
+  if (title) return title;
+  const name = project.name?.trim();
+  if (!name) return null;
+  return capitalizeFirstLetter(name);
+}
 
 export default function project({ project }: any) {
   const dates = formatDates(project.startDate, project.endDate);
   const id: any = 'project-' + project?.id;
+  const name = projectPrimaryLabel(project);
+  const client = project.client ? capitalizeFirstLetter(project.client) : '';
+  const location = project.location
+    ? capitalizeFirstLetter(project.location)
+    : '';
+
   return (
     <section id={id}>
-      <div className="flex justify-between">
-        <strong className="text-blue-300">
+      <div className="cv-row-with-side-meta">
+        <span className="min-w-0 flex-1 text-base font-normal leading-snug text-cv-tag-text print:text-sm">
           <a href={project.link ? project.link : '#'}>
-            {project.name ? project.name : null}
+            {name}
             {project.client ? <span> - </span> : null}
-            {project.client ? project.client : ''}
+            {project.client ? client : null}
             {project.location ? <span> - </span> : null}
-            {project.location ? project.location : ''}
+            {project.location ? location : null}
           </a>
-        </strong>
-        <small className="text-gray-500">{dates}</small>
+        </span>
+        {dates ? (
+          <span className="min-w-max shrink-0 self-end text-cv-meta font-normal tabular-nums leading-snug text-cv-tag-text print:text-xs">
+            {dates}
+          </span>
+        ) : null}
       </div>
-
-      <p className="text-xs">{project?.description}</p>
-      {project?.bullets?.length > 0 ? (
-        <ul className="mx-4 my-2 list-disc text-xs">
-          {project?.bullets?.map((bullet: any) => (
-            <li key={bullet.id}>{bullet.text}</li>
-          ))}
-        </ul>
-      ) : (
-        ''
-      )}
-
-      {project?.frameworks?.length > 0 ? (
-        <p className="flex flex-wrap gap-x-2 gap-y-2 whitespace-nowrap py-2">
-          {project?.frameworks?.map((framework: any) => (
-            <span
-              key={framework.id}
-              className="rounded bg-blue-200 px-2 py-1 text-xs text-white"
-            >
-              {framework.name.toLowerCase()}
-            </span>
-          ))}
-        </p>
-      ) : (
-        ''
-      )}
     </section>
   );
 }

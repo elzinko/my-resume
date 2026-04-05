@@ -1,28 +1,83 @@
 'use client';
 
 import React from 'react';
-import { educationLevel, EducationLevelLang } from '@/data/education-level';
+import type { EducationLevelContent } from '@/lib/education-level-content';
 
 interface EducationLevelProps {
-  lang: EducationLevelLang;
+  content: EducationLevelContent;
   compact?: boolean;
 }
 
-export default function EducationLevel({ lang, compact = false }: EducationLevelProps) {
-  const t = educationLevel[lang];
+type PrimaryRole = 'heading' | 'primary';
+
+interface BlockRow {
+  id: string;
+  primaryRole: PrimaryRole;
+  primary: string;
+  secondary?: string;
+}
+
+function buildRows(t: EducationLevelContent): BlockRow[] {
+  return [
+    {
+      id: 'level',
+      primaryRole: 'heading',
+      primary: t.levelPrimary,
+      secondary: t.effectiveLevelDetail,
+    },
+    {
+      id: 'diploma',
+      primaryRole: 'primary',
+      primary: t.diploma,
+      secondary: t.diplomaDetail,
+    },
+    {
+      id: 'additional',
+      primaryRole: 'primary',
+      primary: t.additionalTraining,
+      secondary: t.trainingThemes,
+    },
+  ];
+}
+
+/** Même typo que la page complète : pas de variantes `-compact` sur le corps (mobile / CV court = desktop). */
+function EducationBlockRow({
+  primaryRole,
+  primary,
+  secondary,
+  tightSpacing,
+}: BlockRow & { tightSpacing: boolean }) {
+  const primaryClass =
+    primaryRole === 'heading'
+      ? 'cv-education-heading'
+      : 'cv-education-primary';
+
+  return (
+    <div className={tightSpacing ? 'space-y-0.5' : 'space-y-1'}>
+      <p className={primaryClass}>{primary}</p>
+      {secondary ? (
+        <p className={`cv-education-muted max-w-full`}>{secondary}</p>
+      ) : null}
+    </div>
+  );
+}
+
+export default function EducationLevel({
+  content,
+  compact = false,
+}: EducationLevelProps) {
+  const rows = buildRows(content);
 
   if (compact) {
     return (
-      <section className="mb-6 print:mb-4">
-        <h2 className="border-b pb-1 text-2xl font-semibold text-teal-300 print:text-sm">
-          {t.title}
+      <section className="mb-6 mt-6 print:mb-4 print:mt-4">
+        <h2 className="border-b pb-1 text-2xl font-semibold text-purple-300 print:text-sm">
+          {content.title}
         </h2>
-        <div className="mt-2 print:mt-1">
-          <span className="inline-block rounded bg-teal-300 px-2 py-0.5 text-xs font-bold text-gray-900 print:text-[10px]">
-            Bac+5
-          </span>
-          <p className="mt-1 text-xs text-teal-300 print:text-[10px]">{t.diploma}</p>
-          <p className="text-[10px] text-gray-400 print:text-[8px]">{t.additionalTraining}</p>
+        <div className="mt-2 space-y-2 font-normal print:mt-1 print:space-y-1.5">
+          {rows.map((row) => (
+            <EducationBlockRow key={row.id} {...row} tightSpacing />
+          ))}
         </div>
       </section>
     );
@@ -30,21 +85,13 @@ export default function EducationLevel({ lang, compact = false }: EducationLevel
 
   return (
     <section id="education-level" className="mt-10">
-      <h2 className="border-b pb-1 text-2xl font-semibold text-teal-300">
-        {t.title}
+      <h2 className="border-b pb-1 text-2xl font-semibold text-purple-300">
+        {content.title}
       </h2>
-      <div className="mt-4 space-y-2">
-        <div className="flex items-center gap-2">
-          <span className="inline-block rounded bg-teal-300 px-2.5 py-1 text-sm font-bold text-gray-900">
-            Bac+5
-          </span>
-          <span className="text-sm text-gray-400">{t.effectiveLevelDetail}</span>
-        </div>
-        <div>
-          <p className="text-sm text-teal-300">{t.diploma}</p>
-          <p className="text-xs text-gray-400">{t.diplomaDetail}</p>
-        </div>
-        <p className="text-sm text-teal-300">{t.additionalTraining}</p>
+      <div className="mt-4 space-y-3 font-normal">
+        {rows.map((row) => (
+          <EducationBlockRow key={row.id} {...row} tightSpacing={false} />
+        ))}
       </div>
     </section>
   );

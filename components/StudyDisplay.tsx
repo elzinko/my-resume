@@ -16,17 +16,27 @@ interface StudyDisplayProps {
   compact?: boolean;
 }
 
-export default function StudyDisplay({ study, compact = false }: StudyDisplayProps) {
+function formatStudyYear(startDate?: string, endDate?: string): string | null {
+  const endYear = endDate ? new Date(endDate).getFullYear() : null;
+  if (endYear) return `${endYear}`;
+  const startYear = startDate ? new Date(startDate).getFullYear() : null;
+  if (startYear) return `${startYear}`;
+  return null;
+}
+
+export default function StudyDisplay({
+  study,
+  compact = false,
+}: StudyDisplayProps) {
   if (compact) {
-    // Compact mode: only name and end year
-    const endYear = study.endDate ? new Date(study.endDate).getFullYear() : null;
+    const endYear = study.endDate
+      ? new Date(study.endDate).getFullYear()
+      : null;
     return (
-      <li className="flex items-start justify-between gap-2">
-        <span className="text-xs text-teal-300 print:text-[10px]">
-          {study.name}
-        </span>
+      <li className="cv-row-study-title-year">
+        <span className="cv-study-title-compact min-w-0 flex-1">{study.name}</span>
         {endYear && (
-          <span className="whitespace-nowrap text-[10px] text-gray-400 print:text-[8px]">
+          <span className="cv-study-year-compact min-w-max shrink-0 whitespace-nowrap">
             {endYear}
           </span>
         )}
@@ -34,16 +44,20 @@ export default function StudyDisplay({ study, compact = false }: StudyDisplayPro
     );
   }
 
-  // Full mode: name with location/establishment
+  const year = formatStudyYear(study.startDate, study.endDate);
+
   return (
     <>
-      <p className="flex justify-between">
-        <strong className="text-base text-teal-300">{study.name}</strong>
-      </p>
-      <p className="flex text-sm text-gray-300">
-        <small>
-          {study.location} / {study.establishment}
-        </small>
+      <div className="cv-row-study-title-year">
+        <span className="cv-study-title min-w-0 flex-1">{study.name}</span>
+        {year && (
+          <span className="cv-study-year min-w-max shrink-0 whitespace-nowrap">
+            {year}
+          </span>
+        )}
+      </div>
+      <p className="cv-study-meta mt-1">
+        {study.location} / {study.establishment}
       </p>
     </>
   );

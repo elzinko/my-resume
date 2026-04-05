@@ -1,49 +1,20 @@
 import Job from '@/components/job';
-import { getDataWithLocal, graphQLClient } from '@/lib/graphql-client';
-import { gql } from 'graphql-request';
+import { getCvData } from '@/lib/cv-data';
 import { Locale } from 'i18n-config';
 import React from 'react';
 
-const query = gql`
-  query getAllJobs($lang: SiteLocale) {
-    jobsTitle(locale: $lang) {
-      title
-    }
-    allJobsModels(locale: $lang, filter: { visible: { eq: true } }) {
-      client
-      location
-      startDate
-      endDate
-      description
-      bullets {
-        id
-        text
-      }
-      frameworks {
-        id
-        name
-        link
-      }
-      role {
-        name
-        id
-      }
-    }
-  }
-`;
-
-export default async function jobs(locale: Locale) {
-  const data = await getDataWithLocal(locale, query);
+export default async function jobs({ locale }: { locale: Locale }) {
+  const data: any = await getCvData(locale);
   return (
     <>
       <section id="jobs" className="mt-10 break-before-page">
-        <h2 className="mt-4 border-b pb-1 text-2xl font-semibold text-pink-300">
+        <h2 className="border-b pb-1 text-2xl font-semibold text-cv-jobs">
           {data?.jobsTitle?.title}
         </h2>
-        <ul className="mt-4">
+        <ul className="mt-4 space-y-4 print:space-y-4">
           {data?.allJobsModels?.map((job: any, index: number) => (
-            <li key={job.client + index} className="py-4">
-              <Job job={job} />
+            <li key={job.client + index}>
+              <Job job={job} locale={locale} />
             </li>
           ))}
         </ul>

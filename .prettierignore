@@ -1,0 +1,7 @@
+.next
+out
+node_modules
+.vercel
+.playwright-mcp
+coverage
+build
