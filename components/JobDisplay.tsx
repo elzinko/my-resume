@@ -2,6 +2,7 @@
 
 import React from 'react';
 import formatDates from '@/lib/date';
+import { slugifyClient } from '@/lib/slug';
 
 export interface JobData {
   id?: string;
@@ -71,7 +72,7 @@ export default function JobDisplay({
 
   // Full mode: complete display with role, bullets, all frameworks
   return (
-    <div id={job.id}>
+    <div id={slugifyClient(job.client)}>
       <div className="flex justify-between">
         <small className="font-bold text-sky-300">{job.client}</small>
         <small className="min-w-max text-sky-300">{dates}</small>

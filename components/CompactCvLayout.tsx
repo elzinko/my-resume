@@ -6,6 +6,7 @@ import Domain from './domain';
 import ContactDisplay from './ContactDisplay';
 import JobDisplay from './JobDisplay';
 import StudyDisplay from './StudyDisplay';
+import EducationLevel from './EducationLevel';
 
 export interface CompactCvData {
   header: {
@@ -164,6 +165,9 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
               ))}
             </ul>
           </section>
+
+          {/* Education Level */}
+          <EducationLevel lang={lang} compact={true} />
         </div>
 
         {/* Right Column */}
