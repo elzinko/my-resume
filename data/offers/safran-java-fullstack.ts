@@ -10,19 +10,39 @@ const offer: JobOffer = {
   requirements: [
     {
       label: 'Java EE / JSF',
-      keywords: ['java', 'jee', 'j2ee', 'jsf', 'primefaces', 'java ee', 'spring'],
+      keywords: [
+        'java',
+        'jee',
+        'j2ee',
+        'jsf',
+        'primefaces',
+        'java ee',
+        'spring',
+      ],
     },
     {
       label: 'SQL (PostgreSQL, MariaDB)',
-      keywords: ['sql', 'postgresql', 'mariadb', 'sqlserver', 'mysql', 'oracle', 'postgres'],
+      keywords: [
+        'sql',
+        'postgresql',
+        'mariadb',
+        'sqlserver',
+        'mysql',
+        'oracle',
+        'postgres',
+      ],
     },
     {
       label: 'Node.JS / JavaScript',
       keywords: ['node', 'nodejs', 'node.js', 'javascript', 'typescript'],
     },
     {
-      label: 'Docker / WildFly',
-      keywords: ['docker', 'docker-compose', 'wildfly', 'jboss', 'tomcat'],
+      label: 'Docker',
+      keywords: ['docker', 'docker-compose'],
+    },
+    {
+      label: 'WildFly / JBoss',
+      keywords: ['wildfly', 'jboss', 'undertow', 'tomcat'],
     },
     {
       label: 'Git / GitLab / Sonar',

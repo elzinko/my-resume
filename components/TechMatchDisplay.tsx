@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { slugifyClient } from '@/lib/slug';
+import MatchClientPill from './MatchClientPill';
 
 export interface MatchEntry {
   label: string;
@@ -39,60 +39,58 @@ const labels = {
 
 function formatYears(totalYears: number, lang: 'fr' | 'en'): string {
   const t = labels[lang];
+  if (!Number.isFinite(totalYears) || totalYears < 0) return '—';
   if (totalYears < 1) return `<1 ${t.year}`;
   const rounded = Math.round(totalYears);
   return `${rounded} ${rounded === 1 ? t.year : t.years}`;
 }
 
-export default function TechMatchDisplay({ data, lang }: TechMatchDisplayProps) {
+export default function TechMatchDisplay({
+  data,
+  lang,
+}: TechMatchDisplayProps) {
   const t = labels[lang];
+  const entries = data?.entries ?? [];
 
   return (
-    <section className="mt-6 print:mt-3">
+    <section id="profile-match" className="mt-10 print:mt-4">
       <h2 className="border-b pb-1 text-2xl font-semibold text-orange-300">
         {t.sectionTitle}
       </h2>
 
-      <div className="mt-3 grid grid-cols-1 gap-2 md:grid-cols-3 print:grid-cols-3 print:gap-1.5">
-        {data.entries.map((entry) => {
+      <div className="flex w-full flex-col print:flex-row print:space-x-4 md:flex-row md:space-x-6">
+        {entries.map((entry) => {
           const hasMatches = entry.matchedClients.length > 0;
 
           return (
             <div
               key={entry.label}
-              className={`rounded border p-2 print:p-1.5 ${
-                hasMatches
-                  ? 'border-orange-300/30 bg-orange-300/5'
-                  : 'border-gray-700 opacity-50'
+              className={`mt-4 min-w-0 flex-1 print:mt-2 ${
+                !hasMatches ? 'opacity-50' : ''
               }`}
               style={{ breakInside: 'avoid' }}
             >
-              <div className="flex items-center justify-between gap-1">
-                <span className="text-xs font-semibold text-orange-300 print:text-[10px]">
+              <div className="mt-4 flex items-baseline justify-between gap-3 print:mt-2">
+                <h3 className="min-w-0 flex-1 text-sm font-semibold leading-snug text-orange-300 print:text-[10px]">
                   {entry.label}
-                </span>
+                </h3>
                 {hasMatches ? (
-                  <span className="whitespace-nowrap rounded bg-orange-300 px-1.5 py-0.5 text-[10px] font-bold text-gray-900 print:text-[8px]">
+                  <span className="shrink-0 text-sm font-semibold tabular-nums text-orange-300 print:text-[10px]">
                     {formatYears(entry.totalYears, lang)}
                   </span>
-                ) : (
-                  <span className="text-[10px] italic text-gray-500 print:text-[8px]">
-                    {t.notPracticed}
-                  </span>
-                )}
+                ) : null}
               </div>
-              {hasMatches && (
-                <div className="mt-1.5 flex flex-wrap gap-1 print:mt-0.5">
+
+              {hasMatches ? (
+                <div className="flex flex-wrap gap-x-2 gap-y-2 py-2 print:gap-1 print:py-1">
                   {entry.matchedClients.map((match) => (
-                    <a
-                      key={match.client}
-                      href={`#${slugifyClient(match.client)}`}
-                      className="whitespace-nowrap rounded bg-orange-300/20 px-1.5 py-0.5 text-[10px] text-orange-200 transition-colors hover:bg-orange-300/40 print:text-[8px]"
-                    >
-                      {match.client}
-                    </a>
+                    <MatchClientPill key={match.client} client={match.client} />
                   ))}
                 </div>
+              ) : (
+                <p className="mt-2 text-sm italic text-gray-500 print:mt-1 print:text-[10px]">
+                  {t.notPracticed}
+                </p>
               )}
             </div>
           );
