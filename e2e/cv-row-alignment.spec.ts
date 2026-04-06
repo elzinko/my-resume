@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe('CV title/date rows (mobile)', () => {
   test.use({ viewport: { width: 375, height: 800 } });
 
-  test('job mobile: ligne 1 client seul; ligne 2 poste / ville / dates (alignement bas)', async ({
+  test('job mobile: client seul ligne 1; poste non tronqué; lieu / dates sans ellipsis', async ({
     page,
   }) => {
     await page.goto('/fr');
@@ -17,55 +17,27 @@ test.describe('CV title/date rows (mobile)', () => {
     await expect(row1Date).toBeHidden();
 
     const role = meta.locator('[data-job-meta="role"]');
+    const location = meta.locator('[data-job-meta="location"]');
     const dates = meta.locator('[data-job-meta="dates"]');
     await expect(role).toBeVisible();
+    await expect(location).toBeVisible();
     await expect(dates).toBeVisible();
-    const lb = await role.evaluate((el) => el.getBoundingClientRect().bottom);
-    const rb = await dates.evaluate((el) => el.getBoundingClientRect().bottom);
-    expect(
-      Math.abs(lb - rb),
-      `Bottom edges should align (left=${lb}, right=${rb})`,
-    ).toBeLessThanOrEqual(2);
 
+    await expect(role).toContainText('Développeur IOT');
+    await expect(location).toContainText('Montereau-sur-le-Jard');
     await expect(meta).toContainText('/');
 
-    /** Les « / » : même marge à gauche et à droite entre les boîtes de texte (symétrie). */
     const seps = meta.locator('[data-job-meta="sep"]');
-    await expect(seps).toHaveCount(2);
+    await expect(seps).toHaveCount(1);
 
-    const rects = await meta.evaluate((row) => {
-      const role = row.querySelector('[data-job-meta="role"]');
-      const loc = row.querySelector('[data-job-meta="location"]');
-      const dates = row.querySelector('[data-job-meta="dates"]');
-      const s = row.querySelectorAll('[data-job-meta="sep"]');
-      if (!role || !loc || !dates || s.length !== 2) return null;
-      const r = (el: Element) => el.getBoundingClientRect();
-      return {
-        role: r(role),
-        loc: r(loc),
-        dates: r(dates),
-        sep0: r(s[0]!),
-        sep1: r(s[1]!),
-      };
-    });
-    expect(rects, 'geometry for job meta row').not.toBeNull();
-    if (!rects) return;
-
-    const sep0Cx = (rects.sep0.left + rects.sep0.right) / 2;
-    const gapLeft0 = sep0Cx - rects.role.right;
-    const gapRight0 = rects.loc.left - sep0Cx;
-    expect(
-      Math.abs(gapLeft0 - gapRight0),
-      `Sep1 centered between role and location (L=${gapLeft0}, R=${gapRight0})`,
-    ).toBeLessThanOrEqual(8);
-
-    const sep1Cx = (rects.sep1.left + rects.sep1.right) / 2;
-    const gapLeft1 = sep1Cx - rects.loc.right;
-    const gapRight1 = rects.dates.left - sep1Cx;
-    expect(
-      Math.abs(gapLeft1 - gapRight1),
-      `Sep2 centered between location and dates (L=${gapLeft1}, R=${gapRight1})`,
-    ).toBeLessThanOrEqual(8);
+    const noHorizontalEllipsis = async (loc: ReturnType<typeof page.locator>) => {
+      const overflow = await loc.evaluate((el) =>
+        window.getComputedStyle(el).textOverflow,
+      );
+      expect(overflow, 'no text-overflow ellipsis').not.toBe('ellipsis');
+    };
+    await noHorizontalEllipsis(role);
+    await noHorizontalEllipsis(dates);
   });
 
   test('project row: title and dates share bottom edge', async ({ page }) => {

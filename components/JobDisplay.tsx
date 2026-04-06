@@ -19,55 +19,52 @@ export interface JobData {
 }
 
 /**
- * Ligne mobile : poste | ville | dates en trois colonnes flexibles ;
- * les « / » sont dans des colonnes `auto` avec `gap-x` identique : le séparateur est au milieu de l’espace entre deux blocs.
+ * Mobile CV complet : poste en entier (retours à la ligne) ; dessous ville / dates
+ * avec un seul « / », flex-wrap pour ne rien tronquer.
  */
 function JobMetaMobileRow({
   roleName,
   location,
   datesLine,
-  compact,
 }: {
   roleName?: string | null;
   location?: string;
   datesLine: string;
-  compact?: boolean;
 }) {
-  const typo = compact
-    ? 'text-[11px] text-cv-meta font-normal leading-snug text-cv-jobs'
-    : 'text-xs text-cv-meta font-normal leading-snug text-cv-jobs';
-
   return (
     <div
-      className={`grid w-full max-w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto_minmax(0,1fr)] items-baseline gap-x-2.5 md:hidden print:hidden ${typo}`}
+      className="mt-1 space-y-1 text-xs text-cv-meta font-normal leading-snug text-cv-jobs md:hidden print:hidden"
       data-testid="job-meta-mobile"
     >
-      <span className="min-w-0 truncate text-end" data-job-meta="role">
-        {roleName ?? ''}
-      </span>
-      <span
-        className="shrink-0 text-center text-cv-jobs/45"
-        data-job-meta="sep"
-        aria-hidden
-      >
-        /
-      </span>
-      <span className="min-w-0 truncate text-center" data-job-meta="location">
-        {location?.trim() ? location : '\u00a0'}
-      </span>
-      <span
-        className="shrink-0 text-center text-cv-jobs/45"
-        data-job-meta="sep"
-        aria-hidden
-      >
-        /
-      </span>
-      <span
-        className="min-w-0 truncate text-left whitespace-nowrap tabular-nums"
-        data-job-meta="dates"
-      >
-        {datesLine}
-      </span>
+      {roleName ? (
+        <p
+          className="w-full break-words text-end text-cv-jobs"
+          data-job-meta="role"
+        >
+          {roleName}
+        </p>
+      ) : null}
+      <div className="flex w-full flex-wrap items-baseline justify-end gap-x-2 gap-y-0.5">
+        <span
+          className="min-w-0 max-w-full break-words text-end"
+          data-job-meta="location"
+        >
+          {location?.trim() ? location : '\u00a0'}
+        </span>
+        <span
+          className="shrink-0 text-cv-jobs/45"
+          data-job-meta="sep"
+          aria-hidden
+        >
+          /
+        </span>
+        <span
+          className="min-w-0 max-w-full whitespace-normal break-words text-end tabular-nums text-cv-jobs"
+          data-job-meta="dates"
+        >
+          {datesLine}
+        </span>
+      </div>
     </div>
   );
 }
@@ -89,11 +86,14 @@ function CompactJobMetaMobile({
           {roleName}
         </p>
       ) : null}
-      <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5 text-xs leading-snug text-cv-meta text-cv-jobs">
-        <span className="min-w-0 max-w-[70%] break-words">
+      <div className="flex flex-wrap items-baseline justify-end gap-x-2 gap-y-0.5 text-xs leading-snug text-cv-meta text-cv-jobs">
+        <span className="min-w-0 max-w-full break-words text-end">
           {location?.trim() ? location : '\u00a0'}
         </span>
-        <span className="shrink-0 tabular-nums whitespace-nowrap">
+        <span className="shrink-0 text-cv-jobs/45" aria-hidden>
+          /
+        </span>
+        <span className="min-w-0 max-w-full whitespace-normal break-words text-end tabular-nums">
           {datesLine}
         </span>
       </div>
