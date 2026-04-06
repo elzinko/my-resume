@@ -102,6 +102,12 @@ function MatchOfferInner({
                   : 'repeat per line: Label:kw1,kw2 (alias: req)'}
               </li>
               <li>
+                <strong>cv_role</strong> —{' '}
+                {l === 'fr'
+                  ? 'optionnel : titre sous le nom (FR+EN identiques) ; cv_role_fr / cv_role_en pour chaque langue'
+                  : 'optional: headline under your name (same for both); cv_role_fr / cv_role_en per locale'}
+              </li>
+              <li>
                 {l === 'fr'
                   ? 'Option avancée : spec=… (base64 JSON) prend le pas sur les autres paramètres.'
                   : 'Advanced: spec=… (base64 JSON) overrides other params when valid.'}

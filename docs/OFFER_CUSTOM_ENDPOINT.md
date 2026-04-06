@@ -2,11 +2,13 @@
 
 Pages qui affichent le bloc **« adéquation avec le poste »** sans ajouter un fichier dans `data/offers/`.
 
-Les offres **prédéfinies** restent inchangées :
+Les offres **prédéfinies** restent inchangées (fichiers `data/offers/*.ts`) :
 
 - `/{lang}/offer/safran-java-fullstack`
 - `/{lang}/offer/safran-ia-factory`
-- … (voir `data/offers/`)
+- …
+
+Tu peux y ajouter un champ optionnel **`cvHeaderRole`** (`{ fr, en }`) pour fixer le titre sous le nom sur ces pages.
 
 ---
 
@@ -27,6 +29,9 @@ GET /{lang}/offer/match?company=...&title=...&requirement=Libellé:mot1,mot2&req
 | `requirement` | **oui** (au moins une) | Répéter le paramètre pour chaque ligne d’exigence |
 | `req` | (alias) | Même format que `requirement` |
 | `id` | non | Identifiant interne (sinon dérivé de `company`) |
+| `cv_role` | non | Titre **sous le nom** dans le header CV (même texte FR et EN) |
+| `cv_role_fr` | non | Surcharge du titre sous le nom en français |
+| `cv_role_en` | non | Surcharge du titre sous le nom en anglais |
 
 ### Format d’une exigence (`requirement` / `req`)
 
@@ -73,6 +78,8 @@ Même rendu que `/offer/match` une fois l’offre résolue.
 | `title` | string ou `{ "fr", "en" }` | oui |
 | `requirements` | `[{ "label", "keywords" }]` | oui |
 | `id`, `url` | string | non |
+| `cvHeaderRole` | `{ "fr", "en" }` | non — titre sous le nom (header CV) |
+| `cv_role` | string | non — raccourci : même valeur FR et EN |
 
 ### Encodage
 
@@ -99,6 +106,8 @@ Plafonds sur longueurs, nombre d’exigences et de mots-clés : `lib/dynamic-off
 ## Hébergement statique (ex. GitHub Pages)
 
 Pas de `POST` : tout passe par des **GET** avec query string. Les URLs longues peuvent être limitées par le navigateur (~2k caractères) ; au-delà, préférer `spec` sur `/offer/custom` ou réduire le nombre d’exigences.
+
+Les routes **`/offer/match`** et **`/offer/custom`** sont en **`force-dynamic`** : le titre sous le nom (`cv_role*`) et l’offre sont lus à chaque requête. Un export **100 % statique** (`next export`) ne pourra pas personnaliser le header par URL ; il faut un runtime Node (Vercel, `next start`, etc.).
 
 ## Fichiers utiles
 

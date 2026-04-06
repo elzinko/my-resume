@@ -1,4 +1,5 @@
 import type { JobOffer, MatchRequirement } from '@/data/offers/types';
+import type { Locale } from 'i18n-config';
 import { decodeOfferSpecParam } from '@/lib/dynamic-offer-spec';
 
 const MAX_REQUIREMENTS = 24;
@@ -6,6 +7,47 @@ const MAX_KEYWORDS_PER_REQ = 24;
 const MAX_LABEL_LEN = 160;
 const MAX_COMPANY_LEN = 120;
 const MAX_TITLE_LEN = 200;
+const MAX_CV_HEADER_ROLE_LEN = 160;
+
+/** Next.js `searchParams` → `URLSearchParams` (valeurs multiples conservées). */
+export function searchParamsRecordToURLSearchParams(
+  record: Record<string, string | string[] | undefined>,
+): URLSearchParams {
+  const sp = new URLSearchParams();
+  for (const [key, value] of Object.entries(record)) {
+    if (value === undefined) continue;
+    if (Array.isArray(value)) {
+      for (const v of value) sp.append(key, v);
+    } else {
+      sp.append(key, value);
+    }
+  }
+  return sp;
+}
+
+function parseCvHeaderRoleFromSearchParams(
+  sp: URLSearchParams,
+): { fr: string; en: string } | undefined {
+  const single =
+    sp.get('cv_role')?.trim().slice(0, MAX_CV_HEADER_ROLE_LEN) ?? '';
+  const fr =
+    sp.get('cv_role_fr')?.trim().slice(0, MAX_CV_HEADER_ROLE_LEN) || single;
+  const en =
+    sp.get('cv_role_en')?.trim().slice(0, MAX_CV_HEADER_ROLE_LEN) || single;
+  if (!fr && !en) return undefined;
+  return { fr: fr || en, en: en || fr };
+}
+
+/** Titre sous le nom (header CV) issu de l’offre résolue, pour la locale courante. */
+export function pickCvHeaderRole(
+  offer: JobOffer | null | undefined,
+  lang: Locale,
+): string | undefined {
+  const r = offer?.cvHeaderRole;
+  if (!r) return undefined;
+  const s = lang === 'en' ? r.en : r.fr;
+  return s.trim() || undefined;
+}
 
 /**
  * Une exigence dans l’URL : `Libellé:motcle1,motcle2` (deux-points après le libellé, virgules entre mots-clés).
@@ -79,10 +121,13 @@ export function buildOfferFromQueryParams(
       .replace(/[^a-z0-9-]/g, '')
       .slice(0, 40)}`;
 
+  const cvHeaderRole = parseCvHeaderRoleFromSearchParams(sp);
+
   return {
     id,
     company,
     title: { fr: titleFrSafe, en: titleEnSafe },
+    ...(cvHeaderRole ? { cvHeaderRole } : {}),
     requirements,
   };
 }

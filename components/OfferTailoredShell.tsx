@@ -20,15 +20,17 @@ export default function OfferTailoredShell({
   lang,
   educationLevel,
   matchSection,
+  headerRoleOverride,
 }: {
   lang: Locale;
   educationLevel: EducationLevelContent;
   matchSection: ReactNode;
+  headerRoleOverride?: string;
 }) {
   return (
     <>
       {/* @ts-expect-error Server Component */}
-      <Headers locale={lang} />
+      <Headers locale={lang} headerRoleOverride={headerRoleOverride} />
 
       {/* @ts-expect-error Server Component */}
       <About locale={lang} />

@@ -16,6 +16,7 @@ import EducationLevel from '@/components/EducationLevel';
 import TechMatch from './tech-match';
 import { getCvData } from '@/lib/cv-data';
 import { getEducationLevelContent } from '@/lib/education-level-content';
+import { pickCvHeaderRole } from '@/lib/query-offer-params';
 import { getAllOfferIds, getOffer } from '@/data/offers';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
@@ -67,11 +68,12 @@ export default async function OfferPage({
     unknown
   >;
   const educationLevel = getEducationLevelContent(data, lang);
+  const headerRoleOverride = pickCvHeaderRole(offer, lang);
 
   return (
     <>
       {/* @ts-expect-error Server Component */}
-      <Headers locale={lang} />
+      <Headers locale={lang} headerRoleOverride={headerRoleOverride} />
 
       {/* @ts-expect-error Server Component */}
       <About locale={lang} />

@@ -6,6 +6,7 @@ const MAX_KEYWORDS_PER_REQ = 24;
 const MAX_LABEL_LEN = 160;
 const MAX_COMPANY_LEN = 120;
 const MAX_TITLE_LEN = 200;
+const MAX_CV_HEADER_ROLE_LEN = 160;
 
 function utf8ToBase64Url(s: string): string {
   const bytes = new TextEncoder().encode(s);
@@ -70,6 +71,17 @@ export function parseJobOfferFromUnknown(raw: unknown): JobOffer | null {
   }
   if (!titleFr) return null;
 
+  let cvHeaderRole: { fr: string; en: string } | undefined;
+  if (o.cvHeaderRole && typeof o.cvHeaderRole === 'object') {
+    const c = o.cvHeaderRole as Record<string, unknown>;
+    const cfr = trimStr(c.fr, MAX_CV_HEADER_ROLE_LEN);
+    const cen = trimStr(c.en, MAX_CV_HEADER_ROLE_LEN);
+    if (cfr || cen) cvHeaderRole = { fr: cfr || cen, en: cen || cfr };
+  } else if (typeof o.cv_role === 'string') {
+    const r = trimStr(o.cv_role, MAX_CV_HEADER_ROLE_LEN);
+    if (r) cvHeaderRole = { fr: r, en: r };
+  }
+
   const reqRaw = o.requirements;
   if (!Array.isArray(reqRaw) || reqRaw.length === 0) return null;
   const requirements: MatchRequirement[] = [];
@@ -87,6 +99,7 @@ export function parseJobOfferFromUnknown(raw: unknown): JobOffer | null {
     id,
     company,
     title: { fr: titleFr, en: titleEn },
+    ...(cvHeaderRole ? { cvHeaderRole } : {}),
     url: typeof o.url === 'string' ? trimStr(o.url, 500) : undefined,
     requirements,
   };
