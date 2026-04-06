@@ -17,6 +17,7 @@
     "test": "npm run prettier:check && npm run lint",
     "playwright:install": "playwright install chromium",
     "test:playwright": "playwright install chromium && playwright test",
+    "print:preview:short": "playwright install chromium && playwright test e2e/print-short-preview.spec.ts --reporter=line",
     "clean": "rm -rf node_modules",
     "reinstall": "npm run clean && npm install",
     "rebuild": "npm run clean && npm install && npm run build",

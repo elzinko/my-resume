@@ -72,6 +72,35 @@ function JobMetaMobileRow({
   );
 }
 
+/** CV court mobile : poste sur une ligne, lieu + dates en dessous (lisible vs grille 5 colonnes tronquées). */
+function CompactJobMetaMobile({
+  roleName,
+  location,
+  datesLine,
+}: {
+  roleName?: string | null;
+  location?: string;
+  datesLine: string;
+}) {
+  return (
+    <div className="mt-1 space-y-1 md:hidden print:hidden">
+      {roleName ? (
+        <p className="text-xs font-semibold leading-snug text-cv-jobs">
+          {roleName}
+        </p>
+      ) : null}
+      <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5 text-xs leading-snug text-cv-meta text-cv-jobs">
+        <span className="min-w-0 max-w-[70%] break-words">
+          {location?.trim() ? location : '\u00a0'}
+        </span>
+        <span className="shrink-0 tabular-nums whitespace-nowrap">
+          {datesLine}
+        </span>
+      </div>
+    </div>
+  );
+}
+
 interface JobDisplayProps {
   job: JobData;
   compact?: boolean;
@@ -105,21 +134,20 @@ export default function JobDisplay({
           <span className="min-w-0 flex-1 text-sm font-bold leading-snug text-cv-jobs print:text-xs">
             {job.client}
           </span>
-          <span className="min-w-max shrink-0 self-end text-cv-meta font-normal tabular-nums leading-snug text-cv-jobs print:text-[8px] max-md:hidden print:!inline">
+          <span className="min-w-max shrink-0 self-end text-cv-meta font-normal tabular-nums leading-snug text-cv-jobs print:text-[10px] max-md:hidden print:!inline">
             {compactDateLine}
           </span>
         </div>
-        <JobMetaMobileRow
-          compact
+        <CompactJobMetaMobile
           roleName={roleName}
           location={job.location}
           datesLine={compactDateLine}
         />
         <div className="cv-row-with-side-meta print:gap-1 max-md:hidden print:flex">
-          <span className="min-w-0 flex-1 text-cv-meta font-normal leading-snug text-cv-jobs print:text-[8px]">
+          <span className="min-w-0 flex-1 text-cv-meta font-normal leading-snug text-cv-jobs print:text-[10px]">
             {roleName ?? ''}
           </span>
-          <span className="min-w-max shrink-0 self-end text-cv-meta leading-snug text-cv-jobs print:text-[8px]">
+          <span className="min-w-max shrink-0 self-end text-cv-meta leading-snug text-cv-jobs print:text-[10px]">
             {job.location}
           </span>
         </div>

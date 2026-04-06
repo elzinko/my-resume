@@ -105,8 +105,8 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
     moreClients: fallback.moreClients,
   };
 
-  // Only show 5 most recent jobs
-  const recentJobs = data.jobs.slice(0, 5);
+  // Six most recent jobs — tient sur une page A4 avec le reste du CV court
+  const recentJobs = data.jobs.slice(0, 6);
 
   return (
     <div className="print:p-0">
@@ -179,7 +179,7 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
             <h2 className="border-b pb-1 text-2xl font-semibold text-cv-jobs print:text-sm">
               {t.experience}
             </h2>
-            <ul className="mt-2 space-y-3 print:mt-1 print:space-y-2">
+            <ul className="mt-2 space-y-3 print:mt-1 print:space-y-1.5">
               {recentJobs.map((job, idx) => (
                 <li key={idx}>
                   <JobDisplay
