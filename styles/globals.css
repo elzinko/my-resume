@@ -4,6 +4,14 @@
 
 @layer components {
   /**
+   * Marge entre sections majeures pleine largeur (mobile + desktop ici : 2.5rem),
+   * alignée sur `#jobs` (`mt-10`) pour un rythme vertical homogène.
+   */
+  .cv-mobile-section-mt {
+    @apply mt-10;
+  }
+
+  /**
    * Liste sous titre de section (Learnings, Hobbies, Projects, Studies, …).
    * Même écart vertical partout (space-y-1 = 0.25rem), mobile comme desktop.
    */

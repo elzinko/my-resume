@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import formatDates from '@/lib/date';
 import JobExperienceBody from './JobExperienceBody';
 import JobFrameworkPills from './JobFrameworkPills';
@@ -23,17 +23,14 @@ export interface JobData {
 }
 
 /**
- * Ligne mobile : poste | ville | dates en trois colonnes flexibles ;
- * les « / » sont dans des colonnes `auto` avec `gap-x` identique : le séparateur est au milieu de l’espace entre deux blocs.
+ * Ligne mobile : poste à gauche, dates à droite (ville sur md+ uniquement).
  */
 function JobMetaMobileRow({
   roleName,
-  location,
   datesLine,
   compact,
 }: {
   roleName?: string | null;
-  location?: string;
   datesLine: string;
   compact?: boolean;
 }) {
@@ -43,31 +40,14 @@ function JobMetaMobileRow({
 
   return (
     <div
-      className={`grid w-full max-w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto_minmax(0,1fr)] items-baseline gap-x-2.5 print:hidden md:hidden ${typo}`}
+      className={`flex w-full max-w-full items-baseline justify-between gap-x-3 print:hidden md:hidden ${typo}`}
       data-testid="job-meta-mobile"
     >
-      <span className="min-w-0 truncate text-end" data-job-meta="role">
+      <span className="min-w-0 truncate text-left" data-job-meta="role">
         {roleName ?? ''}
       </span>
       <span
-        className="text-cv-jobs/45 shrink-0 text-center"
-        data-job-meta="sep"
-        aria-hidden
-      >
-        /
-      </span>
-      <span className="min-w-0 truncate text-center" data-job-meta="location">
-        {location?.trim() ? location : '\u00a0'}
-      </span>
-      <span
-        className="text-cv-jobs/45 shrink-0 text-center"
-        data-job-meta="sep"
-        aria-hidden
-      >
-        /
-      </span>
-      <span
-        className="min-w-0 truncate whitespace-nowrap text-left tabular-nums"
+        className="min-w-0 max-w-[55%] shrink-0 truncate whitespace-nowrap text-right tabular-nums"
         data-job-meta="dates"
       >
         {datesLine}
@@ -89,9 +69,16 @@ export default function JobDisplay({
   presentLabel = 'Présent',
   locale = 'fr',
 }: JobDisplayProps) {
+  const [detailsOpen, setDetailsOpen] = useState(false);
   const dates = compact ? null : formatDates(job.startDate, job.endDate);
   const roleName = typeof job.role === 'string' ? job.role : job.role?.name;
   const frameworks = job.frameworks || [];
+  const shortDesc = (job.descriptionShort ?? '').trim();
+  const longDesc = (job.description ?? '').trim();
+  const hasBullets = Boolean(job.bullets?.length);
+  /** S’il n’y a que des pastilles techno, on les garde visibles sans ouvrir le détail texte. */
+  const hidePillsUntilDetailOpen =
+    Boolean(shortDesc) || Boolean(longDesc) || hasBullets;
   const expandTechAria =
     locale === 'en'
       ? 'Show all technologies'
@@ -116,7 +103,6 @@ export default function JobDisplay({
         <JobMetaMobileRow
           compact
           roleName={roleName}
-          location={job.location}
           datesLine={compactDateLine}
         />
         <div className="cv-row-with-side-meta print:flex print:gap-1 max-md:hidden">
@@ -133,13 +119,20 @@ export default function JobDisplay({
           bullets={job.bullets}
           locale={locale}
           compact
+          onExpandedChange={setDetailsOpen}
         />
-        <JobFrameworkPills
-          frameworks={frameworks}
-          compact
-          expandAriaLabel={expandTechAria}
-          collapseAriaLabel={collapseTechAria}
-        />
+        <div
+          className={
+            !detailsOpen && hidePillsUntilDetailOpen ? 'max-md:hidden' : ''
+          }
+        >
+          <JobFrameworkPills
+            frameworks={frameworks}
+            compact
+            expandAriaLabel={expandTechAria}
+            collapseAriaLabel={collapseTechAria}
+          />
+        </div>
       </div>
     );
   }
@@ -156,11 +149,7 @@ export default function JobDisplay({
           {dates}
         </span>
       </div>
-      <JobMetaMobileRow
-        roleName={roleName}
-        location={job.location}
-        datesLine={datesStr}
-      />
+      <JobMetaMobileRow roleName={roleName} datesLine={datesStr} />
       <div className="cv-row-with-side-meta pb-2 print:flex max-md:hidden">
         <span className="min-w-0 flex-1 text-cv-meta font-normal leading-snug text-cv-jobs print:text-xs">
           {roleName ?? ''}
@@ -174,12 +163,19 @@ export default function JobDisplay({
         description={job.description}
         bullets={job.bullets}
         locale={locale}
+        onExpandedChange={setDetailsOpen}
       />
-      <JobFrameworkPills
-        frameworks={frameworks}
-        expandAriaLabel={expandTechAria}
-        collapseAriaLabel={collapseTechAria}
-      />
+      <div
+        className={
+          !detailsOpen && hidePillsUntilDetailOpen ? 'max-md:hidden' : ''
+        }
+      >
+        <JobFrameworkPills
+          frameworks={frameworks}
+          expandAriaLabel={expandTechAria}
+          collapseAriaLabel={collapseTechAria}
+        />
+      </div>
     </div>
   );
 }

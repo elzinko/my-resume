@@ -22,6 +22,6 @@ const modeShell = `inline-flex h-8 items-center gap-1 rounded-md border border-s
 export const cvHeaderModeBtn = `${modeShell} ${iconHoverNeutral}`;
 
 /**
- * Carré h-8 w-8 : drapeau SVG en plein cadre (overflow hidden, pas de padding).
+ * Même enveloppe h-8 w-8 que les icônes sociales ; le drapeau est inscrit en h-4 w-4 (md h-5 w-5) au centre.
  */
-export const cvHeaderLocaleSwitchBtn = `inline-flex h-8 w-8 shrink-0 overflow-hidden rounded-md border border-blue-500/45 bg-blue-50/90 p-0 shadow-sm transition-all duration-200 ease-out ${focusRing} hover:border-blue-600/60 hover:bg-blue-100 hover:shadow-md active:scale-[0.96] motion-reduce:active:scale-100`;
+export const cvHeaderLocaleSwitchBtn = `inline-flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-md border border-blue-500/45 bg-blue-50/90 shadow-sm transition-all duration-200 ease-out ${focusRing} hover:border-blue-600/60 hover:bg-blue-100 hover:shadow-sm active:scale-[0.96] motion-reduce:active:scale-100`;

@@ -79,7 +79,9 @@ export default function LocaleSwitcher({
           aria-label={ariaLabel}
           onClick={() => onNavigate?.()}
         >
-          <LocaleTargetFlag locale={targetLocale} />
+          <span className="block h-4 w-4 overflow-hidden rounded-sm md:h-5 md:w-5">
+            <LocaleTargetFlag locale={targetLocale} />
+          </span>
         </Link>
       </li>
     </ul>

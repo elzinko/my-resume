@@ -6,7 +6,7 @@ import React from 'react';
 export default async function domains({ locale }: { locale: Locale }) {
   const data: any = await getCvData(locale);
   return (
-    <section id="domains" className="mt-3 md:mt-10">
+    <section id="domains" className="cv-mobile-section-mt">
       <div className="flex w-full flex-col gap-2 md:flex-row md:gap-0 md:space-x-6">
         {data?.allDomainsModels?.map((domain: any) => (
           <Domain key={domain.id} domain={domain} />

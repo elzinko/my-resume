@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useId, useState } from 'react';
+import React, { useEffect, useId, useState } from 'react';
 import type { Locale } from 'i18n-config';
 
 export interface JobExperienceBodyProps {
@@ -9,11 +9,13 @@ export interface JobExperienceBodyProps {
   bullets?: Array<{ id: string; text: string }>;
   locale: Locale;
   compact?: boolean;
+  /** Mobile : notifie l’ouverture du détail (ex. afficher les pastilles techno). */
+  onExpandedChange?: (open: boolean) => void;
 }
 
 /**
- * Texte mission : desktop / print = tout visible ; viewport &lt; lg = accroche + bouton pour
- * détail (texte long + puces).
+ * Texte mission : desktop / print = tout visible ; viewport &lt; lg = replié : uniquement le bouton
+ * « Plus de détails » tant qu’il y a du contenu ; déplié = texte + puces (plus de texte hors ligne poste/dates).
  */
 export default function JobExperienceBody({
   descriptionShort,
@@ -21,6 +23,7 @@ export default function JobExperienceBody({
   bullets,
   locale,
   compact = false,
+  onExpandedChange,
 }: JobExperienceBodyProps) {
   const detailId = useId();
   const [expanded, setExpanded] = useState(false);
@@ -29,9 +32,13 @@ export default function JobExperienceBody({
   const longText = (description ?? '').trim();
   const isLegacy = !shortText;
   const hookLine = isLegacy ? longText : shortText;
-  const hasLong = !isLegacy && Boolean(longText);
   const hasBullets = Boolean(bullets?.length);
-  const showToggle = hasLong || hasBullets;
+  const showToggle =
+    Boolean(shortText) || Boolean(longText) || hasBullets;
+
+  useEffect(() => {
+    onExpandedChange?.(expanded);
+  }, [expanded, onExpandedChange]);
 
   const t =
     locale === 'en'
@@ -69,9 +76,8 @@ export default function JobExperienceBody({
         {bulletList('')}
       </div>
 
-      {/* Mobile écran uniquement */}
+      {/* Mobile écran uniquement : replié = pas de texte, seulement le bouton si contenu */}
       <div className="print:hidden lg:hidden">
-        {hookLine ? <p className={pClass}>{hookLine}</p> : null}
         {showToggle ? (
           <>
             <button
@@ -86,14 +92,21 @@ export default function JobExperienceBody({
             </button>
             {expanded ? (
               <div id={detailId} className="mt-1">
-                {hasLong ? <p className={pClassTight}>{longText}</p> : null}
+                {!isLegacy ? (
+                  <>
+                    {hookLine ? <p className={pClass}>{hookLine}</p> : null}
+                    {longText ? (
+                      <p className={pClassTight}>{longText}</p>
+                    ) : null}
+                  </>
+                ) : longText ? (
+                  <p className={pClass}>{longText}</p>
+                ) : null}
                 {bulletList('')}
               </div>
             ) : null}
           </>
-        ) : (
-          bulletList('')
-        )}
+        ) : null}
       </div>
     </>
   );

@@ -37,7 +37,7 @@ export default function OfferTailoredShell({
 
       {matchSection}
 
-      <div className="mt-4 space-y-4 print:hidden md:hidden">
+      <div className="cv-mobile-section-mt space-y-10 print:hidden md:hidden">
         {/* @ts-expect-error Server Component */}
         <Contact locale={lang} className="mt-0" />
         {/* @ts-expect-error Server Component */}

@@ -88,7 +88,7 @@ function ModeControl({
 
 /**
  * Desktop : langues à gauche, actions à droite.
- * Mobile : barre fixe en haut ; ouvert = langues à gauche | séparateur | actions + menu à droite.
+ * Mobile : barre fixe en haut ; ouvert = langues à gauche, actions + menu à droite (pas de séparateur).
  */
 export default function HeaderToolbar({ shortLang }: { shortLang?: string }) {
   const [open, setOpen] = useState(false);
@@ -118,12 +118,21 @@ export default function HeaderToolbar({ shortLang }: { shortLang?: string }) {
         </div>
       </div>
 
-      {/* Réserve la hauteur : la barre mobile est en position fixed */}
-      <div className="h-12 w-full shrink-0 md:hidden" aria-hidden />
+      {/* Réserve la hauteur : même formule que la barre (safe-area + 2rem + 0.75rem). */}
+      <div
+        className="w-full shrink-0 md:hidden"
+        style={{
+          height:
+            'calc(max(0.75rem, env(safe-area-inset-top, 0px)) + 2rem + 0.75rem)',
+        }}
+        aria-hidden
+      />
 
       <div
-        className="min-h-12 fixed inset-x-0 top-0 z-[90] flex items-center gap-2 bg-white/90 px-4 pb-1.5 backdrop-blur-md supports-[backdrop-filter]:bg-white/80 print:hidden md:hidden"
-        style={{ paddingTop: 'max(0.75rem, env(safe-area-inset-top))' }}
+        className="fixed inset-x-0 top-0 z-[90] flex items-center gap-2 bg-white/90 px-4 pb-3 backdrop-blur-md supports-[backdrop-filter]:bg-white/80 print:hidden md:hidden"
+        style={{
+          paddingTop: 'max(0.75rem, env(safe-area-inset-top, 0px))',
+        }}
       >
         <div
           id="cv-mobile-nav"
@@ -147,14 +156,6 @@ export default function HeaderToolbar({ shortLang }: { shortLang?: string }) {
           >
             <LocaleSwitcher onNavigate={close} listClassName={rowListClass} />
           </div>
-
-          <div
-            className={
-              'h-5 w-px shrink-0 bg-slate-200 transition-opacity duration-200 ' +
-              (open ? 'opacity-100' : 'pointer-events-none w-0 opacity-0')
-            }
-            aria-hidden
-          />
 
           <div
             className={
