@@ -40,11 +40,14 @@
   },
   "educationLevel": {
     "title": "Education Level",
-    "levelPrimary": "Bac+5",
+    "levelPrimary": "Bac+5 — Master's-level (French higher education)",
+    "levelPrimaryShort": "Bac+5 — Master's (FR scale)",
     "effectiveLevelDetail": "Backed by 20 years of professional experience",
-    "diploma": "Bachelor's degree (Bac+3)",
-    "diplomaDetail": "Professional Bachelor in Computer Science and Software Systems",
-    "additionalTraining": "Continuing education",
+    "diploma": "Bac +3 — Bachelor's-level (French scale)",
+    "diplomaShort": "Bac +3 — Bachelor's (FR)",
+    "diplomaDetail": "Professional Bachelor (Licence Pro) in Computer Science and Software Systems",
+    "diplomaDetailShort": "Professional Bachelor (Licence Pro)",
+    "additionalTraining": "Supplementary training",
     "trainingThemes": "Microelectronics / Signal processing / ML / LLM"
   },
   "head": {

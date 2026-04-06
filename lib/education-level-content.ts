@@ -4,9 +4,13 @@ import type { Locale } from '../i18n-config';
 export interface EducationLevelContent {
   title: string;
   levelPrimary: string;
+  /** Variante courte (< sm) ; sinon `levelPrimary` partout. */
+  levelPrimaryShort?: string;
   effectiveLevelDetail: string;
   diploma: string;
+  diplomaShort?: string;
   diplomaDetail: string;
+  diplomaDetailShort?: string;
   additionalTraining: string;
   trainingThemes: string;
 }
@@ -23,12 +27,16 @@ const FALLBACK: Record<Locale, EducationLevelContent> = {
   },
   en: {
     title: 'Education Level',
-    levelPrimary: 'Bac+5',
+    levelPrimary:
+      "Bac+5 — Master's-level (French higher education)",
+    levelPrimaryShort: "Bac+5 — Master's (FR scale)",
     effectiveLevelDetail: 'Backed by 20 years of professional experience',
-    diploma: "Bachelor's degree (Bac+3)",
+    diploma: "Bac +3 — Bachelor's-level (French scale)",
+    diplomaShort: "Bac +3 — Bachelor's (FR)",
     diplomaDetail:
-      'Professional Bachelor in Computer Science and Software Systems',
-    additionalTraining: 'Continuing education',
+      'Professional Bachelor (Licence Pro) in Computer Science and Software Systems',
+    diplomaDetailShort: 'Professional Bachelor (Licence Pro)',
+    additionalTraining: 'Supplementary training',
     trainingThemes: 'Microelectronics / Signal processing / ML / LLM',
   },
 };
@@ -57,10 +65,15 @@ export function getEducationLevelContent(
   return {
     title: pickString(raw, 'title') ?? fb.title,
     levelPrimary: pickString(raw, 'levelPrimary') ?? fb.levelPrimary,
+    levelPrimaryShort:
+      pickString(raw, 'levelPrimaryShort') ?? fb.levelPrimaryShort,
     effectiveLevelDetail:
       pickString(raw, 'effectiveLevelDetail') ?? fb.effectiveLevelDetail,
     diploma: pickString(raw, 'diploma') ?? fb.diploma,
+    diplomaShort: pickString(raw, 'diplomaShort') ?? fb.diplomaShort,
     diplomaDetail: pickString(raw, 'diplomaDetail') ?? fb.diplomaDetail,
+    diplomaDetailShort:
+      pickString(raw, 'diplomaDetailShort') ?? fb.diplomaDetailShort,
     additionalTraining:
       pickString(raw, 'additionalTraining') ?? fb.additionalTraining,
     trainingThemes: pickString(raw, 'trainingThemes') ?? fb.trainingThemes,

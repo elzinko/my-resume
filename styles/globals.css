@@ -65,10 +65,10 @@
   }
 
   /**
-   * Corps de mission : même taille que .cv-education-muted (ex. « Backed by 20 years… »).
+   * Corps de mission : sur mobile, même corps que la méta emploi (text-xs) ; md+ comme avant.
    */
   .cv-job-description {
-    @apply text-left text-sm leading-snug text-cv-body-muted md:text-justify print:text-justify print:text-xs;
+    @apply text-left text-xs leading-snug text-cv-body-muted md:text-sm md:text-justify print:text-justify print:text-xs;
   }
 
   /**

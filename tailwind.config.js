@@ -6,8 +6,8 @@ const colors = require('tailwindcss/colors');
  * - tag-* : titres Skills / Projects + pastilles type compétence (bordure + texte)
  * - jobs : titres Expérience / Contact + client ; dates missions en taille cv-meta
  * - cv-meta : dates / méta secondaires (missions, études, projets) — couleur par token cv-* sur le composant
- * - body-muted : texte secondaire ; descriptions missions = `.cv-job-description` (globals), même corps que
- *   `.cv-education-muted` (ex. détail sous Bac+5).
+ * - body-muted : texte secondaire ; descriptions missions = `.cv-job-description` (globals) : `text-xs` mobile,
+ *   `md:text-sm` ; print `text-xs`.
  *
  * Colonne gauche : `.cv-education-heading`, `.cv-education-primary`, `.cv-study-title` en `text-base` ; méta grise `text-sm`.
  * Bloc Niveau de formation (`EducationLevel`) : même classes sur CV complet et CV court / mobile (pas de `-compact` sur le corps).

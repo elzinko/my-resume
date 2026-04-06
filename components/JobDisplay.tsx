@@ -19,8 +19,8 @@ export interface JobData {
 }
 
 /**
- * Mobile CV complet : poste en entier (retours à la ligne) ; dessous ville / dates
- * avec un seul « / », flex-wrap pour ne rien tronquer.
+ * Vue étroite (< lg) : poste + dates (lieu en sr-only). Au-delà de lg, la ligne desktop poste|lieu reprend.
+ * On utilise lg (pas md) pour éviter une colonne main à ~500px en tablette où poste/lieu/dates semblaient tronqués.
  */
 function JobMetaMobileRow({
   roleName,
@@ -31,35 +31,29 @@ function JobMetaMobileRow({
   location?: string;
   datesLine: string;
 }) {
+  const locationTrimmed = location?.trim() ?? '';
   return (
     <div
-      className="mt-1 space-y-1 text-xs text-cv-meta font-normal leading-snug text-cv-jobs md:hidden print:hidden"
+      className="mt-1 text-xs text-cv-meta font-normal leading-snug text-cv-jobs lg:hidden print:hidden"
       data-testid="job-meta-mobile"
     >
-      {roleName ? (
-        <p
-          className="w-full break-words text-end text-cv-jobs"
-          data-job-meta="role"
-        >
-          {roleName}
-        </p>
-      ) : null}
-      <div className="flex w-full flex-wrap items-baseline justify-end gap-x-2 gap-y-0.5">
+      <span className="sr-only" data-job-meta="location">
+        {locationTrimmed || '\u00a0'}
+      </span>
+      <div
+        className="flex w-full flex-wrap items-baseline gap-x-2 gap-y-0.5"
+        data-testid="job-meta-mobile-line"
+      >
+        {roleName ? (
+          <span
+            className="min-w-0 flex-1 basis-0 break-words text-start text-cv-jobs"
+            data-job-meta="role"
+          >
+            {roleName}
+          </span>
+        ) : null}
         <span
-          className="min-w-0 max-w-full break-words text-end"
-          data-job-meta="location"
-        >
-          {location?.trim() ? location : '\u00a0'}
-        </span>
-        <span
-          className="shrink-0 text-cv-jobs/45"
-          data-job-meta="sep"
-          aria-hidden
-        >
-          /
-        </span>
-        <span
-          className="min-w-0 max-w-full whitespace-normal break-words text-end tabular-nums text-cv-jobs"
+          className={`min-w-0 shrink-0 whitespace-nowrap text-end tabular-nums text-cv-jobs${roleName ? '' : ' ml-auto'}`}
           data-job-meta="dates"
         >
           {datesLine}
@@ -69,7 +63,7 @@ function JobMetaMobileRow({
   );
 }
 
-/** CV court mobile : poste sur une ligne, lieu + dates en dessous (lisible vs grille 5 colonnes tronquées). */
+/** CV court : même seuil lg que JobMetaMobileRow. */
 function CompactJobMetaMobile({
   roleName,
   location,
@@ -79,21 +73,28 @@ function CompactJobMetaMobile({
   location?: string;
   datesLine: string;
 }) {
+  const locationTrimmed = location?.trim() ?? '';
   return (
-    <div className="mt-1 space-y-1 md:hidden print:hidden">
-      {roleName ? (
-        <p className="text-xs font-semibold leading-snug text-cv-jobs">
-          {roleName}
-        </p>
-      ) : null}
-      <div className="flex flex-wrap items-baseline justify-end gap-x-2 gap-y-0.5 text-xs leading-snug text-cv-meta text-cv-jobs">
-        <span className="min-w-0 max-w-full break-words text-end">
-          {location?.trim() ? location : '\u00a0'}
-        </span>
-        <span className="shrink-0 text-cv-jobs/45" aria-hidden>
-          /
-        </span>
-        <span className="min-w-0 max-w-full whitespace-normal break-words text-end tabular-nums">
+    <div className="mt-1 lg:hidden print:hidden">
+      <span className="sr-only" data-job-meta="location">
+        {locationTrimmed || '\u00a0'}
+      </span>
+      <div
+        className="flex w-full flex-wrap items-baseline gap-x-2 gap-y-0.5 text-xs leading-snug text-cv-meta text-cv-jobs"
+        data-testid="job-meta-mobile-line"
+      >
+        {roleName ? (
+          <span
+            className="min-w-0 flex-1 basis-0 break-words text-start font-semibold text-cv-jobs"
+            data-job-meta="role"
+          >
+            {roleName}
+          </span>
+        ) : null}
+        <span
+          className={`min-w-0 shrink-0 whitespace-nowrap text-end tabular-nums${roleName ? '' : ' ml-auto'}`}
+          data-job-meta="dates"
+        >
           {datesLine}
         </span>
       </div>
@@ -134,7 +135,7 @@ export default function JobDisplay({
           <span className="min-w-0 flex-1 text-sm font-bold leading-snug text-cv-jobs print:text-xs">
             {job.client}
           </span>
-          <span className="min-w-max shrink-0 self-end text-cv-meta font-normal tabular-nums leading-snug text-cv-jobs print:text-[10px] max-md:hidden print:!inline">
+          <span className="min-w-max shrink-0 self-end text-cv-meta font-normal tabular-nums leading-snug text-cv-jobs print:text-[10px] max-lg:hidden print:!inline">
             {compactDateLine}
           </span>
         </div>
@@ -143,11 +144,11 @@ export default function JobDisplay({
           location={job.location}
           datesLine={compactDateLine}
         />
-        <div className="cv-row-with-side-meta print:gap-1 max-md:hidden print:flex">
-          <span className="min-w-0 flex-1 text-cv-meta font-normal leading-snug text-cv-jobs print:text-[10px]">
+        <div className="cv-row-with-side-meta print:gap-1 max-lg:hidden print:flex">
+          <span className="min-w-0 flex-1 whitespace-normal break-words text-cv-meta font-normal leading-snug text-cv-jobs print:text-[10px]">
             {roleName ?? ''}
           </span>
-          <span className="min-w-max shrink-0 self-end text-cv-meta leading-snug text-cv-jobs print:text-[10px]">
+          <span className="min-w-max shrink-0 self-end whitespace-normal break-words text-end text-cv-meta leading-snug text-cv-jobs print:text-[10px]">
             {job.location}
           </span>
         </div>
@@ -170,7 +171,7 @@ export default function JobDisplay({
         <span className="min-w-0 flex-1 text-base font-bold leading-snug text-cv-jobs print:text-sm">
           {job.client}
         </span>
-        <span className="min-w-max shrink-0 self-end text-cv-meta font-normal tabular-nums leading-snug text-cv-jobs print:text-xs max-md:hidden print:!inline">
+        <span className="min-w-max shrink-0 self-end text-cv-meta font-normal tabular-nums leading-snug text-cv-jobs print:text-xs max-lg:hidden print:!inline">
           {dates}
         </span>
       </div>
@@ -179,11 +180,11 @@ export default function JobDisplay({
         location={job.location}
         datesLine={datesStr}
       />
-      <div className="cv-row-with-side-meta pb-2 max-md:hidden print:flex">
-        <span className="min-w-0 flex-1 text-cv-meta font-normal leading-snug text-cv-jobs print:text-xs">
+      <div className="cv-row-with-side-meta pb-2 max-lg:hidden print:flex">
+        <span className="min-w-0 flex-1 whitespace-normal break-words text-cv-meta font-normal leading-snug text-cv-jobs print:text-xs">
           {roleName ?? ''}
         </span>
-        <span className="min-w-max shrink-0 self-end text-cv-meta leading-snug text-cv-jobs print:text-xs">
+        <span className="min-w-max shrink-0 self-end whitespace-normal break-words text-end text-cv-meta leading-snug text-cv-jobs print:text-xs">
           {job.location}
         </span>
       </div>

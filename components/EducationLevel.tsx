@@ -14,7 +14,9 @@ interface BlockRow {
   id: string;
   primaryRole: PrimaryRole;
   primary: string;
+  primaryShort?: string;
   secondary?: string;
+  secondaryShort?: string;
 }
 
 function buildRows(t: EducationLevelContent): BlockRow[] {
@@ -23,13 +25,16 @@ function buildRows(t: EducationLevelContent): BlockRow[] {
       id: 'level',
       primaryRole: 'heading',
       primary: t.levelPrimary,
+      primaryShort: t.levelPrimaryShort,
       secondary: t.effectiveLevelDetail,
     },
     {
       id: 'diploma',
       primaryRole: 'primary',
       primary: t.diploma,
+      primaryShort: t.diplomaShort,
       secondary: t.diplomaDetail,
+      secondaryShort: t.diplomaDetailShort,
     },
     {
       id: 'additional',
@@ -41,10 +46,32 @@ function buildRows(t: EducationLevelContent): BlockRow[] {
 }
 
 /** Même typo que la page complète : pas de variantes `-compact` sur le corps (mobile / CV court = desktop). */
+function ResponsiveLine({
+  full,
+  short: shortText,
+  className,
+}: {
+  full: string;
+  short?: string;
+  className: string;
+}) {
+  if (!shortText) {
+    return <p className={className}>{full}</p>;
+  }
+  return (
+    <p className={className}>
+      <span className="inline sm:hidden print:hidden">{shortText}</span>
+      <span className="hidden sm:inline print:inline">{full}</span>
+    </p>
+  );
+}
+
 function EducationBlockRow({
   primaryRole,
   primary,
+  primaryShort,
   secondary,
+  secondaryShort,
   tightSpacing,
 }: BlockRow & { tightSpacing: boolean }) {
   const primaryClass =
@@ -54,9 +81,17 @@ function EducationBlockRow({
 
   return (
     <div className={tightSpacing ? 'space-y-0.5' : 'space-y-1'}>
-      <p className={primaryClass}>{primary}</p>
+      <ResponsiveLine
+        full={primary}
+        short={primaryShort}
+        className={primaryClass}
+      />
       {secondary ? (
-        <p className={`cv-education-muted max-w-full`}>{secondary}</p>
+        <ResponsiveLine
+          full={secondary}
+          short={secondaryShort}
+          className="cv-education-muted max-w-full"
+        />
       ) : null}
     </div>
   );
