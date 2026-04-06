@@ -23,9 +23,8 @@ const modeShell =
 
 export const cvHeaderModeBtn = `${modeShell} ${iconHoverNeutral}`;
 
-/** Boutons carrés FR / EN — même gabarit que les icônes. */
-export const cvHeaderLocaleBtn =
-  `inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-slate-400/40 bg-white text-xs font-semibold uppercase tracking-wide text-slate-600 shadow-sm transition-all duration-200 ease-out hover:border-slate-500/55 hover:bg-slate-50 hover:text-neutral-900`;
-
-export const cvHeaderLocaleBtnActive =
-  'border-blue-500/50 bg-blue-50/90 text-blue-700 shadow-sm';
+/**
+ * Carré h-8 w-8 : drapeau SVG en plein cadre (overflow hidden, pas de padding).
+ */
+export const cvHeaderLocaleSwitchBtn =
+  `inline-flex h-8 w-8 shrink-0 overflow-hidden rounded-md border border-blue-500/45 bg-blue-50/90 p-0 shadow-sm transition-all duration-200 ease-out ${focusRing} hover:border-blue-600/60 hover:bg-blue-100 hover:shadow-md active:scale-[0.96] motion-reduce:active:scale-100`;

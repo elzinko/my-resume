@@ -240,7 +240,7 @@
       "location": "Montereau-sur-le-Jard",
       "startDate": "2024-06-10",
       "endDate": "2025-08-31",
-      "description": "Développements fullstack IOT de la partie logicielle du KeyVibe",
+      "description": "",
       "bullets": [
         {
           "id": "XxV3fZOUT2GMkhDbF72t9Q",
@@ -290,14 +290,15 @@
       "role": {
         "name": "Développeur IOT",
         "id": "FUxO3DDtSpirVhE2ecFudw"
-      }
+      },
+      "descriptionShort": "Développements fullstack IOT de la partie logicielle du KeyVibe"
     },
     {
       "client": "BlablaCar",
       "location": "Paris",
       "startDate": "2023-10-01",
       "endDate": "2023-12-31",
-      "description": "Création d'un nouveau module de remboursement pour les bus opérés BlablaCar",
+      "description": "",
       "bullets": [
         {
           "id": "BloJe9keTU-1zSaCVJfbMA",
@@ -328,22 +329,27 @@
       "role": {
         "name": "Consultant Full Stack",
         "id": "81994135"
-      }
+      },
+      "descriptionShort": "Création d'un nouveau module de remboursement pour les bus opérés BlablaCar"
     },
     {
       "client": "Smartch",
       "location": "Paris",
       "startDate": "2023-05-01",
       "endDate": "2023-09-04",
-      "description": "Plateforme Sass pour de l'e-learning",
+      "description": "",
       "bullets": [
         {
           "id": "197839471",
-          "text": "developpement d'une API Graphql"
+          "text": "API GraphQL, Ktor, Exposed"
+        },
+        {
+          "id": "197839490",
+          "text": "Architecture hexagonale et patterns avancés"
         },
         {
           "id": "197839489",
-          "text": "cicd"
+          "text": "Full remote, Scrum, CI/CD (Jira / Confluence)"
         }
       ],
       "frameworks": [
@@ -381,14 +387,15 @@
       "role": {
         "name": "Consultant Backend",
         "id": "82089336"
-      }
+      },
+      "descriptionShort": "Backend Kotlin pour une startup e-learning (SaaS) : Ktor, GraphQL, livraisons rapides en Scrum à distance."
     },
     {
       "client": "SNCF Réseaux - DGEX Solutions",
       "location": "Saint-Denis",
       "startDate": "2022-05-01",
       "endDate": "2023-02-01",
-      "description": "Stratégie de développement et de croissance des équipes dans le cadre du projet open source OSRD hébergé. Gestion de la qualité des livrables et amélioration continue dans le cadre de a méthodologie SAFe. Gestion du backlog technique transverse.",
+      "description": "Gestion de la qualité des livrables et amélioration continue dans le cadre de a méthodologie SAFe. Gestion du backlog technique transverse.",
       "bullets": [
         {
           "id": "82089445",
@@ -478,14 +485,15 @@
       "role": {
         "name": "Architecte Système",
         "id": "82089432"
-      }
+      },
+      "descriptionShort": "Stratégie de développement et de croissance des équipes dans le cadre du projet open source OSRD hébergé."
     },
     {
       "client": "LeBonCoin",
       "location": "Paris",
       "startDate": "2021-08-01",
       "endDate": "2022-05-01",
-      "description": "Participation à la refonte du système de paiement à la conception d'un projet de portefeuille numérique.",
+      "description": "",
       "bullets": [
         {
           "id": "90815151",
@@ -560,14 +568,15 @@
       "role": {
         "name": "Consultant Backend",
         "id": "82089336"
-      }
+      },
+      "descriptionShort": "Participation à la refonte du système de paiement à la conception d'un projet de portefeuille numérique."
     },
     {
       "client": "Celsius Energy",
       "location": "Clamart",
       "startDate": "2020-12-01",
       "endDate": "2021-08-01",
-      "description": "Logging et monitoring de capteurs IoT pour une solution géothermique.",
+      "description": "",
       "bullets": [
         {
           "id": "82548179",
@@ -662,14 +671,15 @@
       "role": {
         "name": "Consultant Full Stack",
         "id": "81994135"
-      }
+      },
+      "descriptionShort": "Logging et monitoring de capteurs IoT pour une solution géothermique."
     },
     {
       "client": "RelevanC",
       "location": "Paris",
       "startDate": "2020-08-01",
       "endDate": "2020-12-02",
-      "description": "Initialisation de la refonte de l'outil de couponning multitenant Coupilo",
+      "description": "",
       "bullets": [
         {
           "id": "82089404",
@@ -715,14 +725,15 @@
       "role": {
         "name": "Consultant Full Stack",
         "id": "81994135"
-      }
+      },
+      "descriptionShort": "Initialisation de la refonte de l'outil de couponning multitenant Coupilo"
     },
     {
       "client": "Ecocea",
       "location": "Paris",
       "startDate": "2019-10-01",
       "endDate": "2020-05-01",
-      "description": "Transformation de l'usine Logicielle pour le site ecommerce de Manutan.",
+      "description": "",
       "bullets": [],
       "frameworks": [
         {
@@ -769,14 +780,15 @@
       "role": {
         "name": "Consultant Devops",
         "id": "82089385"
-      }
+      },
+      "descriptionShort": "Transformation de l'usine Logicielle pour le site ecommerce de Manutan."
     },
     {
       "client": "Edelia",
       "location": "Nanterre",
       "startDate": "2016-04-01",
       "endDate": "2019-06-01",
-      "description": "Conception et développements de systèmes et applications en lien avec la consommation d'électricité, d'eau et de gaz.",
+      "description": "",
       "bullets": [
         {
           "id": "82089371",
@@ -1026,14 +1038,15 @@
       "role": {
         "name": "Consultant Full Stack",
         "id": "81994135"
-      }
+      },
+      "descriptionShort": "Conception et développements de systèmes et applications en lien avec la consommation d'électricité, d'eau et de gaz."
     },
     {
       "client": "JCDecaux",
       "location": "Plaisir",
       "startDate": "2015-01-01",
       "endDate": "2016-03-01",
-      "description": "Développement d'applications mobiles à destination de la maintenance des mobiliers urbains du groupe.",
+      "description": "",
       "bullets": [
         {
           "id": "82089354",
@@ -1100,14 +1113,15 @@
       "role": {
         "name": "Consultant Full Stack",
         "id": "81994135"
-      }
+      },
+      "descriptionShort": "Développement d'applications mobiles à destination de la maintenance des mobiliers urbains du groupe."
     },
     {
       "client": "Lotsys Filiale FDJ",
       "location": "Suresnes",
       "startDate": "2014-04-01",
       "endDate": "2014-12-01",
-      "description": "Activités d'études et développement pour le backend de la Française des jeux.",
+      "description": "",
       "bullets": [
         {
           "id": "82627548",
@@ -1198,14 +1212,15 @@
       "role": {
         "name": "Consultant Backend",
         "id": "82089336"
-      }
+      },
+      "descriptionShort": "Activités d'études et développement pour le backend de la Française des jeux."
     },
     {
       "client": "Mediametrie",
       "location": "Levallois-Perret",
       "startDate": "2013-04-01",
       "endDate": "2014-03-01",
-      "description": "Conception et développement d'API dans le cadre d'un système de mesure d'audience.",
+      "description": "",
       "bullets": [
         {
           "id": "82627570",
@@ -1330,14 +1345,15 @@
       "role": {
         "name": "Consultant Backend",
         "id": "82089336"
-      }
+      },
+      "descriptionShort": "Conception et développement d'API dans le cadre d'un système de mesure d'audience."
     },
     {
       "client": "Thales communications",
       "location": "Gennevilliers",
       "startDate": "2012-01-01",
       "endDate": "2013-01-01",
-      "description": "Activités de développement d'une plateforme d'analyse d'information et de renseignement sur des données de type sources ouvertes, axée autour de traitements d'analyses de réseaux sociaux et d'analyse d'opinions. Projet au sein de l'équipe R&D du laboratoire d'Etudes Amont CenTAI de THALES",
+      "description": "Projet au sein de l'équipe R&D du laboratoire d'Etudes Amont CenTAI de THALES",
       "bullets": [
         {
           "id": "82627895",
@@ -1460,14 +1476,15 @@
       "role": {
         "name": "Consultant Full Stack",
         "id": "81994135"
-      }
+      },
+      "descriptionShort": "Activités de développement d'une plateforme d'analyse d'information et de renseignement sur des données de type sources ouvertes, axée autour de traitements d'analyses de réseaux sociaux et d'analyse d'opinions."
     },
     {
       "client": "Médiapost",
       "location": "Montrouge",
       "startDate": "2011-04-01",
       "endDate": "2012-01-01",
-      "description": "Activités d'études et développement d'un outil intranet de contractualisation des produits de type imprimés publicitaires proposés par LA POSTE dans ses établissements",
+      "description": "",
       "bullets": [
         {
           "id": "82089294",
@@ -1542,20 +1559,22 @@
       "role": {
         "name": "Consultant Full Stack",
         "id": "81994135"
-      }
+      },
+      "descriptionShort": "Activités d'études et développement d'un outil intranet de contractualisation des produits de type imprimés publicitaires proposés par LA POSTE dans ses établissements"
     },
     {
       "client": "Renault / BNP Paribas / La compagnie 1818 / DGFIP / SFR",
       "location": "Paris",
       "startDate": "2004-09-01",
       "endDate": "2011-03-01",
-      "description": "Toutes mes précédentes missions dont je peux fournir le détail sur demande",
+      "description": "",
       "bullets": [],
       "frameworks": [],
       "role": {
         "name": "Consultant Full Stack",
         "id": "81994135"
-      }
+      },
+      "descriptionShort": "Toutes mes précédentes missions dont je peux fournir le détail sur demande"
     }
   ],
   "allStudiesModels": [

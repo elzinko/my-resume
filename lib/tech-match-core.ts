@@ -6,6 +6,7 @@ export interface JobForMatching {
   startDate: string;
   endDate?: string;
   description?: string;
+  descriptionShort?: string;
   role?: { name: string };
   bullets?: Array<{ id: string; text: string }>;
   frameworks: Array<{ id: string; name: string }>;
@@ -28,6 +29,13 @@ function jobMatchesRequirement(
   if (frameworkMatch) return true;
 
   if (job.role?.name && textContainsKeyword(job.role.name, keywords)) {
+    return true;
+  }
+
+  if (
+    job.descriptionShort &&
+    textContainsKeyword(job.descriptionShort, keywords)
+  ) {
     return true;
   }
 

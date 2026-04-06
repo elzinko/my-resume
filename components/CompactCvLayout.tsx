@@ -44,6 +44,8 @@ export interface CompactCvData {
     startDate: string;
     endDate?: string;
     description: string;
+    descriptionShort?: string;
+    bullets?: Array<{ id: string; text: string }>;
     frameworks: Array<{ id: string; name: string }>;
   }>;
   studies: Array<{

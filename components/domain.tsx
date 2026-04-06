@@ -32,8 +32,10 @@ export default function Domain({
       }
     >
       <h2
-        className={`border-b pb-1 text-2xl font-semibold text-cv-section ${
-          compact ? 'print:text-sm' : 'text-justify'
+        className={`border-b pb-0.5 font-semibold text-cv-section md:pb-1 ${
+          compact
+            ? 'text-2xl print:text-sm'
+            : 'text-base md:text-2xl md:text-justify'
         }`}
       >
         {domain.name}
@@ -42,7 +44,7 @@ export default function Domain({
         className={
           compact
             ? 'mt-4 print:mt-2 print:text-[9px] print:leading-tight'
-            : 'mt-4 min-h-[100px]'
+            : 'mt-1.5 text-sm leading-snug md:mt-4 md:min-h-[100px] md:text-base md:leading-normal print:mt-4 print:min-h-0 print:text-base'
         }
       >
         {domain.description}

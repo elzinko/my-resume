@@ -3,10 +3,8 @@
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { i18n, type Locale } from '../i18n-config';
-import {
-  cvHeaderLocaleBtn,
-  cvHeaderLocaleBtnActive,
-} from '@/lib/cv-header-toolbar';
+import { cvHeaderLocaleSwitchBtn } from '@/lib/cv-header-toolbar';
+import LocaleTargetFlag from './LocaleTargetFlag';
 
 function stripBasePath(pathname: string, basePath: string): string {
   if (!basePath) return pathname;
@@ -16,6 +14,18 @@ function stripBasePath(pathname: string, basePath: string): string {
   }
   return pathname;
 }
+
+/** Libellés aria / title selon la langue affichée et la langue cible du lien. */
+const SWITCH_TITLE: Record<Locale, Record<Locale, string>> = {
+  fr: {
+    fr: 'Passer en français',
+    en: 'Switch to French',
+  },
+  en: {
+    fr: 'Passer en anglais',
+    en: 'Switch to English',
+  },
+};
 
 interface LocaleSwitcherProps {
   /** Fermer le menu mobile après navigation. */
@@ -39,6 +49,8 @@ export default function LocaleSwitcher({
       ? (maybeLocale as Locale)
       : i18n.defaultLocale;
 
+  const targetLocale: Locale = currentLocale === 'fr' ? 'en' : 'fr';
+
   const redirectedPathName = (locale: string): string => {
     if (!pathName || pathName === '/') {
       return `/${locale}`;
@@ -52,24 +64,24 @@ export default function LocaleSwitcher({
     return next.join('/') || `/${locale}`;
   };
 
+  const href = redirectedPathName(targetLocale);
+  const ariaLabel = SWITCH_TITLE[targetLocale][currentLocale];
+
   return (
     <ul className={listClassName}>
-      {i18n.locales.map((locale) => {
-        const active = locale === currentLocale;
-        return (
-          <li key={locale} className="shrink-0">
-            <Link
-              className={`${cvHeaderLocaleBtn} ${active ? cvHeaderLocaleBtnActive : ''}`}
-              href={redirectedPathName(locale)}
-              hrefLang={locale}
-              aria-current={active ? 'true' : undefined}
-              onClick={() => onNavigate?.()}
-            >
-              {locale}
-            </Link>
-          </li>
-        );
-      })}
+      <li className="shrink-0">
+        <Link
+          data-testid="locale-switch"
+          className={cvHeaderLocaleSwitchBtn}
+          href={href}
+          hrefLang={targetLocale}
+          title={ariaLabel}
+          aria-label={ariaLabel}
+          onClick={() => onNavigate?.()}
+        >
+          <LocaleTargetFlag locale={targetLocale} />
+        </Link>
+      </li>
     </ul>
   );
 }

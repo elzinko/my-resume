@@ -2,6 +2,7 @@
 
 import React from 'react';
 import formatDates from '@/lib/date';
+import JobExperienceBody from './JobExperienceBody';
 import JobFrameworkPills from './JobFrameworkPills';
 import { slugifyClient } from '@/lib/slug';
 import type { Locale } from 'i18n-config';
@@ -13,7 +14,10 @@ export interface JobData {
   location: string;
   startDate: string;
   endDate?: string;
+  /** Texte détaillé (suite après l’accroche). Si absent côté CMS, tout peut rester dans `description` sans `descriptionShort`. */
   description: string;
+  /** Accroche courte (mobile replié). */
+  descriptionShort?: string;
   bullets?: Array<{ id: string; text: string }>;
   frameworks?: Array<{ id: string; name: string; link?: string }>;
 }
@@ -123,7 +127,13 @@ export default function JobDisplay({
             {job.location}
           </span>
         </div>
-        <p className="cv-job-description mt-1">{job.description}</p>
+        <JobExperienceBody
+          descriptionShort={job.descriptionShort}
+          description={job.description}
+          bullets={job.bullets}
+          locale={locale}
+          compact
+        />
         <JobFrameworkPills
           frameworks={frameworks}
           compact
@@ -159,14 +169,12 @@ export default function JobDisplay({
           {job.location}
         </span>
       </div>
-      <p className="cv-job-description">{job.description}</p>
-      {job.bullets && job.bullets.length > 0 && (
-        <ul className="cv-job-description mx-4 my-2 list-disc">
-          {job.bullets.map((bullet) => (
-            <li key={bullet.id}>{bullet.text}</li>
-          ))}
-        </ul>
-      )}
+      <JobExperienceBody
+        descriptionShort={job.descriptionShort}
+        description={job.description}
+        bullets={job.bullets}
+        locale={locale}
+      />
       <JobFrameworkPills
         frameworks={frameworks}
         expandAriaLabel={expandTechAria}

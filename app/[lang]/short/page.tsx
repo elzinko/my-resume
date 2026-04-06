@@ -83,6 +83,8 @@ export default async function ShortPage({
         startDate: start || '',
         endDate: end || undefined,
         description: j.description,
+        descriptionShort: j.descriptionShort,
+        bullets: j.bullets,
         frameworks: j.frameworks || [],
       };
     }),
