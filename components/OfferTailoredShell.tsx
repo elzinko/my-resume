@@ -37,15 +37,24 @@ export default function OfferTailoredShell({
 
       {matchSection}
 
+      <div className="mt-4 space-y-4 md:hidden print:hidden">
+        {/* @ts-expect-error Server Component */}
+        <Contact locale={lang} className="mt-0" />
+        {/* @ts-expect-error Server Component */}
+        <Skills locale={lang} className="mt-0" />
+      </div>
+
       <div className="flex flex-col print:flex-row md:flex-row">
         <div
           id="left"
           className="order-last flex w-full flex-col print:order-first print:w-1/3 print:pr-4 md:order-first md:w-1/3 md:shrink-0 md:pr-10"
         >
-          {/* @ts-expect-error Server Component */}
-          <Contact locale={lang} />
-          {/* @ts-expect-error Server Component */}
-          <Skills locale={lang} />
+          <div className="hidden md:block print:block">
+            {/* @ts-expect-error Server Component */}
+            <Contact locale={lang} sectionId={false} />
+            {/* @ts-expect-error Server Component */}
+            <Skills locale={lang} sectionId={false} />
+          </div>
           <EducationLevel content={educationLevel} />
           {/* @ts-expect-error Server Component */}
           <Studies locale={lang} />

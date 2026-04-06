@@ -3,10 +3,21 @@ import { getCvData } from '@/lib/cv-data';
 import { Locale } from 'i18n-config';
 import React from 'react';
 
-export default async function skills({ locale }: { locale: Locale }) {
+export default async function skills({
+  locale,
+  sectionId = 'skills',
+  className = '',
+}: {
+  locale: Locale;
+  sectionId?: string | false;
+  className?: string;
+}) {
   const data: any = await getCvData(locale);
   return (
-    <section id="skills" className="mt-10">
+    <section
+      id={sectionId === false ? undefined : sectionId}
+      className={className ? className : 'mt-10'}
+    >
       <h2 className="border-b pb-1 text-2xl font-semibold text-cv-tag-text">
         {data?.skillsTitle?.title}
       </h2>
