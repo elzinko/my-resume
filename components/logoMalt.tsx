@@ -17,7 +17,7 @@ export default function logoMalt({ onNavigate }: LogoMaltProps) {
       aria-label="Malt"
       onClick={() => onNavigate?.()}
     >
-      <span className="inline-flex transition-all duration-200 [&_svg]:h-4 [&_svg]:w-4 md:[&_svg]:h-5 md:[&_svg]:w-5 [&_svg]:grayscale-[0.35] group-hover:[&_svg]:grayscale-0">
+      <span className="inline-flex transition-all duration-200 [&_svg]:h-4 [&_svg]:w-4 [&_svg]:grayscale-[0.35] group-hover:[&_svg]:grayscale-0 md:[&_svg]:h-5 md:[&_svg]:w-5">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           aria-hidden="true"

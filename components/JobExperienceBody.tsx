@@ -38,9 +38,7 @@ export default function JobExperienceBody({
       ? { more: 'More detail', less: 'Hide detail' }
       : { more: 'Plus de détails', less: 'Masquer les détails' };
 
-  const pClass = compact
-    ? 'cv-job-description mt-1'
-    : 'cv-job-description';
+  const pClass = compact ? 'cv-job-description mt-1' : 'cv-job-description';
   const pClassTight = compact
     ? 'cv-job-description mt-1'
     : 'cv-job-description mt-1';
@@ -57,9 +55,11 @@ export default function JobExperienceBody({
   return (
     <>
       {/* Écran large + impression : contenu complet */}
-      <div className="hidden lg:block print:block">
+      <div className="hidden print:block lg:block">
         {isLegacy ? (
-          hookLine ? <p className={pClass}>{hookLine}</p> : null
+          hookLine ? (
+            <p className={pClass}>{hookLine}</p>
+          ) : null
         ) : (
           <>
             {hookLine ? <p className={pClass}>{hookLine}</p> : null}
@@ -70,7 +70,7 @@ export default function JobExperienceBody({
       </div>
 
       {/* Mobile écran uniquement */}
-      <div className="lg:hidden print:hidden">
+      <div className="print:hidden lg:hidden">
         {hookLine ? <p className={pClass}>{hookLine}</p> : null}
         {showToggle ? (
           <>

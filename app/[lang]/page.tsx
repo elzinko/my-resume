@@ -65,7 +65,7 @@ export default async function Page({
       {/* @ts-expect-error Server Component */}
       <Domains locale={lang} />
 
-      <div className="mt-4 space-y-4 md:hidden print:hidden">
+      <div className="mt-4 space-y-4 print:hidden md:hidden">
         {/* @ts-expect-error Server Component */}
         <Contact locale={lang} className="mt-0" />
         {/* @ts-expect-error Server Component */}
@@ -77,7 +77,7 @@ export default async function Page({
           id="left"
           className="order-last flex w-full flex-col print:order-first print:w-1/3 print:pr-4 md:order-first md:w-1/3 md:shrink-0 md:pr-10"
         >
-          <div className="hidden md:block print:block">
+          <div className="hidden print:block md:block">
             {/* @ts-expect-error Server Component */}
             <Contact locale={lang} sectionId={false} />
             {/* @ts-expect-error Server Component */}

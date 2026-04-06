@@ -3,10 +3,7 @@ import { Locale } from 'i18n-config';
 import { getOffer } from '@/data/offers';
 import TechMatchDisplay from '@/components/TechMatchDisplay';
 import type { MatchDisplayData } from '@/components/TechMatchDisplay';
-import {
-  buildMatchEntries,
-  type JobForMatching,
-} from '@/lib/tech-match-core';
+import { buildMatchEntries, type JobForMatching } from '@/lib/tech-match-core';
 
 interface TechMatchProps {
   locale: Locale;

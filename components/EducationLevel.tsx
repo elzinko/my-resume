@@ -48,9 +48,7 @@ function EducationBlockRow({
   tightSpacing,
 }: BlockRow & { tightSpacing: boolean }) {
   const primaryClass =
-    primaryRole === 'heading'
-      ? 'cv-education-heading'
-      : 'cv-education-primary';
+    primaryRole === 'heading' ? 'cv-education-heading' : 'cv-education-primary';
 
   return (
     <div className={tightSpacing ? 'space-y-0.5' : 'space-y-1'}>

@@ -3,10 +3,7 @@
 import React, { Suspense, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
 import TechMatchDisplay from '@/components/TechMatchDisplay';
-import {
-  buildMatchEntries,
-  type JobForMatching,
-} from '@/lib/tech-match-core';
+import { buildMatchEntries, type JobForMatching } from '@/lib/tech-match-core';
 import { resolveOfferFromUrlParams } from '@/lib/query-offer-params';
 import { decodeOfferSpecParam } from '@/lib/dynamic-offer-spec';
 import type { Locale } from 'i18n-config';
@@ -43,9 +40,7 @@ function MatchOfferInner({
   const hasReqParams =
     sp.getAll('requirement').length > 0 || sp.getAll('req').length > 0;
   const hasAnyInput =
-    mode === 'spec-only'
-      ? hasSpec
-      : hasSpec || hasCompany || hasReqParams;
+    mode === 'spec-only' ? hasSpec : hasSpec || hasCompany || hasReqParams;
 
   if (!hasAnyInput) {
     return (
@@ -128,8 +123,8 @@ function MatchOfferInner({
               ? 'Vérifiez le paramètre spec (JSON base64url).'
               : 'Check the spec parameter (base64url JSON).'
             : l === 'fr'
-              ? 'Vérifiez company, au moins une requirement (Libellé:mots-clés), et optionnellement spec.'
-              : 'Check company, at least one requirement (Label:keywords), and optional spec.'}
+            ? 'Vérifiez company, au moins une requirement (Libellé:mots-clés), et optionnellement spec.'
+            : 'Check company, at least one requirement (Label:keywords), and optional spec.'}
         </p>
       </section>
     );

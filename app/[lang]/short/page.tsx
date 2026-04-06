@@ -96,7 +96,10 @@ export default async function ShortPage({
       })),
       byEndThenStart,
     ),
-    educationLevel: getEducationLevelContent(data as Record<string, unknown>, lang),
+    educationLevel: getEducationLevelContent(
+      data as Record<string, unknown>,
+      lang,
+    ),
   };
 
   return (

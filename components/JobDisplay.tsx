@@ -43,14 +43,14 @@ function JobMetaMobileRow({
 
   return (
     <div
-      className={`grid w-full max-w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto_minmax(0,1fr)] items-baseline gap-x-2.5 md:hidden print:hidden ${typo}`}
+      className={`grid w-full max-w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto_minmax(0,1fr)] items-baseline gap-x-2.5 print:hidden md:hidden ${typo}`}
       data-testid="job-meta-mobile"
     >
       <span className="min-w-0 truncate text-end" data-job-meta="role">
         {roleName ?? ''}
       </span>
       <span
-        className="shrink-0 text-center text-cv-jobs/45"
+        className="text-cv-jobs/45 shrink-0 text-center"
         data-job-meta="sep"
         aria-hidden
       >
@@ -60,14 +60,14 @@ function JobMetaMobileRow({
         {location?.trim() ? location : '\u00a0'}
       </span>
       <span
-        className="shrink-0 text-center text-cv-jobs/45"
+        className="text-cv-jobs/45 shrink-0 text-center"
         data-job-meta="sep"
         aria-hidden
       >
         /
       </span>
       <span
-        className="min-w-0 truncate text-left whitespace-nowrap tabular-nums"
+        className="min-w-0 truncate whitespace-nowrap text-left tabular-nums"
         data-job-meta="dates"
       >
         {datesLine}
@@ -109,7 +109,7 @@ export default function JobDisplay({
           <span className="min-w-0 flex-1 text-sm font-bold leading-snug text-cv-jobs print:text-xs">
             {job.client}
           </span>
-          <span className="min-w-max shrink-0 self-end text-cv-meta font-normal tabular-nums leading-snug text-cv-jobs print:text-[8px] max-md:hidden print:!inline">
+          <span className="min-w-max shrink-0 self-end text-cv-meta font-normal tabular-nums leading-snug text-cv-jobs print:!inline print:text-[8px] max-md:hidden">
             {compactDateLine}
           </span>
         </div>
@@ -119,7 +119,7 @@ export default function JobDisplay({
           location={job.location}
           datesLine={compactDateLine}
         />
-        <div className="cv-row-with-side-meta print:gap-1 max-md:hidden print:flex">
+        <div className="cv-row-with-side-meta print:flex print:gap-1 max-md:hidden">
           <span className="min-w-0 flex-1 text-cv-meta font-normal leading-snug text-cv-jobs print:text-[8px]">
             {roleName ?? ''}
           </span>
@@ -152,7 +152,7 @@ export default function JobDisplay({
         <span className="min-w-0 flex-1 text-base font-bold leading-snug text-cv-jobs print:text-sm">
           {job.client}
         </span>
-        <span className="min-w-max shrink-0 self-end text-cv-meta font-normal tabular-nums leading-snug text-cv-jobs print:text-xs max-md:hidden print:!inline">
+        <span className="min-w-max shrink-0 self-end text-cv-meta font-normal tabular-nums leading-snug text-cv-jobs print:!inline print:text-xs max-md:hidden">
           {dates}
         </span>
       </div>
@@ -161,7 +161,7 @@ export default function JobDisplay({
         location={job.location}
         datesLine={datesStr}
       />
-      <div className="cv-row-with-side-meta pb-2 max-md:hidden print:flex">
+      <div className="cv-row-with-side-meta pb-2 print:flex max-md:hidden">
         <span className="min-w-0 flex-1 text-cv-meta font-normal leading-snug text-cv-jobs print:text-xs">
           {roleName ?? ''}
         </span>

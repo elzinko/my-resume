@@ -68,7 +68,9 @@ test.describe('CV title/date rows (mobile)', () => {
     ).toBeLessThanOrEqual(8);
   });
 
-  test('job mobile: bouton détail déplie texte long ou puces', async ({ page }) => {
+  test('job mobile: bouton détail déplie texte long ou puces', async ({
+    page,
+  }) => {
     await page.goto('/fr');
     const firstJob = page.locator('#jobs li').first().locator('div[id]');
     const toggle = firstJob.getByTestId('job-detail-toggle');
@@ -80,21 +82,21 @@ test.describe('CV title/date rows (mobile)', () => {
     await expect(toggle).toHaveText('Plus de détails');
   });
 
-  test('header: titre sous Thomas Couderc selon la locale', async ({ page }) => {
+  test('header: subtitle matches CV locale (fr.json / en.json)', async ({
+    page,
+  }) => {
     await page.goto('/fr');
     await expect(page.locator('.header-content p').first()).toHaveText(
-      'Développeur full stack senior',
+      'Développeur fullstack',
     );
     await page.goto('/en');
     await expect(page.locator('.header-content p').first()).toHaveText(
-      'Senior Fullstack Developer',
+      'Fullstack Developer',
     );
   });
 
-  test('job tablet (~820px): méta mobile visible (< lg, colonne main étroite)', async ({
-    page,
-  }) => {
-    await page.setViewportSize({ width: 820, height: 800 });
+  test('job below md breakpoint: mobile meta row visible', async ({ page }) => {
+    await page.setViewportSize({ width: 700, height: 800 });
     await page.goto('/fr');
     const meta = page
       .locator('#jobs li')

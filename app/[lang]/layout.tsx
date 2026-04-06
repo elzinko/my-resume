@@ -18,13 +18,11 @@ export default async function RootLayout({
     }
   }
   return (
-    <html lang="fr">
-      <body>
-        <div className="container mx-auto min-h-screen p-8 print:p-4">
-          <main>{children}</main>
-        </div>
-        {enableAnalitycs ? <Analytics /> : ''}
-      </body>
-    </html>
+    <>
+      <div className="container mx-auto min-h-screen p-8 print:p-4">
+        <main>{children}</main>
+      </div>
+      {enableAnalitycs ? <Analytics /> : ''}
+    </>
   );
 }

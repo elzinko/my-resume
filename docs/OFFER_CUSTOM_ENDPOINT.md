@@ -18,15 +18,15 @@ Les offres **prédéfinies** restent inchangées :
 GET /{lang}/offer/match?company=...&title=...&requirement=Libellé:mot1,mot2&requirement=...
 ```
 
-| Paramètre | Obligatoire | Description |
-|-----------|-------------|-------------|
-| `company` | **oui** | Nom de l’entreprise |
-| `title` | non | Intitulé du poste (FR et EN si seul titre fourni) |
-| `title_fr` | non | Titre affiché côté français |
-| `title_en` | non | Titre affiché côté anglais |
+| Paramètre     | Obligatoire            | Description                                       |
+| ------------- | ---------------------- | ------------------------------------------------- |
+| `company`     | **oui**                | Nom de l’entreprise                               |
+| `title`       | non                    | Intitulé du poste (FR et EN si seul titre fourni) |
+| `title_fr`    | non                    | Titre affiché côté français                       |
+| `title_en`    | non                    | Titre affiché côté anglais                        |
 | `requirement` | **oui** (au moins une) | Répéter le paramètre pour chaque ligne d’exigence |
-| `req` | (alias) | Même format que `requirement` |
-| `id` | non | Identifiant interne (sinon dérivé de `company`) |
+| `req`         | (alias)                | Même format que `requirement`                     |
+| `id`          | non                    | Identifiant interne (sinon dérivé de `company`)   |
 
 ### Format d’une exigence (`requirement` / `req`)
 
@@ -67,12 +67,12 @@ Même rendu que `/offer/match` une fois l’offre résolue.
 
 ### Schéma JSON (`spec` décodé)
 
-| Champ | Type | Obligatoire |
-|--------|------|-------------|
-| `company` | string | oui |
-| `title` | string ou `{ "fr", "en" }` | oui |
-| `requirements` | `[{ "label", "keywords" }]` | oui |
-| `id`, `url` | string | non |
+| Champ          | Type                        | Obligatoire |
+| -------------- | --------------------------- | ----------- |
+| `company`      | string                      | oui         |
+| `title`        | string ou `{ "fr", "en" }`  | oui         |
+| `requirements` | `[{ "label", "keywords" }]` | oui         |
+| `id`, `url`    | string                      | non         |
 
 ### Encodage
 
@@ -82,7 +82,9 @@ npm run encode-offer-spec -- path/to/offer.json
 
 ```ts
 import { encodeOfferSpecParam } from '@/lib/dynamic-offer-spec';
-const url = `https://example.com/fr/offer/custom?spec=${encodeURIComponent(encodeOfferSpecParam(offer))}`;
+const url = `https://example.com/fr/offer/custom?spec=${encodeURIComponent(
+  encodeOfferSpecParam(offer),
+)}`;
 ```
 
 ---
@@ -102,13 +104,13 @@ Pas de `POST` : tout passe par des **GET** avec query string. Les URLs longues p
 
 ## Fichiers utiles
 
-| Fichier | Rôle |
-|---------|------|
-| `lib/query-offer-params.ts` | Parse `company`, `title*`, `requirement` / `req`, `spec` |
-| `lib/dynamic-offer-spec.ts` | JSON ↔ base64url |
-| `app/[lang]/offer/match/page.tsx` | Page paramètres lisibles |
-| `app/[lang]/offer/custom/page.tsx` | Page `spec` uniquement |
-| `components/MatchOfferClient.tsx` | Résolution côté client + affichage |
+| Fichier                            | Rôle                                                     |
+| ---------------------------------- | -------------------------------------------------------- |
+| `lib/query-offer-params.ts`        | Parse `company`, `title*`, `requirement` / `req`, `spec` |
+| `lib/dynamic-offer-spec.ts`        | JSON ↔ base64url                                         |
+| `app/[lang]/offer/match/page.tsx`  | Page paramètres lisibles                                 |
+| `app/[lang]/offer/custom/page.tsx` | Page `spec` uniquement                                   |
+| `components/MatchOfferClient.tsx`  | Résolution côté client + affichage                       |
 
 ### Prompt court pour un LLM
 

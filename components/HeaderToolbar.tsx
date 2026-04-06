@@ -10,8 +10,7 @@ import LogoMalt from '@/components/logoMalt';
 import LogoPrint from '@/components/logoPrint';
 import { cvHeaderModeBtn } from '@/lib/cv-header-toolbar';
 
-const rowListClass =
-  'flex flex-nowrap items-center gap-0.5 [&>li]:shrink-0';
+const rowListClass = 'flex flex-nowrap items-center gap-0.5 [&>li]:shrink-0';
 
 function ToolbarIconList({
   onNavigate,
@@ -123,7 +122,7 @@ export default function HeaderToolbar({ shortLang }: { shortLang?: string }) {
       <div className="h-12 w-full shrink-0 md:hidden" aria-hidden />
 
       <div
-        className="fixed inset-x-0 top-0 z-[90] flex min-h-12 items-center gap-2 bg-white/90 px-4 pb-1.5 backdrop-blur-md supports-[backdrop-filter]:bg-white/80 print:hidden md:hidden"
+        className="min-h-12 fixed inset-x-0 top-0 z-[90] flex items-center gap-2 bg-white/90 px-4 pb-1.5 backdrop-blur-md supports-[backdrop-filter]:bg-white/80 print:hidden md:hidden"
         style={{ paddingTop: 'max(0.75rem, env(safe-area-inset-top))' }}
       >
         <div
@@ -143,13 +142,10 @@ export default function HeaderToolbar({ shortLang }: { shortLang?: string }) {
               'flex shrink-0 items-center overflow-hidden transition-[max-width,opacity] duration-300 ease-out motion-reduce:transition-none ' +
               (open
                 ? 'max-w-[9rem] opacity-100'
-                : 'max-w-0 opacity-0 pointer-events-none')
+                : 'pointer-events-none max-w-0 opacity-0')
             }
           >
-            <LocaleSwitcher
-              onNavigate={close}
-              listClassName={rowListClass}
-            />
+            <LocaleSwitcher onNavigate={close} listClassName={rowListClass} />
           </div>
 
           <div
@@ -165,14 +161,11 @@ export default function HeaderToolbar({ shortLang }: { shortLang?: string }) {
               'flex min-w-0 flex-1 items-center justify-end gap-0.5 overflow-hidden transition-[max-width,opacity] duration-300 ease-out motion-reduce:transition-none ' +
               (open
                 ? 'max-w-none opacity-100'
-                : 'max-w-0 opacity-0 pointer-events-none')
+                : 'pointer-events-none max-w-0 opacity-0')
             }
           >
             <ModeControl shortLang={shortLang} onNavigate={close} />
-            <ToolbarIconList
-              onNavigate={close}
-              listClassName={rowListClass}
-            />
+            <ToolbarIconList onNavigate={close} listClassName={rowListClass} />
           </div>
         </div>
 

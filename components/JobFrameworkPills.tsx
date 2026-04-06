@@ -43,8 +43,7 @@ function layoutHeightPx(
   itemHeight: number,
   gap: number,
 ): number {
-  const items =
-    moreWidth != null ? [...itemWidths, moreWidth] : itemWidths;
+  const items = moreWidth != null ? [...itemWidths, moreWidth] : itemWidths;
   if (items.length === 0) return 0;
 
   let rowWidth = 0;
@@ -82,7 +81,10 @@ function maxFitCount(
   }
 
   for (let k = n - 1; k >= 0; k -= 1) {
-    if (layoutHeightPx(widths.slice(0, k), moreW, cw, H, gap) <= maxH + epsilon) {
+    if (
+      layoutHeightPx(widths.slice(0, k), moreW, cw, H, gap) <=
+      maxH + epsilon
+    ) {
       return k;
     }
   }
@@ -209,18 +211,17 @@ export default function JobFrameworkPills({
     !printing &&
     visibleCount < frameworks.length;
 
-  const visibleFrameworks =
-    showCollapse ? frameworks.slice(0, visibleCount) : frameworks;
+  const visibleFrameworks = showCollapse
+    ? frameworks.slice(0, visibleCount)
+    : frameworks;
 
-  const showLess =
-    expanded &&
-    isBelowMd &&
-    !printing &&
-    frameworks.length > 0;
+  const showLess = expanded && isBelowMd && !printing && frameworks.length > 0;
 
   return (
     <div
-      className={`relative w-full ${compact ? 'mt-1.5' : 'py-2'} ${className}`.trim()}
+      className={`relative w-full ${
+        compact ? 'mt-1.5' : 'py-2'
+      } ${className}`.trim()}
     >
       {/* Couche de mesure : même largeur que le bloc visible, hors flux. */}
       <div ref={outerRef} className="relative w-full">

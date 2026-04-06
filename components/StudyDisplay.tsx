@@ -34,7 +34,9 @@ export default function StudyDisplay({
       : null;
     return (
       <li className="cv-row-study-title-year">
-        <span className="cv-study-title-compact min-w-0 flex-1">{study.name}</span>
+        <span className="cv-study-title-compact min-w-0 flex-1">
+          {study.name}
+        </span>
         {endYear && (
           <span className="cv-study-year-compact min-w-max shrink-0 whitespace-nowrap">
             {endYear}

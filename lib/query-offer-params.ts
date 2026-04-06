@@ -59,10 +59,10 @@ export function buildOfferFromQueryParams(
   const titleFrSafe = titleFr.slice(0, MAX_TITLE_LEN);
   const titleEnSafe = titleEn.slice(0, MAX_TITLE_LEN);
 
-  const tokens = [
-    ...sp.getAll('requirement'),
-    ...sp.getAll('req'),
-  ].slice(0, MAX_REQUIREMENTS);
+  const tokens = [...sp.getAll('requirement'), ...sp.getAll('req')].slice(
+    0,
+    MAX_REQUIREMENTS,
+  );
 
   const requirements: MatchRequirement[] = [];
   for (const t of tokens) {

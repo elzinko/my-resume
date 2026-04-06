@@ -37,7 +37,10 @@ function isRecord(v: unknown): v is Record<string, unknown> {
   return typeof v === 'object' && v !== null && !Array.isArray(v);
 }
 
-function pickString(obj: Record<string, unknown>, key: string): string | undefined {
+function pickString(
+  obj: Record<string, unknown>,
+  key: string,
+): string | undefined {
   const v = obj[key];
   return typeof v === 'string' && v.trim() !== '' ? v : undefined;
 }
