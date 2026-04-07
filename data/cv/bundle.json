@@ -766,7 +766,7 @@
           "name": "Consultant Full Stack",
           "id": "81994135"
         },
-        "descriptionShort": "Logging et monitoring de capteurs IoT pour une solution géothermique."
+        "descriptionShort": "Conception et développement de bout en bout du SI : application de monitoring complète du chauffage géothermique par pompe à chaleur pour grands bâtiments."
       },
       {
         "client": "RelevanC",
@@ -2966,7 +2966,7 @@
           "name": "Full Stack Consultant",
           "id": "81994135"
         },
-        "descriptionShort": "Logging and monitoring IoT devices for a geothermal solution."
+        "descriptionShort": "End-to-end design and development of the information system: a full monitoring application for heat-pump geothermal heating in large buildings."
       },
       {
         "client": "RelevanC",
