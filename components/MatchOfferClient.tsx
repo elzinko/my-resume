@@ -6,6 +6,7 @@ import TechMatchDisplay from '@/components/TechMatchDisplay';
 import { buildMatchEntries, type JobForMatching } from '@/lib/tech-match-core';
 import { resolveOfferFromUrlParams } from '@/lib/query-offer-params';
 import { decodeOfferSpecParam } from '@/lib/dynamic-offer-spec';
+import type { MatchCatalog } from '@/lib/match-catalog-schema';
 import type { Locale } from 'i18n-config';
 
 type Mode = 'query-first' | 'spec-only';
@@ -14,19 +15,21 @@ function MatchOfferInner({
   jobs,
   lang,
   mode,
+  matchCatalog,
 }: {
   jobs: JobForMatching[];
   lang: Locale;
   mode: Mode;
+  matchCatalog: MatchCatalog;
 }) {
   const sp = useSearchParams();
 
   const offer = useMemo(() => {
     if (mode === 'spec-only') {
-      return decodeOfferSpecParam(sp.get('spec'));
+      return decodeOfferSpecParam(sp.get('spec'), matchCatalog);
     }
-    return resolveOfferFromUrlParams(sp);
-  }, [sp, mode]);
+    return resolveOfferFromUrlParams(sp, matchCatalog);
+  }, [sp, mode, matchCatalog]);
 
   const matchData = useMemo(() => {
     if (!offer) return null;
@@ -97,6 +100,12 @@ function MatchOfferInner({
                   : 'repeat per line: Label:kw1,kw2 (alias: req)'}
               </li>
               <li>
+                <strong>reqY</strong> —{' '}
+                {l === 'fr'
+                  ? 'optionnel, répétable : années d’exp. affichées pour la ligne de même indice (remplace le calcul auto)'
+                  : 'optional, repeat: displayed years for the same-index requirement (overrides auto sum)'}
+              </li>
+              <li>
                 {l === 'fr'
                   ? 'Option avancée : spec=… (base64 JSON) prend le pas sur les autres paramètres.'
                   : 'Advanced: spec=… (base64 JSON) overrides other params when valid.'}
@@ -137,10 +146,12 @@ export default function MatchOfferClient({
   jobs,
   lang,
   mode,
+  matchCatalog,
 }: {
   jobs: JobForMatching[];
   lang: Locale;
   mode: Mode;
+  matchCatalog: MatchCatalog;
 }) {
   return (
     <Suspense
@@ -150,7 +161,12 @@ export default function MatchOfferClient({
         </p>
       }
     >
-      <MatchOfferInner jobs={jobs} lang={lang} mode={mode} />
+      <MatchOfferInner
+        jobs={jobs}
+        lang={lang}
+        mode={mode}
+        matchCatalog={matchCatalog}
+      />
     </Suspense>
   );
 }

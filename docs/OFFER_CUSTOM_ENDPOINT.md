@@ -26,15 +26,18 @@ GET /{lang}/offer/match?company=...&title=...&requirement=Libellé:mot1,mot2&req
 | `title_en`    | non                    | Titre affiché côté anglais                        |
 | `requirement` | **oui** (au moins une) | Répéter le paramètre pour chaque ligne d’exigence |
 | `req`         | (alias)                | Même format que `requirement`                     |
+| `reqY`        | non                    | Répétable : années d’exp. affichées pour la **même ligne** que le *i*-ème `requirement` / `req` (remplace le calcul auto) |
 | `id`          | non                    | Identifiant interne (sinon dérivé de `company`)   |
 
 ### Format d’une exigence (`requirement` / `req`)
 
 Une valeur = **`Libellé:motcle1,motcle2,motcle3`**
 
+- Option **parallèle** : pour la *i*-ème valeur de `requirement` / `req`, un *i*-ème `reqY` (nombre, virgule ou point décimal) fixe les **années affichées** pour cette ligne (prioritaire sur la somme calculée à partir des missions du CV).
 - Un **deux-points** `:` sépare le libellé (affiché dans le tableau) de la liste de mots-clés.
 - Les mots-clés sont séparés par des **virgules** (sans espace obligatoire).
 - Les espaces dans le libellé sont possibles via encodage URL (`+` ou `%20`).
+- **Référence par id** (recommandé pour les LLM) : un segment égal à un **id** Dato présent dans le CV (`bundle.json` : skills ou frameworks de mission), ou préfixé par **`@`**, est résolu vers les `matchTokens` dérivés du catalogue et utilisé aussi pour un **match direct** sur `frameworks[].id` des missions. Exemple : `requirement=Vue.js:@an8YW0VVTf2JuZZZo1W0pw` (encoder `@` en `%40` dans l’URL si besoin).
 
 ### Exemples d’URL
 
@@ -71,7 +74,7 @@ Même rendu que `/offer/match` une fois l’offre résolue.
 | -------------- | --------------------------- | ----------- |
 | `company`      | string                      | oui         |
 | `title`        | string ou `{ "fr", "en" }`  | oui         |
-| `requirements` | `[{ "label", "keywords" }]` | oui         |
+| `requirements` | `[{ "label", "keywords", "experienceYearsOverride?" }]` | oui         |
 | `id`, `url`    | string                      | non         |
 
 ### Encodage
@@ -102,16 +105,41 @@ Plafonds sur longueurs, nombre d’exigences et de mots-clés : `lib/dynamic-off
 
 Pas de `POST` : tout passe par des **GET** avec query string. Les URLs longues peuvent être limitées par le navigateur (~2k caractères) ; au-delà, préférer `spec` sur `/offer/custom` ou réduire le nombre d’exigences.
 
+## Catalogue pour agents / LLM (source unique `bundle.json`)
+
+Il n’y a **plus** de fichier public `match-catalog.json`. Le catalogue est la **liste des technos** obtenue en parcourant `data/cv/bundle.json` :
+
+- `fr.allSkillsModels` et `en.allSkillsModels` (couples `id` / `name`) ;
+- pour chaque locale, chaque `allJobsModels[].frameworks[]` (même chose).
+
+Les entrées sont fusionnées par `id` ; le nom canonique et les `matchTokens` suivent `lib/match-catalog-schema.ts` (`deriveMatchTokensFromName`).
+
+**Workflow suggéré** pour un LLM (accès au dépôt ou au fichier bundle) :
+
+1. Lire `data/cv/bundle.json` et constuire la liste des `id` (et noms) comme ci-dessus, ou réutiliser la logique exportée par `buildMatchCatalogFromBundle` dans `lib/match-catalog-from-bundle.ts`.
+2. Choisir les `id` ou mots-clés texte pertinents pour chaque exigence du poste.
+3. Construire soit des URLs `/offer/match?...&requirement=Libellé:@id`, soit un JSON d’offre complet + `npm run encode-offer-spec` → `/offer/custom?spec=…`.
+
+Le matching côté CV utilise en plus une **correspondance assouplie** sur la ponctuation / espaces (`nodejs` vs `node.js` dans les textes), et un match **par id** sur les frameworks des missions.
+
+Sans accès au dépôt, tu peux encore t’appuyer sur des **mots-clés texte** après le `:` dans chaque `requirement`, sans id catalogue.
+
 ## Fichiers utiles
 
-| Fichier                            | Rôle                                                     |
-| ---------------------------------- | -------------------------------------------------------- |
-| `lib/query-offer-params.ts`        | Parse `company`, `title*`, `requirement` / `req`, `spec` |
-| `lib/dynamic-offer-spec.ts`        | JSON ↔ base64url                                         |
-| `app/[lang]/offer/match/page.tsx`  | Page paramètres lisibles                                 |
-| `app/[lang]/offer/custom/page.tsx` | Page `spec` uniquement                                   |
-| `components/MatchOfferClient.tsx`  | Résolution côté client + affichage                       |
+| Fichier                             | Rôle                                                     |
+| ----------------------------------- | -------------------------------------------------------- |
+| `data/cv/bundle.json`               | Source CV `fr` / `en` **et** base du catalogue de match   |
+| `lib/match-catalog-from-bundle.ts`  | Agrège skills + frameworks (fr+en) → `MatchCatalog`       |
+| `lib/match-catalog-server.ts`       | Mémoïse le catalogue dérivé du bundle (server-only)       |
+| `lib/match-catalog.ts`              | Expansion des mots-clés + enrichissement des offres       |
+| `lib/match-catalog-schema.ts`       | Types + `deriveMatchTokensFromName`                       |
+| `lib/tech-match-core.ts`            | Match par id framework, texte strict puis assoupli        |
+| `lib/query-offer-params.ts`         | Parse `company`, `title*`, `requirement` / `req`, `spec`  |
+| `lib/dynamic-offer-spec.ts`         | JSON ↔ base64url + enrichissement catalogue               |
+| `app/[lang]/offer/match/page.tsx`   | Page paramètres lisibles                                  |
+| `app/[lang]/offer/custom/page.tsx`  | Page `spec` uniquement                                    |
+| `components/MatchOfferClient.tsx`   | Résolution côté client + affichage (reçoit le catalogue)  |
 
 ### Prompt court pour un LLM
 
-> Construis une URL GET vers `https://<site>/{fr|en}/offer/match` avec : `company`, `title` (optionnel), et pour chaque compétence du poste un paramètre `requirement=Libellé:mot1,mot2` (répéter `requirement` plusieurs fois). Les mots-clés servent à matcher le CV (frameworks, rôle, description des missions).
+> Lis `data/cv/bundle.json` (skills + frameworks des missions, fr et en) pour obtenir les `id` Dato. Construis une URL GET vers `https://<site>/{fr|en}/offer/match` avec `company`, `title` (optionnel), et pour chaque compétence un paramètre `requirement=Libellé:@id` (répéter `requirement`). Sinon utilise des mots-clés texte séparés par des virgules après le `:` ; compléter avec `spec` base64 si l’URL devient trop longue.

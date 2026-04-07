@@ -4,6 +4,11 @@ export interface MatchRequirement {
   /** Libellé court dans le bloc « adéquation » (ex. « Python » au lieu de « Python / Backend »). */
   shortLabel?: string;
   keywords: string[];
+  /**
+   * Durée affichée (années) à la place du calcul automatique à partir des missions.
+   * Utile en attendant un calcul fiable (chevauchements, texte libre, etc.).
+   */
+  experienceYearsOverride?: number;
 }
 
 export interface JobOffer {

@@ -10,6 +10,18 @@ test.describe('Offer match (query params)', () => {
     await expect(page.getByRole('heading', { name: 'Java' })).toBeVisible();
   });
 
+  test('requirement avec @id catalogue matche une mission (Vue.js)', async ({
+    page,
+  }) => {
+    const q =
+      'company=Padoa&title=Dev&requirement=Vue.js%3A%40an8YW0VVTf2JuZZZo1W0pw';
+    await page.goto(`/fr/offer/match?${q}`);
+    await expect(page.locator('#profile-match')).toBeVisible();
+    await expect(page.getByTestId('match-offer-invalid')).toHaveCount(0);
+    await expect(page.getByRole('heading', { name: 'Vue.js' })).toBeVisible();
+    await expect(page.locator('#profile-match').getByText('JPB Système')).toBeVisible();
+  });
+
   test('CV court : ?offer=<id> réutilise le même bloc adéquation que les pages offre', async ({
     page,
   }) => {

@@ -1,4 +1,6 @@
 import type { JobOffer, MatchRequirement } from '@/data/offers/types';
+import { enrichJobOfferRequirements } from '@/lib/match-catalog';
+import type { MatchCatalog } from '@/lib/match-catalog-schema';
 
 const MAX_SPEC_CHARS = 12_000;
 const MAX_REQUIREMENTS = 24;
@@ -45,13 +47,27 @@ function normalizeRequirement(raw: unknown): MatchRequirement | null {
     .filter(Boolean)
     .slice(0, MAX_KEYWORDS_PER_REQ);
   if (keywords.length === 0) return null;
-  return { label, keywords };
+  const yRaw = o.experienceYearsOverride ?? o.experience_years_override;
+  let experienceYearsOverride: number | undefined;
+  if (typeof yRaw === 'number' && Number.isFinite(yRaw) && yRaw >= 0) {
+    experienceYearsOverride = yRaw;
+  }
+  return {
+    label,
+    keywords,
+    ...(experienceYearsOverride !== undefined
+      ? { experienceYearsOverride }
+      : {}),
+  };
 }
 
 /**
  * Valide et normalise un objet JSON en {@link JobOffer} (pour URL dynamique ou scripts LLM).
  */
-export function parseJobOfferFromUnknown(raw: unknown): JobOffer | null {
+export function parseJobOfferFromUnknown(
+  raw: unknown,
+  catalog: MatchCatalog,
+): JobOffer | null {
   if (!raw || typeof raw !== 'object') return null;
   const o = raw as Record<string, unknown>;
 
@@ -83,26 +99,32 @@ export function parseJobOfferFromUnknown(raw: unknown): JobOffer | null {
     trimStr(o.id, 80) ||
     `custom-${company.toLowerCase().replace(/\s+/g, '-').slice(0, 40)}`;
 
-  return {
-    id,
-    company,
-    title: { fr: titleFr, en: titleEn },
-    url: typeof o.url === 'string' ? trimStr(o.url, 500) : undefined,
-    requirements,
-  };
+  return enrichJobOfferRequirements(
+    {
+      id,
+      company,
+      title: { fr: titleFr, en: titleEn },
+      url: typeof o.url === 'string' ? trimStr(o.url, 500) : undefined,
+      requirements,
+    },
+    catalog,
+  );
 }
 
 /**
  * Décode le paramètre d’URL `spec` (JSON UTF-8 en base64url).
  */
-export function decodeOfferSpecParam(spec: string | null): JobOffer | null {
+export function decodeOfferSpecParam(
+  spec: string | null,
+  catalog: MatchCatalog,
+): JobOffer | null {
   if (!spec || typeof spec !== 'string') return null;
   const trimmed = spec.trim();
   if (!trimmed || trimmed.length > MAX_SPEC_CHARS) return null;
   try {
     const json = base64UrlToUtf8(trimmed);
     const data = JSON.parse(json) as unknown;
-    return parseJobOfferFromUnknown(data);
+    return parseJobOfferFromUnknown(data, catalog);
   } catch {
     return null;
   }

@@ -16,27 +16,24 @@
     "prettier:check": "prettier --check --ignore-unknown .",
     "start": "next start",
     "test": "npm run prettier:check && npm run lint",
+    "test:unit": "tsx --test lib/match-catalog-expand.unit.test.ts lib/tech-match-core.unit.test.ts",
     "playwright:install": "playwright install chromium",
     "test:playwright": "playwright install chromium && playwright test",
     "clean": "rm -rf node_modules",
     "reinstall": "npm run clean && npm install",
     "rebuild": "npm run clean && npm install && npm run build",
-    "export:datocms": "tsx scripts/export-datocms.ts",
     "encode-offer-spec": "node scripts/encode-offer-spec.mjs"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "0.2.32",
     "@vercel/analytics": "0.1.11",
     "eslint": "8.28.0",
-    "graphql": "^16.8.1",
-    "graphql-request": "^5.1.0",
     "intl-dateformat": "0.1.4",
     "negotiator": "0.6.3",
     "next": "13.5.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "server-only": "^0.0.1",
-    "yaml": "2.8.3"
+    "server-only": "^0.0.1"
   },
   "devDependencies": {
     "@playwright/test": "^1.50.1",
@@ -45,7 +42,6 @@
     "@types/react": "18.0.26",
     "@types/react-dom": "^18.0.7",
     "autoprefixer": "^10.4.13",
-    "dotenv": "^16.4.5",
     "encoding": "^0.1.13",
     "eslint-config-next": "13.4.1",
     "ngrok": "^4.3.3",

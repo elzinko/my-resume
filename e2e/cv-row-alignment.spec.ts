@@ -47,7 +47,7 @@ test.describe('CV title/date rows (mobile)', () => {
     await expect(toggle).toHaveText('Plus de détails');
   });
 
-  test('header: subtitle matches CV locale (fr.json / en.json)', async ({
+  test('header: subtitle matches CV locale (bundle fr / en)', async ({
     page,
   }) => {
     await page.goto('/fr');

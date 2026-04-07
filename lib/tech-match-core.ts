@@ -12,12 +12,42 @@ export interface JobForMatching {
   frameworks: Array<{ id: string; name: string }>;
 }
 
+const LOOSE_KEYWORD_MIN_LEN = 3;
+
 function textContainsKeyword(text: string, keywords: string[]): boolean {
   const normalized = text.toLowerCase();
   return keywords.some((kw) => normalized.includes(kw));
 }
 
-function jobMatchesRequirement(
+/** Pour rapprocher `nodejs` et `node.js` sans ambiguïté sur la casse uniquement. */
+function normalizeCompact(s: string): string {
+  return s.toLowerCase().replace(/[.\s_-]+/g, '');
+}
+
+function textMatchesKeywordLoose(text: string, kw: string): boolean {
+  if (kw.length < LOOSE_KEYWORD_MIN_LEN) return false;
+  const nt = normalizeCompact(text);
+  const nk = normalizeCompact(kw);
+  if (!nk) return false;
+  return nt.includes(nk);
+}
+
+function jobCorpusForLooseMatch(job: JobForMatching): string {
+  const parts: string[] = [];
+  if (job.role?.name) parts.push(job.role.name);
+  if (job.descriptionShort) parts.push(job.descriptionShort);
+  if (job.description) parts.push(job.description);
+  for (const b of job.bullets || []) parts.push(b.text);
+  for (const fw of job.frameworks || []) parts.push(fw.name);
+  return parts.join(' ');
+}
+
+function jobMatchesFrameworkId(job: JobForMatching, keywords: string[]): boolean {
+  const frameworks = job.frameworks || [];
+  return keywords.some((kw) => frameworks.some((fw) => fw.id === kw));
+}
+
+function jobMatchesRequirementStrict(
   job: JobForMatching,
   keywords: string[],
 ): boolean {
@@ -47,6 +77,25 @@ function jobMatchesRequirement(
     return true;
   }
 
+  return false;
+}
+
+function jobMatchesRequirementLoose(
+  job: JobForMatching,
+  keywords: string[],
+): boolean {
+  const corpus = jobCorpusForLooseMatch(job);
+  if (!corpus) return false;
+  return keywords.some((kw) => textMatchesKeywordLoose(corpus, kw));
+}
+
+export function jobMatchesRequirement(
+  job: JobForMatching,
+  keywords: string[],
+): boolean {
+  if (jobMatchesFrameworkId(job, keywords)) return true;
+  if (jobMatchesRequirementStrict(job, keywords)) return true;
+  if (jobMatchesRequirementLoose(job, keywords)) return true;
   return false;
 }
 
@@ -81,6 +130,10 @@ function deduplicateClients(
   return Array.from(byClient.values());
 }
 
+function hasValidExperienceOverride(v: unknown): v is number {
+  return typeof v === 'number' && Number.isFinite(v) && v >= 0;
+}
+
 export function buildMatchEntries(
   requirements: MatchRequirement[],
   jobs: JobForMatching[],
@@ -103,15 +156,19 @@ export function buildMatchEntries(
     }
 
     const deduplicated = deduplicateClients(matched);
-    const totalYears = deduplicated.reduce(
+    const computedYears = deduplicated.reduce(
       (sum, m) => sum + computeYears(m.startDate, m.endDate),
       0,
     );
 
+    const override = req.experienceYearsOverride;
+    const useOverride = hasValidExperienceOverride(override);
+
     return {
       label: req.shortLabel ?? req.label,
       matchedClients: deduplicated,
-      totalYears,
+      totalYears: useOverride ? override : computedYears,
+      yearsFromOverride: useOverride,
     };
   });
 }

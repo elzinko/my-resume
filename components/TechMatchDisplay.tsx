@@ -11,6 +11,8 @@ export interface MatchEntry {
     endDate?: string;
   }>;
   totalYears: number;
+  /** `totalYears` provient du champ `experienceYearsOverride` sur l’exigence. */
+  yearsFromOverride?: boolean;
 }
 
 export interface MatchDisplayData {
@@ -28,6 +30,8 @@ const labels = {
     years: 'ans',
     year: 'an',
     notPracticed: 'Non pratiquée',
+    manualYearsHint:
+      'Durée indiquée manuellement (pas dérivée des missions ci-dessous).',
     /** Accessibilité : pastille « … » pour afficher tous les clients. */
     expandClientsAria: 'Afficher tous les clients',
     collapseClientsAria: 'Réduire la liste des clients',
@@ -37,6 +41,7 @@ const labels = {
     years: 'years',
     year: 'year',
     notPracticed: 'Not practiced',
+    manualYearsHint: 'Years set manually (not derived from roles below).',
     expandClientsAria: 'Show all clients',
     collapseClientsAria: 'Collapse client list',
   },
@@ -70,12 +75,13 @@ export default function TechMatchDisplay({
       <div className="mt-3 grid grid-cols-1 gap-2 print:mt-2 print:grid-cols-3 print:gap-3 md:mt-4 md:grid-cols-3 md:gap-3">
         {entries.map((entry, index) => {
           const hasMatches = entry.matchedClients.length > 0;
+          const showYearsPill = hasMatches || entry.yearsFromOverride;
 
           return (
             <div
               key={`${index}-${entry.label}`}
               className={`cv-match-requirement-card min-w-0 ${
-                !hasMatches ? 'opacity-60' : ''
+                !hasMatches && !entry.yearsFromOverride ? 'opacity-60' : ''
               }`}
               style={{ breakInside: 'avoid' }}
             >
@@ -83,7 +89,7 @@ export default function TechMatchDisplay({
                 <h3 className="min-w-0 flex-1 text-sm font-semibold leading-snug text-orange-300 max-md:text-xs max-md:leading-tight print:text-[11px] print:!text-orange-300 md:text-base lg:text-lg">
                   {entry.label}
                 </h3>
-                {hasMatches ? (
+                {showYearsPill ? (
                   <span className="cv-pill-match-metric shrink-0 px-1.5 py-0.5 text-xs max-md:px-1 max-md:py-0.5 max-md:text-[11px] print:px-1.5 print:text-[10px] md:px-2 md:text-sm">
                     {formatYears(entry.totalYears, lang)}
                   </span>
@@ -98,6 +104,10 @@ export default function TechMatchDisplay({
                     collapseAriaLabel={t.collapseClientsAria}
                   />
                 </div>
+              ) : entry.yearsFromOverride ? (
+                <p className="mt-1.5 text-xs text-gray-500 max-md:text-[11px] print:mt-1 print:text-[10px] md:mt-2 md:text-sm">
+                  {t.manualYearsHint}
+                </p>
               ) : (
                 <p className="mt-1.5 text-xs italic text-gray-500 max-md:text-[11px] print:mt-1 print:text-[10px] md:mt-2 md:text-sm">
                   {t.notPracticed}

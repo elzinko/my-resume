@@ -5,6 +5,7 @@ import MatchOfferClient from '@/components/MatchOfferClient';
 import { Locale } from '../../../../i18n-config';
 import type { Metadata } from 'next';
 import { getCvData } from '@/lib/cv-data';
+import { getMatchCatalog } from '@/lib/match-catalog-server';
 import { getEducationLevelContent } from '@/lib/education-level-content';
 import type { JobForMatching } from '@/lib/tech-match-core';
 
@@ -34,13 +35,19 @@ export default async function CustomOfferPage({
   >;
   const educationLevel = getEducationLevelContent(data, lang);
   const jobs = (data?.allJobsModels || []) as JobForMatching[];
+  const matchCatalog = getMatchCatalog();
 
   return (
     <OfferTailoredShell
       lang={lang}
       educationLevel={educationLevel}
       matchSection={
-        <MatchOfferClient jobs={jobs} lang={lang} mode="spec-only" />
+        <MatchOfferClient
+          jobs={jobs}
+          lang={lang}
+          mode="spec-only"
+          matchCatalog={matchCatalog}
+        />
       }
     />
   );

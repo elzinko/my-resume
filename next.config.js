@@ -2,7 +2,7 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     unoptimized: true,
-    domains: ['www.datocms-assets.com', 'vitals.vercel-insights.com'],
+    domains: ['vitals.vercel-insights.com'],
   },
   // Optional: Add a trailing slash to all paths `/about` -> `/about/`
   // trailingSlash: true,
