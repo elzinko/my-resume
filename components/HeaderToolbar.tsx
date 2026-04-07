@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useCallback, useEffect, useId, useState } from 'react';
+import React, { useCallback, useEffect, useId, useMemo, useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import LocaleSwitcher from '@/components/locale-switcher';
 import CvModeToggle from '@/components/CvModeToggle';
 import LogoLinkedin from '@/components/LogoLinkedin';
@@ -9,19 +10,30 @@ import LogoGithub from '@/components/logoGithub';
 import LogoMalt from '@/components/logoMalt';
 import LogoPrint from '@/components/logoPrint';
 import { cvHeaderModeBtn } from '@/lib/cv-header-toolbar';
+import {
+  isFullCvRootPathname,
+  localeFromPathIfRoot,
+  shortAutoprintPath,
+} from '@/lib/cv-print-routes';
 
 const rowListClass = 'flex flex-nowrap items-center gap-0.5 [&>li]:shrink-0';
 
 function ToolbarIconList({
   onNavigate,
   listClassName = 'flex flex-wrap gap-2',
+  onPrint,
+  printTitle,
+  printAriaLabel,
 }: {
   onNavigate?: () => void;
   listClassName?: string;
+  onPrint: () => void;
+  printTitle: string;
+  printAriaLabel: string;
 }) {
   const handlePrint = () => {
     onNavigate?.();
-    window.print();
+    onPrint();
   };
 
   return (
@@ -36,7 +48,11 @@ function ToolbarIconList({
         <LogoMalt onNavigate={onNavigate} />
       </li>
       <li>
-        <LogoPrint onClick={handlePrint} />
+        <LogoPrint
+          onClick={handlePrint}
+          title={printTitle}
+          aria-label={printAriaLabel}
+        />
       </li>
     </ul>
   );
@@ -91,10 +107,41 @@ function ModeControl({
  * Mobile : barre fixe en haut ; ouvert = langues à gauche, actions + menu à droite (pas de séparateur).
  */
 export default function HeaderToolbar({ shortLang }: { shortLang?: string }) {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const titleId = useId();
   const close = useCallback(() => setOpen(false), []);
   const toggle = useCallback(() => setOpen((v) => !v), []);
+
+  const { printTitle, printAriaLabel } = useMemo(() => {
+    const fullRoot = isFullCvRootPathname(pathname);
+    const loc = localeFromPathIfRoot(pathname);
+    if (fullRoot && loc === 'en') {
+      return {
+        printTitle: 'Export short resume (PDF)',
+        printAriaLabel: 'Export short resume as PDF',
+      };
+    }
+    if (fullRoot && loc === 'fr') {
+      return {
+        printTitle: 'Exporter le CV court (PDF)',
+        printAriaLabel: 'Exporter le CV court en PDF',
+      };
+    }
+    return {
+      printTitle: 'Imprimer / Exporter en PDF',
+      printAriaLabel: 'Imprimer ou exporter en PDF',
+    };
+  }, [pathname]);
+
+  const runPrint = useCallback(() => {
+    const lang = localeFromPathIfRoot(pathname);
+    if (lang) {
+      window.open(shortAutoprintPath(lang), '_blank', 'noopener,noreferrer');
+      return;
+    }
+    window.print();
+  }, [pathname]);
 
   useEffect(() => {
     if (!open) return;
@@ -114,7 +161,11 @@ export default function HeaderToolbar({ shortLang }: { shortLang?: string }) {
         <LocaleSwitcher />
         <div className="flex flex-wrap items-center justify-end gap-3">
           <ModeControl shortLang={shortLang} />
-          <ToolbarIconList />
+          <ToolbarIconList
+            onPrint={runPrint}
+            printTitle={printTitle}
+            printAriaLabel={printAriaLabel}
+          />
         </div>
       </div>
 
@@ -166,7 +217,13 @@ export default function HeaderToolbar({ shortLang }: { shortLang?: string }) {
             }
           >
             <ModeControl shortLang={shortLang} onNavigate={close} />
-            <ToolbarIconList onNavigate={close} listClassName={rowListClass} />
+            <ToolbarIconList
+              onNavigate={close}
+              listClassName={rowListClass}
+              onPrint={runPrint}
+              printTitle={printTitle}
+              printAriaLabel={printAriaLabel}
+            />
           </div>
         </div>
 

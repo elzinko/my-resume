@@ -21,7 +21,7 @@ export default function MatchClientPill({ client }: MatchClientPillProps) {
     <a
       href={`#${slugifyClient(client)}`}
       title={client}
-      className="whitespace-nowrap rounded bg-orange-300/20 px-1.5 py-0.5 text-[10px] text-white transition-colors hover:bg-orange-300/40 print:text-[8px]"
+      className="whitespace-nowrap rounded border border-orange-300/50 bg-orange-300/10 px-1.5 py-0.5 text-[10px] font-medium text-orange-300 transition-colors hover:border-orange-300/70 hover:bg-orange-300/20 print:border-orange-300/60 print:bg-orange-300/10 print:text-[8px] print:!text-orange-300"
     >
       {label}
     </a>

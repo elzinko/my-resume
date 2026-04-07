@@ -52,7 +52,7 @@ test.describe('CV title/date rows (mobile)', () => {
   }) => {
     await page.goto('/fr');
     await expect(page.locator('.header-content p').first()).toHaveText(
-      'Développeur fullstack',
+      'Développeur fullstack Senior',
     );
     await page.goto('/en');
     await expect(page.locator('.header-content p').first()).toHaveText(
@@ -84,8 +84,11 @@ test.describe('CV title/date rows (mobile)', () => {
 
   test('project row: title and dates share bottom edge', async ({ page }) => {
     await page.goto('/fr');
+    // Mobile : deux blocs projets (sidebar masquée + bas de page) ; cibler le visible.
     const row = page
-      .locator('#projects li')
+      .locator('section[data-cv-section="projects"]')
+      .last()
+      .locator('li')
       .first()
       .locator('section .cv-row-with-side-meta')
       .first();

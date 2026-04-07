@@ -30,24 +30,26 @@ export default function OfferTailoredShell({
       {/* @ts-expect-error Server Component */}
       <Headers locale={lang} />
 
-      {/* @ts-expect-error Server Component */}
-      <About locale={lang} />
-      {/* @ts-expect-error Server Component */}
-      <Domains locale={lang} />
-
-      {matchSection}
-
-      <div className="cv-mobile-section-mt space-y-10 print:hidden md:hidden">
+      <div className="cv-flow-mobile-stack">
         {/* @ts-expect-error Server Component */}
-        <Contact locale={lang} className="mt-0" />
+        <About locale={lang} />
         {/* @ts-expect-error Server Component */}
-        <Skills locale={lang} className="mt-0" />
+        <Domains locale={lang} />
+
+        {matchSection}
+
+        <div className="space-y-10 print:hidden md:hidden max-md:!mt-0">
+          {/* @ts-expect-error Server Component */}
+          <Contact locale={lang} className="mt-0" />
+          {/* @ts-expect-error Server Component */}
+          <Skills locale={lang} className="mt-0" />
+        </div>
       </div>
 
-      <div className="flex flex-col print:flex-row md:flex-row">
+      <div className="cv-page-split">
         <div
           id="left"
-          className="order-last flex w-full flex-col print:order-first print:w-1/3 print:pr-4 md:order-first md:w-1/3 md:shrink-0 md:pr-10"
+          className="order-last flex w-full min-w-0 flex-col print:order-first print:col-span-1 md:order-first md:col-span-1"
         >
           <div className="hidden print:block md:block">
             {/* @ts-expect-error Server Component */}
@@ -58,20 +60,35 @@ export default function OfferTailoredShell({
           <EducationLevel content={educationLevel} />
           {/* @ts-expect-error Server Component */}
           <Studies locale={lang} />
-          {/* @ts-expect-error Server Component */}
-          <Projects locale={lang} />
-          {/* @ts-expect-error Server Component */}
-          <Learnings locale={lang} />
-          {/* @ts-expect-error Server Component */}
-          <Hobbies locale={lang} />
+          <div className="max-md:hidden">
+            {/* @ts-expect-error Server Component */}
+            <Projects locale={lang} />
+            <div className="print:hidden">
+              {/* @ts-expect-error Server Component */}
+              <Learnings locale={lang} />
+            </div>
+            <div className="print:hidden">
+              {/* @ts-expect-error Server Component */}
+              <Hobbies locale={lang} />
+            </div>
+          </div>
         </div>
         <div
           id="main"
-          className="w-full print:w-2/3 print:pr-4 md:w-2/3 md:min-w-0 md:pr-10"
+          className="w-full min-w-0 print:col-span-2 md:col-span-2"
         >
           {/* @ts-expect-error Server Component */}
           <Jobs locale={lang} />
         </div>
+      </div>
+
+      <div className="flex max-md:mt-10 max-md:flex-col max-md:gap-10 md:hidden print:hidden">
+        {/* @ts-expect-error Server Component */}
+        <Projects locale={lang} sectionId={false} className="mt-0" />
+        {/* @ts-expect-error Server Component */}
+        <Learnings locale={lang} sectionId={false} className="mt-0" />
+        {/* @ts-expect-error Server Component */}
+        <Hobbies locale={lang} sectionId={false} className="mt-0" />
       </div>
     </>
   );

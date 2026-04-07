@@ -4,11 +4,22 @@ import { learningLinkLabel } from '@/lib/learning-label';
 import { Locale } from 'i18n-config';
 import React from 'react';
 
-export default async function learnings({ locale }: { locale: Locale }) {
+export default async function learnings({
+  locale,
+  sectionId = 'learnings',
+  className = '',
+}: {
+  locale: Locale;
+  sectionId?: string | false;
+  className?: string;
+}) {
   const data: any = await getCvData(locale);
   const items = data?.allLearningsModels ?? [];
   return (
-    <section id="learnings" className="mt-10">
+    <section
+      id={sectionId === false ? undefined : sectionId}
+      className={className ? className : 'mt-10'}
+    >
       <h2 className="border-b pb-1 text-2xl font-semibold text-teal-300">
         {data?.learningsTitle?.title}
       </h2>
@@ -18,6 +29,7 @@ export default async function learnings({ locale }: { locale: Locale }) {
             <CustomLink
               name={learningLinkLabel(learning)}
               link={learning.link}
+              className="text-teal-300 print:!text-teal-300"
             />
           </li>
         ))}

@@ -91,13 +91,28 @@
       "id": "81821048",
       "name": "12 Factor",
       "link": "https://12factor.net/"
+    },
+    {
+      "id": "skill_ddd_tc2026",
+      "name": "DDD",
+      "link": "https://martinfowler.com/bliki/DomainDrivenDesign.html"
+    },
+    {
+      "id": "skill_cleancode_tc2026",
+      "name": "Clean code",
+      "link": "https://en.wikipedia.org/wiki/Clean_Code"
+    },
+    {
+      "id": "skill_hexa_tc2026",
+      "name": "Hexagonal architecture",
+      "link": "https://alistair.cockburn.us/hexagonal-architecture/"
     }
   ],
   "allDomainsModels": [
     {
       "id": "78726113",
       "name": "Agile",
-      "description": "I know how to use my multiple experiences of agility in the service of a team in order to achieve a product close to the need with a Craftmanship philosophy.",
+      "description": "I know how to use my multiple experiences of agility in the service of a team in order to achieve a product close to the need with a software craftsmanship philosophy.",
       "position": 1,
       "competencies": [
         {
@@ -291,10 +306,10 @@
         "name": "IOT Developer",
         "id": "FUxO3DDtSpirVhE2ecFudw"
       },
-      "descriptionShort": "Fullstack development on hardware Keyvibe product of Keyprod startup"
+      "descriptionShort": "Full-stack development on Keyvibe, Keyprod's industrial IoT hardware product"
     },
     {
-      "client": "BlablaCar",
+      "client": "BlaBlaCar",
       "location": "Paris",
       "startDate": "2023-10-01",
       "endDate": "2023-12-31",
@@ -489,7 +504,7 @@
       "descriptionShort": "Team development and growth strategy within the hosted OSRD open source project."
     },
     {
-      "client": "LeBonCoin",
+      "client": "leboncoin",
       "location": "Paris",
       "startDate": "2021-08-01",
       "endDate": "2022-05-01",
@@ -1346,7 +1361,7 @@
         "name": "Backend Consultant",
         "id": "82089336"
       },
-      "descriptionShort": "Conception et développement d'API dans le cadre d'un système de mesure d'audience."
+      "descriptionShort": "API design and development for an audience measurement system."
     },
     {
       "client": "Thales communications",
@@ -1583,7 +1598,7 @@
       "name": "French HS diploma, Science major",
       "startDate": "1999-01-01",
       "endDate": "1999-01-01",
-      "establishment": "Francois 1er high school",
+      "establishment": "Francois 1st high school",
       "location": "Fontainebleau"
     },
     {
@@ -1615,7 +1630,7 @@
       "name": "Signal processors and programmable logic",
       "startDate": "2011-09-01",
       "endDate": "2012-06-01",
-      "establishment": "Conservatoire National des Arts et Métiers",
+      "establishment": "CNAM",
       "location": "Paris"
     },
     {
@@ -1623,7 +1638,7 @@
       "name": "Advanced microcontroller programming",
       "startDate": "2011-09-01",
       "endDate": "2012-06-01",
-      "establishment": "Conservatoire National des Arts et Métiers",
+      "establishment": "CNAM",
       "location": "Paris"
     },
     {
@@ -2054,7 +2069,7 @@
     },
     {
       "id": "81780862",
-      "name": "Ridding the hills",
+      "name": "Riding the hills",
       "link": "https://www.passportesdusoleil.com/"
     },
     {

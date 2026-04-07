@@ -1,5 +1,11 @@
 const nextConfig = {
   reactStrictMode: true,
+  webpack: (config, { dev }) => {
+    if (dev) {
+      config.cache = false;
+    }
+    return config;
+  },
   images: {
     unoptimized: true,
     domains: ['www.datocms-assets.com', 'vitals.vercel-insights.com'],

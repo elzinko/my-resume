@@ -15,7 +15,8 @@ export default function Skill({ skill, compact = false }: SkillProps) {
   const baseClasses =
     'whitespace-nowrap rounded border border-cv-tag-border/50 text-cv-tag-text';
 
-  const normalClasses = `${baseClasses} px-2 py-1 text-xs transition-colors hover:border-cv-tag-text hover:text-cv-tag-text-hover md:px-3 md:text-sm`;
+  /** `print:!text-cv-tag-text` : le `@media print a { color: inherit }` du global CSS écrase sinon les liens. */
+  const normalClasses = `${baseClasses} px-2 py-1 text-xs transition-colors hover:border-cv-tag-text hover:text-cv-tag-text-hover md:px-3 md:text-sm print:!text-cv-tag-text`;
 
   const compactClasses = `${baseClasses} px-2 py-0.5 text-xs print:px-1.5 print:text-[10px]`;
 

@@ -27,8 +27,8 @@ export default function Domain({
     <div
       className={
         compact
-          ? 'mt-4 min-w-0 flex-1 print:mt-2'
-          : 'mt-0 min-w-0 flex-1 md:mt-4'
+          ? 'mt-4 min-w-0 print:mt-2'
+          : 'mt-0 min-w-0 md:mt-4'
       }
     >
       <h2
@@ -52,7 +52,7 @@ export default function Domain({
       {showTags && domain?.competencies && domain.competencies.length > 0 && (
         <p className="hidden flex-wrap gap-x-2 gap-y-2 whitespace-nowrap py-2 print:flex md:flex">
           {domain.competencies.map((competency) => (
-            <Pill key={competency.id} color="skill">
+            <Pill key={competency.id} color="domain">
               {competency.name.toLowerCase()}
             </Pill>
           ))}

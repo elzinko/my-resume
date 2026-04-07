@@ -5,16 +5,23 @@ import { cvHeaderIconBtn } from '@/lib/cv-header-toolbar';
 
 interface LogoPrintProps {
   onClick: () => void;
+  /** Par défaut : libellé générique impression / PDF. */
+  title?: string;
+  'aria-label'?: string;
 }
 
-export default function LogoPrint({ onClick }: LogoPrintProps) {
+export default function LogoPrint({
+  onClick,
+  title = 'Imprimer / Exporter en PDF',
+  'aria-label': ariaLabel = 'Imprimer ou exporter en PDF',
+}: LogoPrintProps) {
   return (
     <button
       type="button"
       onClick={onClick}
       className={cvHeaderIconBtn.print}
-      title="Imprimer / Exporter en PDF"
-      aria-label="Imprimer ou exporter en PDF"
+      title={title}
+      aria-label={ariaLabel}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

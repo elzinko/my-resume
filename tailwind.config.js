@@ -16,7 +16,8 @@ const colors = require('tailwindcss/colors');
  *
  * Lignes titre + date : `.cv-row-with-side-meta` + `self-end` sur la méta droite (missions, projets). Études : `.cv-row-study-title-year` (baseline).
  *
- * Espacement : `.cv-mobile-section-mt` + `space-y-10` — blocs pleine largeur (Résumé, Domaines, Contact/Skills mobile, avant Jobs) ; `.cv-section-simple-list` — Projects, Learnings, Hobbies, Studies ; jobs — `app/[lang]/jobs.tsx` (`mt-4 space-y-4`).
+ * Espacement : `.cv-flow-mobile-stack` (mobile : `gap-10` sous le header) + `cv-mobile-section-mt` / `max-md:!mt-0` sur les enfants ; `.cv-section-simple-list` — Projects, Learnings, Hobbies, Studies ; jobs — `app/[lang]/jobs.tsx` (`mt-4 space-y-4`).
+ * Grille desktop / print : `.cv-domains-grid` (3 × 1/3) + `.cv-page-split` — `#left` : `md:col-span-1` + `print:col-span-1` ; `#main` : `md:col-span-2` + `print:col-span-2` (CV complet, offres, court).
  * Typo : `styles/globals.css` (`.cv-education-*`, `.cv-study-*`, `.cv-job-description`, `.cv-row-*`).
  */
 /** @type {import('tailwindcss').Config} */

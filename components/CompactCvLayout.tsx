@@ -75,6 +75,7 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
       contact: 'Contact',
       present: 'Présent',
       moreExperience: "+20 ans d'expérience",
+      moreExperienceTail: 'en développement fullstack et DevOps.',
       moreClients:
         'Autres clients : Edelia (EDF), JCDecaux, Lotsys (FDJ), Médiamétrie, Thales, Médiapost, BNP Paribas, Renault, SFR...',
     },
@@ -87,6 +88,7 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
       contact: 'Contact',
       present: 'Present',
       moreExperience: '+20 years of experience',
+      moreExperienceTail: 'in full-stack development and DevOps.',
       moreClients:
         'Other clients: Edelia (EDF), JCDecaux, Lotsys (FDJ), Médiamétrie, Thales, Médiapost, BNP Paribas, Renault, SFR...',
     },
@@ -104,6 +106,7 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
     expertise: fallback.expertise,
     present: fallback.present,
     moreExperience: fallback.moreExperience,
+    moreExperienceTail: fallback.moreExperienceTail,
     moreClients: fallback.moreClients,
   };
 
@@ -120,9 +123,9 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
         <p className="mt-4 print:mt-2 print:text-[10px]">{data.about}</p>
       </section>
 
-      {/* Domains - Full width (same style as full CV, reusing Domain component) */}
-      <section className="mt-10 print:mt-4">
-        <div className="flex w-full flex-col print:flex-row print:space-x-4 md:flex-row md:space-x-6">
+      {/* Domains - Full width (même grille 1/3 que le CV complet) */}
+      <section id="domains" className="mt-10 print:mt-4">
+        <div className="cv-domains-grid">
           {data.domains.map((domain) => (
             <Domain
               key={domain.id || domain.name}
@@ -134,10 +137,12 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
         </div>
       </section>
 
-      {/* Two column layout */}
-      <div className="mt-14 flex flex-col gap-6 print:mt-6 print:flex-row print:gap-6 md:flex-row md:gap-10">
-        {/* Left Column */}
-        <div className="print:w-1/3 md:w-1/3">
+      {/* Colonne gauche 1/3 + expériences 2/3 (grille alignée sur les domaines) */}
+      <div className="cv-page-split mt-14 print:mt-6">
+        <div
+          id="left"
+          className="order-last flex w-full min-w-0 flex-col print:order-first print:col-span-1 md:order-first md:col-span-1"
+        >
           {/* Contact - Reusing ContactDisplay component */}
           <section className="mb-6 print:mb-4">
             <h2 className="border-b pb-1 text-2xl font-semibold text-cv-jobs print:text-sm">
@@ -158,6 +163,9 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
             </div>
           </section>
 
+          {/* Niveau de formation avant le détail des études (aligné CV long) */}
+          <EducationLevel content={data.educationLevel} compact={true} />
+
           {/* Education - Reusing StudyDisplay component */}
           <section>
             <h2 className="border-b pb-1 text-2xl font-semibold text-teal-300 print:text-sm">
@@ -169,13 +177,12 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
               ))}
             </ul>
           </section>
-
-          {/* Education Level */}
-          <EducationLevel content={data.educationLevel} compact={true} />
         </div>
 
-        {/* Right Column */}
-        <div className="print:w-2/3 md:w-2/3">
+        <div
+          id="main"
+          className="w-full min-w-0 print:col-span-2 md:col-span-2"
+        >
           {/* Experience - Reusing JobDisplay component */}
           <section>
             <h2 className="border-b pb-1 text-2xl font-semibold text-cv-jobs print:text-sm">
@@ -197,8 +204,8 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
             {/* More experience note */}
             <div className="mt-4 border-l-4 border-teal-300/50 pl-3 print:mt-2">
               <p className="text-xs text-gray-400 print:text-[10px]">
-                <strong className="text-teal-300">{t.moreExperience}</strong> en
-                développement fullstack et DevOps. {t.moreClients}
+                <strong className="text-teal-300">{t.moreExperience}</strong>{' '}
+                {t.moreExperienceTail} {t.moreClients}
               </p>
             </div>
           </section>

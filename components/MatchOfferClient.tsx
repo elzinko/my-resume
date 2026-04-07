@@ -45,7 +45,7 @@ function MatchOfferInner({
   if (!hasAnyInput) {
     return (
       <section
-        className="mt-10 rounded-lg border border-amber-200 bg-amber-50/90 p-4 text-sm leading-relaxed text-amber-950"
+        className="mt-10 max-md:!mt-0 rounded-lg border border-amber-200 bg-amber-50/90 p-4 text-sm leading-relaxed text-amber-950"
         data-testid="match-offer-empty"
       >
         {mode === 'spec-only' ? (
@@ -111,7 +111,7 @@ function MatchOfferInner({
   if (!offer || !matchData) {
     return (
       <section
-        className="mt-10 rounded-lg border border-red-200 bg-red-50/90 p-4 text-sm text-red-950"
+        className="mt-10 max-md:!mt-0 rounded-lg border border-red-200 bg-red-50/90 p-4 text-sm text-red-950"
         data-testid="match-offer-invalid"
       >
         <p className="font-semibold">

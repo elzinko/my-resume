@@ -5,7 +5,7 @@ import React from 'react';
 export default async function About({ locale }: { locale: Locale }) {
   const data: any = await getCvData(locale);
   return (
-    <section id="about" className="cv-mobile-section-mt">
+    <section id="about" className="cv-mobile-section-mt max-md:!mt-0">
       <h2 className="border-b pb-1 text-2xl font-semibold text-cv-section">
         {data?.about?.title}
       </h2>

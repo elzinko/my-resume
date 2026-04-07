@@ -12,6 +12,33 @@
   }
 
   /**
+   * Blocs pleine largeur sous le header (mobile uniquement) : `gap-10` homogène ;
+   * enfants portent `max-md:!mt-0` pour ne pas cumuler avec `mt-10` desktop.
+   */
+  .cv-flow-mobile-stack {
+    @apply max-md:mt-10 max-md:flex max-md:flex-col max-md:gap-10;
+  }
+
+  /**
+   * Domaines (Agile / Dev / Ops) : 3 colonnes égales en md+ et à l’impression,
+   * même gabarit horizontal que `.cv-page-split` (1/3 + 1/3 + 1/3).
+   */
+  .cv-domains-grid {
+    @apply grid w-full grid-cols-1 grid-rows-none gap-2 md:grid-cols-3 md:gap-x-10 md:gap-y-0 md:items-start;
+    @apply print:grid print:grid-cols-3 print:gap-x-4 print:gap-y-0 print:items-start;
+  }
+
+  /**
+   * Colonne gauche (1/3) + contenu principal missions (2/3) : grille 3 cols,
+   * `#left` : `md:col-span-1` + `print:col-span-1` ; `#main` : `md:col-span-2` + `print:col-span-2`
+   * (sans `print:col-span-*`, l’impression ne reçoit pas toujours `md:` et chaque bloc n’occupe qu’1/3).
+   */
+  .cv-page-split {
+    @apply grid grid-cols-1 grid-rows-none gap-y-6 md:grid-cols-3 md:gap-x-10 md:gap-y-0 md:items-start;
+    @apply print:grid print:grid-cols-3 print:gap-x-4 print:gap-y-0 print:items-start;
+  }
+
+  /**
    * Liste sous titre de section (Learnings, Hobbies, Projects, Studies, …).
    * Même écart vertical partout (space-y-1 = 0.25rem), mobile comme desktop.
    */

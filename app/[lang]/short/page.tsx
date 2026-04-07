@@ -1,5 +1,6 @@
 import '../../../styles/globals.css';
 
+import { Suspense } from 'react';
 import { Locale } from '../../../i18n-config';
 import { getCvData } from '@/lib/cv-data';
 import {
@@ -10,6 +11,7 @@ import CompactCvLayout, { CompactCvData } from '@/components/CompactCvLayout';
 import { getEducationLevelContent } from '@/lib/education-level-content';
 import formatDates from '@/lib/date';
 import ShortPageWrapper from '@/components/ShortPageWrapper';
+import ShortAutoprint from '@/components/ShortAutoprint';
 import type { Metadata } from 'next';
 
 function generateDocumentTitle(
@@ -108,6 +110,9 @@ export default async function ShortPage({
       headerName={data?.header?.name || ''}
       headerRole={data?.header?.role || ''}
     >
+      <Suspense fallback={null}>
+        <ShortAutoprint />
+      </Suspense>
       <CompactCvLayout data={compactData} lang={lang as 'fr' | 'en'} />
     </ShortPageWrapper>
   );

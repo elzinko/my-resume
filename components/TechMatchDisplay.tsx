@@ -53,8 +53,11 @@ export default function TechMatchDisplay({
   const entries = data?.entries ?? [];
 
   return (
-    <section id="profile-match" className="mt-10 print:mt-4">
-      <h2 className="border-b pb-1 text-2xl font-semibold text-orange-300">
+    <section
+      id="profile-match"
+      className="mt-10 max-md:!mt-0 print:mt-4"
+    >
+      <h2 className="border-b pb-1 text-2xl font-semibold text-orange-300 print:!text-orange-300">
         {t.sectionTitle}
       </h2>
 
@@ -71,11 +74,11 @@ export default function TechMatchDisplay({
               style={{ breakInside: 'avoid' }}
             >
               <div className="mt-4 flex items-baseline justify-between gap-3 print:mt-2">
-                <h3 className="min-w-0 flex-1 text-sm font-semibold leading-snug text-orange-300 print:text-[10px]">
+                <h3 className="min-w-0 flex-1 text-sm font-semibold leading-snug text-orange-300 print:text-[10px] print:!text-orange-300">
                   {entry.label}
                 </h3>
                 {hasMatches ? (
-                  <span className="shrink-0 text-sm font-semibold tabular-nums text-orange-300 print:text-[10px]">
+                  <span className="shrink-0 text-sm font-semibold tabular-nums text-orange-300 print:text-[10px] print:!text-orange-300">
                     {formatYears(entry.totalYears, lang)}
                   </span>
                 ) : null}

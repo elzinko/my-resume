@@ -5,7 +5,7 @@
   "header": {
     "id": "78726119",
     "name": "Thomas Couderc",
-    "role": "Développeur fullstack"
+    "role": "Développeur fullstack Senior"
   },
   "contact": {
     "title": "Coordonnées",
@@ -91,13 +91,28 @@
       "id": "81821048",
       "name": "12 Factor",
       "link": "https://12factor.net/"
+    },
+    {
+      "id": "skill_ddd_tc2026",
+      "name": "DDD",
+      "link": "https://martinfowler.com/bliki/DomainDrivenDesign.html"
+    },
+    {
+      "id": "skill_cleancode_tc2026",
+      "name": "Clean code",
+      "link": "https://en.wikipedia.org/wiki/Clean_Code"
+    },
+    {
+      "id": "skill_hexa_tc2026",
+      "name": "Architecture hexagonale",
+      "link": "https://alistair.cockburn.us/hexagonal-architecture/"
     }
   ],
   "allDomainsModels": [
     {
       "id": "78726113",
       "name": "Agile",
-      "description": "Je sais mettre à profit mes multiples expériences d'agilité au service d'une équipe afin d'aboutir à un produit proche du besoin avec une philosophie Craftmanship.",
+      "description": "Je sais mettre à profit mes multiples expériences d'agilité au service d'une équipe afin d'aboutir à un produit proche du besoin avec une philosophie software craftsmanship.",
       "position": 1,
       "competencies": [
         {
@@ -294,7 +309,7 @@
       "descriptionShort": "Développements fullstack IOT de la partie logicielle du KeyVibe"
     },
     {
-      "client": "BlablaCar",
+      "client": "BlaBlaCar",
       "location": "Paris",
       "startDate": "2023-10-01",
       "endDate": "2023-12-31",
@@ -330,7 +345,7 @@
         "name": "Consultant Full Stack",
         "id": "81994135"
       },
-      "descriptionShort": "Création d'un nouveau module de remboursement pour les bus opérés BlablaCar"
+      "descriptionShort": "Création d'un nouveau module de remboursement pour les bus opérés BlaBlaCar"
     },
     {
       "client": "Smartch",
@@ -489,7 +504,7 @@
       "descriptionShort": "Stratégie de développement et de croissance des équipes dans le cadre du projet open source OSRD hébergé."
     },
     {
-      "client": "LeBonCoin",
+      "client": "leboncoin",
       "location": "Paris",
       "startDate": "2021-08-01",
       "endDate": "2022-05-01",
@@ -1583,7 +1598,7 @@
       "name": "Baccalauréat S - Spécialité mathématiques",
       "startDate": "1999-01-01",
       "endDate": "1999-01-01",
-      "establishment": "Francois 1er high school",
+      "establishment": "Lycée François 1er",
       "location": "Fontainebleau"
     },
     {
@@ -1599,7 +1614,7 @@
       "name": "Classes préparatoires grandes écoles - PTSI/PSI",
       "startDate": "1999-09-01",
       "endDate": "2002-07-01",
-      "establishment": "Lafayette high school",
+      "establishment": "Lycée Lafayette",
       "location": "Champagne-sur-Seine"
     },
     {
@@ -1615,7 +1630,7 @@
       "name": "processeurs de signaux et logique programmable",
       "startDate": "2011-09-01",
       "endDate": "2012-06-01",
-      "establishment": "Conservatoire National des Arts et Métiers",
+      "establishment": "CNAM",
       "location": "Paris"
     },
     {
@@ -1623,7 +1638,7 @@
       "name": "Programmation avancée des micro-contrôleurs",
       "startDate": "2011-09-01",
       "endDate": "2012-06-01",
-      "establishment": "Conservatoire National des Arts et Métiers",
+      "establishment": "CNAM",
       "location": "Paris"
     },
     {
