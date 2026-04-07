@@ -56,7 +56,7 @@ test.describe('CV title/date rows (mobile)', () => {
     );
     await page.goto('/en');
     await expect(page.locator('.header-content p').first()).toHaveText(
-      'Fullstack Developer',
+      'Senior Fullstack Developer',
     );
   });
 
