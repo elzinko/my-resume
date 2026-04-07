@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import MatchClientPill from './MatchClientPill';
 
 export interface MatchEntry {
@@ -22,18 +22,25 @@ interface TechMatchDisplayProps {
   lang: 'fr' | 'en';
 }
 
+const MAX_CLIENTS_VISIBLE = 3;
+
 const labels = {
   fr: {
     sectionTitle: 'Adéquation avec le poste',
     years: 'ans',
     year: 'an',
     notPracticed: 'Non pratiquée',
+    /** Accessibilité : pastille « … » pour afficher tous les clients. */
+    expandClientsAria: 'Afficher tous les clients',
+    collapseClientsAria: 'Réduire la liste des clients',
   },
   en: {
     sectionTitle: 'Profile Match',
     years: 'years',
     year: 'year',
     notPracticed: 'Not practiced',
+    expandClientsAria: 'Show all clients',
+    collapseClientsAria: 'Collapse client list',
   },
 };
 
@@ -51,47 +58,110 @@ export default function TechMatchDisplay({
 }: TechMatchDisplayProps) {
   const t = labels[lang];
   const entries = data?.entries ?? [];
+  const [expandedRows, setExpandedRows] = useState<Record<number, boolean>>(
+    {},
+  );
+
+  const toggleRow = useCallback((index: number) => {
+    setExpandedRows((prev) => ({ ...prev, [index]: !prev[index] }));
+  }, []);
 
   return (
     <section
       id="profile-match"
       className="mt-10 max-md:!mt-0 print:mt-4"
+      data-testid="profile-match"
     >
-      <h2 className="border-b pb-1 text-2xl font-semibold text-orange-300 print:!text-orange-300">
+      <h2 className="border-b pb-1 text-lg font-semibold text-orange-300 max-md:text-base max-md:pb-0.5 print:!text-orange-300 md:text-2xl">
         {t.sectionTitle}
       </h2>
 
-      <div className="flex w-full flex-col print:flex-row print:space-x-4 md:flex-row md:space-x-6">
-        {entries.map((entry) => {
+      <div className="mt-3 flex flex-col gap-2 print:mt-2 print:gap-2 md:mt-4 md:gap-3">
+        {entries.map((entry, index) => {
           const hasMatches = entry.matchedClients.length > 0;
+          const expanded = Boolean(expandedRows[index]);
+          const clients = entry.matchedClients;
+          const n = clients.length;
+          const hasOverflow = n > MAX_CLIENTS_VISIBLE;
+          const visibleClients =
+            expanded || !hasOverflow
+              ? clients
+              : clients.slice(0, MAX_CLIENTS_VISIBLE);
+          const hiddenClients =
+            expanded || !hasOverflow ? [] : clients.slice(MAX_CLIENTS_VISIBLE);
 
           return (
             <div
-              key={entry.label}
-              className={`mt-4 min-w-0 flex-1 print:mt-2 ${
-                !hasMatches ? 'opacity-50' : ''
+              key={`${index}-${entry.label}`}
+              className={`cv-match-requirement-card min-w-0 ${
+                !hasMatches ? 'opacity-60' : ''
               }`}
               style={{ breakInside: 'avoid' }}
             >
-              <div className="mt-4 flex items-baseline justify-between gap-3 print:mt-2">
-                <h3 className="min-w-0 flex-1 text-sm font-semibold leading-snug text-orange-300 print:text-[10px] print:!text-orange-300">
+              <div className="flex flex-wrap items-baseline justify-between gap-1.5 gap-y-1 md:gap-2">
+                <h3 className="min-w-0 flex-1 text-sm font-semibold leading-snug text-orange-300 max-md:text-xs max-md:leading-tight print:text-[11px] print:!text-orange-300 md:text-base lg:text-lg">
                   {entry.label}
                 </h3>
                 {hasMatches ? (
-                  <span className="shrink-0 text-sm font-semibold tabular-nums text-orange-300 print:text-[10px] print:!text-orange-300">
+                  <span className="cv-pill-match shrink-0 rounded px-1.5 py-0.5 text-xs font-semibold tabular-nums max-md:px-1 max-md:py-0.5 max-md:text-[11px] print:px-1.5 print:text-[10px] md:px-2 md:text-sm">
                     {formatYears(entry.totalYears, lang)}
                   </span>
                 ) : null}
               </div>
 
               {hasMatches ? (
-                <div className="flex flex-wrap gap-x-2 gap-y-2 py-2 print:gap-1 print:py-1">
-                  {entry.matchedClients.map((match) => (
-                    <MatchClientPill key={match.client} client={match.client} />
-                  ))}
-                </div>
+                <>
+                  <div className="mt-1.5 flex flex-wrap items-center gap-1.5 print:mt-1 print:gap-1 md:mt-2 md:gap-x-2 md:gap-y-2">
+                    {visibleClients.map((match) => (
+                      <MatchClientPill key={match.client} client={match.client} />
+                    ))}
+                    {hiddenClients.length > 0 ? (
+                      <div
+                        className={
+                          expanded
+                            ? 'flex w-full flex-wrap gap-1.5 md:gap-x-2 md:gap-y-2'
+                            : 'hidden w-full flex-wrap gap-1.5 print:flex print:gap-1 md:gap-x-2 md:gap-y-2'
+                        }
+                      >
+                        {hiddenClients.map((match) => (
+                          <MatchClientPill
+                            key={match.client}
+                            client={match.client}
+                          />
+                        ))}
+                      </div>
+                    ) : null}
+                    {hasOverflow ? (
+                      expanded ? (
+                        <button
+                          type="button"
+                          className="inline-flex rounded print:hidden outline-none ring-orange-300/40 focus-visible:ring-2"
+                          onClick={() => toggleRow(index)}
+                          aria-expanded
+                          aria-label={t.collapseClientsAria}
+                        >
+                          <span className="cv-pill-match inline-flex min-w-[1.5rem] items-center justify-center whitespace-nowrap px-1.5 py-0.5 text-[10px] font-medium max-md:min-w-[1.35rem] max-md:px-1 max-md:py-0.5 max-md:text-[9px]">
+                            −
+                          </span>
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          className="inline-flex rounded print:hidden outline-none ring-orange-300/40 focus-visible:ring-2"
+                          onClick={() => toggleRow(index)}
+                          aria-expanded={false}
+                          aria-label={t.expandClientsAria}
+                        >
+                          <span className="cv-pill-match inline-flex min-w-[1.5rem] items-center justify-center whitespace-nowrap px-1.5 py-0.5 text-[10px] font-medium max-md:min-w-[1.35rem] max-md:px-1 max-md:py-0.5 max-md:text-[9px]">
+                            …
+                          </span>
+                        </button>
+                      )
+                    ) : null}
+                  </div>
+                </>
               ) : (
-                <p className="mt-2 text-sm italic text-gray-500 print:mt-1 print:text-[10px]">
+                <p className="mt-1.5 text-xs italic text-gray-500 max-md:text-[11px] print:mt-1 print:text-[10px] md:mt-2 md:text-sm">
                   {t.notPracticed}
                 </p>
               )}

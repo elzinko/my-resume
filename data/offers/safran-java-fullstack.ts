@@ -10,6 +10,7 @@ const offer: JobOffer = {
   requirements: [
     {
       label: 'Java EE / JSF',
+      shortLabel: 'Java / EE',
       keywords: [
         'java',
         'jee',
@@ -22,6 +23,7 @@ const offer: JobOffer = {
     },
     {
       label: 'SQL (PostgreSQL, MariaDB)',
+      shortLabel: 'SQL',
       keywords: [
         'sql',
         'postgresql',
@@ -34,6 +36,7 @@ const offer: JobOffer = {
     },
     {
       label: 'Node.JS / JavaScript',
+      shortLabel: 'Node / JavaScript',
       keywords: ['node', 'nodejs', 'node.js', 'javascript', 'typescript'],
     },
     {
@@ -42,14 +45,17 @@ const offer: JobOffer = {
     },
     {
       label: 'WildFly / JBoss',
+      shortLabel: 'WildFly / JBoss',
       keywords: ['wildfly', 'jboss', 'undertow', 'tomcat'],
     },
     {
       label: 'Git / GitLab / Sonar',
+      shortLabel: 'Git / qualité',
       keywords: ['git', 'gitlab', 'github', 'sonar', 'sonarqube'],
     },
     {
       label: 'MongoDB / NoSQL',
+      shortLabel: 'MongoDB / NoSQL',
       keywords: ['mongodb', 'mongo', 'cassandra', 'hbase'],
     },
   ],

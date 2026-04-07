@@ -10,14 +10,17 @@ const offer: JobOffer = {
   requirements: [
     {
       label: 'Python / Backend',
+      shortLabel: 'Python',
       keywords: ['python', 'flask', 'django', 'fastapi'],
     },
     {
       label: 'React / Frontend',
+      shortLabel: 'React',
       keywords: ['react', 'angular', 'vue.js', 'vue', 'typescript'],
     },
     {
       label: 'AWS / Cloud',
+      shortLabel: 'AWS / Cloud',
       keywords: [
         'aws',
         'ec2',
@@ -33,6 +36,7 @@ const offer: JobOffer = {
     },
     {
       label: 'Docker / Kubernetes',
+      shortLabel: 'Docker / K8s',
       keywords: [
         'docker',
         'docker-compose',
@@ -43,6 +47,7 @@ const offer: JobOffer = {
     },
     {
       label: 'CI/CD / DevOps',
+      shortLabel: 'CI/CD',
       keywords: [
         'jenkins',
         'gitlab',
@@ -54,6 +59,7 @@ const offer: JobOffer = {
     },
     {
       label: 'IA / ML / LLM',
+      shortLabel: 'IA / LLM',
       keywords: [
         'llm',
         'bedrock',

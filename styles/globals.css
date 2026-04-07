@@ -120,6 +120,39 @@
   .cv-row-study-title-year {
     @apply flex items-baseline justify-between gap-2;
   }
+
+  /**
+   * Vignettes (pastilles) : fond léger + bordure — même langage que MatchClientPill.
+   */
+  /* Fonds en palette Tailwind (opacité / hover) : les tokens `cv-*` + /opacity ne passent pas tous en @apply. */
+  .cv-pill-skill {
+    @apply rounded border border-blue-400/50 bg-blue-300/10 text-cv-tag-text transition-colors;
+    @apply hover:border-blue-300 hover:bg-blue-300/20;
+    @apply print:!text-cv-tag-text;
+  }
+
+  .cv-pill-jobs {
+    @apply rounded border border-pink-300/50 bg-pink-300/10 text-cv-jobs transition-colors;
+    @apply hover:border-pink-300 hover:bg-pink-300/20;
+    @apply print:!text-cv-jobs;
+  }
+
+  .cv-pill-domain {
+    @apply rounded border border-teal-300/50 bg-teal-300/10 text-cv-section transition-colors;
+    @apply hover:border-teal-300 hover:bg-teal-300/20;
+    @apply print:!text-cv-section;
+  }
+
+  .cv-pill-match {
+    @apply rounded border border-orange-300/50 bg-orange-300/10 font-medium text-orange-300 transition-colors;
+    @apply hover:border-orange-300/70 hover:bg-orange-300/20;
+    @apply print:border-orange-300/60 print:!text-orange-300;
+  }
+
+  /** Carte critère dans « Adéquation avec le poste » (offres). */
+  .cv-match-requirement-card {
+    @apply rounded-lg border border-orange-300/50 bg-orange-300/10 p-3 print:p-2 max-md:p-2 max-md:rounded-md;
+  }
 }
 
 html {

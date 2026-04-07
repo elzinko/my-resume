@@ -109,7 +109,7 @@ export function buildMatchEntries(
     );
 
     return {
-      label: req.label,
+      label: req.shortLabel ?? req.label,
       matchedClients: deduplicated,
       totalYears,
     };
