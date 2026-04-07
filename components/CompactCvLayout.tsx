@@ -116,8 +116,9 @@ export default function CompactCvLayout({
     moreClients: fallback.moreClients,
   };
 
-  // Only show 5 most recent jobs
-  const recentJobs = data.jobs.slice(0, 5);
+  // Missions récentes sans puces (cf. JobExperienceBody compact) : plus de place pour une page A4 ;
+  // ordre bundle : jusqu’à RelevanC après leboncoin ; le bloc « +20 ans » reste en bas.
+  const recentJobs = data.jobs.slice(0, 8);
 
   return (
     <div className="print:p-0">

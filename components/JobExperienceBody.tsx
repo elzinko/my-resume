@@ -32,9 +32,10 @@ export default function JobExperienceBody({
   const longText = (description ?? '').trim();
   const isLegacy = !shortText;
   const hookLine = isLegacy ? longText : shortText;
-  const hasBullets = Boolean(bullets?.length);
+  /** CV court (compact) : pas de puces, écran comme impression. */
+  const showBullets = !compact && Boolean(bullets?.length);
   const showToggle =
-    Boolean(shortText) || Boolean(longText) || hasBullets;
+    Boolean(shortText) || Boolean(longText) || showBullets;
 
   useEffect(() => {
     onExpandedChange?.(expanded);
@@ -51,7 +52,7 @@ export default function JobExperienceBody({
     : 'cv-job-description mt-1';
 
   const bulletList = (extraClass: string) =>
-    bullets && bullets.length > 0 ? (
+    showBullets && bullets && bullets.length > 0 ? (
       <ul className={`cv-job-description mx-4 my-2 list-disc ${extraClass}`}>
         {bullets.map((bullet) => (
           <li key={bullet.id}>{bullet.text}</li>
