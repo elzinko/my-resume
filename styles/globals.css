@@ -182,10 +182,10 @@ html {
     color-adjust: exact !important;
   }
 
-  /* Page setup */
+  /* Page setup — marges légères : le padding du layout aligne l’écran et l’impression (évite double décalage). */
   @page {
     size: A4;
-    margin: 8mm;
+    margin: 5mm;
   }
 
   /* Hide non-printable elements */
@@ -193,10 +193,9 @@ html {
     display: none !important;
   }
 
-  /* Container adjustments */
+  /* Largeur pleine ; conserver le padding Tailwind du parent (`print:p-8`) pour coller à la vue web. */
   .container {
     max-width: 100% !important;
-    padding: 0 !important;
   }
 
   /* Prevent page breaks inside elements */
@@ -225,6 +224,24 @@ html {
   .cv-short-studies-section li {
     break-inside: avoid;
     page-break-inside: avoid;
+  }
+
+  /**
+   * Domaines + grille missions : éviter un saut de page systématique après `#domains`
+   * (section entière en `break-inside: avoid` + grille suivante).
+   */
+  section#domains,
+  .cv-page-split {
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+
+  /** CV court : moins d’air sous les domaines + éviter un saut de page juste après. */
+  .cv-layout-short section#domains {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    break-after: avoid;
+    page-break-after: avoid;
   }
 
   /* Links - show as normal text */

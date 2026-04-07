@@ -254,7 +254,7 @@
     "allJobsModels": [
       {
         "client": "Solopreneur",
-        "location": "Remote",
+        "location": "@home · maison",
         "startDate": "2023-01-01",
         "description": "",
         "bullets": [
@@ -302,7 +302,7 @@
           "name": "Solopreneur · projets personnels",
           "id": "81994135"
         },
-        "descriptionShort": "Conception et livraison de produits numériques B2B et B2C, de l’idéation à la mise en production et au run (Node.js, TypeScript, React, données, LLM)."
+        "descriptionShort": "Conception et livraison de produits numériques B2B et B2C, de l’idéation à la mise en production et au run."
       },
       {
         "client": "JPB Système",
@@ -2468,7 +2468,7 @@
     "allJobsModels": [
       {
         "client": "Solopreneur",
-        "location": "Remote",
+        "location": "@home · home office",
         "startDate": "2023-01-01",
         "description": "",
         "bullets": [
@@ -2516,7 +2516,7 @@
           "name": "Solopreneur · side projects",
           "id": "81994135"
         },
-        "descriptionShort": "Building and shipping B2B and B2C digital products end to end—from ideation through production launch and operations (Node.js, TypeScript, React, data, LLMs)."
+        "descriptionShort": "Building and shipping B2B and B2C digital products end to end—from ideation through production launch and operations."
       },
       {
         "client": "JPB Système",

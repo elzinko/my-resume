@@ -19,7 +19,7 @@ export default async function RootLayout({
   }
   return (
     <>
-      <div className="container mx-auto min-h-screen p-8 print:min-h-0 print:p-4">
+      <div className="container mx-auto min-h-screen p-8 print:min-h-0 print:p-8">
         <main>{children}</main>
       </div>
       {enableAnalitycs ? <Analytics /> : ''}

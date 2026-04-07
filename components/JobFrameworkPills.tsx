@@ -84,7 +84,13 @@ export default function JobFrameworkPills({
         return;
       }
 
-      /** CV court : toujours une ligne (y compris desktop et impression), sans pastille « … ». */
+      /** Impression : tout afficher (le mode compact coupe sinon avec overflow + une ligne). */
+      if (printing) {
+        setVisibleCount(frameworks.length);
+        return;
+      }
+
+      /** CV court : toujours une ligne (y compris desktop), sans pastille « … ». */
       if (!compact) {
         if (
           window.innerWidth >= MD_MIN ||
@@ -210,7 +216,7 @@ export default function JobFrameworkPills({
         <div
           className={
             compact
-              ? `relative z-10 flex flex-nowrap overflow-hidden ${gapClass}`
+              ? `relative z-10 flex flex-nowrap overflow-hidden ${gapClass} print:flex-wrap print:overflow-visible`
               : `relative z-10 flex flex-wrap ${gapClass} print:flex print:max-h-none print:overflow-visible`
           }
         >

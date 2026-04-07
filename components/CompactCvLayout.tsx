@@ -121,7 +121,7 @@ export default function CompactCvLayout({
     .slice(0, SHORT_CV_MAX_JOBS);
 
   return (
-    <div className="print:p-0">
+    <div className="cv-layout-short print:p-0">
       {/* About - Full width section (same style as full CV) */}
       <section className="mt-10 print:mt-4">
         <h2 className="border-b pb-1 text-2xl font-semibold text-cv-section print:text-base">
@@ -147,7 +147,7 @@ export default function CompactCvLayout({
       </section>
 
       {/* Colonne gauche 1/3 + expériences 2/3 (grille alignée sur les domaines) */}
-      <div className="cv-page-split mt-14 print:mt-6">
+      <div className="cv-page-split mt-14 print:mt-2">
         <div
           id="left"
           className="order-last flex w-full min-w-0 flex-col print:order-first print:col-span-1 md:order-first md:col-span-1"

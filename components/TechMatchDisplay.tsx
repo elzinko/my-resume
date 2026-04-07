@@ -43,7 +43,7 @@ const labels = {
     collapseClientsAria: 'Réduire la liste des clients',
   },
   en: {
-    sectionTitle: 'Profile Match',
+    sectionTitle: 'Job fit',
     sectionTitleCompact: 'Job fit',
     years: 'years',
     year: 'year',
@@ -94,8 +94,8 @@ export default function TechMatchDisplay({
                 style={{ breakInside: 'avoid' }}
               >
                 <div className="flex items-baseline justify-between gap-2">
-                  <span className="cv-pill-match inline-flex min-w-0 max-w-full shrink items-center px-1.5 py-0.5 leading-snug print:px-1 print:py-0.5 print:max-w-[min(100%,12rem)]">
-                    <span className="truncate text-sm font-semibold print:text-[10px]">
+                  <span className="cv-pill-match inline-flex min-w-0 max-w-full shrink items-center px-1.5 py-0.5 font-normal leading-snug print:px-1 print:py-0.5 print:max-w-[min(100%,12rem)]">
+                    <span className="truncate text-sm print:text-[10px]">
                       {entry.label}
                     </span>
                   </span>
@@ -146,7 +146,7 @@ export default function TechMatchDisplay({
               style={{ breakInside: 'avoid' }}
             >
               <div className="flex flex-wrap items-baseline justify-between gap-1.5 gap-y-1 md:gap-2">
-                <h3 className="min-w-0 flex-1 text-sm font-semibold leading-snug text-orange-300 max-md:text-xs max-md:leading-tight print:text-[11px] print:!text-orange-300 md:text-base lg:text-lg">
+                <h3 className="min-w-0 flex-1 text-sm font-normal leading-snug text-orange-300 max-md:text-xs max-md:leading-tight print:text-[11px] print:!text-orange-300 md:text-base lg:text-lg">
                   {entry.label}
                 </h3>
                 {showYearsPill ? (

@@ -86,7 +86,7 @@ export default function EducationLevel({
 
   if (compact) {
     return (
-      <section className="mb-6 mt-6 print:mb-4 print:mt-4">
+      <section className="mb-6 print:mb-4">
         <h2 className="border-b pb-1 text-2xl font-semibold text-purple-300 print:text-sm">
           {content.title}
         </h2>
