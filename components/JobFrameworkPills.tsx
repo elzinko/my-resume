@@ -2,7 +2,10 @@
 
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import Pill from './Pill';
-import { maxFitCountOneRow } from '@/lib/flex-wrap-one-row-fit';
+import {
+  maxFitCountOneRow,
+  maxFitCountSingleRowNoMore,
+} from '@/lib/flex-wrap-one-row-fit';
 
 const MD_MIN = 768;
 
@@ -31,15 +34,15 @@ interface JobFrameworkPillsProps {
   collapseAriaLabel: string;
 }
 
-/** Hauteur totale autorisée (2 lignes de pastilles), en rem — aligné sur les anciennes classes max-h. */
-const MAX_H_REM = { compact: 2.65, default: 3.1 } as const;
+/** CV long : ~2 lignes de pastilles (mobile). Le mode compact force une ligne via la hauteur mesurée. */
+const MAX_H_REM = { default: 3.1 } as const;
 
 /** Gaps flex (gap-1 / gap-1.5) en px pour coller au layout Tailwind mobile. */
 const GAP_PX = { compact: 4, default: 6 } as const;
 
 /**
- * Pastilles techno : sur viewport &lt; md, ~2 lignes + dernière pastille « … » (même composant `Pill` que les autres) ;
- * clic développe tout. À partir de md, tout visible.
+ * Pastilles techno : sur viewport &lt; md (CV long), ~2 lignes + pastille « … », clic pour tout voir.
+ * À partir de md (CV long), tout visible. **CV court (`compact`)** : une seule ligne, sans « … », le surplus est masqué.
  */
 export default function JobFrameworkPills({
   frameworks,
@@ -56,7 +59,7 @@ export default function JobFrameworkPills({
   const isBelowMd = useIsBelowMd();
 
   const gapClass = compact ? 'gap-1' : 'gap-1.5 md:gap-2';
-  const rem = MAX_H_REM[compact ? 'compact' : 'default'];
+  const rem = MAX_H_REM.default;
   const gapPx = GAP_PX[compact ? 'compact' : 'default'];
 
   useLayoutEffect(() => {
@@ -76,14 +79,21 @@ export default function JobFrameworkPills({
     const compute = () => {
       if (typeof window === 'undefined') return;
 
-      if (
-        window.innerWidth >= MD_MIN ||
-        expanded ||
-        printing ||
-        frameworks.length === 0
-      ) {
-        setVisibleCount(frameworks.length);
+      if (frameworks.length === 0) {
+        setVisibleCount(0);
         return;
+      }
+
+      /** CV court : toujours une ligne (y compris desktop et impression), sans pastille « … ». */
+      if (!compact) {
+        if (
+          window.innerWidth >= MD_MIN ||
+          expanded ||
+          printing
+        ) {
+          setVisibleCount(frameworks.length);
+          return;
+        }
       }
 
       const outer = outerRef.current;
@@ -126,9 +136,13 @@ export default function JobFrameworkPills({
       const rootFont = parseFloat(
         getComputedStyle(document.documentElement).fontSize || '16',
       );
-      const maxHPx = rem * rootFont;
+      /** Une seule rangée de pastilles : budget hauteur = hauteur d’une pastille (+ marge). */
+      const maxHPx = compact ? maxH + 2 : rem * rootFont;
 
-      const k = maxFitCountOneRow(widths, moreW, cw, maxH, gapPx, maxHPx);
+      const k = compact
+        ? maxFitCountSingleRowNoMore(widths, cw, maxH, gapPx, maxHPx)
+        : maxFitCountOneRow(widths, moreW, cw, maxH, gapPx, maxHPx);
+
       setVisibleCount(k);
     };
 
@@ -150,17 +164,21 @@ export default function JobFrameworkPills({
   if (frameworks.length === 0) return null;
 
   const showCollapse =
+    !compact &&
     typeof window !== 'undefined' &&
     window.innerWidth < MD_MIN &&
     !expanded &&
     !printing &&
     visibleCount < frameworks.length;
 
-  const visibleFrameworks = showCollapse
-    ? frameworks.slice(0, visibleCount)
-    : frameworks;
+  const visibleFrameworks = frameworks.slice(0, visibleCount);
 
-  const showLess = expanded && isBelowMd && !printing && frameworks.length > 0;
+  const showLess =
+    !compact &&
+    expanded &&
+    isBelowMd &&
+    !printing &&
+    frameworks.length > 0;
 
   return (
     <div
@@ -190,7 +208,11 @@ export default function JobFrameworkPills({
         </div>
 
         <div
-          className={`relative z-10 flex flex-wrap ${gapClass} print:flex print:max-h-none print:overflow-visible`}
+          className={
+            compact
+              ? `relative z-10 flex flex-nowrap overflow-hidden ${gapClass}`
+              : `relative z-10 flex flex-wrap ${gapClass} print:flex print:max-h-none print:overflow-visible`
+          }
         >
           {visibleFrameworks.map((fw) => (
             <Pill key={fw.id} color="jobs" compact={compact}>

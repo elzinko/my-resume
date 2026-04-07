@@ -40,21 +40,28 @@ function buildRows(t: EducationLevelContent): BlockRow[] {
   ];
 }
 
-/** Même typo que la page complète : pas de variantes `-compact` sur le corps (mobile / CV court = desktop). */
+/** Ligne 1 = niveau / titre, ligne 2 = précision ou matière ; encadré violet comme les pastilles Compétences. */
 function EducationBlockRow({
   primaryRole,
   primary,
   secondary,
-  tightSpacing,
-}: BlockRow & { tightSpacing: boolean }) {
+  compact,
+}: BlockRow & { compact: boolean }) {
   const primaryClass =
     primaryRole === 'heading' ? 'cv-education-heading' : 'cv-education-primary';
+  const mutedClass = compact
+    ? 'cv-education-muted-compact'
+    : 'cv-education-muted';
+  const cardClass = compact
+    ? 'cv-education-level-card-compact'
+    : 'cv-education-level-card';
+  const detailGap = compact ? 'mt-0.5' : 'mt-1';
 
   return (
-    <div className={tightSpacing ? 'space-y-0.5' : 'space-y-1'}>
+    <div className={cardClass}>
       <p className={primaryClass}>{primary}</p>
       {secondary ? (
-        <p className={`cv-education-muted max-w-full`}>{secondary}</p>
+        <p className={`${mutedClass} max-w-full ${detailGap}`}>{secondary}</p>
       ) : null}
     </div>
   );
@@ -74,7 +81,7 @@ export default function EducationLevel({
         </h2>
         <div className="mt-2 space-y-2 font-normal print:mt-1 print:space-y-1.5">
           {rows.map((row) => (
-            <EducationBlockRow key={row.id} {...row} tightSpacing />
+            <EducationBlockRow key={row.id} {...row} compact />
           ))}
         </div>
       </section>
@@ -86,9 +93,9 @@ export default function EducationLevel({
       <h2 className="border-b pb-1 text-2xl font-semibold text-purple-300">
         {content.title}
       </h2>
-      <div className="mt-4 space-y-3 font-normal">
+      <div className="mt-4 space-y-3 font-normal print:space-y-2">
         {rows.map((row) => (
-          <EducationBlockRow key={row.id} {...row} tightSpacing={false} />
+          <EducationBlockRow key={row.id} {...row} compact={false} />
         ))}
       </div>
     </section>

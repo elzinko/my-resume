@@ -123,7 +123,9 @@ export default function JobDisplay({
         />
         <div
           className={
-            !detailsOpen && hidePillsUntilDetailOpen ? 'max-md:hidden' : ''
+            !detailsOpen && hidePillsUntilDetailOpen
+              ? 'max-md:hidden print:!block'
+              : ''
           }
         >
           <JobFrameworkPills
@@ -167,7 +169,9 @@ export default function JobDisplay({
       />
       <div
         className={
-          !detailsOpen && hidePillsUntilDetailOpen ? 'max-md:hidden' : ''
+          !detailsOpen && hidePillsUntilDetailOpen
+            ? 'max-md:hidden print:!block'
+            : ''
         }
       >
         <JobFrameworkPills

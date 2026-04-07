@@ -57,3 +57,30 @@ export function maxFitCountOneRow(
 
   return 0;
 }
+
+/** Comme `maxFitCountOneRow`, sans pastille « … » : maximise le nombre d’items sur une seule ligne. */
+export function maxFitCountSingleRowNoMore(
+  widths: number[],
+  cw: number,
+  H: number,
+  gap: number,
+  maxTotalHeightPx: number,
+): number {
+  const epsilon = 2;
+  const n = widths.length;
+
+  if (layoutHeightPx(widths, null, cw, H, gap) <= maxTotalHeightPx + epsilon) {
+    return n;
+  }
+
+  for (let k = n - 1; k >= 0; k -= 1) {
+    if (
+      layoutHeightPx(widths.slice(0, k), null, cw, H, gap) <=
+      maxTotalHeightPx + epsilon
+    ) {
+      return k;
+    }
+  }
+
+  return 0;
+}
