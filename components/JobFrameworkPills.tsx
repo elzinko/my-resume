@@ -2,6 +2,7 @@
 
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import Pill from './Pill';
+import { maxFitCountOneRow } from '@/lib/flex-wrap-one-row-fit';
 
 const MD_MIN = 768;
 
@@ -35,62 +36,6 @@ const MAX_H_REM = { compact: 2.65, default: 3.1 } as const;
 
 /** Gaps flex (gap-1 / gap-1.5) en px pour coller au layout Tailwind mobile. */
 const GAP_PX = { compact: 4, default: 6 } as const;
-
-function layoutHeightPx(
-  itemWidths: number[],
-  moreWidth: number | null,
-  containerWidth: number,
-  itemHeight: number,
-  gap: number,
-): number {
-  const items = moreWidth != null ? [...itemWidths, moreWidth] : itemWidths;
-  if (items.length === 0) return 0;
-
-  let rowWidth = 0;
-  let rows = 1;
-
-  for (const w of items) {
-    const gapSpace = rowWidth > 0 ? gap : 0;
-    if (rowWidth + gapSpace + w > containerWidth && rowWidth > 0) {
-      rows += 1;
-      rowWidth = w;
-    } else if (rowWidth + gapSpace + w > containerWidth && rowWidth === 0) {
-      rowWidth = w;
-    } else {
-      rowWidth += gapSpace + w;
-    }
-  }
-
-  return rows * itemHeight + (rows - 1) * gap;
-}
-
-/** Nombre de technos affichées avant la pastille « … » (mobile replié uniquement). */
-function maxFitCount(
-  widths: number[],
-  moreW: number,
-  cw: number,
-  H: number,
-  gap: number,
-  maxH: number,
-): number {
-  const n = widths.length;
-  const epsilon = 2;
-
-  if (layoutHeightPx(widths, null, cw, H, gap) <= maxH + epsilon) {
-    return n;
-  }
-
-  for (let k = n - 1; k >= 0; k -= 1) {
-    if (
-      layoutHeightPx(widths.slice(0, k), moreW, cw, H, gap) <=
-      maxH + epsilon
-    ) {
-      return k;
-    }
-  }
-
-  return 0;
-}
 
 /**
  * Pastilles techno : sur viewport &lt; md, ~2 lignes + dernière pastille « … » (même composant `Pill` que les autres) ;
@@ -183,7 +128,7 @@ export default function JobFrameworkPills({
       );
       const maxHPx = rem * rootFont;
 
-      const k = maxFitCount(widths, moreW, cw, maxH, gapPx, maxHPx);
+      const k = maxFitCountOneRow(widths, moreW, cw, maxH, gapPx, maxHPx);
       setVisibleCount(k);
     };
 

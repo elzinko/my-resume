@@ -9,4 +9,14 @@ test.describe('Offer match (query params)', () => {
     await expect(page.getByTestId('match-offer-invalid')).toHaveCount(0);
     await expect(page.getByRole('heading', { name: 'Java' })).toBeVisible();
   });
+
+  test('CV court : ?offer=<id> réutilise le même bloc adéquation que les pages offre', async ({
+    page,
+  }) => {
+    await page.goto('/fr/short?offer=safran-ia-factory');
+    await expect(page.locator('#profile-match')).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: 'Adéquation avec le poste' }),
+    ).toBeVisible();
+  });
 });

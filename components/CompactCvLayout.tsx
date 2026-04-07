@@ -61,9 +61,15 @@ export interface CompactCvData {
 interface CompactCvLayoutProps {
   data: CompactCvData;
   lang: 'fr' | 'en';
+  /** Bloc optionnel (ex. adéquation offre) inséré après les domaines, avant la grille. */
+  children?: React.ReactNode;
 }
 
-export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
+export default function CompactCvLayout({
+  data,
+  lang,
+  children,
+}: CompactCvLayoutProps) {
   // Fallback labels if DatoCMS titles are empty
   const fallbackLabels = {
     fr: {
@@ -136,6 +142,8 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
           ))}
         </div>
       </section>
+
+      {children}
 
       {/* Colonne gauche 1/3 + expériences 2/3 (grille alignée sur les domaines) */}
       <div className="cv-page-split mt-14 print:mt-6">

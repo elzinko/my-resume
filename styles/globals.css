@@ -149,6 +149,12 @@
     @apply print:border-orange-300/60 print:!text-orange-300;
   }
 
+  /** Métrique « X ans » à côté du critère : même fond, sans bordure. */
+  .cv-pill-match-metric {
+    @apply rounded bg-orange-300/10 font-semibold tabular-nums text-orange-300;
+    @apply print:!text-orange-300;
+  }
+
   /** Carte critère dans « Adéquation avec le poste » (offres). */
   .cv-match-requirement-card {
     @apply rounded-lg border border-orange-300/50 bg-orange-300/10 p-3 print:p-2 max-md:p-2 max-md:rounded-md;
