@@ -7,7 +7,14 @@ import ContactDisplay from './ContactDisplay';
 import JobDisplay from './JobDisplay';
 import StudyDisplay from './StudyDisplay';
 import EducationLevel from './EducationLevel';
+import ExperienceClosingBlock from './ExperienceClosingBlock';
 import type { EducationLevelContent } from '@/lib/education-level-content';
+import {
+  formatRemainingClientsForShortCv,
+  getExperienceClosingLabels,
+  SHORT_CV_EXCLUDED_CLIENTS,
+  SHORT_CV_MAX_JOBS,
+} from '@/lib/cv-experience-footer';
 
 export interface CompactCvData {
   header: {
@@ -80,10 +87,6 @@ export default function CompactCvLayout({
       about: 'Profil',
       contact: 'Contact',
       present: 'Présent',
-      moreExperience: "+20 ans d'expérience",
-      moreExperienceTail: 'en développement fullstack et DevOps.',
-      moreClients:
-        'Autres clients : Edelia (EDF), JCDecaux, Lotsys (FDJ), Médiamétrie, Thales, Médiapost, BNP Paribas, Renault, SFR...',
     },
     en: {
       skills: 'Skills',
@@ -93,10 +96,6 @@ export default function CompactCvLayout({
       about: 'Profile',
       contact: 'Contact',
       present: 'Now',
-      moreExperience: '+20 years of experience',
-      moreExperienceTail: 'in full-stack development and DevOps.',
-      moreClients:
-        'Other clients: Edelia (EDF), JCDecaux, Lotsys (FDJ), Médiamétrie, Thales, Médiapost, BNP Paribas, Renault, SFR...',
     },
   };
 
@@ -111,15 +110,15 @@ export default function CompactCvLayout({
     experience: data.titles.experience || fallback.experience,
     expertise: fallback.expertise,
     present: fallback.present,
-    moreExperience: fallback.moreExperience,
-    moreExperienceTail: fallback.moreExperienceTail,
-    moreClients: fallback.moreClients,
   };
 
-  // Missions récentes sans puces ; sans RelevanC (CV court) ; le bloc « +20 ans » reste en bas.
+  const closing = getExperienceClosingLabels(lang);
+  const moreClientsLine = formatRemainingClientsForShortCv(data.jobs, lang);
+
+  // Missions récentes sans puces ; fenêtre alignée sur `lib/cv-experience-footer`.
   const recentJobs = data.jobs
-    .filter((job) => job.client !== 'RelevanC')
-    .slice(0, 8);
+    .filter((job) => !SHORT_CV_EXCLUDED_CLIENTS.has(job.client))
+    .slice(0, SHORT_CV_MAX_JOBS);
 
   return (
     <div className="print:p-0">
@@ -213,13 +212,11 @@ export default function CompactCvLayout({
               ))}
             </ul>
 
-            {/* More experience note */}
-            <div className="mt-4 border-l-4 border-teal-300/50 pl-3 print:mt-2">
-              <p className="text-xs text-gray-400 print:text-[10px]">
-                <strong className="text-teal-300">{t.moreExperience}</strong>{' '}
-                {t.moreExperienceTail} {t.moreClients}
-              </p>
-            </div>
+            <ExperienceClosingBlock
+              moreExperience={closing.moreExperience}
+              moreExperienceTail={closing.moreExperienceTail}
+              moreClientsLine={moreClientsLine}
+            />
           </section>
         </div>
       </div>
