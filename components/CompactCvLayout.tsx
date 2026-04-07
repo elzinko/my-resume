@@ -68,7 +68,7 @@ export interface CompactCvData {
 interface CompactCvLayoutProps {
   data: CompactCvData;
   lang: 'fr' | 'en';
-  /** Bloc optionnel (ex. adéquation offre) inséré après les domaines, avant la grille. */
+  /** Bloc optionnel (ex. adéquation offre) dans la colonne gauche, après Compétences. */
   children?: React.ReactNode;
 }
 
@@ -146,8 +146,6 @@ export default function CompactCvLayout({
         </div>
       </section>
 
-      {children}
-
       {/* Colonne gauche 1/3 + expériences 2/3 (grille alignée sur les domaines) */}
       <div className="cv-page-split mt-14 print:mt-6">
         <div
@@ -174,11 +172,16 @@ export default function CompactCvLayout({
             </div>
           </section>
 
+          {children}
+
           {/* Niveau de formation avant le détail des études (aligné CV long) */}
           <EducationLevel content={data.educationLevel} compact={true} />
 
-          {/* Education - Reusing StudyDisplay component */}
-          <section>
+          {/* Études sans détail (établissement masqué) — même titre que le CV long (#studies). */}
+          <section
+            id="studies"
+            className="cv-short-studies-section mb-6 print:mb-4"
+          >
             <h2 className="border-b pb-1 text-2xl font-semibold text-teal-300 print:text-sm">
               {t.education}
             </h2>

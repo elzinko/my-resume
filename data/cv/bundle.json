@@ -520,6 +520,11 @@
             "link": ""
           },
           {
+            "id": "82594001",
+            "name": "Node.js",
+            "link": "https://nodejs.org/"
+          },
+          {
             "id": "82522197",
             "name": "Python",
             "link": "https://www.python.org/"
@@ -2727,6 +2732,11 @@
             "id": "82522195",
             "name": "typescript",
             "link": ""
+          },
+          {
+            "id": "82594001",
+            "name": "Node.js",
+            "link": "https://nodejs.org/"
           },
           {
             "id": "82522197",

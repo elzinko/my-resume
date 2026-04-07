@@ -22,11 +22,17 @@ export interface MatchDisplayData {
 interface TechMatchDisplayProps {
   data: MatchDisplayData;
   lang: 'fr' | 'en';
+  /**
+   * CV court : liste en colonne gauche (techno + durée), alignée sur Contact / Compétences.
+   */
+  variant?: 'default' | 'compact';
 }
 
 const labels = {
   fr: {
     sectionTitle: 'Adéquation avec le poste',
+    /** CV court : titre court (colonne gauche + impression). */
+    sectionTitleCompact: 'Alignement offre',
     years: 'ans',
     year: 'an',
     notPracticed: 'Non pratiquée',
@@ -38,6 +44,7 @@ const labels = {
   },
   en: {
     sectionTitle: 'Profile Match',
+    sectionTitleCompact: 'Job fit',
     years: 'years',
     year: 'year',
     notPracticed: 'Not practiced',
@@ -58,9 +65,62 @@ function formatYears(totalYears: number, lang: 'fr' | 'en'): string {
 export default function TechMatchDisplay({
   data,
   lang,
+  variant = 'default',
 }: TechMatchDisplayProps) {
   const t = labels[lang];
   const entries = data?.entries ?? [];
+
+  if (variant === 'compact') {
+    return (
+      <section
+        id="profile-match"
+        className="mb-6 print:mb-4 print:break-inside-avoid"
+        data-testid="profile-match"
+      >
+        <h2 className="border-b pb-1 text-2xl font-semibold text-orange-300 print:!text-orange-300 print:text-sm">
+          {t.sectionTitleCompact}
+        </h2>
+        <ul className="mt-2 list-none space-y-1 p-0 print:mt-1 print:space-y-0.5">
+          {entries.map((entry, index) => {
+            const hasMatches = entry.matchedClients.length > 0;
+            const showYearsPill = hasMatches || entry.yearsFromOverride;
+            const muted =
+              !hasMatches && !entry.yearsFromOverride ? 'opacity-70' : '';
+
+            return (
+              <li
+                key={`${index}-${entry.label}`}
+                className={`min-w-0 ${muted}`}
+                style={{ breakInside: 'avoid' }}
+              >
+                <div className="flex items-baseline justify-between gap-2">
+                  <span className="cv-pill-match inline-flex min-w-0 max-w-full shrink items-center px-1.5 py-0.5 leading-snug print:px-1 print:py-0.5 print:max-w-[min(100%,12rem)]">
+                    <span className="truncate text-sm font-semibold print:text-[10px]">
+                      {entry.label}
+                    </span>
+                  </span>
+                  {showYearsPill ? (
+                    <span className="cv-pill-match-metric shrink-0 whitespace-nowrap px-1.5 py-0.5 text-[11px] print:px-1 print:text-[10px]">
+                      {formatYears(entry.totalYears, lang)}
+                    </span>
+                  ) : (
+                    <span className="shrink-0 text-[11px] italic text-gray-500 print:text-[10px]">
+                      {t.notPracticed}
+                    </span>
+                  )}
+                </div>
+                {entry.yearsFromOverride && !hasMatches ? (
+                  <p className="mt-0.5 text-[10px] leading-tight text-gray-500 print:text-[9px]">
+                    {t.manualYearsHint}
+                  </p>
+                ) : null}
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    );
+  }
 
   return (
     <section

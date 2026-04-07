@@ -206,6 +206,27 @@ html {
     page-break-inside: avoid;
   }
 
+  /**
+   * Colonne gauche (CV court + CV long) : autoriser la fragmentation entre pages,
+   * sinon le bas (Formation / études compactes) peut être tronqué en PDF.
+   */
+  #left {
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+
+  /** Liste « études sans détail » du CV court : peut se couper entre les lignes si besoin. */
+  .cv-short-studies-section,
+  .cv-short-studies-section ul {
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+
+  .cv-short-studies-section li {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
   /* Links - show as normal text */
   a {
     text-decoration: none !important;

@@ -2,10 +2,13 @@
  * Liens « Version courte » / « Version complète » en préservant offre dynamique (match, custom, offer id).
  */
 
+import { withQuery } from '@/lib/cv-path-utils';
+
 const OFFER_SPECIAL = new Set(['match', 'custom']);
 
 /**
  * Depuis une page offre complète → URL du CV court avec les mêmes paramètres quand c’est pertinent.
+ * Depuis la racine `/{lang}` (CV complet), recopie la query sur `/{lang}/short`.
  */
 export function shortHrefFromOfferPath(
   pathname: string,
@@ -14,7 +17,7 @@ export function shortHrefFromOfferPath(
 ): string {
   const offerSeg = /^\/(fr|en)\/offer\/([^/]+)\/?$/.exec(pathname || '');
   if (!offerSeg) {
-    return `/${lang}/short`;
+    return withQuery(`/${lang}/short`, searchParams);
   }
   const offerId = offerSeg[2]!;
   if (offerId === 'match' || offerId === 'custom') {
@@ -22,9 +25,11 @@ export function shortHrefFromOfferPath(
     return q ? `/${lang}/short?${q}` : `/${lang}/short`;
   }
   if (!OFFER_SPECIAL.has(offerId)) {
-    return `/${lang}/short?offer=${encodeURIComponent(offerId)}`;
+    const merged = new URLSearchParams(searchParams);
+    merged.set('offer', offerId);
+    return withQuery(`/${lang}/short`, merged);
   }
-  return `/${lang}/short`;
+  return withQuery(`/${lang}/short`, searchParams);
 }
 
 /**
@@ -50,5 +55,5 @@ export function fullHrefFromShortPath(
   if (offer && !company && !hasReq) {
     return `/${lang}/offer/${encodeURIComponent(offer)}`;
   }
-  return `/${lang}`;
+  return withQuery(`/${lang}`, searchParams);
 }

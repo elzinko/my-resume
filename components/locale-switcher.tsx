@@ -1,19 +1,11 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { i18n, type Locale } from '../i18n-config';
 import { cvHeaderLocaleSwitchBtn } from '@/lib/cv-header-toolbar';
+import { stripBasePath, withQuery } from '@/lib/cv-path-utils';
 import LocaleTargetFlag from './LocaleTargetFlag';
-
-function stripBasePath(pathname: string, basePath: string): string {
-  if (!basePath) return pathname;
-  if (pathname.startsWith(basePath)) {
-    const rest = pathname.slice(basePath.length);
-    return rest || '/';
-  }
-  return pathname;
-}
 
 /** Libellés aria / title selon la langue affichée et la langue cible du lien. */
 const SWITCH_TITLE: Record<Locale, Record<Locale, string>> = {
@@ -40,6 +32,7 @@ export default function LocaleSwitcher({
 }: LocaleSwitcherProps) {
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
   const rawPath = usePathname() || '/';
+  const searchParams = useSearchParams();
   const pathName = stripBasePath(rawPath, basePath);
 
   const segments = pathName.split('/');
@@ -64,7 +57,10 @@ export default function LocaleSwitcher({
     return next.join('/') || `/${locale}`;
   };
 
-  const href = redirectedPathName(targetLocale);
+  const href = withQuery(
+    redirectedPathName(targetLocale),
+    searchParams,
+  );
   const ariaLabel = SWITCH_TITLE[targetLocale][currentLocale];
 
   return (

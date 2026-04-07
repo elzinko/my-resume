@@ -20,4 +20,15 @@ test.describe('Short CV locale', () => {
       .click();
     await expect(page).toHaveURL(/\/en\/short/);
   });
+
+  test('switching locale preserves ?offer= on short CV', async ({ page }) => {
+    await page.goto('/fr/short?offer=safran-ia-factory');
+    await expect(page).toHaveURL(/offer=safran-ia-factory/);
+    await page
+      .getByTestId('cv-header-toolbar')
+      .getByTestId('locale-switch')
+      .click();
+    await expect(page).toHaveURL(/\/en\/short/);
+    await expect(page).toHaveURL(/offer=safran-ia-factory/);
+  });
 });
