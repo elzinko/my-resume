@@ -101,6 +101,7 @@
 
   /**
    * Corps de mission : text-xs mobile, text-sm md+ ; justifié partout (mobile inclus) pour aligner avec le PDF.
+   * Même token `text-cv-body-muted` que le profil et les domaines (About, Domain — pas de justification).
    */
   .cv-job-description {
     @apply text-justify text-xs leading-snug text-cv-body-muted print:text-xs md:text-sm;

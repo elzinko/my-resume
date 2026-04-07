@@ -260,19 +260,15 @@
         "bullets": [
           {
             "id": "job_solopreneur_fr_b_multi",
-            "text": "multi.app — produit numérique perso (Node.js, TypeScript, React)."
-          },
-          {
-            "id": "job_solopreneur_fr_b_livestreamz",
-            "text": "Livestreamz — projet média / streaming (github.com/elzinko/livestreamz)."
+            "text": "multi.app — Pilotage midi, osc, webhooks par le mouvement."
           },
           {
             "id": "job_solopreneur_fr_b_city",
-            "text": "City Guided — guide urbain connecté (github.com/elzinko/city-guided · cityguided.duckdns.org)."
+            "text": "City Guided — guide urbain connecté (github.com/elzinko/city-guided)."
           },
           {
             "id": "job_solopreneur_fr_b_next",
-            "text": "À venir : assistant Shopify, Livestreamz, Jober (job-app), Cop1, Realizator, Okascore, …"
+            "text": "À venir : assistant Shopify, Livestreamz, Jober, Cop1, Realizator, Okascore, …"
           }
         ],
         "frameworks": [
@@ -2464,19 +2460,15 @@
         "bullets": [
           {
             "id": "job_solopreneur_en_b_multi",
-            "text": "multi.app — personal digital product (Node.js, TypeScript, React)."
-          },
-          {
-            "id": "job_solopreneur_en_b_livestreamz",
-            "text": "Livestreamz — media / streaming side project (github.com/elzinko/livestreamz)."
+            "text": "multi.app — control softwares with midi, osc, webhooks by motion"
           },
           {
             "id": "job_solopreneur_en_b_city",
-            "text": "City Guided — connected city guide (github.com/elzinko/city-guided · cityguided.duckdns.org)."
+            "text": "City Guided — connected city guide."
           },
           {
             "id": "job_solopreneur_en_b_next",
-            "text": "Up next: Shopify assistant, Livestreamz, Jober (job-app), Cop1, Realizator, Okascore, …"
+            "text": "Up next: Shopify assistant, Livestreamz, Jober, Cop1, Realizator, Okascore, …"
           }
         ],
         "frameworks": [

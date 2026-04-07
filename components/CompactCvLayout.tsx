@@ -126,7 +126,9 @@ export default function CompactCvLayout({
         <h2 className="border-b pb-1 text-2xl font-semibold text-cv-section print:text-base">
           {t.about}
         </h2>
-        <p className="mt-4 print:mt-2 print:text-[10px]">{data.about}</p>
+        <p className="mt-4 text-cv-body-muted print:mt-2 print:text-[10px]">
+          {data.about}
+        </p>
       </section>
 
       {/* Domains - Full width (même grille 1/3 que le CV complet) */}
