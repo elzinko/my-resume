@@ -15,6 +15,7 @@
     "prettier": "prettier --write --ignore-unknown .",
     "prettier:check": "prettier --check --ignore-unknown .",
     "start": "next start",
+    "start:prod": "npm run build && next start",
     "test": "npm run prettier:check && npm run lint",
     "test:unit": "tsx --test lib/match-catalog-expand.unit.test.ts lib/tech-match-core.unit.test.ts",
     "playwright:install": "playwright install chromium",

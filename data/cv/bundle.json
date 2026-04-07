@@ -259,8 +259,20 @@
         "description": "",
         "bullets": [
           {
-            "id": "job_solopreneur_fr_b1",
-            "text": "Ex. City Guided (elzinko/city-guided, démo cityguided.duckdns.org), CV Next.js & API Vercel (my-resume, my-resume-api) — github.com/elzinko."
+            "id": "job_solopreneur_fr_b_multi",
+            "text": "multi.app — produit numérique perso (Node.js, TypeScript, React)."
+          },
+          {
+            "id": "job_solopreneur_fr_b_livestreamz",
+            "text": "Livestreamz — projet média / streaming (github.com/elzinko/livestreamz)."
+          },
+          {
+            "id": "job_solopreneur_fr_b_city",
+            "text": "City Guided — guide urbain connecté (github.com/elzinko/city-guided · cityguided.duckdns.org)."
+          },
+          {
+            "id": "job_solopreneur_fr_b_next",
+            "text": "À venir : assistant Shopify, Livestreamz, Jober (job-app), Cop1, Realizator, Okascore, …"
           }
         ],
         "frameworks": [
@@ -278,13 +290,23 @@
             "id": "82593991",
             "name": "postgreSQL",
             "link": ""
+          },
+          {
+            "id": "cnZskAq6SqSbkXAmAB0KIQ",
+            "name": "LLM",
+            "link": "https://www.langchain.com/"
+          },
+          {
+            "id": "82518980",
+            "name": "Matière Web",
+            "link": "https://matiere-web.com/"
           }
         ],
         "role": {
           "name": "Solopreneur · projets personnels",
           "id": "81994135"
         },
-        "descriptionShort": "Depuis 2023 · apps perso Node.js, TypeScript, React (City Guided, multi.app, CV & outils sur GitHub)."
+        "descriptionShort": "Conception et livraison de produits numériques B2B et B2C, de l’idéation à la mise en production et au run (Node.js, TypeScript, React, données, LLM)."
       },
       {
         "client": "JPB Système",
@@ -640,7 +662,7 @@
           "name": "Consultant Backend",
           "id": "82089336"
         },
-        "descriptionShort": "Participation à la refonte du système de paiement à la conception d'un projet de portefeuille numérique."
+        "descriptionShort": "Participation à la refonte du système de paiement et à la conception d'un projet de portefeuille numérique."
       },
       {
         "client": "Celsius Energy",
@@ -2441,8 +2463,20 @@
         "description": "",
         "bullets": [
           {
-            "id": "job_solopreneur_en_b1",
-            "text": "e.g. City Guided (elzinko/city-guided, demo cityguided.duckdns.org), this resume on Next.js & PDF API on Vercel (my-resume, my-resume-api) — github.com/elzinko."
+            "id": "job_solopreneur_en_b_multi",
+            "text": "multi.app — personal digital product (Node.js, TypeScript, React)."
+          },
+          {
+            "id": "job_solopreneur_en_b_livestreamz",
+            "text": "Livestreamz — media / streaming side project (github.com/elzinko/livestreamz)."
+          },
+          {
+            "id": "job_solopreneur_en_b_city",
+            "text": "City Guided — connected city guide (github.com/elzinko/city-guided · cityguided.duckdns.org)."
+          },
+          {
+            "id": "job_solopreneur_en_b_next",
+            "text": "Up next: Shopify assistant, Livestreamz, Jober (job-app), Cop1, Realizator, Okascore, …"
           }
         ],
         "frameworks": [
@@ -2460,13 +2494,23 @@
             "id": "82593991",
             "name": "postgreSQL",
             "link": ""
+          },
+          {
+            "id": "cnZskAq6SqSbkXAmAB0KIQ",
+            "name": "LLM",
+            "link": "https://www.langchain.com/"
+          },
+          {
+            "id": "82518980",
+            "name": "Matière Web",
+            "link": "https://matiere-web.com/"
           }
         ],
         "role": {
           "name": "Solopreneur · side projects",
           "id": "81994135"
         },
-        "descriptionShort": "Since 2023 · personal apps with Node.js, TypeScript, React (City Guided, multi.app, resume & tooling on GitHub)."
+        "descriptionShort": "Building and shipping B2B and B2C digital products end to end—from ideation through production launch and operations (Node.js, TypeScript, React, data, LLMs)."
       },
       {
         "client": "JPB Système",
