@@ -23,9 +23,9 @@ const FALLBACK: Record<Locale, EducationLevelContent> = {
   },
   en: {
     title: 'Education Level',
-    levelPrimary: "Master's-level (Bac+5)",
+    levelPrimary: "Master's-level",
     effectiveLevelDetail: 'Backed by 20 years of professional experience',
-    diploma: "Bachelor's (Bac+3)",
+    diploma: "Bachelor's degree",
     diplomaDetail:
       'Professional Bachelor in Computer Science and Software Systems',
     additionalTraining: 'Continuing education',

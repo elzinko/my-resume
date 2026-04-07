@@ -479,7 +479,7 @@
         "location": "Saint-Denis",
         "startDate": "2022-05-01",
         "endDate": "2023-02-01",
-        "description": "Gestion de la qualité des livrables et amélioration continue dans le cadre de a méthodologie SAFe. Gestion du backlog technique transverse.",
+        "description": "",
         "bullets": [
           {
             "id": "82089445",
@@ -492,9 +492,18 @@
           {
             "id": "82089447",
             "text": "Ferroviaire"
+          },
+          {
+            "id": "82089448",
+            "text": "Gestion du backlog technique transverse"
           }
         ],
         "frameworks": [
+          {
+            "id": "82690001",
+            "name": "SAFe",
+            "link": ""
+          },
           {
             "id": "82456109",
             "name": "Rust",
@@ -570,7 +579,7 @@
           "name": "Architecte Système",
           "id": "82089432"
         },
-        "descriptionShort": "Stratégie de développement et de croissance des équipes dans le cadre du projet open source OSRD hébergé."
+        "descriptionShort": "Gestion de la qualité des livrables et amélioration continue dans le cadre de la méthodologie SAFe."
       },
       {
         "client": "leboncoin",
@@ -2242,9 +2251,9 @@
     },
     "educationLevel": {
       "title": "Education Level",
-      "levelPrimary": "Master's-level (Bac+5)",
+      "levelPrimary": "Master's-level",
       "effectiveLevelDetail": "Backed by 20 years of professional experience",
-      "diploma": "Bachelor's (Bac+3)",
+      "diploma": "Bachelor's degree",
       "diplomaDetail": "Professional Bachelor in Computer Science and Software Systems",
       "additionalTraining": "Continuing education",
       "trainingThemes": "Microelectronics / Signal processing / ML / LLM"
@@ -2679,7 +2688,7 @@
         "location": "Saint-Denis",
         "startDate": "2022-05-01",
         "endDate": "2023-02-01",
-        "description": "Management of the quality of deliverables and continuous improvement within the framework of the SAFe methodology. Management of the transverse technical backlog.",
+        "description": "",
         "bullets": [
           {
             "id": "82089442",
@@ -2692,9 +2701,18 @@
           {
             "id": "82089444",
             "text": "Railway"
+          },
+          {
+            "id": "82089448",
+            "text": "Management of the transverse technical backlog"
           }
         ],
         "frameworks": [
+          {
+            "id": "82690001",
+            "name": "SAFe",
+            "link": ""
+          },
           {
             "id": "82456109",
             "name": "Rust",
@@ -2770,7 +2788,7 @@
           "name": "System architect",
           "id": "82089432"
         },
-        "descriptionShort": "Team development and growth strategy within the hosted OSRD open source project."
+        "descriptionShort": "Management of the quality of deliverables and continuous improvement within the framework of the SAFe methodology."
       },
       {
         "client": "leboncoin",

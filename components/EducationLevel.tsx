@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Pill from './Pill';
 import type { EducationLevelContent } from '@/lib/education-level-content';
 
 interface EducationLevelProps {
@@ -15,6 +16,8 @@ interface BlockRow {
   primaryRole: PrimaryRole;
   primary: string;
   secondary?: string;
+  /** Pastille violette sur le libellé de niveau uniquement (pas sur « Formations complémentaires »). */
+  pillLevelLabel: boolean;
 }
 
 function buildRows(t: EducationLevelContent): BlockRow[] {
@@ -24,44 +27,52 @@ function buildRows(t: EducationLevelContent): BlockRow[] {
       primaryRole: 'heading',
       primary: t.levelPrimary,
       secondary: t.effectiveLevelDetail,
+      pillLevelLabel: true,
     },
     {
       id: 'diploma',
       primaryRole: 'primary',
       primary: t.diploma,
       secondary: t.diplomaDetail,
+      pillLevelLabel: true,
     },
     {
       id: 'additional',
       primaryRole: 'primary',
       primary: t.additionalTraining,
       secondary: t.trainingThemes,
+      pillLevelLabel: false,
     },
   ];
 }
 
-/** Ligne 1 = niveau / titre, ligne 2 = précision ou matière ; encadré violet comme les pastilles Compétences. */
 function EducationBlockRow({
   primaryRole,
   primary,
   secondary,
   compact,
+  pillLevelLabel,
 }: BlockRow & { compact: boolean }) {
   const primaryClass =
     primaryRole === 'heading' ? 'cv-education-heading' : 'cv-education-primary';
   const mutedClass = compact
     ? 'cv-education-muted-compact'
     : 'cv-education-muted';
-  const cardClass = compact
-    ? 'cv-education-level-card-compact'
-    : 'cv-education-level-card';
-  const detailGap = compact ? 'mt-0.5' : 'mt-1';
+  const stackGap = compact ? 'space-y-0.5' : 'space-y-1';
 
   return (
-    <div className={cardClass}>
-      <p className={primaryClass}>{primary}</p>
+    <div className={stackGap}>
+      {pillLevelLabel ? (
+        <p className="m-0 leading-snug">
+          <Pill color="education" compact={compact}>
+            {primary}
+          </Pill>
+        </p>
+      ) : (
+        <p className={`m-0 ${primaryClass}`}>{primary}</p>
+      )}
       {secondary ? (
-        <p className={`${mutedClass} max-w-full ${detailGap}`}>{secondary}</p>
+        <p className={`${mutedClass} m-0 max-w-full`}>{secondary}</p>
       ) : null}
     </div>
   );

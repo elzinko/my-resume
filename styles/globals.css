@@ -144,13 +144,10 @@
     @apply print:!text-cv-section;
   }
 
-  /** Bloc « Niveau de formation » : même logique que les pastilles skills (bordure + fond léger), thème violet. */
-  .cv-education-level-card {
-    @apply rounded border border-purple-300/50 bg-purple-300/10 p-3 print:p-2;
-  }
-
-  .cv-education-level-card-compact {
-    @apply rounded border border-purple-300/50 bg-purple-300/10 p-2 print:p-1.5;
+  /** Pastille « niveau » (Bac+5, Bac+3, équivalent EN) — pas le bloc entier. */
+  .cv-pill-education {
+    @apply rounded border border-purple-300/50 bg-purple-300/10 font-normal text-purple-300 transition-colors;
+    @apply print:!text-purple-300;
   }
 
   .cv-pill-match {

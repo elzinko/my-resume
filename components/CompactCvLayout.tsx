@@ -92,7 +92,7 @@ export default function CompactCvLayout({
       expertise: 'Domains',
       about: 'Profile',
       contact: 'Contact',
-      present: 'Present',
+      present: 'Now',
       moreExperience: '+20 years of experience',
       moreExperienceTail: 'in full-stack development and DevOps.',
       moreClients:
@@ -116,9 +116,10 @@ export default function CompactCvLayout({
     moreClients: fallback.moreClients,
   };
 
-  // Missions récentes sans puces (cf. JobExperienceBody compact) : plus de place pour une page A4 ;
-  // ordre bundle : jusqu’à RelevanC après leboncoin ; le bloc « +20 ans » reste en bas.
-  const recentJobs = data.jobs.slice(0, 8);
+  // Missions récentes sans puces ; sans RelevanC (CV court) ; le bloc « +20 ans » reste en bas.
+  const recentJobs = data.jobs
+    .filter((job) => job.client !== 'RelevanC')
+    .slice(0, 8);
 
   return (
     <div className="print:p-0">
@@ -199,7 +200,7 @@ export default function CompactCvLayout({
             <h2 className="border-b pb-1 text-2xl font-semibold text-cv-jobs print:text-sm">
               {t.experience}
             </h2>
-            <ul className="mt-2 space-y-3 print:mt-1 print:space-y-2">
+            <ul className="mt-2 space-y-4 print:mt-1 print:space-y-3">
               {recentJobs.map((job, idx) => (
                 <li key={idx}>
                   <JobDisplay

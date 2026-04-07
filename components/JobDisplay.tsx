@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import formatDates from '@/lib/date';
+import formatDates, { formatJobDatesCompactYears } from '@/lib/date';
 import JobExperienceBody from './JobExperienceBody';
 import JobFrameworkPills from './JobFrameworkPills';
 import { slugifyClient } from '@/lib/slug';
@@ -89,7 +89,11 @@ export default function JobDisplay({
       : 'Réduire la liste des technologies';
 
   if (compact) {
-    const compactDateLine = `${job.startDate} - ${job.endDate || presentLabel}`;
+    const compactDateLine = formatJobDatesCompactYears(
+      job.startDate,
+      job.endDate,
+      presentLabel,
+    );
     return (
       <div>
         <div className="cv-row-with-side-meta">

@@ -7,11 +7,11 @@ const solidColorMap = {
   orange: 'bg-orange-300',
 } as const;
 
-type PillColor = keyof typeof solidColorMap | 'skill' | 'jobs' | 'domain';
+type PillColor = keyof typeof solidColorMap | 'skill' | 'jobs' | 'domain' | 'education';
 
 interface PillProps {
   children: React.ReactNode;
-  /** `skill` = Compétences (bleu). `jobs` = Missions (rose). `domain` = pastilles sous Agile/Dev/Ops (teal comme les titres). */
+  /** `skill` = Compétences (bleu). `jobs` = Missions (rose). `domain` = Agile/Dev/Ops (teal). `education` = niveau Bac+5 / Bac+3 (violet). */
   color?: PillColor;
   compact?: boolean;
 }
@@ -39,6 +39,13 @@ export default function Pill({
     const classes = compact
       ? 'cv-pill-skill whitespace-nowrap px-1 py-0.5 text-[9px] print:text-[8px]'
       : 'cv-pill-skill whitespace-nowrap px-1.5 py-0.5 text-[10px] md:px-2 md:py-1 md:text-xs';
+    return <span className={classes}>{children}</span>;
+  }
+
+  if (color === 'education') {
+    const classes = compact
+      ? 'cv-pill-education inline-block max-w-full px-1.5 py-0.5 text-xs leading-snug print:px-1.5 print:py-0.5 print:text-[10px]'
+      : 'cv-pill-education inline-block max-w-full px-2 py-0.5 text-sm leading-snug md:px-2.5 md:py-1 md:text-base print:text-sm';
     return <span className={classes}>{children}</span>;
   }
 
