@@ -12,8 +12,7 @@ import { getEducationLevelContent } from '@/lib/education-level-content';
 import formatDates from '@/lib/date';
 import ShortPageWrapper from '@/components/ShortPageWrapper';
 import ShortAutoprint from '@/components/ShortAutoprint';
-import TechMatch from '@/app/[lang]/offer/[offerId]/tech-match';
-import { getOffer } from '@/data/offers';
+import ShortOptionalOfferMatch from '@/components/ShortOptionalOfferMatch';
 import type { Metadata } from 'next';
 
 function generateDocumentTitle(
@@ -42,32 +41,13 @@ export async function generateMetadata({
   };
 }
 
-function resolveShortOfferId(
-  searchParams: Record<string, string | string[] | undefined> | undefined,
-): string | null {
-  const raw = searchParams?.offer;
-  const fromQuery = Array.isArray(raw) ? raw[0] : raw;
-  const trimmed = fromQuery?.trim();
-  if (trimmed) return trimmed;
-  const fromEnv = process.env.SHORT_CV_OFFER_ID?.trim();
-  if (fromEnv) return fromEnv;
-  return null;
-}
-
 export default async function ShortPage({
   params: { lang },
-  searchParams,
 }: {
   params: { lang: Locale };
-  searchParams?: Record<string, string | string[] | undefined>;
 }) {
   const data: any = await getCvData(lang);
-  const offerId = resolveShortOfferId(searchParams);
-  const offerBlock =
-    offerId && getOffer(offerId)
-      ? // @ts-expect-error Async RSC — Promise<Element> is valid at runtime; JSX types lag for async components
-        (<TechMatch locale={lang} offerId={offerId} />)
-      : null;
+  const defaultOfferId = process.env.SHORT_CV_OFFER_ID?.trim() || null;
 
   const compactData: CompactCvData = {
     header: {
@@ -136,7 +116,12 @@ export default async function ShortPage({
         <ShortAutoprint />
       </Suspense>
       <CompactCvLayout data={compactData} lang={lang as 'fr' | 'en'}>
-        {offerBlock}
+        <Suspense fallback={null}>
+          <ShortOptionalOfferMatch
+            lang={lang}
+            defaultOfferId={defaultOfferId}
+          />
+        </Suspense>
       </CompactCvLayout>
     </ShortPageWrapper>
   );
