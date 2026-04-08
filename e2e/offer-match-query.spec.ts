@@ -40,7 +40,7 @@ test.describe('Offer match (query params)', () => {
     );
   });
 
-  test('CV court : ?offer=<id> affiche l’adéquation en grille (comme le CV long)', async ({
+  test('CV court : ?offer=<id> affiche l’adéquation (mode condensé)', async ({
     page,
   }) => {
     await page.goto('/fr/short?offer=safran-ia-factory');
@@ -59,7 +59,7 @@ test.describe('Offer match (query params)', () => {
     ).toBeVisible();
   });
 
-  test('CV court : paramètres company + requirement affichent la grille adéquation', async ({
+  test('CV court : paramètres company + requirement affichent l’adéquation (condensé)', async ({
     page,
   }) => {
     const q = new URLSearchParams({

@@ -7,19 +7,17 @@ import {
 import { Locale } from 'i18n-config';
 import React, { Fragment } from 'react';
 
-export type ProjectsContentLayout = 'list' | 'inline';
-
 export default async function projects({
   locale,
   sectionId = 'projects',
   className = '',
-  contentLayout = 'list',
+  condensed = false,
 }: {
   locale: Locale;
   sectionId?: string | false;
   className?: string;
-  /** `inline` : une ligne avec tirets (colonne latérale dense). */
-  contentLayout?: ProjectsContentLayout;
+  /** `true` : une ligne avec séparateurs · (pile mobile pleine largeur). */
+  condensed?: boolean;
 }) {
   const data: any = await getCvData(locale);
   const visibleProjects = (data?.allProjectsModels || []).filter(
@@ -45,7 +43,7 @@ export default async function projects({
         <h2 className="border-b pb-1 text-2xl font-semibold text-cv-tag-text">
           {data?.projectsTitle?.title ?? 'Projects'}
         </h2>
-        {contentLayout === 'inline' ? (
+        {condensed ? (
           <div className="mt-4 flex flex-wrap items-baseline gap-x-1 gap-y-1 print:mt-2 md:mt-4">
             {projectsOrdered.map((project: any, i: number) => (
               <Fragment key={project.id}>

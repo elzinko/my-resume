@@ -14,6 +14,11 @@ export interface StudyData {
 interface StudyDisplayProps {
   study: StudyData;
   compact?: boolean;
+  /**
+   * `true` : titre + lieu/établissement sur une ligne (séparés par /).
+   * `false` : bloc classique titre + ligne méta (colonne gauche).
+   */
+  condensed?: boolean;
 }
 
 function formatStudyYear(startDate?: string, endDate?: string): string | null {
@@ -34,6 +39,7 @@ function studyMetaLine(study: StudyData): string {
 export default function StudyDisplay({
   study,
   compact = false,
+  condensed = false,
 }: StudyDisplayProps) {
   if (compact) {
     const endYear = study.endDate
@@ -54,17 +60,35 @@ export default function StudyDisplay({
   }
 
   const year = formatStudyYear(study.startDate, study.endDate);
-  const meta = studyMetaLine(study);
-  const titleWithMeta = meta ? `${study.name} / ${meta}` : study.name;
+
+  if (condensed) {
+    const meta = studyMetaLine(study);
+    const titleWithMeta = meta ? `${study.name} / ${meta}` : study.name;
+    return (
+      <div className="cv-row-study-title-year">
+        <span className="cv-study-title min-w-0 flex-1">{titleWithMeta}</span>
+        {year && (
+          <span className="cv-study-year min-w-max shrink-0 whitespace-nowrap">
+            {year}
+          </span>
+        )}
+      </div>
+    );
+  }
 
   return (
-    <div className="cv-row-study-title-year">
-      <span className="cv-study-title min-w-0 flex-1">{titleWithMeta}</span>
-      {year && (
-        <span className="cv-study-year min-w-max shrink-0 whitespace-nowrap">
-          {year}
-        </span>
-      )}
-    </div>
+    <>
+      <div className="cv-row-study-title-year">
+        <span className="cv-study-title min-w-0 flex-1">{study.name}</span>
+        {year && (
+          <span className="cv-study-year min-w-max shrink-0 whitespace-nowrap">
+            {year}
+          </span>
+        )}
+      </div>
+      <p className="cv-study-meta mt-1">
+        {study.location} / {study.establishment}
+      </p>
+    </>
   );
 }

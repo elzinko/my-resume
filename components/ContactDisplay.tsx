@@ -16,16 +16,16 @@ interface ContactDisplayProps {
   contact: ContactData;
   compact?: boolean;
   /**
-   * `grid` : trois champs en colonnes (comme la grille domaines) dès `md`.
-   * `stack` : liste verticale classique.
+   * `true` : grille 3 colonnes (pleine largeur / mobile).
+   * `false` : liste verticale classique (colonne gauche desktop).
    */
-  fieldsLayout?: 'grid' | 'stack';
+  condensed?: boolean;
 }
 
 export default function ContactDisplay({
   contact,
   compact = false,
-  fieldsLayout = 'grid',
+  condensed = false,
 }: ContactDisplayProps) {
   if (compact) {
     return (
@@ -52,7 +52,7 @@ export default function ContactDisplay({
     );
   }
 
-  if (fieldsLayout === 'grid') {
+  if (condensed) {
     return (
       <div className="mt-4 grid grid-cols-1 gap-4 print:mt-2 print:grid-cols-3 print:gap-2 md:mt-4 md:grid-cols-3 md:gap-x-10 md:gap-y-2 md:items-start">
         <div className="min-w-0 text-pink-200">

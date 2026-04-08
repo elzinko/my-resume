@@ -4,19 +4,17 @@ import { learningLinkLabel } from '@/lib/learning-label';
 import { Locale } from 'i18n-config';
 import React from 'react';
 
-export type LearningsContentLayout = 'list' | 'inline';
-
 export default async function learnings({
   locale,
   sectionId = 'learnings',
   className = '',
-  contentLayout = 'list',
+  condensed = false,
 }: {
   locale: Locale;
   sectionId?: string | false;
   className?: string;
-  /** `inline` : liens séparés par un slash teal. */
-  contentLayout?: LearningsContentLayout;
+  /** `true` : liens séparés par un slash teal (pile mobile). */
+  condensed?: boolean;
 }) {
   const data: any = await getCvData(locale);
   const items = data?.allLearningsModels ?? [];
@@ -34,7 +32,7 @@ export default async function learnings({
       <h2 className="border-b pb-1 text-2xl font-semibold text-teal-300">
         {data?.learningsTitle?.title}
       </h2>
-      {contentLayout === 'inline' ? (
+      {condensed ? (
         <div className="mt-4 flex flex-wrap items-baseline gap-x-0.5 text-sm leading-relaxed text-teal-300 print:mt-2 md:mt-4 md:text-base">
           {items.map((learning: any, i: number) => (
             <span key={learning.id} className="inline">

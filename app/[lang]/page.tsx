@@ -69,7 +69,7 @@ export default async function Page({
 
           <div className="space-y-10 print:hidden md:hidden max-md:!mt-0">
             {/* @ts-expect-error Server Component */}
-            <Contact locale={lang} className="mt-0" />
+            <Contact locale={lang} className="mt-0" condensed />
             {/* @ts-expect-error Server Component */}
             <Skills locale={lang} className="mt-0" />
           </div>
@@ -91,11 +91,11 @@ export default async function Page({
             <Studies locale={lang} />
             <div className="cv-print-desktop-tail-group max-md:hidden md:block">
               {/* @ts-expect-error Server Component */}
-              <Projects locale={lang} contentLayout="inline" />
+              <Projects locale={lang} />
               {/* @ts-expect-error Server Component */}
-              <Learnings locale={lang} contentLayout="inline" />
+              <Learnings locale={lang} />
               {/* @ts-expect-error Server Component */}
-              <Hobbies locale={lang} contentLayout="inline" />
+              <Hobbies locale={lang} />
             </div>
           </div>
           <div
@@ -109,11 +109,11 @@ export default async function Page({
 
         <div className="flex max-md:mt-10 max-md:flex-col max-md:gap-10 md:hidden print:hidden">
           {/* @ts-expect-error Server Component */}
-          <Projects locale={lang} sectionId={false} className="mt-0" />
+          <Projects locale={lang} sectionId={false} className="mt-0" condensed />
           {/* @ts-expect-error Server Component */}
-          <Learnings locale={lang} sectionId={false} className="mt-0" />
+          <Learnings locale={lang} sectionId={false} className="mt-0" condensed />
           {/* @ts-expect-error Server Component */}
-          <Hobbies locale={lang} sectionId={false} className="mt-0" />
+          <Hobbies locale={lang} sectionId={false} className="mt-0" condensed />
         </div>
       </div>
     </>

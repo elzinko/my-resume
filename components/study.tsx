@@ -6,8 +6,15 @@ import StudyDisplay from './StudyDisplay';
 interface StudyProps {
   study: any;
   compact?: boolean;
+  condensed?: boolean;
 }
 
-export default function Study({ study, compact = false }: StudyProps) {
-  return <StudyDisplay study={study} compact={compact} />;
+export default function Study({
+  study,
+  compact = false,
+  condensed = false,
+}: StudyProps) {
+  return (
+    <StudyDisplay study={study} compact={compact} condensed={condensed} />
+  );
 }

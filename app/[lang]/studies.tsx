@@ -7,7 +7,14 @@ import {
 import { Locale } from 'i18n-config';
 import React from 'react';
 
-export default async function studies({ locale }: { locale: Locale }) {
+export default async function studies({
+  locale,
+  condensed = false,
+}: {
+  locale: Locale;
+  /** `true` : ligne unique titre/lieu/établissement. `false` : rendu classique. */
+  condensed?: boolean;
+}) {
   const data: any = await getCvData(locale);
   const studiesOrdered = sortChronologicalDesc(
     data?.allStudiesModels || [],
@@ -21,7 +28,7 @@ export default async function studies({ locale }: { locale: Locale }) {
       <ul className="cv-section-simple-list">
         {studiesOrdered.map((study: any) => (
           <li key={study.id}>
-            <Study study={study} />
+            <Study study={study} condensed={condensed} />
           </li>
         ))}
       </ul>

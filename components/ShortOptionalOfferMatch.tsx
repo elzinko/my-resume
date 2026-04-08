@@ -16,5 +16,11 @@ export default function ShortOptionalOfferMatch({
 }: ShortOptionalOfferMatchProps) {
   const data = useShortOfferMatchData(lang, defaultOfferId);
   if (!data) return null;
-  return <TechMatchDisplay data={data} lang={lang as 'fr' | 'en'} />;
+  return (
+    <TechMatchDisplay
+      data={data}
+      lang={lang as 'fr' | 'en'}
+      condensed
+    />
+  );
 }

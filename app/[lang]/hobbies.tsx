@@ -3,19 +3,17 @@ import { getCvData } from '@/lib/cv-data';
 import { Locale } from 'i18n-config';
 import React from 'react';
 
-export type HobbiesContentLayout = 'list' | 'inline';
-
 export default async function hobbies({
   locale,
   sectionId = 'hobbies',
   className = '',
-  contentLayout = 'list',
+  condensed = false,
 }: {
   locale: Locale;
   sectionId?: string | false;
   className?: string;
-  /** `inline` : loisirs séparés par un slash (accent chaud). */
-  contentLayout?: HobbiesContentLayout;
+  /** `true` : loisirs séparés par un slash (pile mobile). */
+  condensed?: boolean;
 }) {
   const data: any = await getCvData(locale);
   const items = data?.allHobbiesModels ?? [];
@@ -33,7 +31,7 @@ export default async function hobbies({
       <h2 className="border-b pb-1 text-2xl font-semibold text-orange-300">
         {data?.hobbiesTitle?.title}
       </h2>
-      {contentLayout === 'inline' ? (
+      {condensed ? (
         <div className="mt-4 flex flex-wrap items-baseline gap-x-0.5 text-sm leading-relaxed text-orange-300 print:mt-2 md:mt-4 md:text-base">
           {items.map((hobby: any, i: number) => (
             <span key={hobby.id} className="inline">
