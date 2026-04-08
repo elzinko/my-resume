@@ -47,6 +47,14 @@
   }
 
   /**
+   * Bloc condensé une ligne (projets / veille / loisirs) : marge sous le h2
+   * alignée partout (`mt-4`, `print:mt-2`).
+   */
+  .cv-section-condensed-inline {
+    @apply mt-4 print:mt-2 md:mt-4;
+  }
+
+  /**
    * Bloc « Niveau de formation » : EducationLevel utilise toujours heading / primary / muted ci-dessous
    * (CV court inclus). Les classes `*-compact` restent disponibles pour d’autres écrans si besoin.
    */
@@ -260,7 +268,8 @@ html {
   .cv-full-cv-print-root {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    /* Même rythme que `mt-10` entre sections (2.5rem) — les `section` ont margin-top annulé. */
+    gap: 2.5rem;
   }
 
   .cv-full-cv-print-root .cv-flow-mobile-stack {
@@ -386,7 +395,7 @@ html {
 .cv-print-preview .cv-full-cv-print-root {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 2.5rem;
 }
 
 .cv-print-preview .cv-full-cv-print-root .cv-flow-mobile-stack {

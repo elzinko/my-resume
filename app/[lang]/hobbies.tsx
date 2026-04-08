@@ -32,7 +32,7 @@ export default async function hobbies({
         {data?.hobbiesTitle?.title}
       </h2>
       {condensed ? (
-        <div className="mt-4 flex flex-wrap items-baseline gap-x-0.5 text-sm leading-relaxed text-orange-300 print:mt-2 md:mt-4 md:text-base">
+        <div className="cv-section-condensed-inline flex flex-wrap items-baseline gap-x-0.5 text-sm leading-relaxed text-orange-300 md:text-base">
           {items.map((hobby: any, i: number) => (
             <span key={hobby.id} className="inline">
               {i > 0 ? (

@@ -51,9 +51,6 @@ export default function project({
     );
     return (
       <span className="inline text-sm leading-snug md:text-base">
-        <span className="font-normal text-cv-tag-text print:!text-cv-tag-text">
-          -{' '}
-        </span>
         {body}
         {dates ? (
           <span className="ml-1 tabular-nums leading-snug text-cv-tag-text print:text-xs">

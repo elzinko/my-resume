@@ -16,7 +16,7 @@ export default async function projects({
   locale: Locale;
   sectionId?: string | false;
   className?: string;
-  /** `true` : une ligne avec séparateurs · (pile mobile pleine largeur). */
+  /** `true` : une ligne avec séparateurs / (comme Learnings). */
   condensed?: boolean;
 }) {
   const data: any = await getCvData(locale);
@@ -44,15 +44,15 @@ export default async function projects({
           {data?.projectsTitle?.title ?? 'Projects'}
         </h2>
         {condensed ? (
-          <div className="mt-4 flex flex-wrap items-baseline gap-x-1 gap-y-1 print:mt-2 md:mt-4">
+          <div className="cv-section-condensed-inline flex flex-wrap items-baseline gap-x-0.5 text-sm leading-relaxed text-cv-tag-text md:text-base">
             {projectsOrdered.map((project: any, i: number) => (
               <Fragment key={project.id}>
                 {i > 0 ? (
                   <span
-                    className="text-cv-tag-text/40 print:text-cv-tag-text/50"
+                    className="mx-1 text-blue-400/80 print:text-blue-300/85"
                     aria-hidden
                   >
-                    ·
+                    /
                   </span>
                 ) : null}
                 <Project project={project} variant="inline" />
