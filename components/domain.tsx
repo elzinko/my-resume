@@ -8,6 +8,11 @@ import {
   isDevDomainId,
   resolveDevDomainTagsFromSearchParams,
 } from '@/lib/dev-domain-tags';
+import {
+  OPS_PRESETS,
+  isOpsDomainId,
+  resolveOpsDomainTagsFromSearchParams,
+} from '@/lib/ops-domain-tags';
 
 /** Trait sous le titre (comportement historique) ou barre verticale à gauche du libellé. */
 export type DomainTitleAccent = 'underline' | 'verticalBar';
@@ -18,7 +23,7 @@ export type DomainTitleAccent = 'underline' | 'verticalBar';
  */
 export const DOMAIN_TITLE_ACCENT_DEFAULT: DomainTitleAccent = 'verticalBar';
 
-function DevDomainTagsRow({
+function DomainFiveTagsRow({
   tags,
   compact,
 }: {
@@ -43,7 +48,13 @@ function DevDomainTagsRow({
 function DevDomainTagsFromUrl({ compact }: { compact: boolean }) {
   const sp = useSearchParams();
   const tags = resolveDevDomainTagsFromSearchParams(sp);
-  return <DevDomainTagsRow tags={tags} compact={compact} />;
+  return <DomainFiveTagsRow tags={tags} compact={compact} />;
+}
+
+function OpsDomainTagsFromUrl({ compact }: { compact: boolean }) {
+  const sp = useSearchParams();
+  const tags = resolveOpsDomainTagsFromSearchParams(sp);
+  return <DomainFiveTagsRow tags={tags} compact={compact} />;
 }
 
 interface DomainProps {
@@ -113,10 +124,18 @@ export default function Domain({
           {isDevDomainId(domain.id) ? (
             <Suspense
               fallback={
-                <DevDomainTagsRow tags={DEV_PRESETS.default} compact={compact} />
+                <DomainFiveTagsRow tags={DEV_PRESETS.default} compact={compact} />
               }
             >
               <DevDomainTagsFromUrl compact={compact} />
+            </Suspense>
+          ) : isOpsDomainId(domain.id) ? (
+            <Suspense
+              fallback={
+                <DomainFiveTagsRow tags={OPS_PRESETS.aws} compact={compact} />
+              }
+            >
+              <OpsDomainTagsFromUrl compact={compact} />
             </Suspense>
           ) : (
             <p className="hidden flex-wrap gap-x-2 gap-y-2 whitespace-nowrap py-2 print:flex print:flex-wrap print:whitespace-normal md:flex">
