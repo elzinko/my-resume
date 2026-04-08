@@ -65,11 +65,11 @@ export default function OfferTailoredShell({
             <Studies locale={lang} />
             <div className="cv-print-desktop-tail-group max-md:hidden md:block">
               {/* @ts-expect-error Server Component */}
-              <Projects locale={lang} />
+              <Projects locale={lang} contentLayout="inline" />
               {/* @ts-expect-error Server Component */}
-              <Learnings locale={lang} />
+              <Learnings locale={lang} contentLayout="inline" />
               {/* @ts-expect-error Server Component */}
-              <Hobbies locale={lang} />
+              <Hobbies locale={lang} contentLayout="inline" />
             </div>
           </div>
           <div

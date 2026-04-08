@@ -24,6 +24,13 @@ function formatStudyYear(startDate?: string, endDate?: string): string | null {
   return null;
 }
 
+function studyMetaLine(study: StudyData): string {
+  const parts = [study.location, study.establishment].filter(
+    (p): p is string => Boolean(p && String(p).trim()),
+  );
+  return parts.join(' / ');
+}
+
 export default function StudyDisplay({
   study,
   compact = false,
@@ -47,20 +54,17 @@ export default function StudyDisplay({
   }
 
   const year = formatStudyYear(study.startDate, study.endDate);
+  const meta = studyMetaLine(study);
+  const titleWithMeta = meta ? `${study.name} / ${meta}` : study.name;
 
   return (
-    <>
-      <div className="cv-row-study-title-year">
-        <span className="cv-study-title min-w-0 flex-1">{study.name}</span>
-        {year && (
-          <span className="cv-study-year min-w-max shrink-0 whitespace-nowrap">
-            {year}
-          </span>
-        )}
-      </div>
-      <p className="cv-study-meta mt-1">
-        {study.location} / {study.establishment}
-      </p>
-    </>
+    <div className="cv-row-study-title-year">
+      <span className="cv-study-title min-w-0 flex-1">{titleWithMeta}</span>
+      {year && (
+        <span className="cv-study-year min-w-max shrink-0 whitespace-nowrap">
+          {year}
+        </span>
+      )}
+    </div>
   );
 }

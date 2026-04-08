@@ -15,25 +15,65 @@ function projectPrimaryLabel(project: {
   return capitalizeFirstLetter(name);
 }
 
-export default function project({ project }: any) {
-  const dates = formatDates(project.startDate, project.endDate);
-  const id: any = 'project-' + project?.id;
-  const name = projectPrimaryLabel(project);
-  const client = project.client ? capitalizeFirstLetter(project.client) : '';
-  const location = project.location
-    ? capitalizeFirstLetter(project.location)
+export type ProjectVariant = 'default' | 'inline';
+
+export default function project({
+  project: projectData,
+  variant = 'default',
+}: {
+  project: any;
+  variant?: ProjectVariant;
+}) {
+  const dates = formatDates(projectData.startDate, projectData.endDate);
+  const id: any = 'project-' + projectData?.id;
+  const name = projectPrimaryLabel(projectData);
+  const client = projectData.client
+    ? capitalizeFirstLetter(projectData.client)
     : '';
+  const location = projectData.location
+    ? capitalizeFirstLetter(projectData.location)
+    : '';
+
+  const titleParts = [name, client || null, location || null].filter(Boolean);
+  const titleText = titleParts.join(' — ');
+
+  if (variant === 'inline') {
+    const linkClass =
+      'text-cv-tag-text underline-offset-2 hover:underline print:!text-cv-tag-text';
+    const body = projectData.link ? (
+      <a href={projectData.link} className={linkClass}>
+        {titleText}
+      </a>
+    ) : (
+      <span className="text-cv-tag-text print:!text-cv-tag-text">
+        {titleText}
+      </span>
+    );
+    return (
+      <span className="inline text-sm leading-snug md:text-base">
+        <span className="font-normal text-cv-tag-text print:!text-cv-tag-text">
+          -{' '}
+        </span>
+        {body}
+        {dates ? (
+          <span className="ml-1 tabular-nums leading-snug text-cv-tag-text print:text-xs">
+            ({dates})
+          </span>
+        ) : null}
+      </span>
+    );
+  }
 
   return (
     <section id={id}>
       <div className="cv-row-with-side-meta">
         <span className="min-w-0 flex-1 text-base font-normal leading-snug text-cv-tag-text print:text-sm">
-          <a href={project.link ? project.link : '#'}>
+          <a href={projectData.link ? projectData.link : '#'}>
             {name}
-            {project.client ? <span> - </span> : null}
-            {project.client ? client : null}
-            {project.location ? <span> - </span> : null}
-            {project.location ? location : null}
+            {projectData.client ? <span> - </span> : null}
+            {projectData.client ? client : null}
+            {projectData.location ? <span> - </span> : null}
+            {projectData.location ? location : null}
           </a>
         </span>
         {dates ? (

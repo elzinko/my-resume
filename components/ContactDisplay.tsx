@@ -15,11 +15,17 @@ export interface ContactData {
 interface ContactDisplayProps {
   contact: ContactData;
   compact?: boolean;
+  /**
+   * `grid` : trois champs en colonnes (comme la grille domaines) dès `md`.
+   * `stack` : liste verticale classique.
+   */
+  fieldsLayout?: 'grid' | 'stack';
 }
 
 export default function ContactDisplay({
   contact,
   compact = false,
+  fieldsLayout = 'grid',
 }: ContactDisplayProps) {
   if (compact) {
     return (
@@ -43,6 +49,43 @@ export default function ContactDisplay({
           <span className="ml-2">{contact.location}</span>
         </li>
       </ul>
+    );
+  }
+
+  if (fieldsLayout === 'grid') {
+    return (
+      <div className="mt-4 grid grid-cols-1 gap-4 print:mt-2 print:grid-cols-3 print:gap-2 md:mt-4 md:grid-cols-3 md:gap-x-10 md:gap-y-2 md:items-start">
+        <div className="min-w-0 text-pink-200">
+          <strong className="block text-base font-bold text-cv-jobs print:text-sm">
+            {contact.phoneTitle}
+          </strong>
+          <a
+            href={`tel:${contact.phone}`}
+            className="mt-0.5 block text-base print:text-sm"
+          >
+            {contact.phone}
+          </a>
+        </div>
+        <div className="min-w-0 text-pink-200">
+          <strong className="block text-base font-bold text-cv-jobs print:text-sm">
+            {contact.emailTitle}
+          </strong>
+          <a
+            href={`mailto:${contact.email}`}
+            className="mt-0.5 block break-all text-base print:text-sm"
+          >
+            {contact.email}
+          </a>
+        </div>
+        <div className="min-w-0 text-pink-200">
+          <strong className="block text-base font-bold text-cv-jobs print:text-sm">
+            {contact.locationTitle}
+          </strong>
+          <span className="mt-0.5 block text-base print:text-sm">
+            {contact.location}
+          </span>
+        </div>
+      </div>
     );
   }
 

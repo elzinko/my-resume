@@ -2,6 +2,7 @@
 
 import React from 'react';
 import MatchClientsOverflowRow from './MatchClientsOverflowRow';
+import { formatMatchYears, type MatchYearsLang } from '@/lib/format-match-years';
 
 export interface MatchEntry {
   label: string;
@@ -27,39 +28,27 @@ interface TechMatchDisplayProps {
 const labels = {
   fr: {
     sectionTitle: 'Adéquation avec le poste',
-    years: 'ans',
-    year: 'an',
     notPracticed: 'Non pratiquée',
     manualYearsHint:
       'Durée indiquée manuellement (pas dérivée des missions ci-dessous).',
-    /** Accessibilité : pastille « … » pour afficher tous les clients. */
     expandClientsAria: 'Afficher tous les clients',
     collapseClientsAria: 'Réduire la liste des clients',
   },
   en: {
     sectionTitle: 'Job fit',
-    years: 'years',
-    year: 'year',
     notPracticed: 'Not practiced',
     manualYearsHint: 'Years set manually (not derived from roles below).',
     expandClientsAria: 'Show all clients',
     collapseClientsAria: 'Collapse client list',
   },
-};
-
-function formatYears(totalYears: number, lang: 'fr' | 'en'): string {
-  const t = labels[lang];
-  if (!Number.isFinite(totalYears) || totalYears < 0) return '—';
-  if (totalYears < 1) return `<1 ${t.year}`;
-  const rounded = Math.round(totalYears);
-  return `${rounded} ${rounded === 1 ? t.year : t.years}`;
-}
+} as const;
 
 export default function TechMatchDisplay({
   data,
   lang,
 }: TechMatchDisplayProps) {
   const t = labels[lang];
+  const l = lang as MatchYearsLang;
   const entries = data?.entries ?? [];
 
   return (
@@ -72,28 +61,36 @@ export default function TechMatchDisplay({
         {t.sectionTitle}
       </h2>
 
-      <div className="mt-3 grid grid-cols-1 gap-2 print:mt-2 print:grid-cols-3 print:gap-3 md:mt-4 md:grid-cols-3 md:gap-3">
+      <div className="mt-3 flex flex-col gap-3 print:mt-2 print:gap-2 md:mt-4 md:gap-3">
         {entries.map((entry, index) => {
           const hasMatches = entry.matchedClients.length > 0;
           const showYearsPill = hasMatches || entry.yearsFromOverride;
+          const yearsLabel = showYearsPill
+            ? formatMatchYears(entry.totalYears, l)
+            : null;
 
           return (
             <div
               key={`${index}-${entry.label}`}
-              className={`cv-match-requirement-card min-w-0 ${
+              className={`cv-match-requirement-card min-w-0 border-0 bg-transparent p-0 print:p-0 ${
                 !hasMatches && !entry.yearsFromOverride ? 'opacity-60' : ''
               }`}
               style={{ breakInside: 'avoid' }}
+              data-testid="profile-match-entry"
             >
-              <div className="flex flex-wrap items-baseline justify-between gap-1.5 gap-y-1 md:gap-2">
-                <h3 className="min-w-0 flex-1 text-sm font-normal leading-snug text-orange-300 max-md:text-xs max-md:leading-tight print:text-sm print:!text-orange-300 md:text-base">
+              <div className="cv-pill-match inline-flex max-w-full flex-wrap items-baseline gap-x-2 gap-y-0.5 px-2.5 py-1 print:px-2 print:py-0.5 md:px-3 md:py-1.5">
+                <span className="font-medium text-orange-300 print:!text-orange-300">
                   {entry.label}
-                </h3>
-                {showYearsPill ? (
-                  <span className="cv-pill-match-metric shrink-0 px-2 py-0.5 text-xs max-md:px-1 max-md:py-0.5 print:px-1.5 print:text-sm md:px-2 md:text-sm">
-                    {formatYears(entry.totalYears, lang)}
+                </span>
+                {yearsLabel ? (
+                  <span className="text-xs font-normal tabular-nums text-orange-200/95 print:text-[10px] print:!text-orange-300 md:text-sm">
+                    {yearsLabel}
                   </span>
-                ) : null}
+                ) : (
+                  <span className="text-xs italic text-gray-500 print:text-[10px] md:text-sm">
+                    {t.notPracticed}
+                  </span>
+                )}
               </div>
 
               {hasMatches ? (
@@ -108,11 +105,7 @@ export default function TechMatchDisplay({
                 <p className="mt-1.5 text-xs text-gray-500 max-md:text-[11px] print:mt-1 print:text-[10px] md:mt-2 md:text-sm">
                   {t.manualYearsHint}
                 </p>
-              ) : (
-                <p className="mt-1.5 text-xs italic text-gray-500 max-md:text-[11px] print:mt-1 print:text-[10px] md:mt-2 md:text-sm">
-                  {t.notPracticed}
-                </p>
-              )}
+              ) : null}
             </div>
           );
         })}

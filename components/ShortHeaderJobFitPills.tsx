@@ -1,13 +1,8 @@
 'use client';
 
+import { formatMatchYears, type MatchYearsLang } from '@/lib/format-match-years';
 import { useShortOfferMatchData } from '@/lib/use-short-offer-match-data';
 import type { Locale } from 'i18n-config';
-
-function yearsCircleLabel(totalYears: number): string {
-  if (!Number.isFinite(totalYears) || totalYears < 0) return '—';
-  if (totalYears < 1) return '<1';
-  return String(Math.round(totalYears));
-}
 
 interface ShortHeaderJobFitPillsProps {
   lang: Locale;
@@ -15,8 +10,8 @@ interface ShortHeaderJobFitPillsProps {
 }
 
 /**
- * Bandeau sous le sous-titre (rôle) du CV court : pastilles type skills + pastille circulaire
- * pour les années d’expérience par critère — même jeu de données que le bloc Adéquation.
+ * Bandeau sous le sous-titre (rôle) du CV court : pastilles type skills avec
+ * libellé techno + années en texte lisible (ex. « 5 ans »), même source que l’adéquation.
  */
 export default function ShortHeaderJobFitPills({
   lang,
@@ -24,6 +19,7 @@ export default function ShortHeaderJobFitPills({
 }: ShortHeaderJobFitPillsProps) {
   const data = useShortOfferMatchData(lang, defaultOfferId);
   const entries = data?.entries ?? [];
+  const l = lang as MatchYearsLang;
   if (entries.length === 0) return null;
 
   const listLabel =
@@ -42,22 +38,15 @@ export default function ShortHeaderJobFitPills({
           const hasMatches = entry.matchedClients.length > 0;
           const showYears =
             hasMatches || entry.yearsFromOverride === true;
-          const yearsText = showYears
-            ? yearsCircleLabel(entry.totalYears)
+          const yearsLabel = showYears
+            ? formatMatchYears(entry.totalYears, l)
             : '—';
 
-          const ariaYears =
-            lang === 'en'
-              ? yearsText === '—'
-                ? 'no years shown'
-                : yearsText === '<1'
-                  ? 'less than one year experience'
-                  : `${yearsText} years experience`
-              : yearsText === '—'
-                ? 'sans années affichées'
-                : yearsText === '<1'
-                  ? 'moins d’un an d’expérience'
-                  : `${yearsText} ans d’expérience`;
+          const ariaYears = showYears
+            ? yearsLabel
+            : lang === 'en'
+              ? 'not practiced'
+              : 'non pratiquée';
 
           return (
             <li
@@ -65,13 +54,10 @@ export default function ShortHeaderJobFitPills({
               className="m-0 p-0"
               aria-label={`${entry.label}, ${ariaYears}`}
             >
-              <span className="cv-pill-match inline-flex max-w-full items-center gap-1.5 whitespace-nowrap px-2 py-0.5 text-xs font-medium print:gap-1 print:px-1.5 print:py-0.5 print:text-[10px] md:text-sm">
+              <span className="cv-pill-match inline-flex max-w-full flex-wrap items-baseline gap-x-1.5 whitespace-nowrap px-2 py-0.5 text-xs font-medium print:gap-1 print:px-1.5 print:py-0.5 print:text-[10px] md:text-sm">
                 <span className="min-w-0 truncate">{entry.label}</span>
-                <span
-                  className="inline-flex h-5 min-w-[1.25rem] shrink-0 items-center justify-center rounded-full border border-orange-300/90 bg-orange-300/20 px-0.5 text-[9px] font-semibold tabular-nums leading-none text-orange-300 print:h-4 print:min-w-4 print:text-[8px] print:!text-orange-300"
-                  aria-hidden
-                >
-                  {yearsText}
+                <span className="text-[10px] font-normal tabular-nums text-orange-200/95 print:text-[9px] print:!text-orange-300 md:text-xs">
+                  {yearsLabel}
                 </span>
               </span>
             </li>

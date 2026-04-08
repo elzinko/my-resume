@@ -7,11 +7,14 @@ export default async function Contact({
   locale,
   sectionId = 'contact',
   className = '',
+  fieldsLayout = 'grid',
 }: {
   locale: Locale;
   /** `false` : pas d’id (doublon mobile / sidebar). */
   sectionId?: string | false;
   className?: string;
+  /** Grille 3 colonnes (type domaines) ou liste verticale. */
+  fieldsLayout?: 'grid' | 'stack';
 }) {
   const data: any = await getCvData(locale);
   const contactData = {
@@ -39,7 +42,7 @@ export default async function Contact({
       <h2 className="border-b pb-1 text-2xl font-semibold text-cv-jobs">
         {contactData.title || 'Contact'}
       </h2>
-      <ContactDisplay contact={contactData} />
+      <ContactDisplay contact={contactData} fieldsLayout={fieldsLayout} />
     </section>
   );
 }
