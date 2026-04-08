@@ -95,12 +95,22 @@ export default async function Page({
             {/* @ts-expect-error Server Component */}
             <Studies locale={lang} />
             <div className="cv-print-desktop-tail-group max-md:hidden md:block">
-              {/* @ts-expect-error Server Component */}
-              <Projects locale={lang} />
-              {/* @ts-expect-error Server Component */}
-              <Learnings locale={lang} />
-              {/* @ts-expect-error Server Component */}
-              <Hobbies locale={lang} />
+              <div className="cv-tail-wide-only">
+                {/* @ts-expect-error Server Component */}
+                <Projects locale={lang} />
+                {/* @ts-expect-error Server Component */}
+                <Learnings locale={lang} />
+                {/* @ts-expect-error Server Component */}
+                <Hobbies locale={lang} />
+              </div>
+              <div className="cv-tail-condensed-only hidden">
+                {/* @ts-expect-error Server Component */}
+                <Projects locale={lang} condensed sectionId={false} />
+                {/* @ts-expect-error Server Component */}
+                <Learnings locale={lang} condensed sectionId={false} />
+                {/* @ts-expect-error Server Component */}
+                <Hobbies locale={lang} condensed sectionId={false} />
+              </div>
             </div>
           </div>
           <div

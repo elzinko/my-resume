@@ -281,6 +281,14 @@ html {
     display: contents !important;
   }
 
+  .cv-full-cv-print-root .cv-tail-wide-only {
+    display: none !important;
+  }
+
+  .cv-full-cv-print-root .cv-tail-condensed-only {
+    display: contents !important;
+  }
+
   .cv-full-cv-print-root section {
     margin-top: 0 !important;
   }
@@ -396,7 +404,16 @@ html {
 
 .cv-print-preview .cv-full-cv-print-root .cv-print-desktop-sidebar-group,
 .cv-print-preview .cv-full-cv-print-root .cv-print-desktop-tail-group {
-  display: block !important;
+  display: contents !important;
+}
+
+/** En aperçu impression : pastilles condensées (projets / veille / loisirs). */
+.cv-print-preview .cv-full-cv-print-root .cv-tail-wide-only {
+  display: none !important;
+}
+
+.cv-print-preview .cv-full-cv-print-root .cv-tail-condensed-only {
+  display: contents !important;
 }
 
 .cv-print-preview .cv-full-cv-print-root .cv-mobile-only-sidebar-dup,
