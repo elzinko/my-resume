@@ -30,6 +30,7 @@ export default function ShortHeaderJobFitPills({
   return (
     <div
       className="mt-2 flex w-full flex-wrap justify-end gap-1.5 print:mt-1.5 print:gap-1 md:mt-3"
+      data-testid="header-job-fit-pills"
       role="region"
       aria-label={listLabel}
     >

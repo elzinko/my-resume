@@ -1,13 +1,16 @@
 import '../../../../styles/globals.css';
 
 import OfferTailoredShell from '@/components/OfferTailoredShell';
-import MatchOfferClient from '@/components/MatchOfferClient';
 import { Locale } from '../../../../i18n-config';
 import type { Metadata } from 'next';
 import { getCvData } from '@/lib/cv-data';
 import { getMatchCatalog } from '@/lib/match-catalog-server';
 import { getEducationLevelContent } from '@/lib/education-level-content';
-import type { JobForMatching } from '@/lib/tech-match-core';
+import { offerPriorityTokensAndContact } from '@/lib/offer-page-data';
+import { resolveOfferFromUrlParams } from '@/lib/query-offer-params';
+import { recordToURLSearchParams } from '@/lib/search-params-to-url';
+
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({
   params: { lang },
@@ -26,29 +29,30 @@ export async function generateMetadata({
 
 export default async function MatchOfferPage({
   params: { lang },
+  searchParams,
 }: {
   params: { lang: Locale };
+  searchParams?: Record<string, string | string[] | undefined>;
 }) {
   const data: Record<string, unknown> = (await getCvData(lang)) as Record<
     string,
     unknown
   >;
   const educationLevel = getEducationLevelContent(data, lang);
-  const jobs = (data?.allJobsModels || []) as JobForMatching[];
   const matchCatalog = getMatchCatalog();
+  const sp = recordToURLSearchParams(searchParams);
+  const offer = resolveOfferFromUrlParams(sp, matchCatalog);
+  const { priorityTokens, contactLocation } = offerPriorityTokensAndContact(
+    offer,
+    sp,
+  );
 
   return (
     <OfferTailoredShell
       lang={lang}
       educationLevel={educationLevel}
-      matchSection={
-        <MatchOfferClient
-          jobs={jobs}
-          lang={lang}
-          mode="query-first"
-          matchCatalog={matchCatalog}
-        />
-      }
+      frameworkDisplayPriorityTokens={priorityTokens}
+      contactLocation={contactLocation}
     />
   );
 }

@@ -1,13 +1,17 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Offer match (query params)', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+  });
+
   test('readable GET params render profile match section', async ({ page }) => {
     const q =
       'company=TestCo&title=Developer&requirement=Java:java,spring&requirement=SQL:sql';
     await page.goto(`/fr/offer/match?${q}`);
-    await expect(page.locator('#profile-match')).toBeVisible();
-    await expect(page.getByTestId('match-offer-invalid')).toHaveCount(0);
-    await expect(page.getByRole('heading', { name: 'Java' })).toBeVisible();
+    const pills = page.getByTestId('header-job-fit-pills');
+    await expect(pills).toBeVisible();
+    await expect(pills.getByText('Java', { exact: true })).toBeVisible();
   });
 
   test('requirement avec @id catalogue matche une mission (Vue.js)', async ({
@@ -16,12 +20,9 @@ test.describe('Offer match (query params)', () => {
     const q =
       'company=Padoa&title=Dev&requirement=Vue.js%3A%40an8YW0VVTf2JuZZZo1W0pw';
     await page.goto(`/fr/offer/match?${q}`);
-    await expect(page.locator('#profile-match')).toBeVisible();
-    await expect(page.getByTestId('match-offer-invalid')).toHaveCount(0);
-    await expect(page.getByRole('heading', { name: 'Vue.js' })).toBeVisible();
-    await expect(
-      page.locator('#profile-match').getByText('JPB Système').first(),
-    ).toBeVisible();
+    const pills = page.getByTestId('header-job-fit-pills');
+    await expect(pills).toBeVisible();
+    await expect(pills.getByText('Vue.js', { exact: true })).toBeVisible();
   });
 
   test('offer/match → version courte conserve les paramètres GET', async ({
@@ -30,8 +31,10 @@ test.describe('Offer match (query params)', () => {
     const q =
       'company=TestCo&title=Developer&requirement=Java:java,spring&requirement=SQL:sql';
     await page.goto(`/fr/offer/match?${q}`);
-    await expect(page.locator('#profile-match')).toBeVisible();
-    await page.getByRole('link', { name: /Version courte/i }).first().click();
+    await expect(page.getByTestId('header-job-fit-pills')).toBeVisible();
+    /** Barre mobile : menu ouvert ; cibler le 2ᵉ lien (le 1ᵉʳ est dans la barre `md:` masquée). */
+    await page.getByTestId('cv-mobile-menu-toggle').click();
+    await page.locator('a[title="Version courte"]').last().click();
     await expect(page).toHaveURL(/\/fr\/short\?/);
     const u = new URL(page.url());
     expect(u.searchParams.get('company')).toBe('TestCo');
@@ -40,26 +43,15 @@ test.describe('Offer match (query params)', () => {
     );
   });
 
-  test('CV court : ?offer=<id> affiche l’adéquation (mode condensé)', async ({
+  test('CV court : ?offer=<id> charge sans section #profile-match (adéquation en en-tête uniquement)', async ({
     page,
   }) => {
     await page.goto('/fr/short?offer=safran-ia-factory');
-    await expect(page.locator('#profile-match')).toBeVisible();
-    await expect(
-      page.getByRole('heading', { name: /Adéquation avec le poste/i }),
-    ).toBeVisible();
-    await expect(
-      page.locator('#profile-match .cv-match-requirement-card'),
-    ).toHaveCount(3);
-    const matchSection = page.locator('#profile-match');
-    await expect(matchSection.getByText('Python', { exact: true })).toBeVisible();
-    await expect(matchSection.getByText('React', { exact: true })).toBeVisible();
-    await expect(
-      matchSection.getByText('AWS / Cloud', { exact: true }),
-    ).toBeVisible();
+    await expect(page.locator('#profile-match')).toHaveCount(0);
+    await expect(page.locator('#domains')).toBeVisible();
   });
 
-  test('CV court : paramètres company + requirement affichent l’adéquation (condensé)', async ({
+  test('CV court : paramètres company + requirement — pas de #profile-match dans le corps', async ({
     page,
   }) => {
     const q = new URLSearchParams({
@@ -70,12 +62,6 @@ test.describe('Offer match (query params)', () => {
     q.append('requirement', 'Node.js:nodejs');
     q.append('requirement', 'TypeScript:typescript');
     await page.goto(`/fr/short?${q.toString()}`);
-    await expect(page.locator('#profile-match')).toBeVisible();
-    await expect(
-      page.getByRole('heading', { name: /Adéquation avec le poste/i }),
-    ).toBeVisible();
-    await expect(
-      page.locator('#profile-match .cv-match-requirement-card'),
-    ).toHaveCount(3);
+    await expect(page.locator('#profile-match')).toHaveCount(0);
   });
 });

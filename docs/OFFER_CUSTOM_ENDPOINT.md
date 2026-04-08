@@ -2,11 +2,7 @@
 
 Pages qui affichent le bloc **« adéquation avec le poste »** sans ajouter un fichier dans `data/offers/`.
 
-Les offres **prédéfinies** restent inchangées :
-
-- `/{lang}/offer/safran-java-fullstack`
-- `/{lang}/offer/safran-ia-factory`
-- … (voir `data/offers/`)
+Les offres **prédéfinies** (`data/offers/*.ts`) servent de modèles pour le CV court (`?offer=<id>`, `SHORT_CV_OFFER_ID`) et pour générer des URLs **`/{lang}/offer/match?…`** équivalentes (`lib/offer-to-match-url.ts`). Il n’y a **plus** de route statique `/{lang}/offer/{id}`.
 
 ---
 
@@ -95,7 +91,7 @@ const url = `https://example.com/fr/offer/custom?spec=${encodeURIComponent(
 ## Comportement commun
 
 - Paramètres manquants ou invalides : message d’aide ou d’erreur sur la page.
-- Offre valide : même mise en page que `/offer/{id}` (profil, domaines, matching, colonnes CV).
+- Offre valide : même mise en page que les pages `offer/match` et `offer/custom` (profil, domaines, matching, colonnes CV).
 
 ## Limites
 
@@ -138,7 +134,9 @@ Sans accès au dépôt, tu peux encore t’appuyer sur des **mots-clés texte** 
 | `lib/dynamic-offer-spec.ts`         | JSON ↔ base64url + enrichissement catalogue               |
 | `app/[lang]/offer/match/page.tsx`   | Page paramètres lisibles                                  |
 | `app/[lang]/offer/custom/page.tsx`  | Page `spec` uniquement                                    |
-| `components/MatchOfferClient.tsx`   | Résolution côté client + affichage (reçoit le catalogue)  |
+| `lib/offer-to-match-url.ts`         | Offre bundle → query `/offer/match` (remplace `/offer/{id}`) |
+| `components/ShortHeaderJobFitPills.tsx` | Pastilles adéquation sous le rôle (même logique que `useShortOfferMatchData`) |
+| `lib/match-display-types.ts`          | Types `MatchEntry` / `MatchDisplayData` pour le calcul de match   |
 
 ### Prompt court pour un LLM
 
