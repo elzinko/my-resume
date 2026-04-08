@@ -21,9 +21,37 @@ export function isShortCvPathname(pathname: string | null): boolean {
   );
 }
 
-/** CV long racine ou CV court : aperçu `?print` (classe `html.cv-print-preview`). */
+/** `/fr/offer/match`, `/fr/offer/custom` — même mise en page CV que la racine. */
+export function isOfferTailoredCvPathname(pathname: string | null): boolean {
+  if (!pathname) return false;
+  const parts = pathname.split('/').filter(Boolean);
+  if (parts.length !== 3) return false;
+  const [lang, mid, page] = parts;
+  if (!(i18n.locales as readonly string[]).includes(lang as string)) return false;
+  return mid === 'offer' && (page === 'match' || page === 'custom');
+}
+
+/**
+ * Locale pour les pages où `?print` active `html.cv-print-preview` :
+ * `/fr`, `/fr/short`, `/fr/offer/match`, `/fr/offer/custom`.
+ */
+export function localeFromCvPrintPreviewPathname(
+  pathname: string | null,
+): Locale | null {
+  if (!pathname) return null;
+  const parts = pathname.split('/').filter(Boolean);
+  if (parts.length === 0) return null;
+  const lang = parts[0];
+  if (!(i18n.locales as readonly string[]).includes(lang as string)) return null;
+  if (parts.length === 1) return lang as Locale;
+  if (parts.length === 2 && parts[1] === 'short') return lang as Locale;
+  if (isOfferTailoredCvPathname(pathname)) return lang as Locale;
+  return null;
+}
+
+/** CV long, CV court ou pages offre « sur mesure » : aperçu `?print`. */
 export function isCvPrintPreviewPathname(pathname: string | null): boolean {
-  return isFullCvRootPathname(pathname) || isShortCvPathname(pathname);
+  return localeFromCvPrintPreviewPathname(pathname) !== null;
 }
 
 export function localeFromPathIfRoot(pathname: string | null): Locale | null {

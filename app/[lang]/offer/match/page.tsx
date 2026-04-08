@@ -46,11 +46,19 @@ export default async function MatchOfferPage({
     offer,
     sp,
   );
+  const contact = data.contact as
+    | { email?: string; phone?: string; location?: string }
+    | undefined;
 
   return (
     <OfferTailoredShell
       lang={lang}
       educationLevel={educationLevel}
+      headerContactStrip={{
+        email: contact?.email ?? '',
+        phone: contact?.phone ?? '',
+        location: contact?.location ?? '',
+      }}
       frameworkDisplayPriorityTokens={priorityTokens}
       contactLocation={contactLocation}
     />

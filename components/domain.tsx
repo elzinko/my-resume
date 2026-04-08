@@ -33,8 +33,8 @@ function DomainFiveTagsRow({
   compact: boolean;
 }) {
   const rowClass = compact
-    ? 'mt-2 flex min-w-0 flex-nowrap items-center gap-x-1 gap-y-0 overflow-x-auto py-1 print:mt-1 print:py-0.5'
-    : 'mt-1.5 flex min-w-0 flex-nowrap items-center gap-x-1.5 gap-y-0 overflow-x-auto py-2 print:flex-nowrap';
+    ? 'mt-2 flex min-w-0 flex-nowrap items-center gap-x-1.5 gap-y-0 overflow-x-auto py-1 [-webkit-overflow-scrolling:touch] print:mt-1 print:gap-x-1 print:py-0.5'
+    : 'mt-1.5 flex min-w-0 flex-nowrap items-center gap-x-2 gap-y-0 overflow-x-auto py-2 print:flex-nowrap [-webkit-overflow-scrolling:touch]';
 
   return (
     <div className={rowClass}>
@@ -144,11 +144,11 @@ export default function Domain({
           ) : isOpsDomainId(domain.id) ? (
             <OpsDomainTagsFromUrl compact={compact} />
           ) : (
-            <p
+            <div
               className={
                 compact
-                  ? 'mt-2 flex flex-wrap gap-x-1 gap-y-1 py-1 print:mt-1 print:py-0.5'
-                  : 'mt-1.5 flex flex-wrap gap-x-2 gap-y-2 py-2 print:flex-wrap print:whitespace-normal'
+                  ? 'mt-2 flex min-w-0 flex-nowrap items-center gap-x-1.5 gap-y-0 overflow-x-auto py-1 [-webkit-overflow-scrolling:touch] print:mt-1 print:gap-x-1 print:py-0.5'
+                  : 'mt-1.5 flex min-w-0 flex-nowrap items-center gap-x-2 gap-y-0 overflow-x-auto py-2 print:flex-nowrap [-webkit-overflow-scrolling:touch]'
               }
             >
               {domain.competencies.map((competency) => (
@@ -156,7 +156,7 @@ export default function Domain({
                   {competency.name.toLowerCase()}
                 </Pill>
               ))}
-            </p>
+            </div>
           )}
         </>
       )}

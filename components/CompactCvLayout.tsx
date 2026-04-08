@@ -5,7 +5,6 @@ import ProfileEducationBadge from '@/components/ProfileEducationBadge';
 import { getProfileEducationBadgeLabel } from '@/lib/education-level-content';
 import Skill from './skill';
 import Domain from './domain';
-import ContactDisplay from './ContactDisplay';
 import JobDisplay from './JobDisplay';
 import StudyDisplay from './StudyDisplay';
 import EducationLevel from './EducationLevel';
@@ -94,7 +93,6 @@ export default function CompactCvLayout({
       education: 'Formation',
       expertise: 'Domaines',
       about: 'Profil',
-      contact: 'Contact',
       present: 'Présent',
     },
     en: {
@@ -103,7 +101,6 @@ export default function CompactCvLayout({
       education: 'Education',
       expertise: 'Domains',
       about: 'Profile',
-      contact: 'Contact',
       present: 'Now',
     },
   };
@@ -114,7 +111,6 @@ export default function CompactCvLayout({
   const t = {
     about: data.titles.about || fallback.about,
     skills: data.titles.skills || fallback.skills,
-    contact: data.titles.contact || fallback.contact,
     education: data.titles.education || fallback.education,
     experience: data.titles.experience || fallback.experience,
     expertise: fallback.expertise,
@@ -176,18 +172,6 @@ export default function CompactCvLayout({
           id="left"
           className="order-last flex w-full min-w-0 flex-col print:order-first print:col-span-1 md:order-first md:col-span-1"
         >
-          {/* Contact : colonne gauche à l’écran ; masqué en PDF / `?print` (bandeau sous le rôle dans l’en-tête). */}
-          <section className="cv-short-left-contact mb-6 print:mb-1 print:hidden print-preview:hidden print:order-[40] print-preview:order-[40] md:mb-4">
-            <h2 className="border-b pb-1 text-2xl font-semibold text-cv-jobs print:pb-0.5 print:text-sm">
-              {t.contact}
-            </h2>
-            <ContactDisplay
-              contact={data.contact}
-              locale={lang}
-              cvShortInlineRows
-            />
-          </section>
-
           {/* Niveau de formation : même bloc que le CV long (une colonne, y compris à l’impression). */}
           <EducationLevel
             content={data.educationLevel}

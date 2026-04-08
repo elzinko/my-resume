@@ -29,9 +29,10 @@ export default function Pill({
   }
 
   if (color === 'domain') {
+    /** Même échelle que `ProfileEducationBadge` (lisible) ; `shrink-0` + ligne unique côté parent (`overflow-x-auto`). */
     const classes = compact
-      ? 'cv-pill-domain whitespace-nowrap px-1 py-0.5 text-[9px] print:text-[8px]'
-      : 'cv-pill-domain whitespace-nowrap px-1.5 py-0.5 text-[10px] md:px-2 md:py-1 md:text-xs';
+      ? 'cv-pill-domain shrink-0 whitespace-nowrap px-2 py-0.5 text-xs font-medium leading-snug print:px-1.5 print:py-0.5 print:text-[10px] md:px-2.5 md:py-1 md:text-sm'
+      : 'cv-pill-domain shrink-0 whitespace-nowrap px-2 py-0.5 text-xs font-medium leading-snug md:px-2.5 md:py-1 md:text-sm print:px-1.5 print:py-0.5 print:text-[10px]';
     return <span className={classes}>{children}</span>;
   }
 

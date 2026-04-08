@@ -6,7 +6,7 @@ import { isCvPrintPreviewPathname } from '@/lib/cv-print-routes';
 import { isCvPrintPreviewQuery } from '@/lib/cv-print-preview';
 
 /**
- * Active `html.cv-print-preview` sur le CV long ou le CV court avec `?print` / `?print=1`.
+ * Active `html.cv-print-preview` sur le CV long, le CV court ou les pages `/offer/match` & `/offer/custom`.
  */
 export default function FullCvPrintPreviewEffect() {
   const pathname = usePathname();

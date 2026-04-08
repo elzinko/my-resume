@@ -7,7 +7,7 @@ import type { Locale } from 'i18n-config';
 
 /**
  * Coordonnées compactes sous le rôle : e-mail, tél., lieu (lien Maps / itinéraire), sans libellés.
- * Desktop écran + même bloc à l’impression du CV long (sous le sous-titre).
+ * CV court : sous le sous-titre (écran + impression). CV long : coordonnées dans la colonne Contact uniquement.
  */
 export default function HeaderDesktopContactStrip({
   email,

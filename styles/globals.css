@@ -393,7 +393,7 @@ html {
    * (résumé → domaines → expériences → études → projets → veille → loisirs ; adéquation = en-tête uniquement).
    * Compétences : masquées en PDF / aperçu `?print`. Niveau de formation : bloc colonne gauche (pastille Profil masquée).
    * Mise en page PDF = logique « desktop » ; projets / veille / loisirs en blocs détaillés, pas condensés.
-   * Coordonnées : sous le sous-titre (header), pas de bloc Contact dupliqué sur mobile.
+   * Coordonnées : bloc Contact en colonne gauche (CV long) ; CV court = bandeau sous le rôle uniquement.
    * `display: contents` sur les grilles / colonnes remonte les sections comme enfants flex.
    */
   .cv-full-cv-print-root {
@@ -517,14 +517,6 @@ html {
   .cv-full-cv-print-root #jobs {
     break-before: auto !important;
     page-break-before: auto !important;
-  }
-
-  /**
-   * Coordonnées déjà sous le sous-titre (header) : masquer le premier bloc Contact
-   * de la colonne latérale en impression pour éviter le doublon.
-   */
-  .cv-full-cv-print-root .cv-print-desktop-sidebar-group > section:first-of-type {
-    display: none !important;
   }
 
   /* Hide non-printable elements */
@@ -701,6 +693,64 @@ html {
   content: none !important;
 }
 
+/**
+ * Pages offre (`cv-offer-tailored-shell`) — aperçu `?print` : pastille niveau sous le résumé
+ * (bloc « Education level » masqué dans la colonne).
+ */
+/**
+ * Coordonnées : le wrapper `.cv-print-desktop-sidebar-group` a ailleurs `display: contents !important`
+ * en aperçu `?print`, ce qui annule `print-preview:hidden` et remonte la section Contact dans le flux
+ * (au-dessus des jobs). Ici on masque tout le groupe pour les pages offre uniquement.
+ */
+.cv-print-preview .cv-offer-tailored-shell .cv-full-cv-print-root .cv-print-desktop-sidebar-group {
+  display: none !important;
+}
+
+.cv-print-preview .cv-offer-tailored-shell .cv-profile-education-badge {
+  display: inline-flex !important;
+}
+
+/**
+ * Pages offre — aperçu `?print` : veille / loisirs en une ligne avec ` / ` (espaces de part et d’autre).
+ */
+.cv-print-preview .cv-offer-tailored-shell .cv-full-cv-print-root [data-cv-section='learnings'] .cv-cq-link-list,
+.cv-print-preview .cv-offer-tailored-shell .cv-full-cv-print-root [data-cv-section='hobbies'] .cv-cq-link-list {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: baseline !important;
+  row-gap: 0.25rem !important;
+  column-gap: 0 !important;
+  list-style: none !important;
+  padding-left: 0 !important;
+  margin: 0 !important;
+}
+
+.cv-print-preview .cv-offer-tailored-shell .cv-full-cv-print-root [data-cv-section='learnings'] .cv-cq-link-list > li,
+.cv-print-preview .cv-offer-tailored-shell .cv-full-cv-print-root [data-cv-section='hobbies'] .cv-cq-link-list > li {
+  display: inline !important;
+  margin-top: 0 !important;
+}
+
+.cv-print-preview .cv-offer-tailored-shell .cv-full-cv-print-root [data-cv-section='learnings'] .cv-cq-link-list > li:first-child,
+.cv-print-preview .cv-offer-tailored-shell .cv-full-cv-print-root [data-cv-section='hobbies'] .cv-cq-link-list > li:first-child {
+  margin-top: 0 !important;
+}
+
+.cv-print-preview .cv-offer-tailored-shell .cv-full-cv-print-root [data-cv-section='learnings'] .cv-cq-link-list > li + li::before {
+  content: '/' !important;
+  display: inline-block !important;
+  color: rgb(20 184 166 / 0.8) !important;
+  /* Espaces de part et d’autre : en flex, les espaces dans `content` peuvent s’effondrer. */
+  padding-inline: 0.35em !important;
+}
+
+.cv-print-preview .cv-offer-tailored-shell .cv-full-cv-print-root [data-cv-section='hobbies'] .cv-cq-link-list > li + li::before {
+  content: '/' !important;
+  display: inline-block !important;
+  color: rgb(251 191 36 / 0.9) !important;
+  padding-inline: 0.35em !important;
+}
+
 .cv-print-preview .cv-full-cv-print-root section {
   margin-top: 0 !important;
 }
@@ -710,9 +760,3 @@ html {
   page-break-before: auto !important;
 }
 
-.cv-print-preview
-  .cv-full-cv-print-root
-  .cv-print-desktop-sidebar-group
-  > section:first-of-type {
-  display: none !important;
-}

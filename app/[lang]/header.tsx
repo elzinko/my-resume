@@ -6,7 +6,18 @@ import { getCvData } from '@/lib/cv-data';
 import { Locale } from 'i18n-config';
 import React, { Suspense } from 'react';
 
-export default async function Header({ locale }: { locale: Locale }) {
+export default async function Header({
+  locale,
+  offerPrintContactStrip,
+}: {
+  locale: Locale;
+  /** Pages offre : bandeau coordonnées sous le rôle uniquement en aperçu `?print`. */
+  offerPrintContactStrip?: {
+    email: string;
+    phone: string;
+    location: string;
+  };
+}) {
   const data: any = await getCvData(locale);
   const defaultOfferId = process.env.SHORT_CV_OFFER_ID?.trim() || null;
 
@@ -20,12 +31,16 @@ export default async function Header({ locale }: { locale: Locale }) {
         name={data?.header?.name}
         role={data?.header?.role}
         afterRole={
-            <HeaderDesktopContactStrip
-              email={data?.contact?.email ?? ''}
-              phone={data?.contact?.phone ?? ''}
-              location={data?.contact?.location ?? ''}
-              locale={locale}
-            />
+          offerPrintContactStrip ? (
+            <div className="hidden w-full print-preview:block">
+              <HeaderDesktopContactStrip
+                email={offerPrintContactStrip.email}
+                phone={offerPrintContactStrip.phone}
+                location={offerPrintContactStrip.location}
+                locale={locale}
+              />
+            </div>
+          ) : undefined
         }
         belowRole={
           <Suspense fallback={null}>

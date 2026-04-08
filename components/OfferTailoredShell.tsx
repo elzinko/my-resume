@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import About from '@/app/[lang]/about';
 import Headers from '@/app/[lang]/header';
 import Contact from '@/app/[lang]/contact';
@@ -9,6 +10,7 @@ import Hobbies from '@/app/[lang]/hobbies';
 import Jobs from '@/app/[lang]/jobs';
 import Projects from '@/app/[lang]/projects';
 import EducationLevel from '@/components/EducationLevel';
+import FullCvPrintPreviewEffect from '@/components/FullCvPrintPreviewEffect';
 import ContactLocationProvider from '@/components/ContactLocationProvider';
 import JobFrameworkDisplayProvider from '@/components/JobFrameworkDisplayProvider';
 import { buildContactLocationHref } from '@/lib/contact-maps';
@@ -19,14 +21,24 @@ import type { Locale } from 'i18n-config';
  * Mise en page commune des pages CV « sur mesure » (custom / match).
  * L’adéquation poste (pastilles) est uniquement sous le rôle / coordonnées via `Headers`.
  */
+const OFFER_EDUCATION_LEVEL_SECTION_CLASS =
+  'mt-10 max-md:mt-0 max-md:order-[1] md:order-[1] print:order-[50] print-preview:hidden print-preview:order-[50]';
+
 export default function OfferTailoredShell({
   lang,
   educationLevel,
+  headerContactStrip,
   frameworkDisplayPriorityTokens = [],
   contactLocation,
 }: {
   lang: Locale;
   educationLevel: EducationLevelContent;
+  /** Coordonnées pour le bandeau sous le rôle en aperçu `?print` uniquement. */
+  headerContactStrip: {
+    email: string;
+    phone: string;
+    location: string;
+  };
   /** Mots-clés / ids pour trier les pastilles techno par pertinence offre. */
   frameworkDisplayPriorityTokens?: string[];
   /** Lien Maps / itinéraire et durée affichée (optionnel). */
@@ -41,9 +53,15 @@ export default function OfferTailoredShell({
   return (
     <JobFrameworkDisplayProvider priorityTokens={frameworkDisplayPriorityTokens}>
       <ContactLocationProvider value={resolvedContact} locale={lang}>
-        <>
+        <div className="cv-offer-tailored-shell">
+          <Suspense fallback={null}>
+            <FullCvPrintPreviewEffect />
+          </Suspense>
           {/* @ts-expect-error Server Component */}
-          <Headers locale={lang} />
+          <Headers
+            locale={lang}
+            offerPrintContactStrip={headerContactStrip}
+          />
 
           <div className="cv-full-cv-print-root">
             <div className="cv-flow-mobile-stack">
@@ -58,11 +76,14 @@ export default function OfferTailoredShell({
                 id="left"
                 className="flex w-full min-w-0 flex-col print:order-first print:col-span-1 md:order-first md:col-span-1"
               >
-                <div className="cv-print-desktop-sidebar-group hidden md:hidden">
+                <div className="cv-print-desktop-sidebar-group w-full">
                   {/* @ts-expect-error Server Component */}
-                  <Contact locale={lang} sectionId={false} />
+                  <Contact locale={lang} />
                 </div>
-                <EducationLevel content={educationLevel} />
+                <EducationLevel
+                  content={educationLevel}
+                  sectionClassName={OFFER_EDUCATION_LEVEL_SECTION_CLASS}
+                />
                 {/* @ts-expect-error Server Component */}
                 <Skills locale={lang} sectionId={false} />
                 {/* @ts-expect-error Server Component */}
@@ -85,7 +106,7 @@ export default function OfferTailoredShell({
               </div>
             </div>
           </div>
-        </>
+        </div>
       </ContactLocationProvider>
     </JobFrameworkDisplayProvider>
   );

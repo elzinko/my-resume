@@ -78,9 +78,9 @@ export default async function Page({
             id="left"
             className="flex w-full min-w-0 flex-col print:order-first print:col-span-1 md:order-first md:col-span-1"
           >
-            <div className="cv-print-desktop-sidebar-group hidden md:hidden">
+            <div className="cv-print-desktop-sidebar-group w-full">
               {/* @ts-expect-error Server Component */}
-              <Contact locale={lang} sectionId={false} />
+              <Contact locale={lang} />
             </div>
             <EducationLevel content={educationLevel} />
             {/* @ts-expect-error Server Component */}

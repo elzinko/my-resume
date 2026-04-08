@@ -25,6 +25,7 @@ import {
 } from '@/lib/cv-header-toolbar';
 import {
   isFullCvRootPathname,
+  localeFromCvPrintPreviewPathname,
   localeFromPathIfRoot,
   shortAutoprintPath,
 } from '@/lib/cv-print-routes';
@@ -213,7 +214,7 @@ function ModeControl({
   );
 }
 
-/** CV long (`/fr`, `/en`) : bascule `?print=1` — flux une colonne comme à l’impression. */
+/** CV long, CV court, `/offer/match` & `/offer/custom` : bascule `?print=1`. */
 function PrintPreviewToggleLink({
   onNavigate,
 }: {
@@ -221,7 +222,7 @@ function PrintPreviewToggleLink({
 }) {
   const pathname = usePathname();
   const sp = useSearchParams();
-  const loc = localeFromPathIfRoot(pathname);
+  const loc = localeFromCvPrintPreviewPathname(pathname);
   if (!loc) return null;
 
   const params = new URLSearchParams(sp.toString());

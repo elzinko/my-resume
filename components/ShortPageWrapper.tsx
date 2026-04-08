@@ -11,7 +11,7 @@ interface ShortPageWrapperProps {
   lang: string;
   headerName: string;
   headerRole: string;
-  /** Coordonnées sous le rôle en PDF / aperçu `?print` (colonne Contact masquée). */
+  /** Coordonnées sous le rôle (écran + PDF / aperçu `?print`) — plus de bloc Contact dans le corps du CV court. */
   headerContact?: {
     email: string;
     phone: string;
@@ -49,7 +49,7 @@ export default function ShortPageWrapper({
           compactPrint
           afterRole={
             headerContact ? (
-              <div className="hidden w-full print-preview:block print:block">
+              <div className="w-full">
                 <HeaderDesktopContactStrip
                   email={headerContact.email}
                   phone={headerContact.phone}
