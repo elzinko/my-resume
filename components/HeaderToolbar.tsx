@@ -23,6 +23,7 @@ import {
   localeFromPathIfRoot,
   shortAutoprintPath,
 } from '@/lib/cv-print-routes';
+import { isCvPrintPreviewQuery } from '@/lib/cv-print-preview';
 
 const rowListClass = 'flex flex-nowrap items-center gap-0.5 [&>li]:shrink-0';
 
@@ -140,13 +141,7 @@ function PrintPreviewToggleLink({
   if (!loc) return null;
 
   const params = new URLSearchParams(sp.toString());
-  const printVal = params.get('print');
-  const active =
-    params.has('print') &&
-    (printVal === null ||
-      printVal === '' ||
-      printVal === '1' ||
-      printVal === 'true');
+  const active = isCvPrintPreviewQuery(params);
 
   const next = new URLSearchParams(sp.toString());
   if (active) next.delete('print');

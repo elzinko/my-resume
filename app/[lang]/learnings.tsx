@@ -21,8 +21,8 @@ export default async function learnings({
 
   const sectionClass =
     className && className.length > 0
-      ? `${className} print:order-[100] print-preview:order-[100]`
-      : 'mt-10 print:order-[100] print-preview:order-[100]';
+      ? `${className} print:order-[110] print-preview:order-[110]`
+      : 'mt-10 print:order-[110] print-preview:order-[110]';
 
   return (
     <section

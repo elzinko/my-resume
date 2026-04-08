@@ -16,7 +16,7 @@ interface BlockRow {
   primaryRole: PrimaryRole;
   primary: string;
   secondary?: string;
-  /** Pastille violette sur le libellé de niveau uniquement (pas sur « Formations complémentaires »). */
+  /** Pastille violette sur le libellé principal (niveau, diplôme, formations complémentaires). */
   pillLevelLabel: boolean;
 }
 
@@ -41,7 +41,7 @@ function buildRows(t: EducationLevelContent): BlockRow[] {
       primaryRole: 'primary',
       primary: t.additionalTraining,
       secondary: t.trainingThemes,
-      pillLevelLabel: false,
+      pillLevelLabel: true,
     },
   ];
 }
@@ -107,7 +107,7 @@ export default function EducationLevel({
       <h2 className="border-b pb-1 text-2xl font-semibold text-purple-300">
         {content.title}
       </h2>
-      <div className="mt-4 space-y-3 font-normal print:space-y-2">
+      <div className="cv-education-level-blocks mt-4 grid grid-cols-1 gap-y-3 font-normal print:grid print:grid-cols-3 print:gap-x-4 print:gap-y-2 print-preview:grid print-preview:grid-cols-3 print-preview:gap-x-10 print-preview:gap-y-2">
         {rows.map((row) => (
           <EducationBlockRow key={row.id} {...row} compact={false} />
         ))}

@@ -90,8 +90,8 @@ export default function ContactDisplay({
   }
 
   return (
-    <ul className="mr-1 mt-4">
-      <li className="mt-1 text-pink-200">
+    <ul className="cv-contact-stack mr-1 mt-4 print:mt-2 print:grid print:grid-cols-3 print:gap-x-4 print:gap-y-1 print:[&>li]:mt-0 print-preview:grid print-preview:grid-cols-3 print-preview:gap-x-10 print-preview:gap-y-1 print-preview:[&>li]:mt-0">
+      <li className="mt-1 text-pink-200 print:mt-0 print-preview:mt-0">
         <strong className="text-base font-bold text-cv-jobs">
           {contact.phoneTitle}
         </strong>
@@ -99,7 +99,7 @@ export default function ContactDisplay({
           {contact.phone}
         </a>
       </li>
-      <li className="mt-1 text-pink-200">
+      <li className="mt-1 text-pink-200 print:mt-0 print-preview:mt-0">
         <strong className="text-base font-bold text-cv-jobs">
           {contact.emailTitle}
         </strong>
@@ -107,7 +107,7 @@ export default function ContactDisplay({
           {contact.email}
         </a>
       </li>
-      <li className="mt-1 text-pink-200">
+      <li className="mt-1 text-pink-200 print:mt-0 print-preview:mt-0">
         <strong className="text-base font-bold text-cv-jobs">
           {contact.locationTitle}
         </strong>

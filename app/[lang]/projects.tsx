@@ -30,8 +30,8 @@ export default async function projects({
 
   const sectionClass =
     className && className.length > 0
-      ? `${className} print:order-[90] print-preview:order-[90]`
-      : 'mt-10 print:order-[90] print-preview:order-[90]';
+      ? `${className} print:order-[100] print-preview:order-[100]`
+      : 'mt-10 print:order-[100] print-preview:order-[100]';
 
   return (
     <>

@@ -3,12 +3,7 @@
 import { useEffect } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { isFullCvRootPathname } from '@/lib/cv-print-routes';
-
-function isPrintPreviewSearch(sp: URLSearchParams): boolean {
-  if (!sp.has('print')) return false;
-  const v = sp.get('print');
-  return v === null || v === '' || v === '1' || v === 'true';
-}
+import { isCvPrintPreviewQuery } from '@/lib/cv-print-preview';
 
 /**
  * Active `html.cv-print-preview` quand le CV long est visité avec `?print` ou `?print=1`
@@ -20,7 +15,7 @@ export default function FullCvPrintPreviewEffect() {
 
   const active =
     isFullCvRootPathname(pathname) &&
-    isPrintPreviewSearch(new URLSearchParams(sp.toString()));
+    isCvPrintPreviewQuery(new URLSearchParams(sp.toString()));
 
   useEffect(() => {
     document.documentElement.classList.toggle('cv-print-preview', active);

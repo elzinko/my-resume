@@ -20,8 +20,8 @@ export default async function hobbies({
 
   const sectionClass =
     className && className.length > 0
-      ? `${className} print:order-[110] print-preview:order-[110]`
-      : 'mt-10 print:order-[110] print-preview:order-[110]';
+      ? `${className} print:order-[120] print-preview:order-[120]`
+      : 'mt-10 print:order-[120] print-preview:order-[120]';
 
   return (
     <section

@@ -254,7 +254,7 @@ html {
 
   /**
    * CV long + pages offre : à l’impression, une seule colonne dans l’ordre métier
-   * (résumé → domaines → contact → compétences → niveau → études → projets → veille → loisirs → expériences).
+   * (résumé → domaines → contact → compétences → niveau → études → expériences → projets → veille → loisirs).
    * `display: contents` sur les grilles / colonnes remonte les sections comme enfants flex.
    */
   .cv-full-cv-print-root {
