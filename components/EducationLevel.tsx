@@ -86,11 +86,11 @@ export default function EducationLevel({
 
   if (compact) {
     return (
-      <section className="mb-6 print:mb-4">
-        <h2 className="border-b pb-1 text-2xl font-semibold text-purple-300 print:text-sm">
+      <section className="mb-6 print:mb-2">
+        <h2 className="border-b pb-1 text-2xl font-semibold text-purple-300 print:pb-0.5 print:text-sm">
           {content.title}
         </h2>
-        <div className="mt-2 space-y-2 font-normal print:mt-1 print:space-y-1.5">
+        <div className="mt-2 space-y-2 font-normal print:mt-1 print:space-y-1">
           {rows.map((row) => (
             <EducationBlockRow key={row.id} {...row} compact />
           ))}
@@ -100,7 +100,7 @@ export default function EducationLevel({
   }
 
   return (
-    <section id="education-level" className="mt-10">
+    <section id="education-level" className="mt-10 print:order-[60]">
       <h2 className="border-b pb-1 text-2xl font-semibold text-purple-300">
         {content.title}
       </h2>

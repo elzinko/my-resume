@@ -13,10 +13,17 @@ export default async function skills({
   className?: string;
 }) {
   const data: any = await getCvData(locale);
+  const sectionClass = [
+    className || 'mt-10',
+    'print:order-[50]',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
   return (
     <section
       id={sectionId === false ? undefined : sectionId}
-      className={className ? className : 'mt-10'}
+      className={sectionClass}
     >
       <h2 className="border-b pb-1 text-2xl font-semibold text-cv-tag-text">
         {data?.skillsTitle?.title}

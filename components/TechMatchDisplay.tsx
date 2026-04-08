@@ -22,17 +22,11 @@ export interface MatchDisplayData {
 interface TechMatchDisplayProps {
   data: MatchDisplayData;
   lang: 'fr' | 'en';
-  /**
-   * CV court : liste en colonne gauche (techno + durée), alignée sur Contact / Compétences.
-   */
-  variant?: 'default' | 'compact';
 }
 
 const labels = {
   fr: {
     sectionTitle: 'Adéquation avec le poste',
-    /** CV court : titre court (colonne gauche + impression). */
-    sectionTitleCompact: 'Alignement offre',
     years: 'ans',
     year: 'an',
     notPracticed: 'Non pratiquée',
@@ -44,7 +38,6 @@ const labels = {
   },
   en: {
     sectionTitle: 'Job fit',
-    sectionTitleCompact: 'Job fit',
     years: 'years',
     year: 'year',
     notPracticed: 'Not practiced',
@@ -65,62 +58,9 @@ function formatYears(totalYears: number, lang: 'fr' | 'en'): string {
 export default function TechMatchDisplay({
   data,
   lang,
-  variant = 'default',
 }: TechMatchDisplayProps) {
   const t = labels[lang];
   const entries = data?.entries ?? [];
-
-  if (variant === 'compact') {
-    return (
-      <section
-        id="profile-match"
-        className="mb-6 print:mb-4 print:break-inside-avoid"
-        data-testid="profile-match"
-      >
-        <h2 className="border-b pb-1 text-2xl font-semibold text-orange-300 print:!text-orange-300 print:text-sm">
-          {t.sectionTitleCompact}
-        </h2>
-        <ul className="mt-2 list-none space-y-1 p-0 print:mt-1 print:space-y-0.5">
-          {entries.map((entry, index) => {
-            const hasMatches = entry.matchedClients.length > 0;
-            const showYearsPill = hasMatches || entry.yearsFromOverride;
-            const muted =
-              !hasMatches && !entry.yearsFromOverride ? 'opacity-70' : '';
-
-            return (
-              <li
-                key={`${index}-${entry.label}`}
-                className={`min-w-0 ${muted}`}
-                style={{ breakInside: 'avoid' }}
-              >
-                <div className="flex items-baseline justify-between gap-2">
-                  <span className="cv-pill-match inline-flex min-w-0 max-w-full shrink items-center px-1.5 py-0.5 font-normal leading-snug print:px-1 print:py-0.5 print:max-w-[min(100%,12rem)]">
-                    <span className="truncate text-sm print:text-[10px]">
-                      {entry.label}
-                    </span>
-                  </span>
-                  {showYearsPill ? (
-                    <span className="cv-pill-match-metric shrink-0 whitespace-nowrap px-1.5 py-0.5 text-[11px] print:px-1 print:text-[10px]">
-                      {formatYears(entry.totalYears, lang)}
-                    </span>
-                  ) : (
-                    <span className="shrink-0 text-[11px] italic text-gray-500 print:text-[10px]">
-                      {t.notPracticed}
-                    </span>
-                  )}
-                </div>
-                {entry.yearsFromOverride && !hasMatches ? (
-                  <p className="mt-0.5 text-[10px] leading-tight text-gray-500 print:text-[9px]">
-                    {t.manualYearsHint}
-                  </p>
-                ) : null}
-              </li>
-            );
-          })}
-        </ul>
-      </section>
-    );
-  }
 
   return (
     <section
@@ -146,11 +86,11 @@ export default function TechMatchDisplay({
               style={{ breakInside: 'avoid' }}
             >
               <div className="flex flex-wrap items-baseline justify-between gap-1.5 gap-y-1 md:gap-2">
-                <h3 className="min-w-0 flex-1 text-sm font-normal leading-snug text-orange-300 max-md:text-xs max-md:leading-tight print:text-[11px] print:!text-orange-300 md:text-base lg:text-lg">
+                <h3 className="min-w-0 flex-1 text-sm font-normal leading-snug text-orange-300 max-md:text-xs max-md:leading-tight print:text-sm print:!text-orange-300 md:text-base">
                   {entry.label}
                 </h3>
                 {showYearsPill ? (
-                  <span className="cv-pill-match-metric shrink-0 px-1.5 py-0.5 text-xs max-md:px-1 max-md:py-0.5 max-md:text-[11px] print:px-1.5 print:text-[10px] md:px-2 md:text-sm">
+                  <span className="cv-pill-match-metric shrink-0 px-2 py-0.5 text-xs max-md:px-1 max-md:py-0.5 print:px-1.5 print:text-sm md:px-2 md:text-sm">
                     {formatYears(entry.totalYears, lang)}
                   </span>
                 ) : null}

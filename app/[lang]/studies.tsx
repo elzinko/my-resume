@@ -14,7 +14,7 @@ export default async function studies({ locale }: { locale: Locale }) {
     byEndThenStart,
   );
   return (
-    <section id="studies" className="mt-10">
+    <section id="studies" className="mt-10 print:order-[80]">
       <h2 className="border-b pb-1 text-2xl font-semibold text-cv-section">
         {data?.studiesTitle?.title}
       </h2>

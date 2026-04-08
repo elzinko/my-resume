@@ -15,8 +15,11 @@ export default async function jobs({ locale }: { locale: Locale }) {
   const recapLine = formatRemainingClientsRecapForFullCv(jobsList, locale);
 
   return (
-    <>
-      <section id="jobs" className="mt-10 break-before-page">
+    <div className="cv-print-jobs-group print:order-[70]">
+      <section
+        id="jobs"
+        className="mt-10 break-before-page print:break-before-auto"
+      >
         <h2 className="border-b pb-1 text-2xl font-semibold text-cv-jobs">
           {data?.jobsTitle?.title}
         </h2>
@@ -35,6 +38,6 @@ export default async function jobs({ locale }: { locale: Locale }) {
           />
         ) : null}
       </section>
-    </>
+    </div>
   );
 }

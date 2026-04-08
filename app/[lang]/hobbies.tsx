@@ -17,7 +17,11 @@ export default async function hobbies({
   return (
     <section
       id={sectionId === false ? undefined : sectionId}
-      className={className ? className : 'mt-10'}
+      className={
+        className
+          ? `${className} print:order-[110]`
+          : 'mt-10 print:order-[110]'
+      }
     >
       <h2 className="border-b pb-1 text-2xl font-semibold text-orange-300">
         {data?.hobbiesTitle?.title}

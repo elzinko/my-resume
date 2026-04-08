@@ -18,7 +18,11 @@ export default async function learnings({
   return (
     <section
       id={sectionId === false ? undefined : sectionId}
-      className={className ? className : 'mt-10'}
+      className={
+        className
+          ? `${className} print:order-[100]`
+          : 'mt-10 print:order-[100]'
+      }
     >
       <h2 className="border-b pb-1 text-2xl font-semibold text-teal-300">
         {data?.learningsTitle?.title}

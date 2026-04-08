@@ -40,15 +40,17 @@ test.describe('Offer match (query params)', () => {
     );
   });
 
-  test('CV court : ?offer=<id> affiche les 3 premiers blocs adéquation (ordre identique à la page offre)', async ({
+  test('CV court : ?offer=<id> affiche l’adéquation en grille (comme le CV long)', async ({
     page,
   }) => {
     await page.goto('/fr/short?offer=safran-ia-factory');
     await expect(page.locator('#profile-match')).toBeVisible();
     await expect(
-      page.getByRole('heading', { name: 'Alignement offre' }),
+      page.getByRole('heading', { name: /Adéquation avec le poste/i }),
     ).toBeVisible();
-    await expect(page.locator('#profile-match ul > li')).toHaveCount(3);
+    await expect(
+      page.locator('#profile-match .cv-match-requirement-card'),
+    ).toHaveCount(3);
     const matchSection = page.locator('#profile-match');
     await expect(matchSection.getByText('Python', { exact: true })).toBeVisible();
     await expect(matchSection.getByText('React', { exact: true })).toBeVisible();
@@ -57,7 +59,7 @@ test.describe('Offer match (query params)', () => {
     ).toBeVisible();
   });
 
-  test('CV court : paramètres company + requirement affichent le bloc compact', async ({
+  test('CV court : paramètres company + requirement affichent la grille adéquation', async ({
     page,
   }) => {
     const q = new URLSearchParams({
@@ -70,8 +72,10 @@ test.describe('Offer match (query params)', () => {
     await page.goto(`/fr/short?${q.toString()}`);
     await expect(page.locator('#profile-match')).toBeVisible();
     await expect(
-      page.getByRole('heading', { name: 'Alignement offre' }),
+      page.getByRole('heading', { name: /Adéquation avec le poste/i }),
     ).toBeVisible();
-    await expect(page.locator('#profile-match ul > li')).toHaveCount(3);
+    await expect(
+      page.locator('#profile-match .cv-match-requirement-card'),
+    ).toHaveCount(3);
   });
 });

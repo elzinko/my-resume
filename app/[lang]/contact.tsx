@@ -24,10 +24,17 @@ export default async function Contact({
     location: data?.contact?.location || '',
   };
 
+  const sectionClass = [
+    className || 'mt-10',
+    'print:order-[40]',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
   return (
     <section
       id={sectionId === false ? undefined : sectionId}
-      className={className ? className : 'mt-10'}
+      className={sectionClass}
     >
       <h2 className="border-b pb-1 text-2xl font-semibold text-cv-jobs">
         {contactData.title || 'Contact'}

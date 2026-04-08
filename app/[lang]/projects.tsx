@@ -30,7 +30,11 @@ export default async function projects({
       <section
         id={sectionId === false ? undefined : sectionId}
         data-cv-section="projects"
-        className={className ? className : 'mt-10'}
+        className={
+          className
+            ? `${className} print:order-[90]`
+            : 'mt-10 print:order-[90]'
+        }
       >
         <h2 className="border-b pb-1 text-2xl font-semibold text-cv-tag-text">
           {data?.projectsTitle?.title ?? 'Projects'}
