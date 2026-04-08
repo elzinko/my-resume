@@ -8,7 +8,7 @@ test.describe('Offer match (query params)', () => {
   test('readable GET params render profile match section', async ({ page }) => {
     const q =
       'company=TestCo&title=Developer&requirement=Java:java,spring&requirement=SQL:sql';
-    await page.goto(`/fr/offer/match?${q}`);
+    await page.goto(`/fr?${q}`);
     const pills = page.getByTestId('header-job-fit-pills');
     await expect(pills).toBeVisible();
     await expect(pills.getByText('Java', { exact: true })).toBeVisible();
@@ -19,18 +19,18 @@ test.describe('Offer match (query params)', () => {
   }) => {
     const q =
       'company=Padoa&title=Dev&requirement=Vue.js%3A%40an8YW0VVTf2JuZZZo1W0pw';
-    await page.goto(`/fr/offer/match?${q}`);
+    await page.goto(`/fr?${q}`);
     const pills = page.getByTestId('header-job-fit-pills');
     await expect(pills).toBeVisible();
     await expect(pills.getByText('Vue.js', { exact: true })).toBeVisible();
   });
 
-  test('offer/match → version courte conserve les paramètres GET', async ({
+  test('racine offre → version courte conserve les paramètres GET', async ({
     page,
   }) => {
     const q =
       'company=TestCo&title=Developer&requirement=Java:java,spring&requirement=SQL:sql';
-    await page.goto(`/fr/offer/match?${q}`);
+    await page.goto(`/fr?${q}`);
     await expect(page.getByTestId('header-job-fit-pills')).toBeVisible();
     /** Barre mobile : menu ouvert ; cibler le 2ᵉ lien (le 1ᵉʳ est dans la barre `md:` masquée). */
     await page.getByTestId('cv-mobile-menu-toggle').click();

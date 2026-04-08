@@ -214,7 +214,7 @@ function ModeControl({
   );
 }
 
-/** CV long, CV court, `/offer/match` & `/offer/custom` : bascule `?print=1`. */
+/** CV long ou CV court : bascule `?print=1`. */
 function PrintPreviewToggleLink({
   onNavigate,
 }: {

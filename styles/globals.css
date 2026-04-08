@@ -318,7 +318,7 @@ html {
   }
 
   /** Études : réafficher la ligne lieu/établissement (masquée en colonne étroite à l’écran). */
-  .cv-study-meta {
+  .cv-full-cv-print-root .cv-study-meta {
     display: block !important;
   }
 
@@ -328,7 +328,11 @@ html {
     margin: 5mm;
   }
 
-  /** CV court uniquement : marges page un peu plus serrées (nommé via `.cv-short-page { page: short }`). */
+  /* ================================================================
+   * === SHORT CV — ajustements print (A4 portrait ~794px) =========
+   * Une seule zone pour tout le comportement print du CV court.
+   * Modifier ici ET NULLE PART AILLEURS pour le rendu imprimé du short.
+   * ================================================================ */
   @page short {
     size: A4;
     margin: 3mm;
@@ -338,25 +342,22 @@ html {
     page: short;
   }
 
-  /** Moins de marge blanche autour du contenu court (le `p-8` du container cumulait trop avec @page). */
   .container:has(.cv-short-page) {
     padding: 0.625rem !important;
   }
 
-  /**
-   * CV court : corps mission / profil un peu plus serrés (les utilitaires Tailwind restent en rem ;
-   * on cible surtout les classes composant `.cv-job-description` et le bloc domaines).
-   */
-  .cv-short-page .cv-job-description {
-    font-size: 0.625rem;
-    line-height: 1.35;
-  }
-
+  /* Densification typographique pour tenir sur 1 page A4 */
   .cv-short-page .cv-short-about p {
     font-size: 0.5625rem !important;
     line-height: 1.35 !important;
   }
 
+  .cv-short-page .cv-job-description {
+    font-size: 0.625rem;
+    line-height: 1.35;
+  }
+
+  /* Grille domaines + colonnes : gaps resserrés */
   .cv-short-page .cv-domains-grid {
     column-gap: 0.75rem !important;
   }
@@ -369,6 +370,7 @@ html {
     column-gap: 0.75rem !important;
   }
 
+  /* Pied de bloc expériences */
   .cv-short-page .cv-experience-footer {
     margin-top: 0.375rem !important;
     padding-left: 0.5rem !important;
@@ -379,15 +381,81 @@ html {
     line-height: 1.35 !important;
   }
 
-  /**
-   * Liste expériences : autoriser la coupure à l’intérieur d’une mission si nécessaire
-   * (évite qu’un gros bloc « indivisible » repousse tout le bas sur la page 2).
-   */
+  /* Missions : autoriser la coupure au sein d'une mission si besoin */
   .cv-short-page #main > section > ul > li {
     break-inside: auto;
     page-break-inside: auto;
   }
 
+  /* Projets : ligne condensée « a / b / c » au lieu d'une liste verticale */
+  .cv-short-page [data-cv-section='projects'] .cv-project-screen {
+    display: none !important;
+  }
+
+  .cv-short-page [data-cv-section='projects'] .cv-project-print {
+    display: inline !important;
+  }
+
+  .cv-short-page [data-cv-section='projects'] .cv-cq-project-list {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: baseline !important;
+    row-gap: 0.25rem !important;
+    column-gap: 0 !important;
+    list-style: none !important;
+  }
+
+  .cv-short-page [data-cv-section='projects'] .cv-cq-project-list > li {
+    display: inline !important;
+    margin-top: 0 !important;
+  }
+
+  .cv-short-page [data-cv-section='projects'] .cv-cq-project-list > li + li::before {
+    content: ' / ' !important;
+    color: rgb(96 165 250 / 0.85) !important;
+  }
+
+  /* Études court : peut se couper entre les lignes */
+  .cv-short-page .cv-short-studies-section,
+  .cv-short-page .cv-short-studies-section ul {
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+
+  .cv-short-page .cv-short-studies-section li {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Profil + domaines : autoriser la fragmentation (sinon page blanche forcée) */
+  .cv-short-page section#cv-short-about,
+  .cv-short-page .cv-short-about h2,
+  .cv-short-page .cv-short-about p {
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+    break-after: auto !important;
+    page-break-after: auto !important;
+  }
+
+  .cv-short-page section#domains {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    break-before: auto !important;
+    page-break-before: auto !important;
+    break-after: auto !important;
+    page-break-after: auto !important;
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+  }
+
+  /* Compétences : masquées à l'impression du short (les tags domaines suffisent) */
+  .cv-short-page .cv-short-skills-block {
+    display: none !important;
+  }
+
+  /* ================================================================
+   * === FULL CV — ajustements print ===============================
+   * ================================================================ */
   /**
    * CV long + pages offre : à l’impression, une seule colonne dans l’ordre métier
    * (résumé → domaines → expériences → études → projets → veille → loisirs ; adéquation = en-tête uniquement).
@@ -419,34 +487,6 @@ html {
   .cv-full-cv-print-root .cv-print-desktop-sidebar-group,
   .cv-full-cv-print-root .cv-print-desktop-tail-group {
     display: contents !important;
-  }
-
-  /** Projets : CV court — ligne condensée à l’impression. */
-  .cv-short-page [data-cv-section='projects'] .cv-project-screen {
-    display: none !important;
-  }
-
-  .cv-short-page [data-cv-section='projects'] .cv-project-print {
-    display: inline !important;
-  }
-
-  .cv-short-page [data-cv-section='projects'] .cv-cq-project-list {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    align-items: baseline !important;
-    row-gap: 0.25rem !important;
-    column-gap: 0 !important;
-    list-style: none !important;
-  }
-
-  .cv-short-page [data-cv-section='projects'] .cv-cq-project-list > li {
-    display: inline !important;
-    margin-top: 0 !important;
-  }
-
-  .cv-short-page [data-cv-section='projects'] .cv-cq-project-list > li + li::before {
-    content: ' / ' !important;
-    color: rgb(96 165 250 / 0.85) !important;
   }
 
   /**
@@ -545,18 +585,6 @@ html {
     page-break-inside: auto;
   }
 
-  /** Liste « études sans détail » du CV court : peut se couper entre les lignes si besoin. */
-  .cv-short-studies-section,
-  .cv-short-studies-section ul {
-    break-inside: auto;
-    page-break-inside: auto;
-  }
-
-  .cv-short-studies-section li {
-    break-inside: avoid;
-    page-break-inside: avoid;
-  }
-
   /**
    * Domaines + grille missions : éviter un saut de page systématique après `#domains`
    * (section entière en `break-inside: avoid` + grille suivante).
@@ -565,35 +593,6 @@ html {
   .cv-page-split {
     break-inside: auto;
     page-break-inside: auto;
-  }
-
-  /**
-   * CV court : le profil doit pouvoir se fragmenter (règle globale `section { break-inside: avoid }`
-   * sinon toute la section summary + saut forcé avant les domaines → page blanche / PDF sur 3 pages).
-   */
-  .cv-layout-short section#cv-short-about {
-    break-inside: auto !important;
-    page-break-inside: auto !important;
-    break-after: auto !important;
-    page-break-after: auto !important;
-  }
-
-  .cv-layout-short .cv-short-about h2,
-  .cv-layout-short .cv-short-about p {
-    break-inside: auto !important;
-    page-break-inside: auto !important;
-  }
-
-  /** CV court : domaines peuvent suivre le summary sur la même page sans contrainte « keep with previous » excessive. */
-  .cv-layout-short section#domains {
-    margin-bottom: 0;
-    padding-bottom: 0;
-    break-before: auto !important;
-    page-break-before: auto !important;
-    break-after: auto !important;
-    page-break-after: auto !important;
-    break-inside: auto !important;
-    page-break-inside: auto !important;
   }
 
   /* Links - show as normal text */

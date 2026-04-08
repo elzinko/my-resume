@@ -46,16 +46,14 @@ export function fullHrefFromShortPath(
   options?: FullHrefFromShortOptions,
 ): string {
   if (searchParams.get('spec')?.trim()) {
-    const q = searchParams.toString();
-    return q ? `/${lang}/offer/custom?${q}` : `/${lang}/offer/custom`;
+    return withQuery(`/${lang}`, searchParams);
   }
   const company = searchParams.get('company')?.trim();
   const hasReq =
     searchParams.getAll('requirement').length > 0 ||
     searchParams.getAll('req').length > 0;
   if (company && hasReq) {
-    const q = searchParams.toString();
-    return q ? `/${lang}/offer/match?${q}` : `/${lang}/offer/match`;
+    return withQuery(`/${lang}`, searchParams);
   }
   const offer = searchParams.get('offer')?.trim();
   if (offer && !company && !hasReq) {

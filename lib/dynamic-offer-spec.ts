@@ -141,7 +141,7 @@ export function decodeOfferSpecParam(
 
 /**
  * Encode une offre en chaîne base64url (navigateur ou Node avec Buffer).
- * Utile pour construire l’URL `/{lang}/offer/custom?spec=…` depuis un script ou un LLM.
+ * Utile pour construire l’URL `/{lang}?spec=…` depuis un script ou un LLM.
  */
 export function encodeOfferSpecParam(offer: JobOffer): string {
   const json = JSON.stringify(offer);

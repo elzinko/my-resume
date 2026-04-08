@@ -13,7 +13,7 @@ const mockCatalog: MatchCatalog = {
       matchTokens: ['node.js', 'nodejs'],
     },
   ],
-  exampleMatchUrl: '/fr/offer/match',
+  exampleMatchUrl: '/fr',
 };
 
 test('expandKeywordsForMatch adds tokens for known id', () => {

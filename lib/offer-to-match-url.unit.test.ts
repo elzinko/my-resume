@@ -15,5 +15,5 @@ test('jobOfferToMatchHref prefixes lang and path', () => {
   const offer = getOffer('safran-ia-factory');
   assert.ok(offer);
   const href = jobOfferToMatchHref('en', offer!);
-  assert.ok(href.startsWith('/en/offer/match?'));
+  assert.ok(href.startsWith('/en?'));
 });

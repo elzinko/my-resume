@@ -19,7 +19,7 @@ export interface MatchCatalog {
   exampleMatchUrl: string;
 }
 
-/** Déduit des tokens de match à partir du nom affiché (CV / Dato). */
+/** Déduit des tokens de match à partir du nom affiché (CV). */
 export function deriveMatchTokensFromName(name: string): string[] {
   const lower = name.trim().toLowerCase();
   if (!lower) return [];

@@ -20,11 +20,6 @@ interface ContactDisplayProps {
   contact: ContactData;
   compact?: boolean;
   /**
-   * `true` : grille 3 colonnes à partir de `md` (1 colonne en dessous).
-   * `false` : liste verticale (même rendu que la colonne gauche du CV complet).
-   */
-  condensed?: boolean;
-  /**
    * CV court : chaque ligne = libellé à gauche / valeur à droite (mobile, tablette, impression).
    */
   cvShortInlineRows?: boolean;
@@ -72,7 +67,6 @@ function LocationLinkBlock({
 export default function ContactDisplay({
   contact,
   compact = false,
-  condensed = false,
   cvShortInlineRows = false,
   locale = 'fr',
 }: ContactDisplayProps) {
@@ -146,44 +140,6 @@ export default function ContactDisplay({
           </div>
         </li>
       </ul>
-    );
-  }
-
-  if (condensed) {
-    const cell =
-      'flex min-w-0 flex-row items-baseline justify-between gap-2 text-pink-200 md:flex-col md:items-stretch md:gap-0';
-    const label =
-      'shrink-0 text-base font-bold text-cv-jobs print:text-sm md:block';
-    const value =
-      'mt-0.5 block min-w-0 text-right text-base print:text-sm md:mt-0.5 md:text-left';
-    return (
-      <div className="mt-4 grid grid-cols-1 gap-4 print:mt-2 print:grid-cols-3 print:gap-2 md:mt-4 md:grid-cols-3 md:gap-x-10 md:gap-y-2 md:items-start">
-        <div className={cell}>
-          <strong className={label}>{contact.emailTitle}</strong>
-          <a
-            href={`mailto:${contact.email}`}
-            className={`${value} break-all`}
-          >
-            {contact.email}
-          </a>
-        </div>
-        <div className={cell}>
-          <strong className={label}>{contact.phoneTitle}</strong>
-          <a href={`tel:${contact.phone}`} className={`${value} tabular-nums`}>
-            {contact.phone}
-          </a>
-        </div>
-        <div className={cell}>
-          <strong className={label}>{contact.locationTitle}</strong>
-          <div className="mt-0.5 min-w-0 text-right md:mt-0.5 md:text-left">
-            <LocationLinkBlock
-              location={contact.location}
-              locale={locale}
-              className="justify-end md:mt-0 md:justify-between"
-            />
-          </div>
-        </div>
-      </div>
     );
   }
 

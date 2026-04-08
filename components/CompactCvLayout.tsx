@@ -85,7 +85,7 @@ export default function CompactCvLayout({
   defaultOfferId = null,
   children,
 }: CompactCvLayoutProps) {
-  // Fallback labels if DatoCMS titles are empty
+  // Fallback labels if bundle.json titles are empty
   const fallbackLabels = {
     fr: {
       skills: 'Compétences',
@@ -107,7 +107,7 @@ export default function CompactCvLayout({
 
   const fallback = fallbackLabels[lang];
 
-  // Use DatoCMS titles with fallback
+  // Use bundle.json titles with fallback
   const t = {
     about: data.titles.about || fallback.about,
     skills: data.titles.skills || fallback.skills,
@@ -131,27 +131,25 @@ export default function CompactCvLayout({
   );
 
   return (
-    <div className="cv-layout-short print:p-0">
+    <div className="cv-layout-short">
       {/* About - Full width section (same style as full CV) */}
       <section
         id="cv-short-about"
-        className="cv-short-about mt-10 print:mt-2 pb-6 print:pb-4 mb-6 print:mb-5"
+        className="cv-short-about mt-10 pb-6 mb-6"
       >
-        <div className="border-b pb-1 print:pb-0.5">
-          <h2 className="min-w-0 text-2xl font-semibold text-cv-section print:text-sm">
+        <div className="border-b pb-1">
+          <h2 className="min-w-0 text-2xl font-semibold text-cv-section">
             {t.about}
           </h2>
         </div>
-        <p className="mt-4 text-cv-body-muted print:mt-1 print:text-[10px]">
-          {data.about}
-        </p>
-        <div className="mt-2 flex flex-wrap gap-x-1 gap-y-1 py-1 print:mt-1 print:py-0.5">
+        <p className="mt-4 text-cv-body-muted">{data.about}</p>
+        <div className="mt-2 flex flex-wrap gap-x-1 gap-y-1 py-1">
           <ProfileEducationBadge label={profileBadgeLabel} />
         </div>
       </section>
 
       {/* Domains - Full width (même grille 1/3 que le CV complet) */}
-      <section id="domains" className="mt-8 print:mt-3">
+      <section id="domains" className="mt-8">
         <div className="cv-domains-grid">
           {data.domains.map((domain) => (
             <Domain
@@ -167,24 +165,24 @@ export default function CompactCvLayout({
       {children}
 
       {/* Colonne gauche 1/3 + expériences 2/3 (grille alignée sur les domaines) */}
-      <div className="cv-page-split mt-14 print:mt-1">
+      <div className="cv-page-split mt-14">
         <div
           id="left"
-          className="order-last flex w-full min-w-0 flex-col print:order-first print:col-span-1 md:order-first md:col-span-1"
+          className="order-last flex w-full min-w-0 flex-col md:order-first md:col-span-1"
         >
           {/* Niveau de formation : même bloc que le CV long (une colonne, y compris à l’impression). */}
           <EducationLevel
             content={data.educationLevel}
-            sectionClassName="mb-6 print:mb-2 print:order-[60] print-preview:order-[60]"
+            sectionClassName="mb-6"
             pillsCompact
           />
 
-          {/* Skills : écran uniquement (tags domaines en impression / aperçu). */}
-          <section className="mb-6 print:mb-2 print:hidden print-preview:hidden print:order-[70] print-preview:order-[70]">
-            <h2 className="border-b pb-1 text-2xl font-semibold text-cv-tag-text print:pb-0.5 print:text-sm">
+          {/* Skills — masqué à l'impression via `.cv-short-skills-block` dans `@media print` */}
+          <section className="cv-short-skills-block mb-6">
+            <h2 className="border-b pb-1 text-2xl font-semibold text-cv-tag-text">
               {t.skills}
             </h2>
-            <div className="mt-2 flex flex-wrap gap-1.5 print:mt-1 print:gap-1">
+            <div className="mt-2 flex flex-wrap gap-1.5">
               {data.skills.slice(0, 10).map((skill) => (
                 <Skill key={skill.id} skill={skill} compact={true} />
               ))}
@@ -194,12 +192,12 @@ export default function CompactCvLayout({
           {/* Études sans détail (établissement masqué) — même titre que le CV long (#studies). */}
           <section
             id="studies"
-            className="cv-short-studies-section mb-6 print:mb-2 print:order-[95] print-preview:order-[95]"
+            className="cv-short-studies-section mb-6"
           >
-            <h2 className="border-b pb-1 text-2xl font-semibold text-teal-300 print:pb-0.5 print:text-sm">
+            <h2 className="border-b pb-1 text-2xl font-semibold text-teal-300">
               {t.education}
             </h2>
-            <ul className="mt-2 space-y-1 print:mt-1 print:space-y-0">
+            <ul className="mt-2 space-y-1">
               {data.studies.map((study) => (
                 <StudyDisplay key={study.id} study={study} compact={true} />
               ))}
@@ -210,9 +208,9 @@ export default function CompactCvLayout({
           <section
             id="projects"
             data-cv-section="projects"
-            className="cv-cq-section mb-6 print:mb-2 print:order-[100] print-preview:order-[100]"
+            className="cv-cq-section mb-6"
           >
-            <h2 className="border-b pb-1 text-2xl font-semibold text-cv-tag-text print:pb-0.5 print:text-sm">
+            <h2 className="border-b pb-1 text-2xl font-semibold text-cv-tag-text">
               {data.projectsTitle}
             </h2>
             <ul className="cv-section-simple-list cv-cq-project-list max-md:mt-6">
@@ -225,16 +223,13 @@ export default function CompactCvLayout({
           </section>
         </div>
 
-        <div
-          id="main"
-          className="w-full min-w-0 print:col-span-2 md:col-span-2"
-        >
+        <div id="main" className="w-full min-w-0 md:col-span-2">
           {/* Experience - Reusing JobDisplay component */}
           <section>
-            <h2 className="border-b pb-1 text-2xl font-semibold text-cv-jobs print:pb-0.5 print:text-sm">
+            <h2 className="border-b pb-1 text-2xl font-semibold text-cv-jobs">
               {t.experience}
             </h2>
-            <ul className="mt-2 space-y-4 print:mt-1 print:space-y-1.5">
+            <ul className="mt-2 space-y-4">
               {recentJobs.map((job, idx) => (
                 <li key={idx}>
                   <JobDisplay

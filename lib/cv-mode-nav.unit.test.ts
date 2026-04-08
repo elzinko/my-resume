@@ -2,12 +2,12 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { fullHrefFromShortPath } from './cv-mode-nav';
 
-test('fullHrefFromShortPath uses defaultOfferId → /offer/match?…', () => {
+test('fullHrefFromShortPath uses defaultOfferId → /{lang}?…', () => {
   const sp = new URLSearchParams();
   const href = fullHrefFromShortPath('fr', sp, {
     defaultOfferId: 'safran-java-fullstack',
   });
-  assert.ok(href.startsWith('/fr/offer/match?'));
+  assert.ok(href.startsWith('/fr?'));
   assert.ok(href.includes('company=Safran'));
 });
 
@@ -16,7 +16,7 @@ test('fullHrefFromShortPath explicit offer= beats defaultOfferId', () => {
   const href = fullHrefFromShortPath('fr', sp, {
     defaultOfferId: 'safran-java-fullstack',
   });
-  assert.ok(href.startsWith('/fr/offer/match?'));
+  assert.ok(href.startsWith('/fr?'));
   assert.ok(href.includes('company=Safran'));
   assert.ok(
     href.includes('IA+Factory') ||
@@ -33,7 +33,7 @@ test('fullHrefFromShortPath match query ignores defaultOfferId', () => {
   const href = fullHrefFromShortPath('en', sp, {
     defaultOfferId: 'safran-java-fullstack',
   });
-  assert.ok(href.startsWith('/en/offer/match?'));
+  assert.ok(href.startsWith('/en?'));
 });
 
 test('fullHrefFromShortPath no fallback returns root with query', () => {

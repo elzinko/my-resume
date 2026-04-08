@@ -1,38 +1,26 @@
 import '../../styles/globals.css';
 
-import About from '@/app/[lang]/about';
-import Headers from '@/app/[lang]/header';
+import OfferTailoredShell from '@/components/OfferTailoredShell';
 import { Locale } from '../../i18n-config';
-import Contact from './contact';
-import Studies from './studies';
-import Skills from './skills';
-import Domains from './domains';
-import Learnings from './learnings';
-import Hobbies from './hobbies';
-import Jobs from './jobs';
-import EducationLevel from '@/components/EducationLevel';
-import Projects from './projects';
-import { getCvData } from '@/lib/cv-data';
-import { getEducationLevelContent } from '@/lib/education-level-content';
 import type { Metadata } from 'next';
-import { Suspense } from 'react';
-import FullCvPrintPreviewEffect from '@/components/FullCvPrintPreviewEffect';
+import { getCvData } from '@/lib/cv-data';
+import { getMatchCatalog } from '@/lib/match-catalog-server';
+import { getEducationLevelContent } from '@/lib/education-level-content';
+import { offerPriorityTokensAndContact } from '@/lib/offer-page-data';
+import { resolveOfferFromUrlParams } from '@/lib/query-offer-params';
+import { recordToURLSearchParams } from '@/lib/search-params-to-url';
+
+export const dynamic = 'force-dynamic';
 
 // Helper to generate document title (developer style: lowercase with underscores)
-function generateDocumentTitle(
-  name: string,
-  lang: string,
-  mode: 'full' | 'short',
-): string {
+function generateDocumentTitle(name: string, lang: string): string {
   const prefix = lang === 'fr' ? 'cv' : 'resume';
-  const modeLabel =
-    lang === 'fr' ? (mode === 'full' ? 'complet' : 'court') : mode;
+  const modeLabel = lang === 'fr' ? 'complet' : 'full';
   const date = new Date().toISOString().slice(0, 10).replace(/-/g, '');
   const safeName = name.toLowerCase().replace(/\s+/g, '_');
   return `${prefix}_${safeName}_${modeLabel}_${date}`;
 }
 
-// Generate dynamic metadata for PDF title
 export async function generateMetadata({
   params: { lang },
 }: {
@@ -42,73 +30,50 @@ export async function generateMetadata({
   const name = data?.header?.name || 'CV';
 
   return {
-    title: generateDocumentTitle(name, lang, 'full'),
+    title: generateDocumentTitle(name, lang),
   };
 }
 
+/**
+ * Page CV complète unifiée — anciennement éclatée entre `/`, `/offer/match` et `/offer/custom`.
+ * Les query params (`company`, `title`, `requirement`, `offer`, etc.) permettent d'injecter
+ * un contexte d'offre pour personnaliser le rendu (pastilles d'adéquation, priorité techno).
+ * Sans params : rendu CV neutre. Source unique de la mise en page CV long.
+ */
 export default async function Page({
   params: { lang },
+  searchParams,
 }: {
   params: { lang: Locale };
+  searchParams?: Record<string, string | string[] | undefined>;
 }) {
   const data: Record<string, unknown> = (await getCvData(lang)) as Record<
     string,
     unknown
   >;
   const educationLevel = getEducationLevelContent(data, lang);
+  const matchCatalog = getMatchCatalog();
+  const sp = recordToURLSearchParams(searchParams);
+  const offer = resolveOfferFromUrlParams(sp, matchCatalog);
+  const { priorityTokens, contactLocation } = offerPriorityTokensAndContact(
+    offer,
+    sp,
+  );
+  const contact = data.contact as
+    | { email?: string; phone?: string; location?: string }
+    | undefined;
 
   return (
-    <>
-      <Suspense fallback={null}>
-        <FullCvPrintPreviewEffect />
-      </Suspense>
-      {/* @ts-expect-error Server Component */}
-      <Headers locale={lang} />
-
-      <div className="cv-full-cv-print-root">
-        <div className="cv-flow-mobile-stack">
-          {/* @ts-expect-error Server Component */}
-          <About locale={lang} educationLevel={educationLevel} />
-          {/* @ts-expect-error Server Component */}
-          <Domains locale={lang} />
-        </div>
-
-        <div className="cv-page-split">
-          <div
-            id="left"
-            className="flex w-full min-w-0 flex-col print:order-first print:col-span-1 md:order-first md:col-span-1"
-          >
-            <div className="cv-print-desktop-sidebar-group w-full">
-              {/* @ts-expect-error Server Component */}
-              <Contact locale={lang} />
-            </div>
-            <EducationLevel content={educationLevel} />
-            {/* @ts-expect-error Server Component */}
-            <Skills locale={lang} sectionId={false} />
-            {/* @ts-expect-error Server Component */}
-            <Studies locale={lang} />
-            {/**
-             * Projets / veille / loisirs : même flux mobile et desktop (fin de #left, après les études).
-             * Évite le doublon `cv-mobile-only-tail-stack` qui plaçait ces blocs hors de la colonne.
-             */}
-            <div className="cv-print-desktop-tail-group max-md:order-[4] md:order-[4]">
-              {/* @ts-expect-error Server Component */}
-              <Projects locale={lang} />
-              {/* @ts-expect-error Server Component */}
-              <Learnings locale={lang} />
-              {/* @ts-expect-error Server Component */}
-              <Hobbies locale={lang} />
-            </div>
-          </div>
-          <div
-            id="main"
-            className="w-full min-w-0 print:col-span-2 md:col-span-2"
-          >
-            {/* @ts-expect-error Server Component */}
-            <Jobs locale={lang} />
-          </div>
-        </div>
-      </div>
-    </>
+    <OfferTailoredShell
+      lang={lang}
+      educationLevel={educationLevel}
+      headerContactStrip={{
+        email: contact?.email ?? '',
+        phone: contact?.phone ?? '',
+        location: contact?.location ?? '',
+      }}
+      frameworkDisplayPriorityTokens={priorityTokens}
+      contactLocation={contactLocation}
+    />
   );
 }
