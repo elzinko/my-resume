@@ -21,19 +21,19 @@ const BUNDLE_OPS_LABELS: readonly string[] = [
   'Docker',
   'Kubernetes',
   'Terraform',
-  'Vagrant',
+  'Helm',
   'AWS',
   'GCP',
   'Azure',
 ];
 
 /**
- * Trois listes « un nuage » : Docker / K8s / Terraform en commun + le fournisseur + Vagrant.
+ * Trois listes « un nuage » : Docker / K8s / Terraform en commun + le fournisseur + Helm.
  */
 export const OPS_PRESETS: Record<string, OpsTagFive> = {
-  aws: ['Docker', 'Kubernetes', 'Terraform', 'AWS', 'Vagrant'],
-  gcp: ['Docker', 'Kubernetes', 'Terraform', 'GCP', 'Vagrant'],
-  azure: ['Docker', 'Kubernetes', 'Terraform', 'Azure', 'Vagrant'],
+  aws: ['Docker', 'Kubernetes', 'Terraform', 'AWS', 'Helm'],
+  gcp: ['Docker', 'Kubernetes', 'Terraform', 'GCP', 'Helm'],
+  azure: ['Docker', 'Kubernetes', 'Terraform', 'Azure', 'Helm'],
 };
 
 export const OPS_CLOUD_KEYS = Object.freeze(

@@ -1,6 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { Suspense } from 'react';
+import ProfileEducationBadge from '@/components/ProfileEducationBadge';
+import { getProfileEducationBadgeLabel } from '@/lib/education-level-content';
 import Skill from './skill';
 import Domain from './domain';
 import ContactDisplay from './ContactDisplay';
@@ -8,6 +10,8 @@ import JobDisplay from './JobDisplay';
 import StudyDisplay from './StudyDisplay';
 import EducationLevel from './EducationLevel';
 import ExperienceClosingBlock from './ExperienceClosingBlock';
+import ShortCvOnlineDetailLink from './ShortCvOnlineDetailLink';
+import Project from './project';
 import type { EducationLevelContent } from '@/lib/education-level-content';
 import {
   formatRemainingClientsForShortCv,
@@ -63,18 +67,23 @@ export interface CompactCvData {
     endDate?: string;
   }>;
   educationLevel: EducationLevelContent;
+  projectsTitle: string;
+  projects: any[];
 }
 
 interface CompactCvLayoutProps {
   data: CompactCvData;
   lang: 'fr' | 'en';
-  /** Bloc optionnel (ex. Job fit / adéquation offre), pleine largeur sous les domaines. */
+  /** `SHORT_CV_OFFER_ID` : lien « CV en ligne » même sans `?offer=` dans l’URL. */
+  defaultOfferId?: string | null;
+  /** Emplacement réservé pour extensions (ex. adéquation offre) — non utilisé par défaut. */
   children?: React.ReactNode;
 }
 
 export default function CompactCvLayout({
   data,
   lang,
+  defaultOfferId = null,
   children,
 }: CompactCvLayoutProps) {
   // Fallback labels if DatoCMS titles are empty
@@ -120,6 +129,11 @@ export default function CompactCvLayout({
     .filter((job) => !SHORT_CV_EXCLUDED_CLIENTS.has(job.client))
     .slice(0, SHORT_CV_MAX_JOBS);
 
+  const profileBadgeLabel = getProfileEducationBadgeLabel(
+    data.educationLevel,
+    lang,
+  );
+
   return (
     <div className="cv-layout-short print:p-0">
       {/* About - Full width section (same style as full CV) */}
@@ -127,12 +141,17 @@ export default function CompactCvLayout({
         id="cv-short-about"
         className="cv-short-about mt-10 print:mt-2 pb-6 print:pb-4 mb-6 print:mb-5"
       >
-        <h2 className="border-b pb-1 text-2xl font-semibold text-cv-section print:pb-0.5 print:text-sm">
-          {t.about}
-        </h2>
+        <div className="border-b pb-1 print:pb-0.5">
+          <h2 className="min-w-0 text-2xl font-semibold text-cv-section print:text-sm">
+            {t.about}
+          </h2>
+        </div>
         <p className="mt-4 text-cv-body-muted print:mt-1 print:text-[10px]">
           {data.about}
         </p>
+        <div className="mt-2 flex flex-wrap gap-x-1 gap-y-1 py-1 print:mt-1 print:py-0.5">
+          <ProfileEducationBadge label={profileBadgeLabel} />
+        </div>
       </section>
 
       {/* Domains - Full width (même grille 1/3 que le CV complet) */}
@@ -142,7 +161,7 @@ export default function CompactCvLayout({
             <Domain
               key={domain.id || domain.name}
               domain={domain}
-              showTags={false}
+              showTags={true}
               compact={true}
             />
           ))}
@@ -152,21 +171,32 @@ export default function CompactCvLayout({
       {children}
 
       {/* Colonne gauche 1/3 + expériences 2/3 (grille alignée sur les domaines) */}
-      <div className="cv-page-split mt-14 print:mt-2">
+      <div className="cv-page-split mt-14 print:mt-1">
         <div
           id="left"
           className="order-last flex w-full min-w-0 flex-col print:order-first print:col-span-1 md:order-first md:col-span-1"
         >
-          {/* Contact - Reusing ContactDisplay component */}
-          <section className="mb-6 print:mb-2">
+          {/* Contact : colonne gauche à l’écran ; masqué en PDF / `?print` (bandeau sous le rôle dans l’en-tête). */}
+          <section className="cv-short-left-contact mb-6 print:mb-1 print:hidden print-preview:hidden print:order-[40] print-preview:order-[40] md:mb-4">
             <h2 className="border-b pb-1 text-2xl font-semibold text-cv-jobs print:pb-0.5 print:text-sm">
               {t.contact}
             </h2>
-            <ContactDisplay contact={data.contact} compact={true} />
+            <ContactDisplay
+              contact={data.contact}
+              locale={lang}
+              cvShortInlineRows
+            />
           </section>
 
-          {/* Skills - Reusing Skill component in compact mode */}
-          <section className="mb-6 print:mb-2">
+          {/* Niveau de formation : même bloc que le CV long (une colonne, y compris à l’impression). */}
+          <EducationLevel
+            content={data.educationLevel}
+            sectionClassName="mb-6 print:mb-2 print:order-[60] print-preview:order-[60]"
+            pillsCompact
+          />
+
+          {/* Skills : écran uniquement (tags domaines en impression / aperçu). */}
+          <section className="mb-6 print:mb-2 print:hidden print-preview:hidden print:order-[70] print-preview:order-[70]">
             <h2 className="border-b pb-1 text-2xl font-semibold text-cv-tag-text print:pb-0.5 print:text-sm">
               {t.skills}
             </h2>
@@ -177,13 +207,10 @@ export default function CompactCvLayout({
             </div>
           </section>
 
-          {/* Niveau de formation avant le détail des études (aligné CV long) */}
-          <EducationLevel content={data.educationLevel} compact={true} />
-
           {/* Études sans détail (établissement masqué) — même titre que le CV long (#studies). */}
           <section
             id="studies"
-            className="cv-short-studies-section mb-6 print:mb-2"
+            className="cv-short-studies-section mb-6 print:mb-2 print:order-[95] print-preview:order-[95]"
           >
             <h2 className="border-b pb-1 text-2xl font-semibold text-teal-300 print:pb-0.5 print:text-sm">
               {t.education}
@@ -191,6 +218,24 @@ export default function CompactCvLayout({
             <ul className="mt-2 space-y-1 print:mt-1 print:space-y-0">
               {data.studies.map((study) => (
                 <StudyDisplay key={study.id} study={study} compact={true} />
+              ))}
+            </ul>
+          </section>
+
+          {/* Projets : mêmes composants / classes que le CV long (`cv-cq-section`, `Project`). */}
+          <section
+            id="projects"
+            data-cv-section="projects"
+            className="cv-cq-section mb-6 print:mb-2 print:order-[100] print-preview:order-[100]"
+          >
+            <h2 className="border-b pb-1 text-2xl font-semibold text-cv-tag-text print:pb-0.5 print:text-sm">
+              {data.projectsTitle}
+            </h2>
+            <ul className="cv-section-simple-list cv-cq-project-list max-md:mt-6">
+              {data.projects.map((project: any) => (
+                <li key={project.id}>
+                  <Project project={project} />
+                </li>
               ))}
             </ul>
           </section>
@@ -223,6 +268,12 @@ export default function CompactCvLayout({
               moreExperienceTail={closing.moreExperienceTail}
               moreClientsLine={moreClientsLine}
             />
+            <Suspense fallback={null}>
+              <ShortCvOnlineDetailLink
+                lang={lang}
+                defaultOfferId={defaultOfferId}
+              />
+            </Suspense>
           </section>
         </div>
       </div>

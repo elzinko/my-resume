@@ -11,12 +11,12 @@
     },
     "contact": {
       "title": "Coordonnées",
-      "phoneTitle": "téléphone",
+      "phoneTitle": "Téléphone",
       "phone": "+33661412725",
-      "emailTitle": "e-mail",
+      "emailTitle": "E-mail",
       "email": "thomas.couderc@gmail.com",
-      "locationTitle": "emplacement",
-      "location": "Paris, France"
+      "locationTitle": "Emplacement",
+      "location": "Thomery (77)"
     },
     "about": {
       "title": "Profile",
@@ -210,7 +210,7 @@
       {
         "id": "78855347",
         "name": "Ops",
-        "description": "Je souhaite collaborer avec les équipes opérationnelles en pratiquant le déploiement continue et ainsi produire de la valeur pour l'entreprise en réduisant les frictions organisationnelles.",
+        "description": "Je travaille avec les opérationnels en privilégiant le déploiement continu : livrer vite de la valeur concrète tout en réduisant les frictions entre métiers et production.",
         "position": 3,
         "competencies": [
           {
@@ -230,8 +230,8 @@
           },
           {
             "id": "90601547",
-            "name": "Vagrant",
-            "link": "https://www.vagrantup.com/"
+            "name": "Helm",
+            "link": "https://helm.sh/"
           },
           {
             "id": "82627329",
@@ -1769,7 +1769,7 @@
         "link": "https://github.com/elzinko/shopify-plugin-product-assistant",
         "startDate": "2025-12-01",
         "endDate": null,
-        "description": "Extension Shopify d’assistance produit (recommandations, fiches, parcours d’achat). En cours de développement.",
+        "description": "Chat IA pour créer des produits Shopify facilement et rapidement.",
         "frameworks": [
           {
             "id": "81826170",
@@ -1797,7 +1797,7 @@
         "link": "https://github.com/elzinko/cop1",
         "startDate": "2026-02-15",
         "endDate": null,
-        "description": "Projet COP1 — développement mené en 2026.",
+        "description": "Projet COP1.",
         "frameworks": [
           {
             "id": "81826170",
@@ -1825,7 +1825,7 @@
         "link": "https://github.com/elzinko/iamthelaw",
         "startDate": "2026-02-01",
         "endDate": null,
-        "description": "Projet I Am The Law — développé en 2026.",
+        "description": "Projet I Am The Law.",
         "frameworks": [
           {
             "id": "81826170",
@@ -1853,7 +1853,7 @@
         "link": "https://github.com/elzinko/lifefindsaway",
         "startDate": "2026-02-01",
         "endDate": null,
-        "description": "Projet LifeFindsAway — développé en 2026.",
+        "description": "Projet LifeFindsAway.",
         "frameworks": [
           {
             "id": "81826170",
@@ -1877,10 +1877,11 @@
       {
         "id": "cvproj-realizator-2026",
         "name": "realizator",
+        "title": "Realizator",
         "link": "https://github.com/elzinko/realizator",
         "startDate": "2026-01-15",
         "endDate": null,
-        "description": "Projet Realizator — développé en 2026.",
+        "description": "Application web qui génère des démos vidéo automatiquement à partir d’URL : scénario personnalisable, puis rendu vidéo.",
         "frameworks": [
           {
             "id": "81826170",
@@ -1904,10 +1905,11 @@
       {
         "id": "cvproj-livestreamz-2026",
         "name": "livestreamz",
+        "title": "Livestreamz",
         "link": "https://github.com/elzinko/livestreamz",
         "startDate": "2026-01-15",
         "endDate": null,
-        "description": "Projet autour du live streaming — développé en 2026.",
+        "description": "Application qui transforme le téléphone en caméra pour du streaming temps réel fiable — sur le principe de DroidCam, avec une stabilité renforcée.",
         "frameworks": [
           {
             "id": "81826170",
@@ -1931,10 +1933,11 @@
       {
         "id": "cvproj-muti-2026",
         "name": "MUTI",
+        "title": "Muti",
         "link": "https://www.muti.app/",
         "startDate": "2026-01-01",
         "endDate": null,
-        "description": "MUTI — Motion Orchestration Engine : moteur d’orchestration pour enchaîner et piloter des flux motion / créatifs. Développement début 2026.",
+        "description": "Transforme les mouvements du corps en contrôleur MIDI, OSC ou WebSocket.",
         "frameworks": [
           {
             "id": "81826170",
@@ -2225,12 +2228,12 @@
     },
     "contact": {
       "title": "Contact",
-      "phoneTitle": "phone",
+      "phoneTitle": "Phone",
       "phone": "+33661412725",
-      "emailTitle": "e-mail",
+      "emailTitle": "E-mail",
       "email": "thomas.couderc@gmail.com",
-      "locationTitle": "location",
-      "location": "Paris, France"
+      "locationTitle": "Location",
+      "location": "Thomery (77)"
     },
     "about": {
       "title": "Summary",
@@ -2444,8 +2447,8 @@
           },
           {
             "id": "90601547",
-            "name": "Vagrant",
-            "link": "https://www.vagrantup.com/"
+            "name": "Helm",
+            "link": "https://helm.sh/"
           },
           {
             "id": "82627329",
@@ -3983,7 +3986,7 @@
         "link": "https://github.com/elzinko/shopify-plugin-product-assistant",
         "startDate": "2025-12-01",
         "endDate": null,
-        "description": "Shopify product assistant plugin (recommendations, product pages, purchase flows). In active development.",
+        "description": "AI chat to create Shopify products quickly and easily.",
         "frameworks": [
           {
             "id": "81826170",
@@ -4011,7 +4014,7 @@
         "link": "https://github.com/elzinko/cop1",
         "startDate": "2026-02-15",
         "endDate": null,
-        "description": "COP1 project — built in 2026.",
+        "description": "COP1 project.",
         "frameworks": [
           {
             "id": "81826170",
@@ -4039,7 +4042,7 @@
         "link": "https://github.com/elzinko/iamthelaw",
         "startDate": "2026-02-01",
         "endDate": null,
-        "description": "I Am The Law project — built in 2026.",
+        "description": "I Am The Law project.",
         "frameworks": [
           {
             "id": "81826170",
@@ -4067,7 +4070,7 @@
         "link": "https://github.com/elzinko/lifefindsaway",
         "startDate": "2026-02-01",
         "endDate": null,
-        "description": "LifeFindsAway project — built in 2026.",
+        "description": "LifeFindsAway project.",
         "frameworks": [
           {
             "id": "81826170",
@@ -4091,10 +4094,11 @@
       {
         "id": "cvproj-realizator-2026",
         "name": "realizator",
+        "title": "Realizator",
         "link": "https://github.com/elzinko/realizator",
         "startDate": "2026-01-15",
         "endDate": null,
-        "description": "Realizator project — built in 2026.",
+        "description": "Web app that builds video demos automatically from URLs: you design a customizable scenario, and it generates the video.",
         "frameworks": [
           {
             "id": "81826170",
@@ -4118,10 +4122,11 @@
       {
         "id": "cvproj-livestreamz-2026",
         "name": "livestreamz",
+        "title": "Livestreamz",
         "link": "https://github.com/elzinko/livestreamz",
         "startDate": "2026-01-15",
         "endDate": null,
-        "description": "Live streaming–related project — built in 2026.",
+        "description": "App that turns your phone into a camera for reliable real-time streaming—in the spirit of DroidCam, with greater stability.",
         "frameworks": [
           {
             "id": "81826170",
@@ -4145,10 +4150,11 @@
       {
         "id": "cvproj-muti-2026",
         "name": "MUTI",
+        "title": "Muti",
         "link": "https://www.muti.app/",
         "startDate": "2026-01-01",
         "endDate": null,
-        "description": "MUTI — Motion Orchestration Engine: orchestration layer for motion and creative pipelines. Early 2026 development.",
+        "description": "Turns body movement into a MIDI, OSC, or WebSocket controller.",
         "frameworks": [
           {
             "id": "81826170",

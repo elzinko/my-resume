@@ -8,7 +8,7 @@ export interface ExperienceClosingBlockProps {
 }
 
 /**
- * Bloc de synthèse sous les expériences (bordure teal, typo discrète) — CV court et CV complet.
+ * Bloc de synthèse sous les expériences (bordure + emphase alignées sur la couleur « jobs » / rose) — CV court et CV complet.
  */
 export default function ExperienceClosingBlock({
   moreExperience,
@@ -16,9 +16,9 @@ export default function ExperienceClosingBlock({
   moreClientsLine,
 }: ExperienceClosingBlockProps) {
   return (
-    <div className="cv-experience-footer mt-4 border-l-4 border-teal-300/50 pl-3 print:mt-2">
+    <div className="cv-experience-footer mt-4 border-l-4 border-pink-300/50 pl-3 print:mt-2">
       <p className="text-xs text-gray-400 print:text-[10px]">
-        <strong className="text-teal-300">{moreExperience}</strong>{' '}
+        <strong className="text-cv-jobs">{moreExperience}</strong>{' '}
         {moreExperienceTail}
         {moreClientsLine ? <> {moreClientsLine}</> : null}
       </p>

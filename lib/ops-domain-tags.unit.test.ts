@@ -31,7 +31,7 @@ test('opsPreset alias', () => {
 
 test('opsTags five valid tokens', () => {
   const t = resolveOpsDomainTagsFromSearchParams(
-    sp('opsTags=Docker,Kubernetes,Terraform,AWS,Vagrant'),
+    sp('opsTags=Docker,Kubernetes,Terraform,AWS,Helm'),
   );
   assert.equal(t[3], 'AWS');
 });
@@ -43,7 +43,7 @@ test('opsHint google picks gcp', () => {
 
 test('explicit opsTags beats opsCloud', () => {
   const t = resolveOpsDomainTagsFromSearchParams(
-    sp('opsCloud=aws&opsTags=Docker,Kubernetes,Terraform,GCP,Vagrant'),
+    sp('opsCloud=aws&opsTags=Docker,Kubernetes,Terraform,GCP,Helm'),
   );
   assert.equal(t[3], 'GCP');
 });
