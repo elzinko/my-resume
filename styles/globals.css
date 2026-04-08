@@ -188,6 +188,108 @@ html {
     margin: 5mm;
   }
 
+  /** CV court uniquement : marges page un peu plus serrées (nommé via `.cv-short-page { page: short }`). */
+  @page short {
+    size: A4;
+    margin: 3mm;
+  }
+
+  .cv-short-page {
+    page: short;
+  }
+
+  /** Moins de marge blanche autour du contenu court (le `p-8` du container cumulait trop avec @page). */
+  .container:has(.cv-short-page) {
+    padding: 0.625rem !important;
+  }
+
+  /**
+   * CV court : corps mission / profil un peu plus serrés (les utilitaires Tailwind restent en rem ;
+   * on cible surtout les classes composant `.cv-job-description` et le bloc domaines).
+   */
+  .cv-short-page .cv-job-description {
+    font-size: 0.625rem;
+    line-height: 1.35;
+  }
+
+  .cv-short-page .cv-short-about p {
+    font-size: 0.5625rem !important;
+    line-height: 1.35 !important;
+  }
+
+  .cv-short-page .cv-domains-grid {
+    column-gap: 0.75rem !important;
+  }
+
+  .cv-short-page #domains .cv-domains-grid > div:first-child {
+    margin-top: 0 !important;
+  }
+
+  .cv-short-page .cv-page-split {
+    column-gap: 0.75rem !important;
+  }
+
+  .cv-short-page #profile-match {
+    margin-bottom: 0.5rem !important;
+  }
+
+  .cv-short-page .cv-experience-footer {
+    margin-top: 0.375rem !important;
+    padding-left: 0.5rem !important;
+  }
+
+  .cv-short-page .cv-experience-footer p {
+    font-size: 0.5625rem !important;
+    line-height: 1.35 !important;
+  }
+
+  /**
+   * Liste expériences : autoriser la coupure à l’intérieur d’une mission si nécessaire
+   * (évite qu’un gros bloc « indivisible » repousse tout le bas sur la page 2).
+   */
+  .cv-short-page #main > section > ul > li {
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+
+  /**
+   * CV long + pages offre : à l’impression, une seule colonne dans l’ordre métier
+   * (résumé → domaines → adéquation → contact → compétences → niveau → expériences → …).
+   * `display: contents` sur les grilles / colonnes remonte les sections comme enfants flex.
+   */
+  .cv-full-cv-print-root {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .cv-full-cv-print-root .cv-flow-mobile-stack {
+    display: contents;
+  }
+
+  .cv-full-cv-print-root .cv-page-split {
+    display: contents;
+  }
+
+  .cv-full-cv-print-root #left,
+  .cv-full-cv-print-root #main {
+    display: contents;
+  }
+
+  .cv-full-cv-print-root .cv-print-desktop-sidebar-group,
+  .cv-full-cv-print-root .cv-print-desktop-tail-group {
+    display: contents !important;
+  }
+
+  .cv-full-cv-print-root section {
+    margin-top: 0 !important;
+  }
+
+  .cv-full-cv-print-root #jobs {
+    break-before: auto !important;
+    page-break-before: auto !important;
+  }
+
   /* Hide non-printable elements */
   .print\:hidden {
     display: none !important;
@@ -236,10 +338,28 @@ html {
     page-break-inside: auto;
   }
 
+  /**
+   * CV court : le profil ne doit pas être une section « indivisible » seule sur une page
+   * (sinon les domaines et la suite partent systématiquement après — effet « trou » après le summary).
+   */
+  .cv-layout-short .cv-short-about {
+    break-inside: auto;
+    page-break-inside: auto;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  .cv-layout-short .cv-short-about p {
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+
   /** CV court : moins d’air sous les domaines + éviter un saut de page juste après. */
   .cv-layout-short section#domains {
     margin-bottom: 0;
     padding-bottom: 0;
+    break-before: avoid;
+    page-break-before: avoid;
     break-after: avoid;
     page-break-after: avoid;
   }
