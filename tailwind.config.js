@@ -10,14 +10,14 @@ const colors = require('tailwindcss/colors');
  *   `md:text-sm`, `text-justify` (y compris mobile) ; print `text-xs`.
  *
  * Colonne gauche : `.cv-education-heading`, `.cv-education-primary`, `.cv-study-title` en `text-base` ; méta grise `text-sm`.
- * Bloc Niveau de formation (`EducationLevel`) : même classes sur CV complet et CV court / mobile (pas de `-compact` sur le corps).
+ * Bloc Niveau de formation : `Pill` + `.cv-pill-education` ; texte secondaire `.cv-education-muted-narrow`.
  *
  * Header : `lib/cv-header-toolbar.ts` — boutons `h-8 w-8`, icônes `h-4` (md `h-5`) ; fond clair, Malt légèrement désaturé au repos.
  *
  * Lignes titre + date : `.cv-row-with-side-meta` + `self-end` sur la méta droite (missions, projets). Études : `.cv-row-study-title-year` (baseline).
  *
- * Espacement : `.cv-flow-mobile-stack` (mobile : `gap-10` sous le header) + `cv-mobile-section-mt` / `max-md:!mt-0` sur les enfants ; `.cv-section-simple-list` — Projects, Learnings, Hobbies, Studies ; jobs — `app/[lang]/jobs.tsx` (`mt-4 space-y-4`).
- * Grille desktop / print : `.cv-domains-grid` (3 × 1/3) + `.cv-page-split` — `#left` : `md:col-span-1` + `print:col-span-1` ; `#main` : `md:col-span-2` + `print:col-span-2` (CV complet, offres, court).
+ * Espacement : `.cv-flow-mobile-stack` (mobile : `gap-10` sous le header) + `cv-mobile-section-mt` / `max-md:!mt-0` sur les enfants ; `.cv-section-simple-list` + `.cv-cq-section` / `.cv-cq-link-list` / `.cv-cq-project-list` — Projects, Learnings, Hobbies, Studies ; jobs — `app/[lang]/jobs.tsx` (`mt-4 space-y-4`).
+ * Grille desktop / print : `.cv-domains-grid` (3 × 1/3) + `.cv-page-split` — mobile `gap-y-10` (même pas que `.cv-flow-mobile-stack`) ; `#left` / `#main` : `md:col-span-*` + `print:col-span-*`.
  * Typo : `styles/globals.css` (`.cv-education-*`, `.cv-study-*`, `.cv-job-description`, `.cv-about-domain-print-body`, `.cv-row-*`, `.cv-pill-*`, `.cv-pill-match-metric`, `.cv-match-requirement-card`).
  */
 /** @type {import('tailwindcss').Config} */
