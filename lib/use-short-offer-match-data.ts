@@ -7,7 +7,7 @@ import {
   computeShortOfferMatchData,
   computeShortUrlMatchData,
 } from '@/lib/short-offer-match';
-import type { MatchDisplayData } from '@/components/TechMatchDisplay';
+import type { MatchDisplayData } from '@/lib/match-display-types';
 import type { Locale } from 'i18n-config';
 
 /**

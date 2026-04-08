@@ -17,4 +17,8 @@ export interface JobOffer {
   title: { fr: string; en: string };
   url?: string;
   requirements: MatchRequirement[];
+  /** Adresse du lieu de travail (itinéraire depuis la gare de Thomery). */
+  workAddress?: string;
+  /** Libellé discret affiché à côté du lieu (ex. durée de trajet). */
+  commuteLabel?: string;
 }

@@ -1,4 +1,4 @@
-import type { MatchDisplayData } from '@/components/TechMatchDisplay';
+import type { MatchDisplayData } from '@/lib/match-display-types';
 import bundleJson from '@/data/cv/bundle.json';
 import { getOffer } from '@/data/offers';
 import { enrichJobOfferRequirements } from '@/lib/match-catalog';
@@ -36,7 +36,7 @@ function hasReadableMatchParams(sp: URLSearchParams): boolean {
 }
 
 /**
- * Même résolution que `MatchOfferClient` (spec / company + requirement), données bundle — pour `/short?company=…`.
+ * Même résolution que les pages offre (spec / company + requirement), données bundle — pour `/short?company=…`.
  */
 export function computeShortUrlMatchData(
   locale: Locale,
@@ -55,7 +55,7 @@ export function computeShortUrlMatchData(
   return { entries: entries.slice(0, SHORT_PROFILE_MATCH_MAX) };
 }
 
-/** Même logique que `TechMatch` (RSC) mais synchrone — pour le CV court en export statique / hydratation client. */
+/** Offre catalogue `data/offers` — pour le CV court (`?offer=id`) en export statique / hydratation client. */
 export function computeShortOfferMatchData(
   locale: Locale,
   offerId: string,

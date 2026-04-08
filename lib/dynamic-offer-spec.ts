@@ -99,6 +99,13 @@ export function parseJobOfferFromUnknown(
     trimStr(o.id, 80) ||
     `custom-${company.toLowerCase().replace(/\s+/g, '-').slice(0, 40)}`;
 
+  const workAddress = trimStr(o.workAddress, 500) || undefined;
+  let commuteLabel = trimStr(o.commuteLabel, 80) || undefined;
+  const cm = o.commuteMinutes ?? o.commute_minutes;
+  if (!commuteLabel && typeof cm === 'number' && Number.isFinite(cm) && cm >= 0) {
+    commuteLabel = `~${Math.round(cm)} min`;
+  }
+
   return enrichJobOfferRequirements(
     {
       id,
@@ -106,6 +113,8 @@ export function parseJobOfferFromUnknown(
       title: { fr: titleFr, en: titleEn },
       url: typeof o.url === 'string' ? trimStr(o.url, 500) : undefined,
       requirements,
+      ...(workAddress ? { workAddress } : {}),
+      ...(commuteLabel ? { commuteLabel } : {}),
     },
     catalog,
   );

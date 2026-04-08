@@ -12,7 +12,3 @@ const offers: Record<string, JobOffer> = {
 export function getOffer(id: string): JobOffer | undefined {
   return offers[id];
 }
-
-export function getAllOfferIds(): string[] {
-  return Object.keys(offers);
-}

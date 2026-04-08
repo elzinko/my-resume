@@ -9,6 +9,11 @@ export interface EducationLevelContent {
   diplomaDetail: string;
   additionalTraining: string;
   trainingThemes: string;
+  /**
+   * Pastille verte à droite du titre Profil (CV long, desktop + PDF).
+   * Si absent : « Équivalent {levelPrimary} » (fr) / « Equivalent {levelPrimary} » (en).
+   */
+  profileInlineBadge?: string;
 }
 
 const FALLBACK: Record<Locale, EducationLevelContent> = {
@@ -67,5 +72,18 @@ export function getEducationLevelContent(
     additionalTraining:
       pickString(raw, 'additionalTraining') ?? fb.additionalTraining,
     trainingThemes: pickString(raw, 'trainingThemes') ?? fb.trainingThemes,
+    profileInlineBadge: pickString(raw, 'profileInlineBadge'),
   };
+}
+
+/** Libellé de la pastille profil (vert) à côté du titre « Profil ». */
+export function getProfileEducationBadgeLabel(
+  content: EducationLevelContent,
+  locale: Locale,
+): string {
+  const explicit = content.profileInlineBadge?.trim();
+  if (explicit) return explicit;
+  return locale === 'fr'
+    ? `Équivalent ${content.levelPrimary}`
+    : `Equivalent ${content.levelPrimary}`;
 }

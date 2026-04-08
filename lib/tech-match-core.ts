@@ -1,5 +1,5 @@
 import type { MatchRequirement } from '@/data/offers/types';
-import type { MatchEntry } from '@/components/TechMatchDisplay';
+import type { MatchEntry } from '@/lib/match-display-types';
 
 export interface JobForMatching {
   client: string;

@@ -1,10 +1,10 @@
 /**
- * Liens « Version courte » / « Version complète » en préservant offre dynamique (match, custom, offer id).
+ * Liens « Version courte » / « Version complète » en préservant offre dynamique (match, custom, offre bundle).
  */
 
+import { getOffer } from '@/data/offers';
+import { jobOfferToMatchHref, jobOfferToMatchSearchParams } from '@/lib/offer-to-match-url';
 import { withQuery } from '@/lib/cv-path-utils';
-
-const OFFER_SPECIAL = new Set(['match', 'custom']);
 
 /**
  * Depuis une page offre complète → URL du CV court avec les mêmes paramètres quand c’est pertinent.
@@ -24,13 +24,18 @@ export function shortHrefFromOfferPath(
     const q = searchParams.toString();
     return q ? `/${lang}/short?${q}` : `/${lang}/short`;
   }
-  if (!OFFER_SPECIAL.has(offerId)) {
-    const merged = new URLSearchParams(searchParams);
-    merged.set('offer', offerId);
-    return withQuery(`/${lang}/short`, merged);
+  const job = getOffer(offerId);
+  if (job) {
+    const q = jobOfferToMatchSearchParams(job).toString();
+    return q ? `/${lang}/short?${q}` : `/${lang}/short`;
   }
   return withQuery(`/${lang}/short`, searchParams);
 }
+
+export type FullHrefFromShortOptions = {
+  /** Aligné sur `SHORT_CV_OFFER_ID` : URL sans `?offer=` mais CV court contextualisé. */
+  defaultOfferId?: string | null;
+};
 
 /**
  * Depuis `/[lang]/short` avec query → retour vers la page offre adaptée, sinon CV complet.
@@ -38,6 +43,7 @@ export function shortHrefFromOfferPath(
 export function fullHrefFromShortPath(
   lang: string,
   searchParams: URLSearchParams,
+  options?: FullHrefFromShortOptions,
 ): string {
   if (searchParams.get('spec')?.trim()) {
     const q = searchParams.toString();
@@ -53,7 +59,17 @@ export function fullHrefFromShortPath(
   }
   const offer = searchParams.get('offer')?.trim();
   if (offer && !company && !hasReq) {
-    return `/${lang}/offer/${encodeURIComponent(offer)}`;
+    const job = getOffer(offer);
+    if (job) return jobOfferToMatchHref(lang, job);
+    const next = new URLSearchParams(searchParams);
+    next.delete('offer');
+    return withQuery(`/${lang}`, next);
+  }
+  const fallback = options?.defaultOfferId?.trim();
+  if (fallback && !company && !hasReq) {
+    const job = getOffer(fallback);
+    if (job) return jobOfferToMatchHref(lang, job);
+    return withQuery(`/${lang}`, searchParams);
   }
   return withQuery(`/${lang}`, searchParams);
 }
