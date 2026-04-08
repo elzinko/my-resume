@@ -44,8 +44,6 @@ export default function OfferTailoredShell({
           <div className="space-y-10 print:hidden md:hidden max-md:!mt-0">
             {/* @ts-expect-error Server Component */}
             <Contact locale={lang} className="mt-0" condensed />
-            {/* @ts-expect-error Server Component */}
-            <Skills locale={lang} className="mt-0" />
           </div>
         </div>
 
@@ -57,10 +55,10 @@ export default function OfferTailoredShell({
             <div className="cv-print-desktop-sidebar-group hidden md:block">
               {/* @ts-expect-error Server Component */}
               <Contact locale={lang} sectionId={false} />
-              {/* @ts-expect-error Server Component */}
-              <Skills locale={lang} sectionId={false} />
             </div>
             <EducationLevel content={educationLevel} />
+            {/* @ts-expect-error Server Component */}
+            <Skills locale={lang} sectionId={false} />
             {/* @ts-expect-error Server Component */}
             <Studies locale={lang} />
             <div className="cv-print-desktop-tail-group max-md:hidden md:block">

@@ -75,8 +75,6 @@ export default async function Page({
           <div className="cv-mobile-only-sidebar-dup space-y-10 print:hidden md:hidden max-md:!mt-0">
             {/* @ts-expect-error Server Component */}
             <Contact locale={lang} className="mt-0" condensed />
-            {/* @ts-expect-error Server Component */}
-            <Skills locale={lang} className="mt-0" />
           </div>
         </div>
 
@@ -88,10 +86,10 @@ export default async function Page({
             <div className="cv-print-desktop-sidebar-group hidden md:block">
               {/* @ts-expect-error Server Component */}
               <Contact locale={lang} sectionId={false} />
-              {/* @ts-expect-error Server Component */}
-              <Skills locale={lang} sectionId={false} />
             </div>
             <EducationLevel content={educationLevel} />
+            {/* @ts-expect-error Server Component */}
+            <Skills locale={lang} sectionId={false} />
             {/* @ts-expect-error Server Component */}
             <Studies locale={lang} />
             <div className="cv-print-desktop-tail-group max-md:hidden md:block">

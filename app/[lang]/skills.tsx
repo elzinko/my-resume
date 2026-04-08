@@ -15,7 +15,7 @@ export default async function skills({
   const data: any = await getCvData(locale);
   const sectionClass = [
     className || 'mt-10',
-    'print:order-[50] print-preview:order-[50]',
+    'print:order-[70] print-preview:order-[70]',
   ]
     .filter(Boolean)
     .join(' ');
