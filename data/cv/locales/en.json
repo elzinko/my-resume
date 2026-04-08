@@ -1,0 +1,316 @@
+{
+  "header": {
+    "role": "Fullstack Developer"
+  },
+  "contact": {
+    "title": "Contact details",
+    "phoneTitle": "phone",
+    "emailTitle": "e-mail",
+    "locationTitle": "location"
+  },
+  "about": {
+    "title": "Summary",
+    "text": "I am an agile fullstack consultant passionate about open source frontend and backend technologies. I like to develop software using cloud solutions, all in line with the Devops movement."
+  },
+  "sectionTitles": {
+    "skills": "Skills",
+    "studies": "Studies",
+    "jobs": "Jobs",
+    "projects": "Projects",
+    "hobbies": "Hobbies",
+    "learnings": "Learnings"
+  },
+  "educationLevel": {
+    "title": "Education Level",
+    "levelPrimary": "Bac+5",
+    "effectiveLevelDetail": "Backed by 20 years of professional experience",
+    "diploma": "Bachelor's degree (Bac+3)",
+    "diplomaDetail": "Professional Bachelor in Computer Science and Software Systems",
+    "additionalTraining": "Continuing education",
+    "trainingThemes": "Microelectronics / Signal processing / ML / LLM"
+  },
+  "head": {
+    "url": "https://elzinko.github.io/my-resume/en",
+    "name": "Thomas Couderc's resume",
+    "locale": "en_EN",
+    "seo": {
+      "description": "This is my new professional resume",
+      "title": "Thomas Couderc's resume"
+    }
+  },
+  "jobs": {
+    "jpb-systeme-2024": {
+      "role": "IoT Developer",
+      "description": "Fullstack IoT development on the Keyvibe product (Keyprod startup): real-time acquisition and cloud telemetry.",
+      "bullets": [
+        "Multi-threshold production detection on Raspberry Pi 3/4 (Python, Node.js) — real-time machine state analysis.",
+        "Ethernet → MQTT → AWS IoT Core → Lambda pipeline: low latency, scalable, DHCPD-configured."
+      ]
+    },
+    "blablacar-2023": {
+      "role": "Full Stack Consultant",
+      "description": "New cash refund module for BlablaCar-operated buses.",
+      "bullets": [
+        "New Spring Boot microservice for refunds.",
+        "React refund tab inside the Zendesk back-office."
+      ]
+    },
+    "smartch-2023": {
+      "role": "Backend Consultant",
+      "description": "SaaS e-learning platform: backend design and development.",
+      "bullets": [
+        "Kotlin/Ktor GraphQL API with Exposed persistence on PostgreSQL.",
+        "Hexagonal architecture and CI/CD pipelines."
+      ]
+    },
+    "sncf-reseaux-dgex-solutions-2022": {
+      "role": "System Architect",
+      "description": "Growth and quality strategy on the OSRD open source project (SAFe). Cross-team technical backlog ownership.",
+      "bullets": [
+        "SAFe coaching of several teams on an open source railway product.",
+        "Cross-team technical backlog: observability, build, releases.",
+        "Rust and Python contributions on the simulator core."
+      ]
+    },
+    "leboncoin-2021": {
+      "role": "Backend Consultant",
+      "description": "Payment engine rewrite and design of an internal wallet.",
+      "bullets": [
+        "Hexagonal architecture in a Go monorepo.",
+        "Event-driven Kafka pipeline; Datadog and ELK observability.",
+        "Internal wallet POC and technical spikes."
+      ]
+    },
+    "celsius-energy-2020": {
+      "role": "Full Stack Consultant",
+      "description": "IoT logging and monitoring for a geothermal energy solution.",
+      "bullets": [
+        "Designed a scalable real-time dashboard architecture for an IoT fleet.",
+        "Automated CI/CD pipelines: unit, integration and e2e tests.",
+        "Scrum methodology inside a cross-functional team."
+      ]
+    },
+    "relevanc-2020": {
+      "role": "Full Stack Consultant",
+      "description": "Bootstrap of the Coupilo multitenant couponing rewrite.",
+      "bullets": [
+        "Java 11 / Spring Boot foundation generated with JHipster.",
+        "Hexagonal architecture deployed on GCP."
+      ]
+    },
+    "ecocea-2019": {
+      "role": "DevOps Consultant",
+      "description": "Software factory overhaul for the Manutan e-commerce website.",
+      "bullets": [
+        "Software factory modernization: Jenkins → GitLab CI.",
+        "WebSphere Commerce build industrialization (Gradle, Docker).",
+        "React onboarding support for the frontend teams."
+      ]
+    },
+    "edelia-2016": {
+      "role": "Full Stack Consultant",
+      "description": "Design and development of systems tied to electricity, water and gas metering.",
+      "bullets": [
+        "Calculation backend for Sowee connected thermostats.",
+        "Digital transformation program, DevOps workstream.",
+        "Mon Eco Service hybrid mobile app (fullstack design and delivery)."
+      ]
+    },
+    "jcdecaux-2015": {
+      "role": "Full Stack Consultant",
+      "description": "Mobile apps for maintaining the group's street furniture.",
+      "bullets": [
+        "Java 8 / Spring Boot backend and field apps, delivered in Scrum."
+      ]
+    },
+    "lotsys-filiale-fdj-2014": {
+      "role": "Backend Consultant",
+      "description": "Studies and development on the FDJ backend.",
+      "bullets": [
+        "Session management in a clustered environment.",
+        "REST API development on the gateway."
+      ]
+    },
+    "mediametrie-2013": {
+      "role": "Backend Consultant",
+      "description": "API design and development for an audience measurement system.",
+      "bullets": [
+        "Scrum-based R&D activities.",
+        "POC of an audience tag quality measurement tool.",
+        "Internet nomenclature integrator as part of a global project."
+      ]
+    },
+    "thales-communications-2012": {
+      "role": "Full Stack Consultant",
+      "description": "Open source intelligence analysis platform — social network and opinion analysis (CenTAI Lab, THALES R&D).",
+      "bullets": [
+        "Performance audit and processing pipeline optimization.",
+        "Scalable Internet proof service.",
+        "Load-balancing integration for an NLP tool.",
+        "GWT interfaces and virtual machine templates."
+      ]
+    },
+    "mediapost-2011": {
+      "role": "Full Stack Consultant",
+      "description": "Intranet contracting tool for La Poste's printed advertising products.",
+      "bullets": [
+        "POC of a Selenium Hub-based testing solution.",
+        "Scrum facilitation (sprints, reviews, retros, dailies)."
+      ]
+    },
+    "renault-bnp-paribas-la-compagnie-1818-dgfip-sfr-2004": {
+      "role": "Earlier experience",
+      "description": "Earlier assignments, details available on request.",
+      "bullets": []
+    }
+  },
+  "domains": {
+    "agile": {
+      "name": "Agile",
+      "description": "I know how to use my multiple experiences of agility in the service of a team in order to achieve a product close to the need with a Craftmanship philosophy."
+    },
+    "dev": {
+      "name": "Dev",
+      "description": "I like to develop reusable components in a clustered environment using concepts like microservices, robustness, observability, clean code."
+    },
+    "ops": {
+      "name": "Ops",
+      "description": "I want to collaborate with operational teams by practicing continuous deployment and thus produce value for the company by reducing organizational friction."
+    }
+  },
+  "studies": {
+    "francois-1er-high-school-baccalaureat-s-specialite-mathemati": {
+      "name": "French HS diploma, Science major"
+    },
+    "coursera-control-of-mobile-robots-digital-signal-processing": {
+      "name": "Control of Mobile Robots & Digital Signal Processing"
+    },
+    "lafayette-high-school-classes-preparatoires-grandes-ecoles-p": {
+      "name": "Scientific preparatory classes in physics"
+    },
+    "coursera-apprentissage-automatique-ml": {
+      "name": "Machine Learning"
+    },
+    "conservatoire-national-des-arts-et-metiers-processeurs-de-si": {
+      "name": "Signal processors and programmable logic"
+    },
+    "conservatoire-national-des-arts-et-metiers-programmation-ava": {
+      "name": "Advanced microcontroller programming"
+    },
+    "iut-licence-pro-systemes-informatiques-et-logiciels": {
+      "name": "Bachelor's degree in Computer Systems and Software"
+    },
+    "iut-dut-informatique": {
+      "name": "Technological University Diploma in Computer Science"
+    }
+  },
+  "projects": {
+    "shopify-plugin-product-assistant": {
+      "description": "Shopify product assistant plugin (recommendations, product pages, purchase flows). In active development.",
+      "bullets": []
+    },
+    "cop1": {
+      "description": "COP1 project — built in 2026.",
+      "bullets": []
+    },
+    "iamthelaw": {
+      "description": "I Am The Law project — built in 2026.",
+      "bullets": []
+    },
+    "lifefindsaway": {
+      "description": "LifeFindsAway project — built in 2026.",
+      "bullets": []
+    },
+    "realizator": {
+      "description": "Realizator project — built in 2026.",
+      "bullets": []
+    },
+    "livestreamz": {
+      "description": "Live streaming–related project — built in 2026.",
+      "bullets": []
+    },
+    "muti": {
+      "description": "MUTI — Motion Orchestration Engine: orchestration layer for motion and creative pipelines. Early 2026 development.",
+      "bullets": []
+    },
+    "curriculum-vitae": {
+      "description": "My own professional resume made with love",
+      "bullets": [
+        "own design with tailwind",
+        "mobile ready"
+      ]
+    },
+    "matiere-web": {
+      "description": "Co-founder and director of the web agency \"Matière Web\"",
+      "bullets": []
+    },
+    "deploiement-octobot": {
+      "description": "Deploy freely an Octobot instance on an Oracle cloud free tier.",
+      "bullets": []
+    },
+    "fizzbuzz-en-go": {
+      "description": "Fizzbuzz project using Golang",
+      "bullets": []
+    }
+  },
+  "hobbies": [
+    {
+      "slug": "creer-du-son",
+      "name": "Creating music"
+    },
+    {
+      "slug": "crossovers",
+      "name": "Crossovers"
+    },
+    {
+      "slug": "rider",
+      "name": "Ridding the hills"
+    },
+    {
+      "slug": "le-systeme-de-londres",
+      "name": "London system or Caro-Kann"
+    }
+  ],
+  "learnings": [
+    {
+      "slug": "llm",
+      "name": "LLM"
+    },
+    {
+      "slug": "aws-bedrock",
+      "name": "AWS Bedrock"
+    },
+    {
+      "slug": "mcp",
+      "name": "MCP"
+    },
+    {
+      "slug": "langchain",
+      "name": "LangChain"
+    },
+    {
+      "slug": "openrag",
+      "name": "OpenRAG"
+    },
+    {
+      "slug": "bmad",
+      "name": "BMAD"
+    }
+  ],
+  "ui": {
+    "present": "Present",
+    "expandTech": "Show all technologies",
+    "collapseTech": "Show fewer technologies",
+    "versionFull": "Full version",
+    "versionCompact": "Short version",
+    "menu": "Menu",
+    "menuClose": "Close menu",
+    "moreExperience": "+20 years of experience",
+    "moreExperienceSuffix": "in fullstack development and DevOps.",
+    "otherClients": "Other clients: Edelia (EDF), JCDecaux, Lotsys (FDJ), Médiamétrie, Thales, Médiapost, BNP Paribas, Renault, SFR...",
+    "sectionContact": "Contact",
+    "sectionExperience": "Experience",
+    "sectionEducation": "Education",
+    "sectionProfile": "Profile"
+  }
+}
