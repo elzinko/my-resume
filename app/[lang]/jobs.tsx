@@ -18,7 +18,7 @@ export default async function jobs({ locale }: { locale: Locale }) {
     <div className="cv-print-jobs-group print:order-[90] print-preview:order-[90]">
       <section
         id="jobs"
-        className="mt-10 break-before-page print:break-before-auto"
+        className="mt-10 max-md:mt-0 break-before-page print:break-before-auto"
       >
         <h2 className="border-b pb-1 text-2xl font-semibold text-cv-jobs">
           {data?.jobsTitle?.title}

@@ -9,17 +9,6 @@ import {
 
 const MD_MIN = 768;
 
-function useIsBelowMd() {
-  const [below, setBelow] = useState(false);
-  useLayoutEffect(() => {
-    const run = () => setBelow(window.innerWidth < MD_MIN);
-    run();
-    window.addEventListener('resize', run);
-    return () => window.removeEventListener('resize', run);
-  }, []);
-  return below;
-}
-
 export type JobFramework = { id: string; name: string; link?: string };
 
 interface JobFrameworkPillsProps {
@@ -40,9 +29,12 @@ const MAX_H_REM = { default: 3.1 } as const;
 /** Gaps flex (gap-1 / gap-1.5) en px pour coller au layout Tailwind mobile. */
 const GAP_PX = { compact: 4, default: 6 } as const;
 
+/** Nombre max de pastilles visibles sans « tout voir » (écran + impression). */
+const MAX_VISIBLE_WHEN_COLLAPSED = 10;
+
 /**
- * Pastilles techno : sur viewport &lt; md (CV long), ~2 lignes + pastille « … », clic pour tout voir.
- * À partir de md (CV long), tout visible. **CV court (`compact`)** : une seule ligne, sans « … », le surplus est masqué.
+ * Pastilles techno : CV long — max {@link MAX_VISIBLE_WHEN_COLLAPSED} + « … » (mobile et desktop), idem à l’impression sans extension.
+ * **CV court (`compact`)** : une seule ligne mesurée, cap à 10 hors impression ; impression limitée à 10.
  */
 export default function JobFrameworkPills({
   frameworks,
@@ -55,8 +47,11 @@ export default function JobFrameworkPills({
   const measureRef = useRef<HTMLDivElement>(null);
   const [expanded, setExpanded] = useState(false);
   const [printing, setPrinting] = useState(false);
-  const [visibleCount, setVisibleCount] = useState(() => frameworks.length);
-  const isBelowMd = useIsBelowMd();
+  const [visibleCount, setVisibleCount] = useState(() =>
+    Math.min(MAX_VISIBLE_WHEN_COLLAPSED, frameworks.length),
+  );
+  /** Évite l’erreur d’hydratation : pas de `<button>` avant le premier layout (serveur ≠ client `window`). */
+  const [layoutReady, setLayoutReady] = useState(false);
 
   const gapClass = compact ? 'gap-1' : 'gap-1.5 md:gap-2';
   const rem = MAX_H_REM.default;
@@ -84,72 +79,114 @@ export default function JobFrameworkPills({
         return;
       }
 
-      /** Impression : tout afficher (le mode compact coupe sinon avec overflow + une ligne). */
+      const cap = MAX_VISIBLE_WHEN_COLLAPSED;
+
+      /** Impression : au plus `cap` pastilles (pas d’extension). */
       if (printing) {
+        setVisibleCount(Math.min(cap, frameworks.length));
+        return;
+      }
+
+      /** CV court : une ligne mesurée, plafonnée à `cap`. */
+      if (compact) {
+        const outer = outerRef.current;
+        const measure = measureRef.current;
+        if (!outer || !measure) {
+          setVisibleCount(Math.min(cap, frameworks.length));
+          return;
+        }
+        const cw = outer.clientWidth;
+        if (cw < 1) {
+          setVisibleCount(Math.min(cap, frameworks.length));
+          return;
+        }
+        const widths: number[] = [];
+        let maxH = 0;
+        for (let i = 0; i < frameworks.length; i += 1) {
+          const el = measure.querySelector(
+            `[data-fw-measure="${i}"]`,
+          ) as HTMLElement | null;
+          if (!el) {
+            setVisibleCount(Math.min(cap, frameworks.length));
+            return;
+          }
+          widths.push(el.offsetWidth);
+          maxH = Math.max(maxH, el.offsetHeight);
+        }
+        const moreEl = measure.querySelector(
+          '[data-more-measure]',
+        ) as HTMLElement | null;
+        const moreW = moreEl?.offsetWidth ?? 0;
+        if (maxH < 1 || moreW < 1) {
+          setVisibleCount(Math.min(cap, frameworks.length));
+          return;
+        }
+        const rootFont = parseFloat(
+          getComputedStyle(document.documentElement).fontSize || '16',
+        );
+        const maxHPx = maxH + 2;
+        const k = maxFitCountSingleRowNoMore(
+          widths,
+          cw,
+          maxH,
+          gapPx,
+          maxHPx,
+        );
+        setVisibleCount(Math.min(cap, k));
+        return;
+      }
+
+      /** CV long : tout voir si étendu. */
+      if (expanded) {
         setVisibleCount(frameworks.length);
         return;
       }
 
-      /** CV court : toujours une ligne (y compris desktop), sans pastille « … ». */
-      if (!compact) {
-        if (
-          window.innerWidth >= MD_MIN ||
-          expanded ||
-          printing
-        ) {
-          setVisibleCount(frameworks.length);
-          return;
-        }
+      /** Desktop replié : `cap` pastilles. */
+      if (window.innerWidth >= MD_MIN) {
+        setVisibleCount(Math.min(cap, frameworks.length));
+        return;
       }
 
+      /** Mobile replié : hauteur ~2 lignes + pastille « … », plafond `cap`. */
       const outer = outerRef.current;
       const measure = measureRef.current;
       if (!outer || !measure) {
-        setVisibleCount(frameworks.length);
+        setVisibleCount(Math.min(cap, frameworks.length));
         return;
       }
-
       const cw = outer.clientWidth;
       if (cw < 1) {
-        setVisibleCount(frameworks.length);
+        setVisibleCount(Math.min(cap, frameworks.length));
         return;
       }
-
       const widths: number[] = [];
       let maxH = 0;
-
       for (let i = 0; i < frameworks.length; i += 1) {
         const el = measure.querySelector(
           `[data-fw-measure="${i}"]`,
         ) as HTMLElement | null;
         if (!el) {
-          setVisibleCount(frameworks.length);
+          setVisibleCount(Math.min(cap, frameworks.length));
           return;
         }
         widths.push(el.offsetWidth);
         maxH = Math.max(maxH, el.offsetHeight);
       }
-
       const moreEl = measure.querySelector(
         '[data-more-measure]',
       ) as HTMLElement | null;
       const moreW = moreEl?.offsetWidth ?? 0;
       if (maxH < 1 || moreW < 1) {
-        setVisibleCount(frameworks.length);
+        setVisibleCount(Math.min(cap, frameworks.length));
         return;
       }
-
       const rootFont = parseFloat(
         getComputedStyle(document.documentElement).fontSize || '16',
       );
-      /** Une seule rangée de pastilles : budget hauteur = hauteur d’une pastille (+ marge). */
-      const maxHPx = compact ? maxH + 2 : rem * rootFont;
-
-      const k = compact
-        ? maxFitCountSingleRowNoMore(widths, cw, maxH, gapPx, maxHPx)
-        : maxFitCountOneRow(widths, moreW, cw, maxH, gapPx, maxHPx);
-
-      setVisibleCount(k);
+      const maxHPx = rem * rootFont;
+      const k = maxFitCountOneRow(widths, moreW, cw, maxH, gapPx, maxHPx);
+      setVisibleCount(Math.min(cap, k));
     };
 
     compute();
@@ -161,6 +198,8 @@ export default function JobFrameworkPills({
     const onResize = () => compute();
     window.addEventListener('resize', onResize);
 
+    setLayoutReady(true);
+
     return () => {
       window.removeEventListener('resize', onResize);
       ro.disconnect();
@@ -170,9 +209,8 @@ export default function JobFrameworkPills({
   if (frameworks.length === 0) return null;
 
   const showCollapse =
+    layoutReady &&
     !compact &&
-    typeof window !== 'undefined' &&
-    window.innerWidth < MD_MIN &&
     !expanded &&
     !printing &&
     visibleCount < frameworks.length;
@@ -180,9 +218,9 @@ export default function JobFrameworkPills({
   const visibleFrameworks = frameworks.slice(0, visibleCount);
 
   const showLess =
+    layoutReady &&
     !compact &&
     expanded &&
-    isBelowMd &&
     !printing &&
     frameworks.length > 0;
 

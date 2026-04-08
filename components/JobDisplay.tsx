@@ -1,9 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import formatDates, { formatJobDatesCompactYears } from '@/lib/date';
+import { sortJobFrameworksForDisplay } from '@/lib/framework-display-order';
 import JobExperienceBody from './JobExperienceBody';
 import JobFrameworkPills from './JobFrameworkPills';
+import { useJobFrameworkPriorityTokens } from './JobFrameworkDisplayProvider';
 import { slugifyClient } from '@/lib/slug';
 import type { Locale } from 'i18n-config';
 
@@ -70,9 +72,13 @@ export default function JobDisplay({
   locale = 'fr',
 }: JobDisplayProps) {
   const [detailsOpen, setDetailsOpen] = useState(false);
+  const priorityTokens = useJobFrameworkPriorityTokens();
   const dates = compact ? null : formatDates(job.startDate, job.endDate);
   const roleName = typeof job.role === 'string' ? job.role : job.role?.name;
-  const frameworks = job.frameworks || [];
+  const frameworks = useMemo(
+    () => sortJobFrameworksForDisplay(job.frameworks || [], priorityTokens),
+    [job.frameworks, priorityTokens],
+  );
   const shortDesc = (job.descriptionShort ?? '').trim();
   const longDesc = (job.description ?? '').trim();
   const hasBullets = Boolean(job.bullets?.length);
