@@ -254,7 +254,7 @@ html {
 
   /**
    * CV long + pages offre : à l’impression, une seule colonne dans l’ordre métier
-   * (résumé → domaines → adéquation → contact → compétences → niveau → expériences → …).
+   * (résumé → domaines → contact → compétences → niveau → études → projets → veille → loisirs → expériences).
    * `display: contents` sur les grilles / colonnes remonte les sections comme enfants flex.
    */
   .cv-full-cv-print-root {
@@ -369,4 +369,46 @@ html {
     text-decoration: none !important;
     color: inherit !important;
   }
+}
+
+/**
+ * Aperçu impression (écran) : `?print` sur le CV long — même flux qu’en @media print
+ * (une colonne après le header, ordre des sections via utilitaires `print-preview:order-*`).
+ */
+.cv-print-preview .cv-full-cv-print-root {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cv-print-preview .cv-full-cv-print-root .cv-flow-mobile-stack {
+  display: contents;
+}
+
+.cv-print-preview .cv-full-cv-print-root .cv-page-split {
+  display: contents;
+}
+
+.cv-print-preview .cv-full-cv-print-root #left,
+.cv-print-preview .cv-full-cv-print-root #main {
+  display: contents;
+}
+
+.cv-print-preview .cv-full-cv-print-root .cv-print-desktop-sidebar-group,
+.cv-print-preview .cv-full-cv-print-root .cv-print-desktop-tail-group {
+  display: block !important;
+}
+
+.cv-print-preview .cv-full-cv-print-root .cv-mobile-only-sidebar-dup,
+.cv-print-preview .cv-full-cv-print-root .cv-mobile-only-tail-stack {
+  display: none !important;
+}
+
+.cv-print-preview .cv-full-cv-print-root section {
+  margin-top: 0 !important;
+}
+
+.cv-print-preview .cv-full-cv-print-root #jobs {
+  break-before: auto !important;
+  page-break-before: auto !important;
 }

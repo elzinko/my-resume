@@ -100,7 +100,10 @@ export default function EducationLevel({
   }
 
   return (
-    <section id="education-level" className="mt-10 print:order-[60]">
+    <section
+      id="education-level"
+      className="mt-10 print:order-[60] print-preview:order-[60]"
+    >
       <h2 className="border-b pb-1 text-2xl font-semibold text-purple-300">
         {content.title}
       </h2>

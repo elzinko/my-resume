@@ -7,7 +7,7 @@ export default async function About({ locale }: { locale: Locale }) {
   return (
     <section
       id="about"
-      className="cv-mobile-section-mt max-md:!mt-0 print:order-[10]"
+      className="cv-mobile-section-mt max-md:!mt-0 print:order-[10] print-preview:order-[10]"
     >
       <h2 className="border-b pb-1 text-2xl font-semibold text-cv-section">
         {data?.about?.title}

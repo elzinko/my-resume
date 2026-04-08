@@ -15,6 +15,8 @@ import Projects from './projects';
 import { getCvData } from '@/lib/cv-data';
 import { getEducationLevelContent } from '@/lib/education-level-content';
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
+import FullCvPrintPreviewEffect from '@/components/FullCvPrintPreviewEffect';
 
 // Helper to generate document title (developer style: lowercase with underscores)
 function generateDocumentTitle(
@@ -57,6 +59,9 @@ export default async function Page({
 
   return (
     <>
+      <Suspense fallback={null}>
+        <FullCvPrintPreviewEffect />
+      </Suspense>
       {/* @ts-expect-error Server Component */}
       <Headers locale={lang} />
 
@@ -67,7 +72,7 @@ export default async function Page({
           {/* @ts-expect-error Server Component */}
           <Domains locale={lang} />
 
-          <div className="space-y-10 print:hidden md:hidden max-md:!mt-0">
+          <div className="cv-mobile-only-sidebar-dup space-y-10 print:hidden md:hidden max-md:!mt-0">
             {/* @ts-expect-error Server Component */}
             <Contact locale={lang} className="mt-0" condensed />
             {/* @ts-expect-error Server Component */}
@@ -107,7 +112,7 @@ export default async function Page({
           </div>
         </div>
 
-        <div className="flex max-md:mt-10 max-md:flex-col max-md:gap-10 md:hidden print:hidden">
+        <div className="cv-mobile-only-tail-stack flex max-md:mt-10 max-md:flex-col max-md:gap-10 md:hidden print:hidden">
           {/* @ts-expect-error Server Component */}
           <Projects locale={lang} sectionId={false} className="mt-0" condensed />
           {/* @ts-expect-error Server Component */}

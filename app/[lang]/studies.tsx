@@ -21,7 +21,10 @@ export default async function studies({
     byEndThenStart,
   );
   return (
-    <section id="studies" className="mt-10 print:order-[80]">
+    <section
+      id="studies"
+      className="mt-10 print:order-[80] print-preview:order-[80]"
+    >
       <h2 className="border-b pb-1 text-2xl font-semibold text-cv-section">
         {data?.studiesTitle?.title}
       </h2>

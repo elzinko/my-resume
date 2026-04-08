@@ -47,5 +47,10 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function printPreviewVariant({ addVariant }) {
+      /** Même ordre de sections qu’à l’impression, pour `?print=1` sur le CV long. */
+      addVariant('print-preview', 'html.cv-print-preview &');
+    },
+  ],
 };

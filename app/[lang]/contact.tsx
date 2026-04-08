@@ -32,7 +32,7 @@ export default async function Contact({
 
   const sectionClass = [
     className || 'mt-10',
-    'print:order-[40]',
+    'print:order-[40] print-preview:order-[40]',
   ]
     .filter(Boolean)
     .join(' ');

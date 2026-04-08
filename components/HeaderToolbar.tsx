@@ -128,6 +128,62 @@ function ModeControl({
   );
 }
 
+/** CV long (`/fr`, `/en`) : bascule `?print=1` — flux une colonne comme à l’impression. */
+function PrintPreviewToggleLink({
+  onNavigate,
+}: {
+  onNavigate?: () => void;
+}) {
+  const pathname = usePathname();
+  const sp = useSearchParams();
+  const loc = localeFromPathIfRoot(pathname);
+  if (!loc) return null;
+
+  const params = new URLSearchParams(sp.toString());
+  const printVal = params.get('print');
+  const active =
+    params.has('print') &&
+    (printVal === null ||
+      printVal === '' ||
+      printVal === '1' ||
+      printVal === 'true');
+
+  const next = new URLSearchParams(sp.toString());
+  if (active) next.delete('print');
+  else next.set('print', '1');
+  const q = next.toString();
+  const href = q ? `${pathname}?${q}` : pathname;
+
+  const { label, title } =
+    loc === 'en'
+      ? active
+        ? {
+            label: 'Normal layout',
+            title: 'Exit print-style single-column layout',
+          }
+        : {
+            label: 'Print layout',
+            title: 'Preview single-column layout (as when printing)',
+          }
+      : active
+      ? { label: 'Affichage normal', title: "Quitter l'aperçu impression" }
+      : {
+          label: 'Aperçu impression',
+          title: 'Une colonne comme à l’impression (PDF)',
+        };
+
+  return (
+    <Link
+      href={href}
+      className={`${cvHeaderModeBtn} print:hidden max-w-[11rem] truncate text-xs font-normal text-slate-500 hover:text-slate-800`}
+      title={title}
+      onClick={() => onNavigate?.()}
+    >
+      {label}
+    </Link>
+  );
+}
+
 /**
  * Desktop : langues à gauche, actions à droite.
  * Mobile : barre fixe en haut ; ouvert = langues à gauche, actions + menu à droite (pas de séparateur).
@@ -191,6 +247,9 @@ export default function HeaderToolbar({ shortLang }: { shortLang?: string }) {
           <Suspense fallback={null}>
             <ModeControl shortLang={shortLang} />
           </Suspense>
+          <Suspense fallback={null}>
+            <PrintPreviewToggleLink />
+          </Suspense>
           <ToolbarIconList
             onPrint={runPrint}
             printTitle={printTitle}
@@ -250,6 +309,9 @@ export default function HeaderToolbar({ shortLang }: { shortLang?: string }) {
           >
             <Suspense fallback={null}>
               <ModeControl shortLang={shortLang} onNavigate={close} />
+            </Suspense>
+            <Suspense fallback={null}>
+              <PrintPreviewToggleLink onNavigate={close} />
             </Suspense>
             <ToolbarIconList
               onNavigate={close}
