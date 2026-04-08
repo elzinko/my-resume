@@ -1,7 +1,13 @@
 'use client';
 
-import React from 'react';
+import React, { Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Pill from './Pill';
+import {
+  DEV_PRESETS,
+  isDevDomainId,
+  resolveDevDomainTagsFromSearchParams,
+} from '@/lib/dev-domain-tags';
 
 /** Trait sous le titre (comportement historique) ou barre verticale à gauche du libellé. */
 export type DomainTitleAccent = 'underline' | 'verticalBar';
@@ -11,6 +17,34 @@ export type DomainTitleAccent = 'underline' | 'verticalBar';
  * Passer à `'verticalBar'` pour activer la barre à gauche partout.
  */
 export const DOMAIN_TITLE_ACCENT_DEFAULT: DomainTitleAccent = 'verticalBar';
+
+function DevDomainTagsRow({
+  tags,
+  compact,
+}: {
+  tags: readonly string[];
+  compact: boolean;
+}) {
+  const rowClass = compact
+    ? 'mt-2 flex min-w-0 flex-nowrap items-center gap-x-1 gap-y-0 overflow-x-auto py-1 print:mt-1 print:py-0.5'
+    : 'mt-1.5 hidden min-w-0 flex-nowrap items-center gap-x-1.5 gap-y-0 overflow-x-auto py-2 print:flex print:flex-nowrap md:flex';
+
+  return (
+    <div className={rowClass}>
+      {tags.map((name) => (
+        <Pill key={name} color="domain" compact={compact}>
+          {name.toLowerCase()}
+        </Pill>
+      ))}
+    </div>
+  );
+}
+
+function DevDomainTagsFromUrl({ compact }: { compact: boolean }) {
+  const sp = useSearchParams();
+  const tags = resolveDevDomainTagsFromSearchParams(sp);
+  return <DevDomainTagsRow tags={tags} compact={compact} />;
+}
 
 interface DomainProps {
   domain: {
@@ -75,13 +109,25 @@ export default function Domain({
         {domain.description}
       </p>
       {showTags && domain?.competencies && domain.competencies.length > 0 && (
-        <p className="hidden flex-wrap gap-x-2 gap-y-2 whitespace-nowrap py-2 print:flex print:flex-wrap print:whitespace-normal md:flex">
-          {domain.competencies.map((competency) => (
-            <Pill key={competency.id} color="domain">
-              {competency.name.toLowerCase()}
-            </Pill>
-          ))}
-        </p>
+        <>
+          {isDevDomainId(domain.id) ? (
+            <Suspense
+              fallback={
+                <DevDomainTagsRow tags={DEV_PRESETS.default} compact={compact} />
+              }
+            >
+              <DevDomainTagsFromUrl compact={compact} />
+            </Suspense>
+          ) : (
+            <p className="hidden flex-wrap gap-x-2 gap-y-2 whitespace-nowrap py-2 print:flex print:flex-wrap print:whitespace-normal md:flex">
+              {domain.competencies.map((competency) => (
+                <Pill key={competency.id} color="domain" compact={compact}>
+                  {competency.name.toLowerCase()}
+                </Pill>
+              ))}
+            </p>
+          )}
+        </>
       )}
     </div>
   );

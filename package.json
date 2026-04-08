@@ -18,7 +18,7 @@
     "start": "next start",
     "start:prod": "npm run build && next start",
     "test": "npm run prettier:check && npm run lint",
-    "test:unit": "tsx --test lib/match-catalog-expand.unit.test.ts lib/tech-match-core.unit.test.ts",
+    "test:unit": "tsx --test lib/match-catalog-expand.unit.test.ts lib/tech-match-core.unit.test.ts lib/dev-domain-tags.unit.test.ts",
     "playwright:install": "playwright install chromium",
     "test:playwright": "playwright install chromium && playwright test",
     "clean": "rm -rf node_modules",
