@@ -97,7 +97,7 @@ export default function JobDisplay({
     return (
       <div>
         <div className="cv-row-with-side-meta">
-          <span className="min-w-0 flex-1 text-sm font-bold leading-snug text-cv-jobs print:text-xs">
+          <span className="min-w-0 flex-1 text-sm font-bold leading-snug text-cv-jobs print:text-[10px] print:leading-tight">
             {job.client}
           </span>
           <span className="min-w-max shrink-0 self-end text-cv-meta font-normal tabular-nums leading-snug text-cv-jobs print:!inline print:text-[8px] max-md:hidden">

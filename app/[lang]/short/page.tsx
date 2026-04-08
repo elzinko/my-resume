@@ -111,6 +111,7 @@ export default async function ShortPage({
       lang={lang}
       headerName={data?.header?.name || ''}
       headerRole={data?.header?.role || ''}
+      defaultOfferId={defaultOfferId}
     >
       <Suspense fallback={null}>
         <ShortAutoprint />

@@ -23,20 +23,20 @@ export default function ContactDisplay({
 }: ContactDisplayProps) {
   if (compact) {
     return (
-      <ul className="mt-2 space-y-0.5 print:mt-1">
-        <li className="text-sm text-pink-200 print:text-xs">
+      <ul className="mt-2 space-y-0.5 print:mt-0.5">
+        <li className="text-sm text-pink-200 print:text-[10px] print:leading-tight">
           <strong className="text-cv-jobs">
             {contact.phoneTitle || 'Tél.'}
           </strong>
           <span className="ml-2">{contact.phone}</span>
         </li>
-        <li className="text-sm text-pink-200 print:text-xs">
+        <li className="text-sm text-pink-200 print:text-[10px] print:leading-tight">
           <strong className="text-cv-jobs">
             {contact.emailTitle || 'Email'}
           </strong>
           <span className="ml-2">{contact.email}</span>
         </li>
-        <li className="text-sm text-pink-200 print:text-xs">
+        <li className="text-sm text-pink-200 print:text-[10px] print:leading-tight">
           <strong className="text-cv-jobs">
             {contact.locationTitle || 'Lieu'}
           </strong>

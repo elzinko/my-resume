@@ -1,13 +1,7 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
-import { useMemo } from 'react';
 import TechMatchDisplay from '@/components/TechMatchDisplay';
-import { getOffer } from '@/data/offers';
-import {
-  computeShortOfferMatchData,
-  computeShortUrlMatchData,
-} from '@/lib/short-offer-match';
+import { useShortOfferMatchData } from '@/lib/use-short-offer-match-data';
 import type { Locale } from 'i18n-config';
 
 interface ShortOptionalOfferMatchProps {
@@ -20,25 +14,7 @@ export default function ShortOptionalOfferMatch({
   lang,
   defaultOfferId,
 }: ShortOptionalOfferMatchProps) {
-  const searchParams = useSearchParams();
-  const fromQuery = searchParams.get('offer')?.trim() || null;
-  const offerId = fromQuery || defaultOfferId;
-  const queryKey = searchParams.toString();
-
-  const data = useMemo(() => {
-    if (offerId && getOffer(offerId)) {
-      return computeShortOfferMatchData(lang, offerId);
-    }
-    const sp = new URLSearchParams(queryKey);
-    return computeShortUrlMatchData(lang, sp);
-  }, [lang, offerId, queryKey]);
-
+  const data = useShortOfferMatchData(lang, defaultOfferId);
   if (!data) return null;
-  return (
-    <TechMatchDisplay
-      data={data}
-      lang={lang as 'fr' | 'en'}
-      variant="compact"
-    />
-  );
+  return <TechMatchDisplay data={data} lang={lang as 'fr' | 'en'} />;
 }

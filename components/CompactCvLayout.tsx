@@ -68,7 +68,7 @@ export interface CompactCvData {
 interface CompactCvLayoutProps {
   data: CompactCvData;
   lang: 'fr' | 'en';
-  /** Bloc optionnel (ex. adéquation offre) dans la colonne gauche, après Compétences. */
+  /** Bloc optionnel (ex. Job fit / adéquation offre), pleine largeur sous les domaines. */
   children?: React.ReactNode;
 }
 
@@ -123,17 +123,20 @@ export default function CompactCvLayout({
   return (
     <div className="cv-layout-short print:p-0">
       {/* About - Full width section (same style as full CV) */}
-      <section className="mt-10 print:mt-4">
-        <h2 className="border-b pb-1 text-2xl font-semibold text-cv-section print:text-base">
+      <section
+        id="cv-short-about"
+        className="cv-short-about mt-10 print:mt-2 pb-6 print:pb-4 mb-6 print:mb-5"
+      >
+        <h2 className="border-b pb-1 text-2xl font-semibold text-cv-section print:pb-0.5 print:text-sm">
           {t.about}
         </h2>
-        <p className="mt-4 text-cv-body-muted print:mt-2 print:text-[10px]">
+        <p className="mt-4 text-cv-body-muted print:mt-1 print:text-[10px]">
           {data.about}
         </p>
       </section>
 
       {/* Domains - Full width (même grille 1/3 que le CV complet) */}
-      <section id="domains" className="mt-10 print:mt-4">
+      <section id="domains" className="mt-8 print:mt-3">
         <div className="cv-domains-grid">
           {data.domains.map((domain) => (
             <Domain
@@ -146,6 +149,8 @@ export default function CompactCvLayout({
         </div>
       </section>
 
+      {children}
+
       {/* Colonne gauche 1/3 + expériences 2/3 (grille alignée sur les domaines) */}
       <div className="cv-page-split mt-14 print:mt-2">
         <div
@@ -153,16 +158,16 @@ export default function CompactCvLayout({
           className="order-last flex w-full min-w-0 flex-col print:order-first print:col-span-1 md:order-first md:col-span-1"
         >
           {/* Contact - Reusing ContactDisplay component */}
-          <section className="mb-6 print:mb-4">
-            <h2 className="border-b pb-1 text-2xl font-semibold text-cv-jobs print:text-sm">
+          <section className="mb-6 print:mb-2">
+            <h2 className="border-b pb-1 text-2xl font-semibold text-cv-jobs print:pb-0.5 print:text-sm">
               {t.contact}
             </h2>
             <ContactDisplay contact={data.contact} compact={true} />
           </section>
 
           {/* Skills - Reusing Skill component in compact mode */}
-          <section className="mb-6 print:mb-4">
-            <h2 className="border-b pb-1 text-2xl font-semibold text-cv-tag-text print:text-sm">
+          <section className="mb-6 print:mb-2">
+            <h2 className="border-b pb-1 text-2xl font-semibold text-cv-tag-text print:pb-0.5 print:text-sm">
               {t.skills}
             </h2>
             <div className="mt-2 flex flex-wrap gap-1.5 print:mt-1 print:gap-1">
@@ -172,20 +177,18 @@ export default function CompactCvLayout({
             </div>
           </section>
 
-          {children}
-
           {/* Niveau de formation avant le détail des études (aligné CV long) */}
           <EducationLevel content={data.educationLevel} compact={true} />
 
           {/* Études sans détail (établissement masqué) — même titre que le CV long (#studies). */}
           <section
             id="studies"
-            className="cv-short-studies-section mb-6 print:mb-4"
+            className="cv-short-studies-section mb-6 print:mb-2"
           >
-            <h2 className="border-b pb-1 text-2xl font-semibold text-teal-300 print:text-sm">
+            <h2 className="border-b pb-1 text-2xl font-semibold text-teal-300 print:pb-0.5 print:text-sm">
               {t.education}
             </h2>
-            <ul className="mt-2 space-y-1 print:mt-1 print:space-y-0.5">
+            <ul className="mt-2 space-y-1 print:mt-1 print:space-y-0">
               {data.studies.map((study) => (
                 <StudyDisplay key={study.id} study={study} compact={true} />
               ))}
@@ -199,10 +202,10 @@ export default function CompactCvLayout({
         >
           {/* Experience - Reusing JobDisplay component */}
           <section>
-            <h2 className="border-b pb-1 text-2xl font-semibold text-cv-jobs print:text-sm">
+            <h2 className="border-b pb-1 text-2xl font-semibold text-cv-jobs print:pb-0.5 print:text-sm">
               {t.experience}
             </h2>
-            <ul className="mt-2 space-y-4 print:mt-1 print:space-y-3">
+            <ul className="mt-2 space-y-4 print:mt-1 print:space-y-1.5">
               {recentJobs.map((job, idx) => (
                 <li key={idx}>
                   <JobDisplay

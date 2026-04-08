@@ -16,7 +16,7 @@ export default function ExperienceClosingBlock({
   moreClientsLine,
 }: ExperienceClosingBlockProps) {
   return (
-    <div className="mt-4 border-l-4 border-teal-300/50 pl-3 print:mt-2">
+    <div className="cv-experience-footer mt-4 border-l-4 border-teal-300/50 pl-3 print:mt-2">
       <p className="text-xs text-gray-400 print:text-[10px]">
         <strong className="text-teal-300">{moreExperience}</strong>{' '}
         {moreExperienceTail}
