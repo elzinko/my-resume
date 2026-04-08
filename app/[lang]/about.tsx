@@ -12,7 +12,7 @@ export default async function About({ locale }: { locale: Locale }) {
       <h2 className="border-b pb-1 text-2xl font-semibold text-cv-section">
         {data?.about?.title}
       </h2>
-      <p className="mt-2 text-sm leading-snug text-cv-body-muted md:mt-4 md:text-base md:leading-normal">
+      <p className="cv-about-domain-print-body mt-2 text-sm leading-snug text-cv-body-muted md:mt-4 md:text-base md:leading-normal">
         {data?.about?.text}
       </p>
     </section>

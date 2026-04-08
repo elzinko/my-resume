@@ -103,7 +103,7 @@ export default function Domain({
         className={
           compact
             ? 'mt-4 text-cv-body-muted print:mt-1 print:text-[8px] print:leading-tight'
-            : 'mt-1.5 text-sm leading-snug text-cv-body-muted print:mt-4 print:min-h-0 print:text-base md:mt-4 md:min-h-[100px] md:text-base md:leading-normal'
+            : 'cv-about-domain-print-body mt-1.5 text-sm leading-snug text-cv-body-muted print:mt-4 print:min-h-0 md:mt-4 md:min-h-[100px] md:text-base md:leading-normal'
         }
       >
         {domain.description}

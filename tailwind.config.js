@@ -18,7 +18,7 @@ const colors = require('tailwindcss/colors');
  *
  * Espacement : `.cv-flow-mobile-stack` (mobile : `gap-10` sous le header) + `cv-mobile-section-mt` / `max-md:!mt-0` sur les enfants ; `.cv-section-simple-list` — Projects, Learnings, Hobbies, Studies ; jobs — `app/[lang]/jobs.tsx` (`mt-4 space-y-4`).
  * Grille desktop / print : `.cv-domains-grid` (3 × 1/3) + `.cv-page-split` — `#left` : `md:col-span-1` + `print:col-span-1` ; `#main` : `md:col-span-2` + `print:col-span-2` (CV complet, offres, court).
- * Typo : `styles/globals.css` (`.cv-education-*`, `.cv-study-*`, `.cv-job-description`, `.cv-row-*`, `.cv-pill-*`, `.cv-pill-match-metric`, `.cv-match-requirement-card`).
+ * Typo : `styles/globals.css` (`.cv-education-*`, `.cv-study-*`, `.cv-job-description`, `.cv-about-domain-print-body`, `.cv-row-*`, `.cv-pill-*`, `.cv-pill-match-metric`, `.cv-match-requirement-card`).
  */
 /** @type {import('tailwindcss').Config} */
 module.exports = {

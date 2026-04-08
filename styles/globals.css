@@ -108,6 +108,14 @@
   }
 
   /**
+   * Résumé (About) + paragraphes des colonnes Agile / Dev / Ops : même taille à l’impression
+   * (évite `print:text-base` sur les domaines alors que le profil reste en `text-sm`).
+   */
+  .cv-about-domain-print-body {
+    @apply print:text-sm print:leading-snug;
+  }
+
+  /**
    * Corps de mission : text-xs mobile, text-sm md+ ; justifié partout (mobile inclus) pour aligner avec le PDF.
    * Même token `text-cv-body-muted` que le profil et les domaines (About, Domain — pas de justification).
    */
