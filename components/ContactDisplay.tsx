@@ -1,6 +1,10 @@
 'use client';
 
 import React from 'react';
+import { buildContactLocationHref } from '@/lib/contact-maps';
+import { contactLocationLinkTitle } from '@/lib/contact-location-labels';
+import { useContactLocation } from '@/components/ContactLocationProvider';
+import type { Locale } from 'i18n-config';
 
 export interface ContactData {
   title?: string;
@@ -16,102 +20,209 @@ interface ContactDisplayProps {
   contact: ContactData;
   compact?: boolean;
   /**
-   * `true` : grille 3 colonnes (pleine largeur / mobile).
-   * `false` : liste verticale classique (colonne gauche desktop).
+   * `true` : grille 3 colonnes à partir de `md` (1 colonne en dessous).
+   * `false` : liste verticale (même rendu que la colonne gauche du CV complet).
    */
   condensed?: boolean;
+  /**
+   * CV court : chaque ligne = libellé à gauche / valeur à droite (mobile, tablette, impression).
+   */
+  cvShortInlineRows?: boolean;
+  locale?: Locale;
+}
+
+function LocationLinkBlock({
+  location,
+  locale,
+  className,
+}: {
+  location: string;
+  locale: Locale;
+  className?: string;
+}) {
+  const ctx = useContactLocation();
+  const mapsHref = ctx?.mapsHref ?? buildContactLocationHref();
+  const commuteLabel = ctx?.commuteLabel;
+  const isDirections = ctx?.isDirections ?? false;
+  const loc = ctx?.locale ?? locale;
+  const title = contactLocationLinkTitle(loc, isDirections);
+
+  return (
+    <div
+      className={`flex w-full min-w-0 flex-wrap items-baseline justify-between gap-x-2 gap-y-0.5 ${className ?? ''}`.trim()}
+    >
+      <a
+        href={mapsHref}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="min-w-0 break-words text-inherit underline decoration-current/40 underline-offset-2 hover:decoration-current/70"
+        title={title}
+      >
+        {location}
+      </a>
+      {commuteLabel ? (
+        <span className="shrink-0 text-xs font-normal text-slate-500 print:hidden">
+          {commuteLabel}
+        </span>
+      ) : null}
+    </div>
+  );
 }
 
 export default function ContactDisplay({
   contact,
   compact = false,
   condensed = false,
+  cvShortInlineRows = false,
+  locale = 'fr',
 }: ContactDisplayProps) {
-  if (compact) {
+  if (cvShortInlineRows) {
+    const row =
+      'flex w-full flex-row items-baseline justify-between gap-2 text-sm text-pink-200 md:gap-3 print:gap-2 print:text-[9px] print:leading-tight';
+    const labelCls = 'shrink-0 font-semibold text-cv-jobs';
+    const valueWrap = 'min-w-0 text-right';
+
     return (
-      <ul className="mt-2 space-y-0.5 print:mt-0.5">
-        <li className="text-sm text-pink-200 print:text-[10px] print:leading-tight">
-          <strong className="text-cv-jobs">
-            {contact.phoneTitle || 'Tél.'}
-          </strong>
-          <span className="ml-2">{contact.phone}</span>
+      <ul className="cv-short-contact-rows mt-2 space-y-1.5 md:space-y-1 print:mt-0.5 print:space-y-0.5">
+        <li className={row}>
+          <strong className={labelCls}>{contact.emailTitle}</strong>
+          <a
+            href={`mailto:${contact.email}`}
+            className={`${valueWrap} break-all`}
+          >
+            {contact.email}
+          </a>
         </li>
-        <li className="text-sm text-pink-200 print:text-[10px] print:leading-tight">
-          <strong className="text-cv-jobs">
+        <li className={row}>
+          <strong className={labelCls}>{contact.phoneTitle}</strong>
+          <a
+            href={`tel:${contact.phone.replace(/\s/g, '')}`}
+            className={`${valueWrap} tabular-nums`}
+          >
+            {contact.phone}
+          </a>
+        </li>
+        <li className={row}>
+          <strong className={labelCls}>{contact.locationTitle}</strong>
+          <div className={valueWrap}>
+            <LocationLinkBlock
+              location={contact.location}
+              locale={locale}
+              className="justify-end"
+            />
+          </div>
+        </li>
+      </ul>
+    );
+  }
+
+  if (compact) {
+    const row =
+      'flex flex-row items-baseline justify-between gap-2 text-sm text-pink-200 print:text-[10px] print:leading-tight';
+    return (
+      <ul className="mt-2 space-y-1 print:mt-0.5">
+        <li className={row}>
+          <strong className="shrink-0 text-cv-jobs">
             {contact.emailTitle || 'Email'}
           </strong>
-          <span className="ml-2">{contact.email}</span>
+          <span className="min-w-0 break-all text-right">{contact.email}</span>
         </li>
-        <li className="text-sm text-pink-200 print:text-[10px] print:leading-tight">
-          <strong className="text-cv-jobs">
+        <li className={row}>
+          <strong className="shrink-0 text-cv-jobs">
+            {contact.phoneTitle || 'Tél.'}
+          </strong>
+          <span className="min-w-0 text-right tabular-nums">{contact.phone}</span>
+        </li>
+        <li className={row}>
+          <strong className="shrink-0 text-cv-jobs">
             {contact.locationTitle || 'Lieu'}
           </strong>
-          <span className="ml-2">{contact.location}</span>
+          <div className="min-w-0 text-right">
+            <LocationLinkBlock
+              location={contact.location}
+              locale={locale}
+              className="justify-end"
+            />
+          </div>
         </li>
       </ul>
     );
   }
 
   if (condensed) {
+    const cell =
+      'flex min-w-0 flex-row items-baseline justify-between gap-2 text-pink-200 md:flex-col md:items-stretch md:gap-0';
+    const label =
+      'shrink-0 text-base font-bold text-cv-jobs print:text-sm md:block';
+    const value =
+      'mt-0.5 block min-w-0 text-right text-base print:text-sm md:mt-0.5 md:text-left';
     return (
       <div className="mt-4 grid grid-cols-1 gap-4 print:mt-2 print:grid-cols-3 print:gap-2 md:mt-4 md:grid-cols-3 md:gap-x-10 md:gap-y-2 md:items-start">
-        <div className="min-w-0 text-pink-200">
-          <strong className="block text-base font-bold text-cv-jobs print:text-sm">
-            {contact.phoneTitle}
-          </strong>
-          <a
-            href={`tel:${contact.phone}`}
-            className="mt-0.5 block text-base print:text-sm"
-          >
-            {contact.phone}
-          </a>
-        </div>
-        <div className="min-w-0 text-pink-200">
-          <strong className="block text-base font-bold text-cv-jobs print:text-sm">
-            {contact.emailTitle}
-          </strong>
+        <div className={cell}>
+          <strong className={label}>{contact.emailTitle}</strong>
           <a
             href={`mailto:${contact.email}`}
-            className="mt-0.5 block break-all text-base print:text-sm"
+            className={`${value} break-all`}
           >
             {contact.email}
           </a>
         </div>
-        <div className="min-w-0 text-pink-200">
-          <strong className="block text-base font-bold text-cv-jobs print:text-sm">
-            {contact.locationTitle}
-          </strong>
-          <span className="mt-0.5 block text-base print:text-sm">
-            {contact.location}
-          </span>
+        <div className={cell}>
+          <strong className={label}>{contact.phoneTitle}</strong>
+          <a href={`tel:${contact.phone}`} className={`${value} tabular-nums`}>
+            {contact.phone}
+          </a>
+        </div>
+        <div className={cell}>
+          <strong className={label}>{contact.locationTitle}</strong>
+          <div className="mt-0.5 min-w-0 text-right md:mt-0.5 md:text-left">
+            <LocationLinkBlock
+              location={contact.location}
+              locale={locale}
+              className="justify-end md:mt-0 md:justify-between"
+            />
+          </div>
         </div>
       </div>
     );
   }
 
+  /** Mobile : libellé à gauche / valeur à droite ; `md+` : pile comme la colonne gauche ; print : pile dans chaque cellule de grille. */
+  const stackLi =
+    'mt-1 flex flex-row items-baseline justify-between gap-2 gap-x-3 text-pink-200 md:flex-col md:items-stretch md:gap-0 print:mt-0 print:block print:flex-none print-preview:mt-0 print-preview:block print-preview:flex-none';
+  const stackLabel = 'shrink-0 text-base font-bold text-cv-jobs';
+  const stackValue =
+    'block min-w-0 text-right text-base md:mt-0 md:text-left print:text-left';
+
   return (
     <ul className="cv-contact-stack mr-1 mt-4 print:mt-2 print:grid print:grid-cols-3 print:gap-x-4 print:gap-y-1 print:[&>li]:mt-0 print-preview:grid print-preview:grid-cols-3 print-preview:gap-x-10 print-preview:gap-y-1 print-preview:[&>li]:mt-0">
-      <li className="mt-1 text-pink-200 print:mt-0 print-preview:mt-0">
-        <strong className="text-base font-bold text-cv-jobs">
-          {contact.phoneTitle}
-        </strong>
-        <a href={`tel:${contact.phone}`} className="block text-base">
-          {contact.phone}
-        </a>
-      </li>
-      <li className="mt-1 text-pink-200 print:mt-0 print-preview:mt-0">
-        <strong className="text-base font-bold text-cv-jobs">
-          {contact.emailTitle}
-        </strong>
-        <a href={`mailto:${contact.email}`} className="block text-base">
+      <li className={stackLi}>
+        <strong className={stackLabel}>{contact.emailTitle}</strong>
+        <a
+          href={`mailto:${contact.email}`}
+          className={`${stackValue} break-all`}
+        >
           {contact.email}
         </a>
       </li>
-      <li className="mt-1 text-pink-200 print:mt-0 print-preview:mt-0">
-        <strong className="text-base font-bold text-cv-jobs">
-          {contact.locationTitle}
-        </strong>
-        <span className="block text-base">{contact.location}</span>
+      <li className={stackLi}>
+        <strong className={stackLabel}>{contact.phoneTitle}</strong>
+        <a
+          href={`tel:${contact.phone}`}
+          className={`${stackValue} tabular-nums`}
+        >
+          {contact.phone}
+        </a>
+      </li>
+      <li className={stackLi}>
+        <strong className={stackLabel}>{contact.locationTitle}</strong>
+        <div className="min-w-0 text-right md:w-full md:text-left print:text-left">
+          <LocationLinkBlock
+            location={contact.location}
+            locale={locale}
+            className="justify-end md:mt-0.5 md:justify-between print:justify-between"
+          />
+        </div>
       </li>
     </ul>
   );

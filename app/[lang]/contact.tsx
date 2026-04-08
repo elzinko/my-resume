@@ -14,8 +14,8 @@ export default async function Contact({
   sectionId?: string | false;
   className?: string;
   /**
-   * `true` : grille 3 champs (pile mobile pleine largeur).
-   * `false` : liste classique (colonne gauche).
+   * `true` : grille 3 champs dès `md` (utile si le bloc est dans une zone large).
+   * `false` : liste verticale comme la colonne gauche (recommandé en pile mobile une colonne).
    */
   condensed?: boolean;
 }) {
@@ -45,7 +45,11 @@ export default async function Contact({
       <h2 className="border-b pb-1 text-2xl font-semibold text-cv-jobs">
         {contactData.title || 'Contact'}
       </h2>
-      <ContactDisplay contact={contactData} condensed={condensed} />
+      <ContactDisplay
+        contact={contactData}
+        condensed={condensed}
+        locale={locale}
+      />
     </section>
   );
 }
