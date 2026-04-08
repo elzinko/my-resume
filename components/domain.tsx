@@ -1,15 +1,17 @@
 'use client';
 
-import React, { Suspense } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Pill from './Pill';
 import {
   DEV_PRESETS,
+  type DevTagFive,
   isDevDomainId,
   resolveDevDomainTagsFromSearchParams,
 } from '@/lib/dev-domain-tags';
 import {
   OPS_PRESETS,
+  type OpsTagFive,
   isOpsDomainId,
   resolveOpsDomainTagsFromSearchParams,
 } from '@/lib/ops-domain-tags';
@@ -32,7 +34,7 @@ function DomainFiveTagsRow({
 }) {
   const rowClass = compact
     ? 'mt-2 flex min-w-0 flex-nowrap items-center gap-x-1 gap-y-0 overflow-x-auto py-1 print:mt-1 print:py-0.5'
-    : 'mt-1.5 hidden min-w-0 flex-nowrap items-center gap-x-1.5 gap-y-0 overflow-x-auto py-2 print:flex print:flex-nowrap md:flex';
+    : 'mt-1.5 flex min-w-0 flex-nowrap items-center gap-x-1.5 gap-y-0 overflow-x-auto py-2 print:flex-nowrap';
 
   return (
     <div className={rowClass}>
@@ -45,15 +47,31 @@ function DomainFiveTagsRow({
   );
 }
 
+/**
+ * Même rendu SSR / premier paint client que l’ancien fallback Suspense, puis synchro URL
+ * en `useLayoutEffect` pour éviter les erreurs d’hydratation (Suspense + useSearchParams dans un client).
+ */
 function DevDomainTagsFromUrl({ compact }: { compact: boolean }) {
   const sp = useSearchParams();
-  const tags = resolveDevDomainTagsFromSearchParams(sp);
+  const queryKey = sp.toString();
+  const [tags, setTags] = useState<DevTagFive>(() => DEV_PRESETS.default);
+
+  useLayoutEffect(() => {
+    setTags(resolveDevDomainTagsFromSearchParams(new URLSearchParams(queryKey)));
+  }, [queryKey]);
+
   return <DomainFiveTagsRow tags={tags} compact={compact} />;
 }
 
 function OpsDomainTagsFromUrl({ compact }: { compact: boolean }) {
   const sp = useSearchParams();
-  const tags = resolveOpsDomainTagsFromSearchParams(sp);
+  const queryKey = sp.toString();
+  const [tags, setTags] = useState<OpsTagFive>(() => OPS_PRESETS.aws);
+
+  useLayoutEffect(() => {
+    setTags(resolveOpsDomainTagsFromSearchParams(new URLSearchParams(queryKey)));
+  }, [queryKey]);
+
   return <DomainFiveTagsRow tags={tags} compact={compact} />;
 }
 
@@ -122,23 +140,17 @@ export default function Domain({
       {showTags && domain?.competencies && domain.competencies.length > 0 && (
         <>
           {isDevDomainId(domain.id) ? (
-            <Suspense
-              fallback={
-                <DomainFiveTagsRow tags={DEV_PRESETS.default} compact={compact} />
-              }
-            >
-              <DevDomainTagsFromUrl compact={compact} />
-            </Suspense>
+            <DevDomainTagsFromUrl compact={compact} />
           ) : isOpsDomainId(domain.id) ? (
-            <Suspense
-              fallback={
-                <DomainFiveTagsRow tags={OPS_PRESETS.aws} compact={compact} />
+            <OpsDomainTagsFromUrl compact={compact} />
+          ) : (
+            <p
+              className={
+                compact
+                  ? 'mt-2 flex flex-wrap gap-x-1 gap-y-1 py-1 print:mt-1 print:py-0.5'
+                  : 'mt-1.5 flex flex-wrap gap-x-2 gap-y-2 py-2 print:flex-wrap print:whitespace-normal'
               }
             >
-              <OpsDomainTagsFromUrl compact={compact} />
-            </Suspense>
-          ) : (
-            <p className="hidden flex-wrap gap-x-2 gap-y-2 whitespace-nowrap py-2 print:flex print:flex-wrap print:whitespace-normal md:flex">
               {domain.competencies.map((competency) => (
                 <Pill key={competency.id} color="domain" compact={compact}>
                   {competency.name.toLowerCase()}

@@ -15,17 +15,9 @@ function projectPrimaryLabel(project: {
   return capitalizeFirstLetter(name);
 }
 
-export type ProjectVariant = 'default' | 'inline';
-
-export default function project({
-  project: projectData,
-  variant = 'default',
-}: {
-  project: any;
-  variant?: ProjectVariant;
-}) {
+export default function project({ project: projectData }: { project: any }) {
   const dates = formatDates(projectData.startDate, projectData.endDate);
-  const id: any = 'project-' + projectData?.id;
+  const id: string = 'project-' + projectData?.id;
   const name = projectPrimaryLabel(projectData);
   const client = projectData.client
     ? capitalizeFirstLetter(projectData.client)
@@ -37,48 +29,75 @@ export default function project({
   const titleParts = [name, client || null, location || null].filter(Boolean);
   const titleText = titleParts.join(' — ');
 
-  if (variant === 'inline') {
-    const linkClass =
-      'text-cv-tag-text underline-offset-2 hover:underline print:!text-cv-tag-text';
-    const body = projectData.link ? (
-      <a href={projectData.link} className={linkClass}>
-        {titleText}
-      </a>
-    ) : (
-      <span className="text-cv-tag-text print:!text-cv-tag-text">
-        {titleText}
-      </span>
-    );
-    return (
-      <span className="inline text-sm leading-snug md:text-base">
-        {body}
-        {dates ? (
-          <span className="ml-1 tabular-nums leading-snug text-cv-tag-text print:text-xs">
-            ({dates})
-          </span>
-        ) : null}
-      </span>
-    );
-  }
+  const description =
+    typeof projectData.description === 'string'
+      ? projectData.description.trim()
+      : '';
+  const hasDesc = description.length > 0;
+
+  const href = projectData.link || '#';
+
+  const titleInner = (
+    <>
+      {name}
+      {projectData.client ? <span> - </span> : null}
+      {projectData.client ? client : null}
+      {projectData.location ? <span> - </span> : null}
+      {projectData.location ? location : null}
+    </>
+  );
+
+  const titleEl = projectData.link ? (
+    <a
+      href={href}
+      className="text-base font-normal leading-snug text-cv-tag-text underline-offset-2 hover:underline print:text-sm"
+    >
+      {titleInner}
+    </a>
+  ) : (
+    <span className="text-base font-normal leading-snug text-cv-tag-text print:text-sm">
+      {titleInner}
+    </span>
+  );
+
+  const printLinkClass =
+    'text-cv-tag-text underline-offset-2 print:!text-cv-tag-text';
+
+  const printBody = projectData.link ? (
+    <a href={href} className={printLinkClass}>
+      {titleText}
+    </a>
+  ) : (
+    <span className="text-cv-tag-text print:!text-cv-tag-text">{titleText}</span>
+  );
 
   return (
-    <section id={id}>
-      <div className="cv-row-with-side-meta">
-        <span className="min-w-0 flex-1 text-base font-normal leading-snug text-cv-tag-text print:text-sm">
-          <a href={projectData.link ? projectData.link : '#'}>
-            {name}
-            {projectData.client ? <span> - </span> : null}
-            {projectData.client ? client : null}
-            {projectData.location ? <span> - </span> : null}
-            {projectData.location ? location : null}
-          </a>
-        </span>
+    <>
+      <div
+        id={id}
+        className={`cv-project-screen cv-project-row${hasDesc ? '' : ' cv-project-row--no-desc'}`}
+      >
+        <div className="cv-project-title-area">{titleEl}</div>
+        {hasDesc ? (
+          <p className="cv-project-desc-area cv-study-meta">{description}</p>
+        ) : null}
         {dates ? (
-          <span className="min-w-max shrink-0 self-end text-cv-meta font-normal tabular-nums leading-snug text-cv-tag-text print:text-xs">
+          <span className="cv-project-date-area min-w-max shrink-0 text-sm font-normal tabular-nums leading-snug text-cv-tag-text print:text-xs">
             {dates}
           </span>
         ) : null}
       </div>
-    </section>
+      <span
+        className="cv-project-print hidden text-sm leading-snug text-cv-tag-text print:inline print:text-xs md:text-base"
+        aria-hidden="true"
+      >
+        {printBody}
+        {dates ? (
+          <span className="ml-1 tabular-nums text-cv-tag-text print:text-xs">
+            ({dates})
+          </span>
+        ) : null}
+      </span>
+    </>
   );
 }

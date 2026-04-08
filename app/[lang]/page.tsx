@@ -68,22 +68,17 @@ export default async function Page({
       <div className="cv-full-cv-print-root">
         <div className="cv-flow-mobile-stack">
           {/* @ts-expect-error Server Component */}
-          <About locale={lang} />
+          <About locale={lang} educationLevel={educationLevel} />
           {/* @ts-expect-error Server Component */}
           <Domains locale={lang} />
-
-          <div className="cv-mobile-only-sidebar-dup space-y-10 print:hidden md:hidden max-md:!mt-0">
-            {/* @ts-expect-error Server Component */}
-            <Contact locale={lang} className="mt-0" condensed />
-          </div>
         </div>
 
         <div className="cv-page-split">
           <div
             id="left"
-            className="order-last flex w-full min-w-0 flex-col print:order-first print:col-span-1 md:order-first md:col-span-1"
+            className="flex w-full min-w-0 flex-col print:order-first print:col-span-1 md:order-first md:col-span-1"
           >
-            <div className="cv-print-desktop-sidebar-group hidden md:block">
+            <div className="cv-print-desktop-sidebar-group hidden md:hidden">
               {/* @ts-expect-error Server Component */}
               <Contact locale={lang} sectionId={false} />
             </div>
@@ -92,23 +87,17 @@ export default async function Page({
             <Skills locale={lang} sectionId={false} />
             {/* @ts-expect-error Server Component */}
             <Studies locale={lang} />
-            <div className="cv-print-desktop-tail-group max-md:hidden md:block">
-              <div className="cv-tail-wide-only">
-                {/* @ts-expect-error Server Component */}
-                <Projects locale={lang} />
-                {/* @ts-expect-error Server Component */}
-                <Learnings locale={lang} />
-                {/* @ts-expect-error Server Component */}
-                <Hobbies locale={lang} />
-              </div>
-              <div className="cv-tail-condensed-only hidden">
-                {/* @ts-expect-error Server Component */}
-                <Projects locale={lang} condensed sectionId={false} />
-                {/* @ts-expect-error Server Component */}
-                <Learnings locale={lang} condensed sectionId={false} />
-                {/* @ts-expect-error Server Component */}
-                <Hobbies locale={lang} condensed sectionId={false} />
-              </div>
+            {/**
+             * Projets / veille / loisirs : même flux mobile et desktop (fin de #left, après les études).
+             * Évite le doublon `cv-mobile-only-tail-stack` qui plaçait ces blocs hors de la colonne.
+             */}
+            <div className="cv-print-desktop-tail-group max-md:order-[4] md:order-[4]">
+              {/* @ts-expect-error Server Component */}
+              <Projects locale={lang} />
+              {/* @ts-expect-error Server Component */}
+              <Learnings locale={lang} />
+              {/* @ts-expect-error Server Component */}
+              <Hobbies locale={lang} />
             </div>
           </div>
           <div
@@ -118,15 +107,6 @@ export default async function Page({
             {/* @ts-expect-error Server Component */}
             <Jobs locale={lang} />
           </div>
-        </div>
-
-        <div className="cv-mobile-only-tail-stack flex max-md:mt-10 max-md:flex-col max-md:gap-10 md:hidden print:hidden">
-          {/* @ts-expect-error Server Component */}
-          <Projects locale={lang} sectionId={false} className="mt-0" condensed />
-          {/* @ts-expect-error Server Component */}
-          <Learnings locale={lang} sectionId={false} className="mt-0" condensed />
-          {/* @ts-expect-error Server Component */}
-          <Hobbies locale={lang} sectionId={false} className="mt-0" condensed />
         </div>
       </div>
     </>

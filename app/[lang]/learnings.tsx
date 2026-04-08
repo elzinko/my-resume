@@ -8,13 +8,10 @@ export default async function learnings({
   locale,
   sectionId = 'learnings',
   className = '',
-  condensed = false,
 }: {
   locale: Locale;
   sectionId?: string | false;
   className?: string;
-  /** `true` : liens séparés par un slash teal (pile mobile). */
-  condensed?: boolean;
 }) {
   const data: any = await getCvData(locale);
   const items = data?.allLearningsModels ?? [];
@@ -27,41 +24,23 @@ export default async function learnings({
   return (
     <section
       id={sectionId === false ? undefined : sectionId}
-      className={sectionClass}
+      data-cv-section="learnings"
+      className={`cv-cq-section ${sectionClass}`}
     >
       <h2 className="border-b pb-1 text-2xl font-semibold text-teal-300">
         {data?.learningsTitle?.title}
       </h2>
-      {condensed ? (
-        <div className="cv-section-condensed-inline flex flex-wrap items-baseline gap-x-0.5 text-sm leading-relaxed text-teal-300 md:text-base">
-          {items.map((learning: any, i: number) => (
-            <span key={learning.id} className="inline">
-              {i > 0 ? (
-                <span className="mx-1 text-teal-500/80 print:text-teal-400/90" aria-hidden>
-                  /
-                </span>
-              ) : null}
-              <CustomLink
-                name={learningLinkLabel(learning)}
-                link={learning.link}
-                className="text-teal-300 print:!text-teal-300"
-              />
-            </span>
-          ))}
-        </div>
-      ) : (
-        <ul className="cv-section-simple-list">
-          {items.map((learning: any) => (
-            <li className="text-teal-300" key={learning.id}>
-              <CustomLink
-                name={learningLinkLabel(learning)}
-                link={learning.link}
-                className="text-teal-300 print:!text-teal-300"
-              />
-            </li>
-          ))}
-        </ul>
-      )}
+      <ul className="cv-section-simple-list cv-cq-link-list max-md:mt-6">
+        {items.map((learning: any) => (
+          <li className="text-teal-300" key={learning.id}>
+            <CustomLink
+              name={learningLinkLabel(learning)}
+              link={learning.link}
+              className="text-teal-300 print:!text-teal-300"
+            />
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }

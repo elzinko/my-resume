@@ -7,13 +7,10 @@ export default async function hobbies({
   locale,
   sectionId = 'hobbies',
   className = '',
-  condensed = false,
 }: {
   locale: Locale;
   sectionId?: string | false;
   className?: string;
-  /** `true` : loisirs séparés par un slash (pile mobile). */
-  condensed?: boolean;
 }) {
   const data: any = await getCvData(locale);
   const items = data?.allHobbiesModels ?? [];
@@ -26,44 +23,23 @@ export default async function hobbies({
   return (
     <section
       id={sectionId === false ? undefined : sectionId}
-      className={sectionClass}
+      data-cv-section="hobbies"
+      className={`cv-cq-section ${sectionClass}`}
     >
       <h2 className="border-b pb-1 text-2xl font-semibold text-orange-300">
         {data?.hobbiesTitle?.title}
       </h2>
-      {condensed ? (
-        <div className="cv-section-condensed-inline flex flex-wrap items-baseline gap-x-0.5 text-sm leading-relaxed text-orange-300 md:text-base">
-          {items.map((hobby: any, i: number) => (
-            <span key={hobby.id} className="inline">
-              {i > 0 ? (
-                <span
-                  className="mx-1 text-amber-400/90 print:text-amber-300/95"
-                  aria-hidden
-                >
-                  /
-                </span>
-              ) : null}
-              <CustomLink
-                name={hobby.name}
-                link={hobby.link}
-                className="text-orange-300 print:!text-orange-300"
-              />
-            </span>
-          ))}
-        </div>
-      ) : (
-        <ul className="cv-section-simple-list">
-          {items.map((hobby: any) => (
-            <li className="text-orange-300" key={hobby.id}>
-              <CustomLink
-                name={hobby.name}
-                link={hobby.link}
-                className="text-orange-300 print:!text-orange-300"
-              />
-            </li>
-          ))}
-        </ul>
-      )}
+      <ul className="cv-section-simple-list cv-cq-link-list max-md:mt-6">
+        {items.map((hobby: any) => (
+          <li className="text-orange-300" key={hobby.id}>
+            <CustomLink
+              name={hobby.name}
+              link={hobby.link}
+              className="text-orange-300 print:!text-orange-300"
+            />
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }
