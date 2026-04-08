@@ -1,5 +1,6 @@
 import HeaderToolbar from '@/components/HeaderToolbar';
 import HeaderContent from '@/components/HeaderContent';
+import HeaderDesktopContactStrip from '@/components/HeaderDesktopContactStrip';
 import ShortHeaderJobFitPills from '@/components/ShortHeaderJobFitPills';
 import { getCvData } from '@/lib/cv-data';
 import { Locale } from 'i18n-config';
@@ -18,6 +19,14 @@ export default async function Header({ locale }: { locale: Locale }) {
       <HeaderContent
         name={data?.header?.name}
         role={data?.header?.role}
+        afterRole={
+            <HeaderDesktopContactStrip
+              email={data?.contact?.email ?? ''}
+              phone={data?.contact?.phone ?? ''}
+              location={data?.contact?.location ?? ''}
+              locale={locale}
+            />
+        }
         belowRole={
           <Suspense fallback={null}>
             <ShortHeaderJobFitPills

@@ -7,7 +7,9 @@ interface HeaderContentProps {
   role: string;
   /** CV court : en-tête plus compact à l’impression pour gagner de la hauteur sur A4. */
   compactPrint?: boolean;
-  /** Ex. pastilles adéquation sous le sous-titre (rôle), alignées à droite. */
+  /** Ex. coordonnées sans titres, alignées à droite (desktop CV long uniquement). */
+  afterRole?: ReactNode;
+  /** Ex. pastilles adéquation sous le sous-titre (rôle). */
   belowRole?: ReactNode;
 }
 
@@ -15,11 +17,12 @@ export default function HeaderContent({
   name,
   role,
   compactPrint = false,
+  afterRole,
   belowRole,
 }: HeaderContentProps) {
   return (
     <div
-      className={`header-content flex justify-between pb-0 pt-2 max-md:pt-1 md:py-20 ${
+      className={`header-content flex justify-between pb-0 pt-2 max-md:pt-0 md:py-20 ${
         compactPrint ? 'print:py-1.5' : 'print:py-4'
       }`}
     >
@@ -40,6 +43,9 @@ export default function HeaderContent({
         >
           {role}
         </p>
+        {afterRole ? (
+          <div className="w-full max-w-full justify-self-stretch">{afterRole}</div>
+        ) : null}
         {belowRole ? (
           <div className="w-full max-w-full justify-self-stretch">{belowRole}</div>
         ) : null}

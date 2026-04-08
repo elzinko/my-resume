@@ -11,8 +11,9 @@ import CompactCvLayout, { CompactCvData } from '@/components/CompactCvLayout';
 import { getEducationLevelContent } from '@/lib/education-level-content';
 import formatDates from '@/lib/date';
 import ShortPageWrapper from '@/components/ShortPageWrapper';
+import ShortHeaderJobFitPills from '@/components/ShortHeaderJobFitPills';
+import FullCvPrintPreviewEffect from '@/components/FullCvPrintPreviewEffect';
 import ShortAutoprint from '@/components/ShortAutoprint';
-import ShortOptionalOfferMatch from '@/components/ShortOptionalOfferMatch';
 import type { Metadata } from 'next';
 
 function generateDocumentTitle(
@@ -104,26 +105,48 @@ export default async function ShortPage({
       data as Record<string, unknown>,
       lang,
     ),
+    projectsTitle: data?.projectsTitle?.title ?? 'Projects',
+    projects: sortChronologicalDesc(
+      (data?.allProjectsModels || []).filter(
+        (p: { display?: boolean }) => p.display !== false,
+      ),
+      byEndThenStart,
+    ),
   };
 
   return (
-    <ShortPageWrapper
-      lang={lang}
-      headerName={data?.header?.name || ''}
-      headerRole={data?.header?.role || ''}
-      defaultOfferId={defaultOfferId}
-    >
+    <>
+      <Suspense fallback={null}>
+        <FullCvPrintPreviewEffect />
+      </Suspense>
+      <ShortPageWrapper
+        lang={lang}
+        headerName={data?.header?.name || ''}
+        headerRole={data?.header?.role || ''}
+        headerContact={{
+          email: data?.contact?.email ?? '',
+          phone: data?.contact?.phone ?? '',
+          location: data?.contact?.location ?? '',
+        }}
+        defaultOfferId={defaultOfferId}
+        belowRole={
+          <Suspense fallback={null}>
+            <ShortHeaderJobFitPills
+              lang={lang}
+              defaultOfferId={defaultOfferId}
+            />
+          </Suspense>
+        }
+      >
       <Suspense fallback={null}>
         <ShortAutoprint />
       </Suspense>
-      <CompactCvLayout data={compactData} lang={lang as 'fr' | 'en'}>
-        <Suspense fallback={null}>
-          <ShortOptionalOfferMatch
-            lang={lang}
-            defaultOfferId={defaultOfferId}
-          />
-        </Suspense>
-      </CompactCvLayout>
+      <CompactCvLayout
+        data={compactData}
+        lang={lang as 'fr' | 'en'}
+        defaultOfferId={defaultOfferId}
+      />
     </ShortPageWrapper>
+    </>
   );
 }

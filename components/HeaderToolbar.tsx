@@ -5,11 +5,12 @@ import React, {
   useCallback,
   useEffect,
   useId,
+  useLayoutEffect,
   useMemo,
   useState,
 } from 'react';
 import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import LocaleSwitcher from '@/components/locale-switcher';
 import CvModeToggle from '@/components/CvModeToggle';
 import { fullHrefFromShortPath } from '@/lib/cv-mode-nav';
@@ -17,28 +18,105 @@ import LogoLinkedin from '@/components/LogoLinkedin';
 import LogoGithub from '@/components/logoGithub';
 import LogoMalt from '@/components/logoMalt';
 import LogoPrint from '@/components/logoPrint';
-import { cvHeaderModeBtn } from '@/lib/cv-header-toolbar';
+import {
+  cvHeaderModeBtn,
+  isCvPrintLayoutToolbarEnabled,
+  isLocalDevHostname,
+} from '@/lib/cv-header-toolbar';
 import {
   isFullCvRootPathname,
   localeFromPathIfRoot,
   shortAutoprintPath,
 } from '@/lib/cv-print-routes';
 import { isCvPrintPreviewQuery } from '@/lib/cv-print-preview';
+import {
+  CV_VIEWPORT_MOBILE_VALUE,
+  CV_VIEWPORT_PARAM,
+} from '@/lib/cv-viewport-mobile';
 
 const rowListClass = 'flex flex-nowrap items-center gap-0.5 [&>li]:shrink-0';
+
+/**
+ * Affiche le lien d’aperçu impression : `next dev`, ou `next start` sur localhost,
+ * ou si `NEXT_PUBLIC_SHOW_PRINT_PREVIEW=true` (ex. test depuis une IP LAN).
+ */
+function useCvPrintPreviewToggleVisible(): boolean {
+  const fromNodeEnv = isCvPrintLayoutToolbarEnabled();
+  const [fromHost, setFromHost] = useState(false);
+
+  useLayoutEffect(() => {
+    if (fromNodeEnv) return;
+    if (process.env.NEXT_PUBLIC_SHOW_PRINT_PREVIEW === 'true') {
+      setFromHost(true);
+      return;
+    }
+    setFromHost(isLocalDevHostname(window.location.hostname));
+  }, [fromNodeEnv]);
+
+  return fromNodeEnv || fromHost;
+}
+
+/**
+ * `next dev` : ouvre la page courante dans une fenêtre ~390×844 pour appliquer les breakpoints `max-md`
+ * sans ouvrir les DevTools (le navigateur impose parfois une largeur minimale — redimensionner si besoin).
+ */
+function DevMobilePreviewButton({ onNavigate }: { onNavigate?: () => void }) {
+  const pathname = usePathname() || '/';
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const openMobilePreview = useCallback(() => {
+    onNavigate?.();
+    const next = new URLSearchParams(searchParams.toString());
+    next.set(CV_VIEWPORT_PARAM, CV_VIEWPORT_MOBILE_VALUE);
+    const q = next.toString();
+    router.push(q ? `${pathname}?${q}` : `${pathname}?${CV_VIEWPORT_PARAM}=${CV_VIEWPORT_MOBILE_VALUE}`);
+  }, [pathname, searchParams, router, onNavigate]);
+
+  return (
+    <button
+      type="button"
+      data-testid="cv-dev-mobile-preview"
+      className={`${cvHeaderModeBtn} print:hidden`}
+      title="Aperçu mobile (même onglet, ?cvViewport=mobile + iframe 390px)"
+      aria-label="Ouvrir l’aperçu mobile sur cette page avec le paramètre cvViewport dans l’URL"
+      onClick={openMobilePreview}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-4 w-4 md:h-5 md:w-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        strokeWidth={2}
+        aria-hidden
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
+        />
+      </svg>
+      <span className="hidden md:inline">Mobile</span>
+    </button>
+  );
+}
 
 /** Lien « Version complète » depuis `/[lang]/short` : reprend `fullHrefFromShortPath` + query. */
 function FullVersionFromShortLink({
   shortLang,
+  shortDefaultOfferId,
   onNavigate,
 }: {
   shortLang: string;
+  shortDefaultOfferId?: string | null;
   onNavigate?: () => void;
 }) {
   const searchParams = useSearchParams();
   const href = fullHrefFromShortPath(
     shortLang,
     new URLSearchParams(searchParams.toString()),
+    { defaultOfferId: shortDefaultOfferId ?? null },
   );
   return (
     <Link
@@ -108,14 +186,20 @@ function ToolbarIconList({
 
 function ModeControl({
   shortLang,
+  shortDefaultOfferId,
   onNavigate,
 }: {
   shortLang?: string;
+  shortDefaultOfferId?: string | null;
   onNavigate?: () => void;
 }) {
   if (shortLang) {
     return (
-      <FullVersionFromShortLink shortLang={shortLang} onNavigate={onNavigate} />
+      <FullVersionFromShortLink
+        shortLang={shortLang}
+        shortDefaultOfferId={shortDefaultOfferId}
+        onNavigate={onNavigate}
+      />
     );
   }
   return (
@@ -183,10 +267,17 @@ function PrintPreviewToggleLink({
  * Desktop : langues à gauche, actions à droite.
  * Mobile : barre fixe en haut ; ouvert = langues à gauche, actions + menu à droite (pas de séparateur).
  */
-export default function HeaderToolbar({ shortLang }: { shortLang?: string }) {
+export default function HeaderToolbar({
+  shortLang,
+  shortDefaultOfferId,
+}: {
+  shortLang?: string;
+  shortDefaultOfferId?: string | null;
+}) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const titleId = useId();
+  const showPrintPreviewToggle = useCvPrintPreviewToggleVisible();
   const close = useCallback(() => setOpen(false), []);
   const toggle = useCallback(() => setOpen((v) => !v), []);
 
@@ -240,11 +331,21 @@ export default function HeaderToolbar({ shortLang }: { shortLang?: string }) {
         </Suspense>
         <div className="flex flex-wrap items-center justify-end gap-3">
           <Suspense fallback={null}>
-            <ModeControl shortLang={shortLang} />
+            <ModeControl
+              shortLang={shortLang}
+              shortDefaultOfferId={shortDefaultOfferId}
+            />
           </Suspense>
-          <Suspense fallback={null}>
-            <PrintPreviewToggleLink />
-          </Suspense>
+          {showPrintPreviewToggle ? (
+            <Suspense fallback={null}>
+              <PrintPreviewToggleLink />
+            </Suspense>
+          ) : null}
+          {isCvPrintLayoutToolbarEnabled() ? (
+            <Suspense fallback={null}>
+              <DevMobilePreviewButton />
+            </Suspense>
+          ) : null}
           <ToolbarIconList
             onPrint={runPrint}
             printTitle={printTitle}
@@ -303,11 +404,22 @@ export default function HeaderToolbar({ shortLang }: { shortLang?: string }) {
             }
           >
             <Suspense fallback={null}>
-              <ModeControl shortLang={shortLang} onNavigate={close} />
+              <ModeControl
+                shortLang={shortLang}
+                shortDefaultOfferId={shortDefaultOfferId}
+                onNavigate={close}
+              />
             </Suspense>
-            <Suspense fallback={null}>
-              <PrintPreviewToggleLink onNavigate={close} />
-            </Suspense>
+            {showPrintPreviewToggle ? (
+              <Suspense fallback={null}>
+                <PrintPreviewToggleLink onNavigate={close} />
+              </Suspense>
+            ) : null}
+            {isCvPrintLayoutToolbarEnabled() ? (
+              <Suspense fallback={null}>
+                <DevMobilePreviewButton onNavigate={close} />
+              </Suspense>
+            ) : null}
             <ToolbarIconList
               onNavigate={close}
               listClassName={rowListClass}

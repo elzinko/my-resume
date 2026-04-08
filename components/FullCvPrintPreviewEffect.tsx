@@ -2,19 +2,18 @@
 
 import { useEffect } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { isFullCvRootPathname } from '@/lib/cv-print-routes';
+import { isCvPrintPreviewPathname } from '@/lib/cv-print-routes';
 import { isCvPrintPreviewQuery } from '@/lib/cv-print-preview';
 
 /**
- * Active `html.cv-print-preview` quand le CV long est visité avec `?print` ou `?print=1`
- * (aperçu une colonne comme à l’impression).
+ * Active `html.cv-print-preview` sur le CV long ou le CV court avec `?print` / `?print=1`.
  */
 export default function FullCvPrintPreviewEffect() {
   const pathname = usePathname();
   const sp = useSearchParams();
 
   const active =
-    isFullCvRootPathname(pathname) &&
+    isCvPrintPreviewPathname(pathname) &&
     isCvPrintPreviewQuery(new URLSearchParams(sp.toString()));
 
   useEffect(() => {

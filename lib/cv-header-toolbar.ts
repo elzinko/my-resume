@@ -1,5 +1,20 @@
 /** Barre d’outils CV : boutons carrés compacts, repose lisible (pas « disabled »), survol en couleur. */
 
+/**
+ * Bascule « aperçu impression » : réservé au dev local (pas les déploiements prod).
+ * Préférer le hook {@link useCvPrintPreviewToggleVisible} côté client : il couvre aussi
+ * `next start` sur localhost et `NEXT_PUBLIC_SHOW_PRINT_PREVIEW` (accès LAN, etc.).
+ */
+export function isCvPrintLayoutToolbarEnabled(): boolean {
+  return process.env.NODE_ENV === 'development';
+}
+
+const LOCAL_DEV_HOSTS = new Set(['localhost', '127.0.0.1', '[::1]']);
+
+export function isLocalDevHostname(hostname: string): boolean {
+  return LOCAL_DEV_HOSTS.has(hostname);
+}
+
 const focusRing =
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white';
 
