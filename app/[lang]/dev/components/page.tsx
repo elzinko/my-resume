@@ -13,6 +13,7 @@ import Domain from '@/components/domain';
 import Contact from '../../contact';
 import Studies from '../../studies';
 import Hobbies from '../../hobbies';
+import Learnings from '../../learnings';
 import Projects from '../../projects';
 import Jobs from '../../jobs';
 import Header from '../../header';
@@ -63,6 +64,7 @@ export default async function DevComponentsPage({
     domainsNode,
     studiesDefaultNode,
     hobbiesNode,
+    learningsNode,
     projectsNode,
     projectsNarrowNode,
     jobsNode,
@@ -74,6 +76,7 @@ export default async function DevComponentsPage({
     (Domains as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang }),
     (Studies as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang }),
     (Hobbies as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang }),
+    (Learnings as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang }),
     (Projects as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang }),
     (Projects as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang, yearOnly: true }),
     (Jobs as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang }),
@@ -230,6 +233,12 @@ export default async function DevComponentsPage({
       id: 'hobbies-narrow',
       title: 'Hobbies (narrow container — mobile / sidebar)',
       node: <Narrow>{hobbiesNode}</Narrow>,
+    },
+    { id: 'learnings', title: 'Learnings (large container — descriptions visibles)', node: learningsNode },
+    {
+      id: 'learnings-narrow',
+      title: 'Learnings (narrow container — mobile / sidebar, sans descriptions)',
+      node: <Narrow>{learningsNode}</Narrow>,
     },
     { id: 'projects', title: 'Projects (default)', node: projectsNode },
     {

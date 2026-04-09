@@ -175,13 +175,15 @@
     }
   }
 
-  /* Loisirs : descriptions visibles en conteneur large, masquées en étroit. */
-  .cv-cq-section[data-cv-section='hobbies'] .cv-hobby-desc {
+  /* Loisirs / Apprentissages : descriptions visibles en conteneur large, masquées en étroit. */
+  .cv-cq-section[data-cv-section='hobbies'] .cv-hobby-desc,
+  .cv-cq-section[data-cv-section='learnings'] .cv-learning-desc {
     display: none;
   }
 
   @container (min-width: 36rem) {
-    .cv-cq-section[data-cv-section='hobbies'] .cv-hobby-desc {
+    .cv-cq-section[data-cv-section='hobbies'] .cv-hobby-desc,
+    .cv-cq-section[data-cv-section='learnings'] .cv-learning-desc {
       display: inline;
     }
   }
@@ -345,11 +347,11 @@ html {
     display: block !important;
   }
 
-  /* Page setup — marge unique gérée par `@page` (le layout est en `print:p-0`
-     pour éviter la double marge qui provoquait une page blanche orpheline). */
+  /* Page setup — le layout utilise `print:p-0` donc la marge vient de `@page`.
+     10mm ≈ le `p-8` (2rem) de l'écran, rendu propre en PDF. */
   @page {
     size: A4;
-    margin: 1mm;
+    margin: 10mm;
   }
 
   /* ================================================================
@@ -577,8 +579,9 @@ html {
     content: none !important;
   }
 
-  /** Loisirs print : descriptions toujours visibles. */
-  .cv-full-cv-print-root [data-cv-section='hobbies'] .cv-hobby-desc {
+  /** Loisirs / Apprentissages print : descriptions toujours visibles. */
+  .cv-full-cv-print-root [data-cv-section='hobbies'] .cv-hobby-desc,
+  .cv-full-cv-print-root [data-cv-section='learnings'] .cv-learning-desc {
     display: inline !important;
   }
 
@@ -755,8 +758,9 @@ html {
   content: none !important;
 }
 
-/** Loisirs print-preview : descriptions toujours visibles (contournement container query). */
-.cv-print-preview .cv-full-cv-print-root [data-cv-section='hobbies'] .cv-hobby-desc {
+/** Loisirs / Apprentissages print-preview : descriptions toujours visibles. */
+.cv-print-preview .cv-full-cv-print-root [data-cv-section='hobbies'] .cv-hobby-desc,
+.cv-print-preview .cv-full-cv-print-root [data-cv-section='learnings'] .cv-learning-desc {
   display: inline !important;
 }
 
@@ -840,8 +844,9 @@ html {
   padding-inline: 0.35em !important;
 }
 
-/** Loisirs offre print-preview : descriptions toujours visibles. */
-.cv-print-preview .cv-offer-tailored-shell .cv-full-cv-print-root [data-cv-section=’hobbies’] .cv-hobby-desc {
+/** Loisirs / Apprentissages offre print-preview : descriptions toujours visibles. */
+.cv-print-preview .cv-offer-tailored-shell .cv-full-cv-print-root [data-cv-section=’hobbies’] .cv-hobby-desc,
+.cv-print-preview .cv-offer-tailored-shell .cv-full-cv-print-root [data-cv-section=’learnings’] .cv-learning-desc {
   display: inline !important;
 }
 

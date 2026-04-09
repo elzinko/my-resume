@@ -129,14 +129,6 @@ export default async function ShortPage({
           location: data?.contact?.location ?? '',
         }}
         defaultOfferId={defaultOfferId}
-        belowRole={
-          <Suspense fallback={null}>
-            <ShortHeaderJobFitPills
-              lang={lang}
-              defaultOfferId={defaultOfferId}
-            />
-          </Suspense>
-        }
       >
       <Suspense fallback={null}>
         <ShortAutoprint />
@@ -145,6 +137,14 @@ export default async function ShortPage({
         data={compactData}
         lang={lang as 'fr' | 'en'}
         defaultOfferId={defaultOfferId}
+        afterBadge={
+          <Suspense fallback={null}>
+            <ShortHeaderJobFitPills
+              lang={lang}
+              defaultOfferId={defaultOfferId}
+            />
+          </Suspense>
+        }
       />
     </ShortPageWrapper>
     </>

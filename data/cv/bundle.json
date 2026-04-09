@@ -29,7 +29,7 @@
       "title": "Études"
     },
     "jobsTitle": {
-      "title": "Missions"
+      "title": "Expérience professionnelle"
     },
     "projectsTitle": {
       "title": "Projets"
@@ -2073,32 +2073,38 @@
       {
         "id": "cnZskAq6SqSbkXAmAB0KIQ",
         "name": "LLM",
-        "link": "https://www.langchain.com/"
+        "link": "https://www.langchain.com/",
+        "description": "Agents, RAG, prompt engineering et intégration dans des produits SaaS."
       },
       {
         "id": "Taq3bWZ6Stu5rt42dP1_WQ",
         "name": "AWS Bedrock",
-        "link": "https://aws.amazon.com/fr/bedrock/agents/"
+        "link": "https://aws.amazon.com/fr/bedrock/agents/",
+        "description": "Orchestration d'agents IA managés et modèles fondation AWS."
       },
       {
         "id": "UsM_i8jNSFK12ePhrc0x0g",
         "name": "MCP",
-        "link": "https://modelcontextprotocol.io/specification/2025-06-18"
+        "link": "https://modelcontextprotocol.io/specification/2025-06-18",
+        "description": "Protocole d'intégration d'outils pour modèles de langage."
       },
       {
         "id": "learn-langchain-stack",
         "name": "LangChain",
-        "link": "https://docs.langchain.com/"
+        "link": "https://docs.langchain.com/",
+        "description": "Framework d'orchestration de chaînes LLM et agents conversationnels."
       },
       {
         "id": "learn-openrag",
         "name": "OpenRAG",
-        "link": "https://docs.openr.ag/"
+        "link": "https://docs.openr.ag/",
+        "description": "Pipeline RAG open source : indexation, recherche vectorielle, génération."
       },
       {
         "id": "learn-bmad-method",
         "name": "BMAD",
-        "link": "https://docs.bmad-method.org/"
+        "link": "https://docs.bmad-method.org/",
+        "description": "Méthodologie de cadrage produit assistée par IA multi-agents."
       }
     ]
   },
@@ -2131,7 +2137,7 @@
       "title": "Studies"
     },
     "jobsTitle": {
-      "title": "Jobs"
+      "title": "Professional Experience"
     },
     "projectsTitle": {
       "title": "Projects"
@@ -4175,32 +4181,38 @@
       {
         "id": "cnZskAq6SqSbkXAmAB0KIQ",
         "name": "LLM",
-        "link": "https://www.langchain.com/"
+        "link": "https://www.langchain.com/",
+        "description": "Agents, RAG, prompt engineering and integration into SaaS products."
       },
       {
         "id": "Taq3bWZ6Stu5rt42dP1_WQ",
         "name": "AWS Bedrock",
-        "link": "https://aws.amazon.com/fr/bedrock/agents/"
+        "link": "https://aws.amazon.com/fr/bedrock/agents/",
+        "description": "Managed AI agent orchestration and AWS foundation models."
       },
       {
         "id": "UsM_i8jNSFK12ePhrc0x0g",
         "name": "MCP",
-        "link": "https://modelcontextprotocol.io/specification/2025-06-18"
+        "link": "https://modelcontextprotocol.io/specification/2025-06-18",
+        "description": "Tool integration protocol for language models."
       },
       {
         "id": "learn-langchain-stack",
         "name": "LangChain",
-        "link": "https://docs.langchain.com/"
+        "link": "https://docs.langchain.com/",
+        "description": "LLM chain orchestration framework and conversational agents."
       },
       {
         "id": "learn-openrag",
         "name": "OpenRAG",
-        "link": "https://docs.openr.ag/"
+        "link": "https://docs.openr.ag/",
+        "description": "Open-source RAG pipeline: indexing, vector search, generation."
       },
       {
         "id": "learn-bmad-method",
         "name": "BMAD",
-        "link": "https://docs.bmad-method.org/"
+        "link": "https://docs.bmad-method.org/",
+        "description": "AI-assisted multi-agent product scoping methodology."
       }
     ]
   }

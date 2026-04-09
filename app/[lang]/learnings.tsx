@@ -38,6 +38,11 @@ export default async function learnings({
               link={learning.link}
               className="text-teal-300 print:!text-teal-300"
             />
+            {learning.description ? (
+              <span className="cv-learning-desc ml-1 text-sm text-cv-body-muted">
+                — {learning.description}
+              </span>
+            ) : null}
           </li>
         ))}
       </ul>

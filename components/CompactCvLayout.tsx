@@ -73,8 +73,10 @@ export interface CompactCvData {
 interface CompactCvLayoutProps {
   data: CompactCvData;
   lang: 'fr' | 'en';
-  /** `SHORT_CV_OFFER_ID` : lien « CV en ligne » même sans `?offer=` dans l’URL. */
+  /** `SHORT_CV_OFFER_ID` : lien « CV en ligne » même sans `?offer=` dans l'URL. */
   defaultOfferId?: string | null;
+  /** Contenu injecté après la pastille niveau (ex. pastilles adéquation offre). */
+  afterBadge?: React.ReactNode;
   /** Emplacement réservé pour extensions (ex. adéquation offre) — non utilisé par défaut. */
   children?: React.ReactNode;
 }
@@ -83,6 +85,7 @@ export default function CompactCvLayout({
   data,
   lang,
   defaultOfferId = null,
+  afterBadge,
   children,
 }: CompactCvLayoutProps) {
   // Fallback labels if bundle.json titles are empty
@@ -143,8 +146,9 @@ export default function CompactCvLayout({
           </h2>
         </div>
         <p className="mt-4 text-cv-body-muted">{data.about}</p>
-        <div className="mt-2 flex flex-wrap gap-x-1 gap-y-1 py-1">
+        <div className="mt-2 flex flex-wrap items-center gap-x-1.5 gap-y-1 py-1">
           <ProfileEducationBadge label={profileBadgeLabel} />
+          {afterBadge}
         </div>
       </section>
 
@@ -170,7 +174,7 @@ export default function CompactCvLayout({
           id="left"
           className="order-last flex w-full min-w-0 flex-col md:order-first md:col-span-1 print:order-first print:col-span-1"
         >
-          {/* Niveau de formation : même bloc que le CV long (une colonne, y compris à l’impression). */}
+          {/* Niveau de formation : même bloc que le CV long (une colonne, y compris à l'impression). */}
           <EducationLevel
             content={data.educationLevel}
             sectionClassName="mb-6"

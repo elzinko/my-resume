@@ -1,10 +1,9 @@
 import HeaderToolbar from '@/components/HeaderToolbar';
 import HeaderContent from '@/components/HeaderContent';
 import HeaderDesktopContactStrip from '@/components/HeaderDesktopContactStrip';
-import ShortHeaderJobFitPills from '@/components/ShortHeaderJobFitPills';
 import { getCvData } from '@/lib/cv-data';
 import { Locale } from 'i18n-config';
-import React, { Suspense } from 'react';
+import React from 'react';
 
 export default async function Header({
   locale,
@@ -19,7 +18,6 @@ export default async function Header({
   };
 }) {
   const data: any = await getCvData(locale);
-  const defaultOfferId = process.env.SHORT_CV_OFFER_ID?.trim() || null;
 
   return (
     <header className="relative z-[70] print:mb-2">
@@ -41,14 +39,6 @@ export default async function Header({
               />
             </div>
           ) : undefined
-        }
-        belowRole={
-          <Suspense fallback={null}>
-            <ShortHeaderJobFitPills
-              lang={locale}
-              defaultOfferId={defaultOfferId}
-            />
-          </Suspense>
         }
       />
     </header>

@@ -10,6 +10,7 @@ import Hobbies from '@/app/[lang]/hobbies';
 import Jobs from '@/app/[lang]/jobs';
 import Projects from '@/app/[lang]/projects';
 import EducationLevel from '@/components/EducationLevel';
+import ShortHeaderJobFitPills from '@/components/ShortHeaderJobFitPills';
 import FullCvPrintPreviewEffect from '@/components/FullCvPrintPreviewEffect';
 import ContactLocationProvider from '@/components/ContactLocationProvider';
 import JobFrameworkDisplayProvider from '@/components/JobFrameworkDisplayProvider';
@@ -50,6 +51,14 @@ export default function OfferTailoredShell({
       isDirections: false,
     };
 
+  const defaultOfferId = process.env.SHORT_CV_OFFER_ID?.trim() || null;
+
+  const jobFitPills = (
+    <Suspense fallback={null}>
+      <ShortHeaderJobFitPills lang={lang} defaultOfferId={defaultOfferId} />
+    </Suspense>
+  );
+
   return (
     <JobFrameworkDisplayProvider priorityTokens={frameworkDisplayPriorityTokens}>
       <ContactLocationProvider value={resolvedContact} locale={lang}>
@@ -66,7 +75,7 @@ export default function OfferTailoredShell({
           <div className="cv-full-cv-print-root">
             <div className="cv-flow-mobile-stack">
               {/* @ts-expect-error Server Component */}
-              <About locale={lang} educationLevel={educationLevel} />
+              <About locale={lang} educationLevel={educationLevel} afterBadge={jobFitPills} />
               {/* @ts-expect-error Server Component */}
               <Domains locale={lang} />
             </div>

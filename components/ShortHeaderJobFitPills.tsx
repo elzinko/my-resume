@@ -29,12 +29,12 @@ export default function ShortHeaderJobFitPills({
 
   return (
     <div
-      className="mt-2 flex w-full flex-wrap justify-end gap-1.5 print:mt-1.5 print:gap-1 md:mt-3"
+      className="flex flex-wrap items-center gap-1.5 print:gap-1"
       data-testid="header-job-fit-pills"
       role="region"
       aria-label={listLabel}
     >
-      <ul className="m-0 flex max-w-full list-none flex-wrap justify-end gap-1.5 p-0 print:gap-1">
+      <ul className="m-0 flex max-w-full list-none flex-wrap items-center gap-1.5 p-0 print:gap-1">
         {entries.map((entry, index) => {
           const hasMatches = entry.matchedClients.length > 0;
           const showYears =
