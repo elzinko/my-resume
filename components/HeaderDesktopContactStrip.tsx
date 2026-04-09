@@ -31,7 +31,7 @@ export default function HeaderDesktopContactStrip({
 
   return (
     <div
-      className="cv-header-contact-strip mt-2 flex w-full flex-col items-end gap-0.5 text-right text-sm leading-snug text-pink-200 md:mt-3 md:text-lg md:leading-snug print:mt-0 print:flex print:items-start print:gap-0.5 print:text-left print:text-xs print:leading-snug print:text-pink-200 print-preview:mt-0 print-preview:items-start print-preview:text-left"
+      className="cv-header-contact-strip mt-2 flex w-full flex-col items-end gap-0.5 text-right text-sm leading-snug text-pink-200 md:mt-0 md:items-start md:text-left md:text-lg md:leading-snug print:mt-0 print:flex print:items-start print:gap-0.5 print:text-left print:text-xs print:leading-snug print:text-pink-200"
       aria-label="Contact"
     >
       {email ? (
@@ -45,7 +45,7 @@ export default function HeaderDesktopContactStrip({
         </a>
       ) : null}
       {location ? (
-        <div className="flex w-full max-w-full flex-wrap items-baseline justify-end gap-x-2 gap-y-0.5 print:justify-start print-preview:justify-start">
+        <div className="flex w-full max-w-full flex-wrap items-baseline justify-end gap-x-2 gap-y-0.5 md:justify-start print:justify-start">
           <a
             href={mapsHref}
             target="_blank"
