@@ -90,11 +90,11 @@ export default function OfferTailoredShell({
                   content={educationLevel}
                   sectionClassName={OFFER_EDUCATION_LEVEL_SECTION_CLASS}
                 />
-                <div className="max-md:order-[50]">
+                <div className="contents max-md:block max-md:order-[50] print-preview:contents print:contents">
                   {/* @ts-expect-error Server Component */}
                   <Skills locale={lang} sectionId={false} />
                 </div>
-                <div className="max-md:order-[40]">
+                <div className="contents max-md:block max-md:order-[40] print-preview:contents print:contents">
                   {/* @ts-expect-error Server Component */}
                   <Studies locale={lang} />
                 </div>

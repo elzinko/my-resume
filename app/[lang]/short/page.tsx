@@ -108,7 +108,8 @@ export default async function ShortPage({
     projectsTitle: data?.projectsTitle?.title ?? 'Projects',
     projects: sortChronologicalDesc(
       (data?.allProjectsModels || []).filter(
-        (p: { display?: boolean }) => p.display !== false,
+        (p: { display?: boolean; id?: string }) =>
+          p.display !== false && p.id !== '82933230',
       ),
       byEndThenStart,
     ),

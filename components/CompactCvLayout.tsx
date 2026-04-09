@@ -135,7 +135,7 @@ export default function CompactCvLayout({
       {/* About - Full width section (same style as full CV) */}
       <section
         id="cv-short-about"
-        className="cv-short-about mt-10 pb-6 mb-6"
+        className="cv-short-about mt-4 pb-1 mb-1"
       >
         <div className="border-b pb-1">
           <h2 className="min-w-0 text-2xl font-semibold text-cv-section">
@@ -149,7 +149,7 @@ export default function CompactCvLayout({
       </section>
 
       {/* Domains - Full width (même grille 1/3 que le CV complet) */}
-      <section id="domains" className="mt-8">
+      <section id="domains" className="mt-2">
         <div className="cv-domains-grid">
           {data.domains.map((domain) => (
             <Domain
@@ -165,10 +165,10 @@ export default function CompactCvLayout({
       {children}
 
       {/* Colonne gauche 1/3 + expériences 2/3 (grille alignée sur les domaines) */}
-      <div className="cv-page-split mt-14">
+      <div className="cv-page-split mt-6">
         <div
           id="left"
-          className="order-last flex w-full min-w-0 flex-col md:order-first md:col-span-1"
+          className="order-last flex w-full min-w-0 flex-col md:order-first md:col-span-1 print:order-first print:col-span-1"
         >
           {/* Niveau de formation : même bloc que le CV long (une colonne, y compris à l’impression). */}
           <EducationLevel
@@ -216,14 +216,14 @@ export default function CompactCvLayout({
             <ul className="cv-section-simple-list cv-cq-project-list max-md:mt-6">
               {data.projects.map((project: any) => (
                 <li key={project.id}>
-                  <Project project={project} />
+                  <Project project={project} yearOnly hideDatesPrint />
                 </li>
               ))}
             </ul>
           </section>
         </div>
 
-        <div id="main" className="w-full min-w-0 md:col-span-2">
+        <div id="main" className="w-full min-w-0 md:col-span-2 print:col-span-2">
           {/* Experience - Reusing JobDisplay component */}
           <section>
             <h2 className="border-b pb-1 text-2xl font-semibold text-cv-jobs">

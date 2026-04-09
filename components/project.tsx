@@ -4,6 +4,13 @@ import React from 'react';
 import formatDates from '@/lib/date';
 import { capitalizeFirstLetter } from '@/lib/capitalize-first';
 
+function formatProjectYear(start?: string, end?: string): string | null {
+  const sy = start ? new Date(start).getFullYear() : null;
+  const ey = end ? new Date(end).getFullYear() : null;
+  if (sy && ey) return sy === ey ? `${sy}` : `${sy} - ${ey}`;
+  return ey ? `${ey}` : sy ? `${sy}` : null;
+}
+
 function projectPrimaryLabel(project: {
   title?: string | null;
   name?: string | null;
@@ -15,8 +22,21 @@ function projectPrimaryLabel(project: {
   return capitalizeFirstLetter(name);
 }
 
-export default function project({ project: projectData }: { project: any }) {
-  const dates = formatDates(projectData.startDate, projectData.endDate);
+export default function project({
+  project: projectData,
+  yearOnly = false,
+  hideDatesPrint = false,
+}: {
+  project: any;
+  /** Afficher uniquement l'année (ex. « 2021 ») au lieu de MM/YYYY - MM/YYYY. */
+  yearOnly?: boolean;
+  /** Masquer les dates à l'impression (print + print-preview). */
+  hideDatesPrint?: boolean;
+}) {
+  const fullDates = formatDates(projectData.startDate, projectData.endDate);
+  const dates = yearOnly
+    ? formatProjectYear(projectData.startDate, projectData.endDate)
+    : fullDates;
   const id: string = 'project-' + projectData?.id;
   const name = projectPrimaryLabel(projectData);
   const client = projectData.client
@@ -82,7 +102,7 @@ export default function project({ project: projectData }: { project: any }) {
           <p className="cv-project-desc-area cv-study-meta">{description}</p>
         ) : null}
         {dates ? (
-          <span className="cv-project-date-area min-w-max shrink-0 text-sm font-normal tabular-nums leading-snug text-cv-tag-text print:text-xs">
+          <span className={`cv-project-date-area min-w-max shrink-0 text-sm font-normal tabular-nums leading-snug text-cv-tag-text print:text-xs${hideDatesPrint ? ' print:hidden print-preview:hidden' : ''}`}>
             {dates}
           </span>
         ) : null}
@@ -92,7 +112,7 @@ export default function project({ project: projectData }: { project: any }) {
         aria-hidden="true"
       >
         {printBody}
-        {dates ? (
+        {dates && !hideDatesPrint ? (
           <span className="ml-1 tabular-nums text-cv-tag-text print:text-xs">
             ({dates})
           </span>

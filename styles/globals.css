@@ -447,6 +447,18 @@ html {
     display: none !important;
   }
 
+  /* Titre « Niveau de formation » : même taille que les autres h2 dans le CV court
+   * (le `print:text-sm` du composant est conçu pour la colonne étroite du CV long). */
+  .cv-short-page #education-level h2 {
+    font-size: 1.5rem !important;
+    line-height: 2rem !important;
+  }
+
+  /* Projets : mt-2 pour aligner sur Études (au lieu du mt-4 de .cv-section-simple-list) */
+  .cv-short-page .cv-cq-project-list {
+    margin-top: 0.5rem !important;
+  }
+
   /* ================================================================
    * === FULL CV — ajustements print ===============================
    * ================================================================ */
@@ -712,8 +724,21 @@ html {
   display: none !important;
 }
 
-.cv-print-preview .cv-offer-tailored-shell .cv-profile-education-badge {
+.cv-print-preview .cv-offer-tailored-shell .cv-profile-education-badge,
+.cv-print-preview .cv-layout-short .cv-profile-education-badge {
   display: inline-flex !important;
+}
+
+/* Short CV : header plus compact (écran + print-preview). */
+.cv-short-page .header-content {
+  padding-top: 2rem !important;
+  padding-bottom: 0.5rem !important;
+}
+
+/* Titre « Niveau de formation » en print-preview short : même taille que les autres h2. */
+.cv-print-preview .cv-layout-short #education-level h2 {
+  font-size: 1.5rem !important;
+  line-height: 2rem !important;
 }
 
 /**

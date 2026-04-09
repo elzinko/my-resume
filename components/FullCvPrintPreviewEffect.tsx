@@ -2,10 +2,7 @@
 
 import { useEffect } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
-import {
-  isCvPrintPreviewPathname,
-  isFullCvRootPathname,
-} from '@/lib/cv-print-routes';
+import { isCvPrintPreviewPathname } from '@/lib/cv-print-routes';
 import { isCvPrintPreviewQuery } from '@/lib/cv-print-preview';
 
 /**
@@ -31,10 +28,11 @@ export default function FullCvPrintPreviewEffect() {
   }, [active]);
 
   useEffect(() => {
-    // Le listener d'impression navigateur ne concerne que le CV long : le CV
-    // court possède son propre rendu `@media print` et ne doit PAS hériter des
-    // règles `.cv-print-preview …` du full CV.
-    if (!isFullCvRootPathname(pathname)) return;
+    // Activer `.cv-print-preview` pendant Cmd+P sur le CV long ET le CV court.
+    // Les règles `.cv-print-preview .cv-full-cv-print-root …` ne matchent que
+    // le CV long (pas de `.cv-full-cv-print-root` dans le short). Le short
+    // bénéficie de `.cv-print-preview .cv-layout-short …` (badge, etc.).
+    if (!isCvPrintPreviewPathname(pathname)) return;
     const root = document.documentElement;
     const onBeforePrint = () => root.classList.add('cv-print-preview');
     const onAfterPrint = () => {

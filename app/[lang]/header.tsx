@@ -32,7 +32,7 @@ export default async function Header({
         role={data?.header?.role}
         afterRole={
           offerPrintContactStrip ? (
-            <div className="hidden w-full print-preview:block">
+            <div className="w-full">
               <HeaderDesktopContactStrip
                 email={offerPrintContactStrip.email}
                 phone={offerPrintContactStrip.phone}
