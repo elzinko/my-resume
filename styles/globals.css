@@ -201,7 +201,7 @@
    * Études (StudyDisplay) — titres au même corps que le bloc Niveau de formation (primary).
    */
   .cv-study-title {
-    @apply text-base font-normal leading-snug text-cv-section print:text-sm;
+    @apply text-base font-normal leading-snug print:text-sm;
   }
 
   .cv-study-meta {
@@ -209,11 +209,11 @@
   }
 
   .cv-study-year {
-    @apply text-sm font-normal tabular-nums leading-snug text-cv-section print:text-xs;
+    @apply text-sm font-normal tabular-nums leading-snug print:text-xs;
   }
 
   .cv-study-title-compact {
-    @apply text-sm font-normal leading-snug text-cv-section print:text-xs;
+    @apply text-sm font-normal leading-snug print:text-xs;
   }
 
   .cv-study-year-compact {

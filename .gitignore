@@ -50,3 +50,4 @@ backups
 /print-previews/
 playwright-report/
 test-results/
+storybook-static
