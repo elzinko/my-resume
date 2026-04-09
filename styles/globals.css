@@ -99,19 +99,12 @@
     text-align: right;
   }
 
+  /**
+   * Conteneur large (≥ 36rem) : projets avec description conservent la grille
+   * 2 lignes (`titre + date` / `description`) pour s’aligner visuellement sur
+   * Studies default. Les projets sans description restent sur une seule ligne.
+   */
   @container (min-width: 36rem) {
-    .cv-cq-section .cv-project-row:not(.cv-project-row--no-desc) {
-      grid-template-columns: minmax(0, max-content) minmax(0, 1fr) auto;
-      grid-template-areas: 'proj-title proj-desc proj-date';
-      grid-template-rows: auto;
-      row-gap: 0;
-    }
-
-    .cv-cq-section .cv-project-row:not(.cv-project-row--no-desc) .cv-project-date-area {
-      justify-self: end;
-      text-align: right;
-    }
-
     .cv-cq-section .cv-project-row--no-desc {
       grid-template-columns: minmax(0, max-content) auto;
       grid-template-areas: 'proj-title proj-date';
@@ -322,10 +315,11 @@ html {
     display: block !important;
   }
 
-  /* Page setup — marges légères : le padding du layout aligne l’écran et l’impression (évite double décalage). */
+  /* Page setup — marge unique gérée par `@page` (le layout est en `print:p-0`
+     pour éviter la double marge qui provoquait une page blanche orpheline). */
   @page {
     size: A4;
-    margin: 5mm;
+    margin: 1mm;
   }
 
   /* ================================================================
@@ -335,7 +329,7 @@ html {
    * ================================================================ */
   @page short {
     size: A4;
-    margin: 3mm;
+    margin: 1mm;
   }
 
   .cv-short-page {
@@ -554,9 +548,12 @@ html {
     margin-top: 0 !important;
   }
 
-  .cv-full-cv-print-root #jobs {
+  .cv-full-cv-print-root #jobs,
+  .cv-full-cv-print-root #jobs > ul {
     break-before: auto !important;
     page-break-before: auto !important;
+    break-inside: auto !important;
+    page-break-inside: auto !important;
   }
 
   /* Hide non-printable elements */
@@ -570,7 +567,6 @@ html {
   }
 
   /* Prevent page breaks inside elements */
-  section,
   li {
     break-inside: avoid;
     page-break-inside: avoid;
@@ -599,6 +595,17 @@ html {
   a {
     text-decoration: none !important;
     color: inherit !important;
+  }
+
+  /**
+   * Titres projets : conserver le bleu `text-cv-tag-text` malgré la règle
+   * `a { color: inherit !important }` ci-dessus (sinon noir à l’impression).
+   */
+  .cv-full-cv-print-root .cv-project-title-area a,
+  .cv-full-cv-print-root .cv-project-title-area span,
+  .cv-full-cv-print-root .cv-project-print a,
+  .cv-full-cv-print-root .cv-project-print span {
+    @apply !text-cv-tag-text;
   }
 }
 

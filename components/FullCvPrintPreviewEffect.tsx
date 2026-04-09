@@ -6,7 +6,13 @@ import { isCvPrintPreviewPathname } from '@/lib/cv-print-routes';
 import { isCvPrintPreviewQuery } from '@/lib/cv-print-preview';
 
 /**
- * Active `html.cv-print-preview` sur le CV long ou le CV court (les query params d'offre s'appliquent à la racine).
+ * Active `html.cv-print-preview` sur le CV long ou le CV court :
+ * - en permanence si l'URL porte `?print` (aperçu écran) ;
+ * - temporairement pendant un vrai `window.print()` (Cmd+P) via `beforeprint` /
+ *   `afterprint`, pour que tout le CSS `.cv-print-preview …` (masquage du
+ *   niveau de formation, Contact 3-col remplacé par le contact strip, ordre
+ *   Studies après Jobs, projets en ligne, pas de saut de page avant Jobs,
+ *   titres projets bleus…) s'applique aussi à l'impression navigateur.
  */
 export default function FullCvPrintPreviewEffect() {
   const pathname = usePathname();
@@ -20,6 +26,21 @@ export default function FullCvPrintPreviewEffect() {
     document.documentElement.classList.toggle('cv-print-preview', active);
     return () => document.documentElement.classList.remove('cv-print-preview');
   }, [active]);
+
+  useEffect(() => {
+    if (!isCvPrintPreviewPathname(pathname)) return;
+    const root = document.documentElement;
+    const onBeforePrint = () => root.classList.add('cv-print-preview');
+    const onAfterPrint = () => {
+      if (!active) root.classList.remove('cv-print-preview');
+    };
+    window.addEventListener('beforeprint', onBeforePrint);
+    window.addEventListener('afterprint', onAfterPrint);
+    return () => {
+      window.removeEventListener('beforeprint', onBeforePrint);
+      window.removeEventListener('afterprint', onAfterPrint);
+    };
+  }, [pathname, active]);
 
   return null;
 }
