@@ -246,6 +246,12 @@ export default async function DevComponentsPage({
           Full / Short / mobile.
         </p>
         <nav className="mt-4 flex flex-wrap gap-2 text-xs">
+          <a
+            href={`/${lang}/dev/renders`}
+            className="rounded border border-teal-400/40 bg-teal-950/30 px-2 py-1 text-teal-300 hover:border-teal-400/80"
+          >
+            Renders Comparison
+          </a>
           {stories.map((s) => (
             <a
               key={s.id}

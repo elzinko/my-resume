@@ -2,7 +2,7 @@ import { chromium } from '@playwright/test';
 import fs from 'fs';
 import path from 'path';
 
-const BASE = 'http://localhost:60738';
+const BASE = process.env.RENDERS_BASE_URL || 'http://localhost:60738';
 const OUT = path.dirname(new URL(import.meta.url).pathname);
 
 const b = await chromium.launch();
