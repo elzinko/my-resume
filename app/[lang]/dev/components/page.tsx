@@ -9,6 +9,7 @@ import { getEducationLevelContent } from '@/lib/education-level-content';
 import About from '../../about';
 import Skills from '../../skills';
 import Domains from '../../domains';
+import Domain from '@/components/domain';
 import Contact from '../../contact';
 import Studies from '../../studies';
 import Hobbies from '../../hobbies';
@@ -163,8 +164,13 @@ export default async function DevComponentsPage({
     { id: 'header', title: 'Header (assemblé)', node: headerNode },
     {
       id: 'header-toolbar',
-      title: 'Header · Toolbar (menu seul)',
+      title: 'Header · Toolbar (desktop)',
       node: headerToolbarNode,
+    },
+    {
+      id: 'header-toolbar-mobile',
+      title: 'Header · Toolbar (mobile)',
+      node: <Narrow>{headerToolbarNode}</Narrow>,
     },
     {
       id: 'header-content',
@@ -184,7 +190,16 @@ export default async function DevComponentsPage({
     { id: 'about', title: 'About', node: aboutNode },
     { id: 'contact', title: 'Contact', node: contactDefaultNode },
     { id: 'skills', title: 'Skills', node: skillsNode },
-    { id: 'domains', title: 'Domains', node: domainsNode },
+    { id: 'domains', title: 'Domains (3 colonnes)', node: domainsNode },
+    ...(data?.allDomainsModels || []).map((domain: any, i: number) => ({
+      id: `domain-${domain.id || i}`,
+      title: `Domain · ${domain.name || `#${i}`}`,
+      node: (
+        <div className="max-w-sm">
+          <Domain key={domain.id} domain={domain} />
+        </div>
+      ),
+    })),
     {
       id: 'education-level',
       title: 'Niveau de formation',
@@ -228,6 +243,29 @@ export default async function DevComponentsPage({
       node: <ShortFrame>{projectsNode}</ShortFrame>,
     },
     { id: 'jobs', title: 'Jobs (full CV)', node: jobsNode },
+    {
+      id: 'job-single',
+      title: 'Job · single (premier job)',
+      node: allJobs[0] ? (
+        <JobDisplay
+          job={allJobs[0]}
+          presentLabel={presentLabel}
+          locale={lang}
+        />
+      ) : <p>Aucun job</p>,
+    },
+    {
+      id: 'job-single-compact',
+      title: 'Job · single compact (short CV)',
+      node: allJobs[0] ? (
+        <JobDisplay
+          job={allJobs[0]}
+          compact
+          presentLabel={presentLabel}
+          locale={lang}
+        />
+      ) : <p>Aucun job</p>,
+    },
     {
       id: 'jobs-short',
       title: 'Jobs (short CV — missions limitées + bloc de clôture)',

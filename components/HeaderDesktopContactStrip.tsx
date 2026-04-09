@@ -50,7 +50,7 @@ export default function HeaderDesktopContactStrip({
             href={mapsHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-inherit underline decoration-pink-200/50 underline-offset-2 hover:decoration-pink-200"
+            className="text-inherit no-underline hover:underline hover:decoration-pink-200 hover:underline-offset-2"
             title={locationTitle}
           >
             {location}
