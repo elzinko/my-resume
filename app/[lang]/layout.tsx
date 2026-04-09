@@ -25,7 +25,7 @@ export default async function RootLayout({
           <CvMobilePreviewOverlay />
         </Suspense>
       ) : null}
-      <div className="container mx-auto min-h-screen p-8 max-md:px-8 max-md:pb-8 max-md:pt-3 print:min-h-0 print:p-0">
+      <div className="container mx-auto min-h-screen p-8 max-md:px-8 max-md:pb-8 max-md:pt-3 print:min-h-0 print:p-8">
         <main>{children}</main>
       </div>
       {enableAnalitycs ? <Analytics /> : ''}

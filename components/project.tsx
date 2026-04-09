@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
-import formatDates from '@/lib/date';
 import { capitalizeFirstLetter } from '@/lib/capitalize-first';
 
+/** Projets : toujours année seule (le mois n'apporte rien). */
 function formatProjectYear(start?: string, end?: string): string | null {
   const sy = start ? new Date(start).getFullYear() : null;
   const ey = end ? new Date(end).getFullYear() : null;
@@ -24,22 +24,16 @@ function projectPrimaryLabel(project: {
 
 export default function project({
   project: projectData,
-  yearOnly = false,
   hideDatesPrint = false,
   compact = false,
 }: {
   project: any;
-  /** Afficher uniquement l'année (ex. « 2021 ») au lieu de MM/YYYY - MM/YYYY. */
-  yearOnly?: boolean;
   /** Masquer les dates à l'impression (print + print-preview). */
   hideDatesPrint?: boolean;
   /** Taille réduite (même typo que Studies compact). */
   compact?: boolean;
 }) {
-  const fullDates = formatDates(projectData.startDate, projectData.endDate);
-  const dates = yearOnly
-    ? formatProjectYear(projectData.startDate, projectData.endDate)
-    : fullDates;
+  const dates = formatProjectYear(projectData.startDate, projectData.endDate);
   const id: string = 'project-' + projectData?.id;
   const name = projectPrimaryLabel(projectData);
   const client = projectData.client

@@ -66,7 +66,6 @@ export default async function DevComponentsPage({
     hobbiesNode,
     learningsNode,
     projectsNode,
-    projectsNarrowNode,
     jobsNode,
   ] = await Promise.all([
     (Header as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang }),
@@ -78,7 +77,6 @@ export default async function DevComponentsPage({
     (Hobbies as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang }),
     (Learnings as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang }),
     (Projects as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang }),
-    (Projects as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang, yearOnly: true }),
     (Jobs as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang }),
   ]);
 
@@ -240,11 +238,11 @@ export default async function DevComponentsPage({
       title: 'Learnings (narrow container — mobile / sidebar, sans descriptions)',
       node: <Narrow>{learningsNode}</Narrow>,
     },
-    { id: 'projects', title: 'Projects (default)', node: projectsNode },
+    { id: 'projects', title: 'Projects (default — année seule)', node: projectsNode },
     {
       id: 'projects-narrow',
-      title: 'Projects (narrow — colonne 1/3 / mobile, année seule)',
-      node: <Narrow>{projectsNarrowNode}</Narrow>,
+      title: 'Projects (narrow — mobile / sidebar)',
+      node: <Narrow>{projectsNode}</Narrow>,
     },
     { id: 'jobs', title: 'Jobs (full CV)', node: jobsNode },
     {

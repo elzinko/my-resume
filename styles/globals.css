@@ -347,11 +347,11 @@ html {
     display: block !important;
   }
 
-  /* Page setup — le layout utilise `print:p-0` donc la marge vient de `@page`.
-     10mm ≈ le `p-8` (2rem) de l'écran, rendu propre en PDF. */
+  /* Page setup — margin 1mm élimine les en-têtes/pieds de page du navigateur.
+     Les marges visuelles sont gérées par le padding du container (print:p-8). */
   @page {
     size: A4;
-    margin: 10mm;
+    margin: 1mm;
   }
 
   /* ================================================================

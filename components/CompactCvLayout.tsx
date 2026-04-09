@@ -220,7 +220,7 @@ export default function CompactCvLayout({
             <ul className="cv-section-body-gap space-y-1">
               {data.projects.map((project: any) => (
                 <li key={project.id}>
-                  <Project project={project} yearOnly compact />
+                  <Project project={project} compact />
                 </li>
               ))}
             </ul>
