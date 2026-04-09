@@ -140,11 +140,13 @@
   }
 
   .cv-pill-skill {
-    @apply border-cv-tag-border/50 text-cv-tag-text;
+    @apply text-cv-tag-text;
+    border-color: rgb(96 165 250 / 0.5); /* cv-tag-border (blue-400) at 50% */
   }
 
   .cv-pill-job {
-    @apply border-cv-jobs/45 text-cv-jobs;
+    @apply text-cv-jobs;
+    border-color: rgb(249 168 212 / 0.45); /* cv-jobs (pink-300) at 45% */
   }
 
   .cv-pill-link {
