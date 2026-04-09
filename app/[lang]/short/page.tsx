@@ -102,6 +102,12 @@ export default async function ShortPage({
       lang={lang}
       headerName={data?.header?.name || ''}
       headerRole={data?.header?.role || ''}
+      toolbarLabels={{
+        menu: (data as any)?.ui?.menu ?? 'Menu',
+        menuClose: (data as any)?.ui?.menuClose ?? 'Close menu',
+        versionFull: (data as any)?.ui?.versionFull ?? 'Full version',
+        versionCompact: (data as any)?.ui?.versionCompact ?? 'Compact version',
+      }}
     >
       <CompactCvLayout data={compactData} lang={lang as 'fr' | 'en'} />
     </ShortPageWrapper>

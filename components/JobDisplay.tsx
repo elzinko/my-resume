@@ -82,7 +82,7 @@ interface JobDisplayProps {
 export default function JobDisplay({
   job,
   compact = false,
-  presentLabel = 'Présent',
+  presentLabel = 'Present',
   locale = 'fr',
 }: JobDisplayProps) {
   const dates = compact ? null : formatDates(job.startDate, job.endDate);

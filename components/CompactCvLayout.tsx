@@ -73,6 +73,7 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
       contact: 'Contact',
       present: 'Présent',
       moreExperience: "+20 ans d'expérience",
+      moreExperienceSuffix: 'en développement fullstack et DevOps.',
       moreClients:
         'Autres clients : Edelia (EDF), JCDecaux, Lotsys (FDJ), Médiamétrie, Thales, Médiapost, BNP Paribas, Renault, SFR...',
     },
@@ -85,6 +86,7 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
       contact: 'Contact',
       present: 'Present',
       moreExperience: '+20 years of experience',
+      moreExperienceSuffix: 'in fullstack development and DevOps.',
       moreClients:
         'Other clients: Edelia (EDF), JCDecaux, Lotsys (FDJ), Médiamétrie, Thales, Médiapost, BNP Paribas, Renault, SFR...',
     },
@@ -102,6 +104,7 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
     expertise: fallback.expertise,
     present: fallback.present,
     moreExperience: fallback.moreExperience,
+    moreExperienceSuffix: fallback.moreExperienceSuffix,
     moreClients: fallback.moreClients,
   };
 
@@ -195,8 +198,8 @@ export default function CompactCvLayout({ data, lang }: CompactCvLayoutProps) {
             {/* More experience note */}
             <div className="mt-4 border-l-4 border-teal-300/50 pl-3 print:mt-2">
               <p className="text-xs text-gray-400 print:text-[10px]">
-                <strong className="text-teal-300">{t.moreExperience}</strong> en
-                développement fullstack et DevOps. {t.moreClients}
+                <strong className="text-teal-300">{t.moreExperience}</strong>{' '}
+                {t.moreExperienceSuffix} {t.moreClients}
               </p>
             </div>
           </section>

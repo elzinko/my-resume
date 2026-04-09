@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactNode } from 'react';
-import HeaderToolbar from './HeaderToolbar';
+import HeaderToolbar, { HeaderToolbarLabels } from './HeaderToolbar';
 import HeaderContent from './HeaderContent';
 
 interface ShortPageWrapperProps {
@@ -9,6 +9,7 @@ interface ShortPageWrapperProps {
   lang: string;
   headerName: string;
   headerRole: string;
+  toolbarLabels?: HeaderToolbarLabels;
 }
 
 export default function ShortPageWrapper({
@@ -16,12 +17,13 @@ export default function ShortPageWrapper({
   lang,
   headerName,
   headerRole,
+  toolbarLabels,
 }: ShortPageWrapperProps) {
   return (
     <>
       <header className="relative z-[70] print:mb-2">
         <div className="print:hidden">
-          <HeaderToolbar shortLang={lang} />
+          <HeaderToolbar shortLang={lang} labels={toolbarLabels} />
         </div>
         <HeaderContent name={headerName} role={headerRole} />
       </header>

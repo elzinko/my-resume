@@ -1,0 +1,581 @@
+{
+  "github": {
+    "url": "https://github.com/elzinko"
+  },
+  "contact": {
+    "phone": "+33661412725",
+    "email": "thomas.couderc@gmail.com",
+    "location": "Paris, France"
+  },
+  "header": {
+    "name": "Thomas Couderc"
+  },
+  "jobs": [
+    {
+      "slug": "jpb-systeme-2024",
+      "client": "JPB Système",
+      "location": "Montereau-sur-le-Jard",
+      "startDate": "2024-06-10",
+      "endDate": "2025-08-31",
+      "tech": [
+        "vue-js",
+        "typescript",
+        "python",
+        "aws",
+        "aws-lambda",
+        "iot-hub"
+      ]
+    },
+    {
+      "slug": "blablacar-2023",
+      "client": "BlablaCar",
+      "location": "Paris",
+      "startDate": "2023-10-01",
+      "endDate": "2023-12-31",
+      "tech": [
+        "react",
+        "spring-boot",
+        "kubernetes"
+      ]
+    },
+    {
+      "slug": "smartch-2023",
+      "client": "Smartch",
+      "location": "Paris",
+      "startDate": "2023-05-01",
+      "endDate": "2023-09-04",
+      "tech": [
+        "kotlin",
+        "ktor",
+        "exposed",
+        "hexagonal-architecture",
+        "confluence",
+        "jira"
+      ]
+    },
+    {
+      "slug": "sncf-reseaux-dgex-solutions-2022",
+      "client": "SNCF Réseaux - DGEX Solutions",
+      "location": "Saint-Denis",
+      "startDate": "2022-05-01",
+      "endDate": "2023-02-01",
+      "tech": [
+        "rust",
+        "java-17",
+        "typescript",
+        "python",
+        "github",
+        "kubernetes",
+        "vs-code",
+        "debian",
+        "hugo",
+        "git",
+        "postgresql",
+        "fastapi",
+        "docker",
+        "docker-compose"
+      ]
+    },
+    {
+      "slug": "leboncoin-2021",
+      "client": "LeBonCoin",
+      "location": "Paris",
+      "startDate": "2021-08-01",
+      "endDate": "2022-05-01",
+      "tech": [
+        "go",
+        "kafka",
+        "gitlab",
+        "vs-code",
+        "kubernetes",
+        "docker",
+        "debian",
+        "elk",
+        "datadog",
+        "postman",
+        "swagger"
+      ]
+    },
+    {
+      "slug": "celsius-energy-2020",
+      "client": "Celsius Energy",
+      "location": "Clamart",
+      "startDate": "2020-12-01",
+      "endDate": "2021-08-01",
+      "tech": [
+        "typescript",
+        "python",
+        "angular",
+        "azure",
+        "terraform",
+        "iot-hub",
+        "iot-edge",
+        "stream-analytics",
+        "function-app",
+        "databricks",
+        "cosmosdb",
+        "signalr",
+        "azure-devops",
+        "key-vault",
+        "backup-vault"
+      ]
+    },
+    {
+      "slug": "relevanc-2020",
+      "client": "RelevanC",
+      "location": "Paris",
+      "startDate": "2020-08-01",
+      "endDate": "2020-12-02",
+      "tech": [
+        "java-11",
+        "spring-boot",
+        "swagger",
+        "postman",
+        "jhipster",
+        "gcp"
+      ]
+    },
+    {
+      "slug": "ecocea-2019",
+      "client": "Ecocea",
+      "location": "Paris",
+      "startDate": "2019-10-01",
+      "endDate": "2020-05-01",
+      "tech": [
+        "java-8",
+        "gitlab-flow",
+        "jenkins",
+        "gitlab",
+        "websphere-commerce",
+        "ubuntu",
+        "react",
+        "gradle"
+      ]
+    },
+    {
+      "slug": "edelia-2016",
+      "client": "Edelia",
+      "location": "Nanterre",
+      "startDate": "2016-04-01",
+      "endDate": "2019-06-01",
+      "tech": [
+        "java-8",
+        "java-11",
+        "docker",
+        "docker-compose",
+        "rancher",
+        "openshift",
+        "kubernetes",
+        "cucumber",
+        "mysql",
+        "ecs",
+        "ecr",
+        "eks",
+        "ec2",
+        "rds",
+        "s3"
+      ]
+    },
+    {
+      "slug": "jcdecaux-2015",
+      "client": "JCDecaux",
+      "location": "Plaisir",
+      "startDate": "2015-01-01",
+      "endDate": "2016-03-01",
+      "tech": [
+        "java-8",
+        "spring-boot",
+        "mysql",
+        "apache",
+        "undertow",
+        "git",
+        "gitlab",
+        "jira",
+        "ubuntu",
+        "aws"
+      ]
+    },
+    {
+      "slug": "lotsys-filiale-fdj-2014",
+      "client": "Lotsys Filiale FDJ",
+      "location": "Suresnes",
+      "startDate": "2014-04-01",
+      "endDate": "2014-12-01",
+      "tech": [
+        "java-7",
+        "spring",
+        "oracle",
+        "mercurial",
+        "confluence",
+        "bamboo",
+        "fisheye",
+        "stash",
+        "hazelcast",
+        "zookeeper"
+      ]
+    },
+    {
+      "slug": "mediametrie-2013",
+      "client": "Mediametrie",
+      "location": "Levallois-Perret",
+      "startDate": "2013-04-01",
+      "endDate": "2014-03-01",
+      "tech": [
+        "java-7",
+        "gwt",
+        "spring",
+        "spring-data-jpa",
+        "spring-security",
+        "cucumber",
+        "selenium",
+        "nutch",
+        "htmlunit",
+        "gora",
+        "hbase",
+        "hadoop"
+      ]
+    },
+    {
+      "slug": "thales-communications-2012",
+      "client": "Thales communications",
+      "location": "Gennevilliers",
+      "startDate": "2012-01-01",
+      "endDate": "2013-01-01",
+      "tech": [
+        "java-7",
+        "gwt",
+        "spring",
+        "spring-data-jpa",
+        "spring-social",
+        "mysql",
+        "tomcat",
+        "git",
+        "maven",
+        "mongodb",
+        "selenium-grid",
+        "jmeter"
+      ]
+    },
+    {
+      "slug": "mediapost-2011",
+      "client": "Médiapost",
+      "location": "Montrouge",
+      "startDate": "2011-04-01",
+      "endDate": "2012-01-01",
+      "tech": [
+        "java-5",
+        "maven-2",
+        "git",
+        "tomcat-5",
+        "jenkins",
+        "sybase",
+        "jasper-reports",
+        "selenium",
+        "scrum",
+        "tdd"
+      ]
+    },
+    {
+      "slug": "renault-bnp-paribas-la-compagnie-1818-dgfip-sfr-2004",
+      "client": "Renault / BNP Paribas / La compagnie 1818 / DGFIP / SFR",
+      "location": "Paris",
+      "startDate": "2004-09-01",
+      "endDate": "2011-03-01",
+      "tech": []
+    }
+  ],
+  "domains": [
+    {
+      "slug": "agile",
+      "position": 1,
+      "competencies": [
+        "scrum",
+        "safe",
+        "scrum-master",
+        "kanban",
+        "lean"
+      ]
+    },
+    {
+      "slug": "dev",
+      "position": 2,
+      "competencies": [
+        "java",
+        "spring-boot",
+        "typescript",
+        "python",
+        "go",
+        "vue-js",
+        "react",
+        "angular",
+        "microservices",
+        "ddd",
+        "architecture"
+      ]
+    },
+    {
+      "slug": "ops",
+      "position": 3,
+      "competencies": [
+        "docker",
+        "kubernetes",
+        "terraform",
+        "vagrant",
+        "aws",
+        "gcp",
+        "azure"
+      ]
+    }
+  ],
+  "skills": [
+    "typescript",
+    "java",
+    "spring-boot",
+    "react",
+    "kubernetes",
+    "cloud",
+    "12-factor"
+  ],
+  "studies": [
+    {
+      "slug": "francois-1er-high-school-baccalaureat-s-specialite-mathemati",
+      "establishment": "Francois 1er high school",
+      "location": "Fontainebleau",
+      "startDate": "1999-01-01",
+      "endDate": "1999-01-01"
+    },
+    {
+      "slug": "coursera-control-of-mobile-robots-digital-signal-processing",
+      "establishment": "Coursera",
+      "location": "Stanford",
+      "startDate": "2011-09-01",
+      "endDate": "2013-07-01"
+    },
+    {
+      "slug": "lafayette-high-school-classes-preparatoires-grandes-ecoles-p",
+      "establishment": "Lafayette high school",
+      "location": "Champagne-sur-Seine",
+      "startDate": "1999-09-01",
+      "endDate": "2002-07-01"
+    },
+    {
+      "slug": "coursera-apprentissage-automatique-ml",
+      "establishment": "Coursera",
+      "location": "Stanford",
+      "startDate": "2011-09-01",
+      "endDate": "2013-07-01"
+    },
+    {
+      "slug": "conservatoire-national-des-arts-et-metiers-processeurs-de-si",
+      "establishment": "Conservatoire National des Arts et Métiers",
+      "location": "Paris",
+      "startDate": "2011-09-01",
+      "endDate": "2012-06-01"
+    },
+    {
+      "slug": "conservatoire-national-des-arts-et-metiers-programmation-ava",
+      "establishment": "Conservatoire National des Arts et Métiers",
+      "location": "Paris",
+      "startDate": "2011-09-01",
+      "endDate": "2012-06-01"
+    },
+    {
+      "slug": "iut-licence-pro-systemes-informatiques-et-logiciels",
+      "establishment": "IUT",
+      "location": "Fontainebleau",
+      "startDate": "2005-08-01",
+      "endDate": "2006-08-01"
+    },
+    {
+      "slug": "iut-dut-informatique",
+      "establishment": "IUT",
+      "location": "Fontainebleau",
+      "startDate": "2003-08-01",
+      "endDate": "2005-06-01"
+    }
+  ],
+  "projects": [
+    {
+      "slug": "shopify-plugin-product-assistant",
+      "name": "shopify-plugin-product-assistant",
+      "link": "https://github.com/elzinko/shopify-plugin-product-assistant",
+      "startDate": "2025-12-01",
+      "endDate": null,
+      "tech": [
+        "next-js",
+        "react"
+      ],
+      "title": "Assistant Shopify"
+    },
+    {
+      "slug": "cop1",
+      "name": "cop1",
+      "link": "https://github.com/elzinko/cop1",
+      "startDate": "2026-02-15",
+      "endDate": null,
+      "tech": [
+        "next-js",
+        "react"
+      ],
+      "display": false
+    },
+    {
+      "slug": "iamthelaw",
+      "name": "iamthelaw",
+      "link": "https://github.com/elzinko/iamthelaw",
+      "startDate": "2026-02-01",
+      "endDate": null,
+      "tech": [
+        "next-js",
+        "react"
+      ],
+      "display": false
+    },
+    {
+      "slug": "lifefindsaway",
+      "name": "lifefindsaway",
+      "link": "https://github.com/elzinko/lifefindsaway",
+      "startDate": "2026-02-01",
+      "endDate": null,
+      "tech": [
+        "next-js",
+        "react"
+      ],
+      "display": false
+    },
+    {
+      "slug": "realizator",
+      "name": "realizator",
+      "link": "https://github.com/elzinko/realizator",
+      "startDate": "2026-01-15",
+      "endDate": null,
+      "tech": [
+        "next-js",
+        "react"
+      ]
+    },
+    {
+      "slug": "livestreamz",
+      "name": "livestreamz",
+      "link": "https://github.com/elzinko/livestreamz",
+      "startDate": "2026-01-15",
+      "endDate": null,
+      "tech": [
+        "next-js",
+        "react"
+      ]
+    },
+    {
+      "slug": "muti",
+      "name": "MUTI",
+      "link": "https://www.muti.app/",
+      "startDate": "2026-01-01",
+      "endDate": null,
+      "tech": [
+        "next-js",
+        "react"
+      ]
+    },
+    {
+      "slug": "curriculum-vitae",
+      "name": "Curriculum Vitae",
+      "link": "https://github.com/elzinko/my-resume",
+      "startDate": null,
+      "endDate": "2023-03-16",
+      "tech": [
+        "next-js",
+        "tailwind-css",
+        "datocms",
+        "github",
+        "github-copilot",
+        "vercel"
+      ]
+    },
+    {
+      "slug": "matiere-web",
+      "name": "Matière Web",
+      "link": "https://matiere-web.com/",
+      "startDate": "2020-06-01",
+      "endDate": null,
+      "tech": [
+        "wordpress",
+        "elementor",
+        "next-js",
+        "react",
+        "angular",
+        "datocms"
+      ]
+    },
+    {
+      "slug": "deploiement-octobot",
+      "name": "Déploiement Octobot",
+      "link": "https://github.com/elzinko/octobot",
+      "startDate": null,
+      "endDate": "2023-02-01",
+      "tech": [
+        "docker",
+        "docker-compose",
+        "python",
+        "oracle-cloud"
+      ]
+    },
+    {
+      "slug": "fizzbuzz-en-go",
+      "name": "Fizzbuzz en Go",
+      "link": "https://github.com/elzinko/go-fizzbuzz",
+      "startDate": null,
+      "endDate": "2021-01-09",
+      "tech": [
+        "go",
+        "docker",
+        "rest",
+        "swagger",
+        "gin"
+      ]
+    }
+  ],
+  "hobbies": [
+    {
+      "slug": "creer-du-son",
+      "link": "https://soundcloud.com/zebra-music-459073993/sets/la-base"
+    },
+    {
+      "slug": "crossovers",
+      "link": "https://hoopstudy.com/"
+    },
+    {
+      "slug": "rider",
+      "link": "https://www.passportesdusoleil.com/"
+    },
+    {
+      "slug": "le-systeme-de-londres",
+      "link": "https://www.chess.com/fr"
+    }
+  ],
+  "learnings": [
+    {
+      "slug": "llm",
+      "link": "https://www.langchain.com/"
+    },
+    {
+      "slug": "aws-bedrock",
+      "link": "https://aws.amazon.com/fr/bedrock/agents/"
+    },
+    {
+      "slug": "mcp",
+      "link": "https://modelcontextprotocol.io/specification/2025-06-18"
+    },
+    {
+      "slug": "langchain",
+      "link": "https://docs.langchain.com/"
+    },
+    {
+      "slug": "openrag",
+      "link": "https://docs.openr.ag/"
+    },
+    {
+      "slug": "bmad",
+      "link": "https://docs.bmad-method.org/"
+    }
+  ]
+}

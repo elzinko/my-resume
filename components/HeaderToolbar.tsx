@@ -43,19 +43,35 @@ function ToolbarIconList({
   );
 }
 
+export type HeaderToolbarLabels = {
+  menu: string;
+  menuClose: string;
+  versionFull: string;
+  versionCompact: string;
+};
+
+const DEFAULT_LABELS: HeaderToolbarLabels = {
+  menu: 'Menu',
+  menuClose: 'Close menu',
+  versionFull: 'Full version',
+  versionCompact: 'Compact version',
+};
+
 function ModeControl({
   shortLang,
   onNavigate,
+  labels,
 }: {
   shortLang?: string;
   onNavigate?: () => void;
+  labels: HeaderToolbarLabels;
 }) {
   if (shortLang) {
     return (
       <Link
         href={`/${shortLang}`}
         className={`${cvHeaderModeBtn} print:hidden`}
-        title="Version complète"
+        title={labels.versionFull}
         onClick={() => onNavigate?.()}
       >
         <svg
@@ -72,15 +88,15 @@ function ModeControl({
             d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
           />
         </svg>
-        <span className="hidden md:inline">Version complète</span>
+        <span className="hidden md:inline">{labels.versionFull}</span>
       </Link>
     );
   }
   return (
     <CvModeToggle
       labels={{
-        full: 'Version complète',
-        compact: 'Version courte',
+        full: labels.versionFull,
+        compact: labels.versionCompact,
       }}
       onNavigate={onNavigate}
     />
@@ -91,7 +107,13 @@ function ModeControl({
  * Desktop : langues à gauche, actions à droite.
  * Mobile : barre fixe en haut ; ouvert = langues à gauche | séparateur | actions + menu à droite.
  */
-export default function HeaderToolbar({ shortLang }: { shortLang?: string }) {
+export default function HeaderToolbar({
+  shortLang,
+  labels = DEFAULT_LABELS,
+}: {
+  shortLang?: string;
+  labels?: HeaderToolbarLabels;
+}) {
   const [open, setOpen] = useState(false);
   const titleId = useId();
   const close = useCallback(() => setOpen(false), []);
@@ -114,7 +136,7 @@ export default function HeaderToolbar({ shortLang }: { shortLang?: string }) {
       >
         <LocaleSwitcher />
         <div className="flex flex-wrap items-center justify-end gap-3">
-          <ModeControl shortLang={shortLang} />
+          <ModeControl shortLang={shortLang} labels={labels} />
           <ToolbarIconList />
         </div>
       </div>
@@ -135,7 +157,7 @@ export default function HeaderToolbar({ shortLang }: { shortLang?: string }) {
           className="flex min-w-0 flex-1 items-center gap-2 border-0 bg-transparent p-0 shadow-none outline-none ring-0"
         >
           <span id={titleId} className="sr-only">
-            Menu
+            {labels.menu}
           </span>
 
           <div
@@ -168,7 +190,7 @@ export default function HeaderToolbar({ shortLang }: { shortLang?: string }) {
                 : 'max-w-0 opacity-0 pointer-events-none')
             }
           >
-            <ModeControl shortLang={shortLang} onNavigate={close} />
+            <ModeControl shortLang={shortLang} labels={labels} onNavigate={close} />
             <ToolbarIconList
               onNavigate={close}
               listClassName={rowListClass}
@@ -183,7 +205,7 @@ export default function HeaderToolbar({ shortLang }: { shortLang?: string }) {
           aria-expanded={open}
           aria-controls="cv-mobile-nav"
           aria-haspopup="dialog"
-          aria-label={open ? 'Fermer le menu' : 'Menu'}
+          aria-label={open ? labels.menuClose : labels.menu}
           onClick={toggle}
         >
           {open ? (

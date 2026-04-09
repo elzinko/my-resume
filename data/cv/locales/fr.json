@@ -1,0 +1,316 @@
+{
+  "header": {
+    "role": "Développeur fullstack"
+  },
+  "contact": {
+    "title": "Coordonnées",
+    "phoneTitle": "téléphone",
+    "emailTitle": "e-mail",
+    "locationTitle": "emplacement"
+  },
+  "about": {
+    "title": "Profile",
+    "text": "Je suis un consultant informatique fullstack agile passionné par les technologies open source frontend et backend. J'aime développer des logiciels à l'aide de solutions cloud, le tout dans la lignée du mouvement Devops."
+  },
+  "sectionTitles": {
+    "skills": "Compétences",
+    "studies": "Études",
+    "jobs": "Missions",
+    "projects": "Projets",
+    "hobbies": "Loisirs",
+    "learnings": "Apprentissages"
+  },
+  "educationLevel": {
+    "title": "Niveau de formation",
+    "levelPrimary": "Bac+5",
+    "effectiveLevelDetail": "Valorisé par 20 ans d'expérience professionnelle",
+    "diploma": "Bac +3",
+    "diplomaDetail": "Licence Pro Systèmes Informatiques et Logiciels",
+    "additionalTraining": "Formations complémentaires",
+    "trainingThemes": "Microélectronique / Traitement du signal / ML / LLM"
+  },
+  "head": {
+    "url": "https://elzinko.github.io/my-resume/en",
+    "name": "Le CV de Thomas Couderc",
+    "locale": "fr_FR",
+    "seo": {
+      "description": "Voici mon CV professionnel",
+      "title": "Le CV de Thomas Couderc"
+    }
+  },
+  "jobs": {
+    "jpb-systeme-2024": {
+      "role": "Développeur IoT",
+      "description": "Développements fullstack IoT sur le produit Keyvibe (startup Keyprod) : acquisition temps réel et remontée cloud.",
+      "bullets": [
+        "Détection multi-seuils de production sur Raspberry Pi 3/4 (Python, Node.js) : analyse temps réel des états machine.",
+        "Chaîne Ethernet → MQTT → AWS IoT Core → Lambda : faible latence, montée en charge, DHCPD configuré."
+      ]
+    },
+    "blablacar-2023": {
+      "role": "Consultant Full Stack",
+      "description": "Création d'un nouveau module de remboursement pour les bus opérés par BlablaCar.",
+      "bullets": [
+        "Nouveau microservice de remboursement en Spring Boot.",
+        "Onglet Zendesk de remboursement en React intégré au back-office."
+      ]
+    },
+    "smartch-2023": {
+      "role": "Consultant Backend",
+      "description": "Plateforme SaaS d'e-learning : conception et développement backend.",
+      "bullets": [
+        "API GraphQL Kotlin/Ktor avec persistance Exposed sur PostgreSQL.",
+        "Architecture hexagonale et pipelines CI/CD."
+      ]
+    },
+    "sncf-reseaux-dgex-solutions-2022": {
+      "role": "Architecte Système",
+      "description": "Pilotage de la stratégie de croissance et de qualité sur le projet open source OSRD (SAFe). Gestion du backlog technique transverse.",
+      "bullets": [
+        "Accompagnement SAFe de plusieurs équipes sur un produit open source ferroviaire.",
+        "Backlog technique transverse : observabilité, build, releases.",
+        "Contributions Rust / Python sur le cœur du simulateur."
+      ]
+    },
+    "leboncoin-2021": {
+      "role": "Consultant Backend",
+      "description": "Refonte du moteur de paiement et conception d'un projet de wallet interne.",
+      "bullets": [
+        "Architecture hexagonale en monorepo Go.",
+        "Event-driven via Kafka ; observabilité Datadog et ELK.",
+        "POC de wallet interne et spikes techniques."
+      ]
+    },
+    "celsius-energy-2020": {
+      "role": "Consultant Full Stack",
+      "description": "Collecte et monitoring de capteurs IoT pour une solution géothermique.",
+      "bullets": [
+        "Architecture évolutive de tableaux de bord temps réel pour un parc d'IoT.",
+        "Pipelines CI/CD automatisés : tests unitaires, d'intégration et e2e.",
+        "Méthodologie Scrum au sein d'une équipe cross-fonctionnelle."
+      ]
+    },
+    "relevanc-2020": {
+      "role": "Consultant Full Stack",
+      "description": "Bootstrap de la refonte de l'outil de couponning multitenant Coupilo.",
+      "bullets": [
+        "Socle Java 11 / Spring Boot généré avec JHipster.",
+        "Architecture hexagonale et déploiement sur GCP."
+      ]
+    },
+    "ecocea-2019": {
+      "role": "Consultant DevOps",
+      "description": "Transformation de l'usine logicielle pour le site e-commerce Manutan.",
+      "bullets": [
+        "Modernisation de la software factory : Jenkins → GitLab CI.",
+        "Industrialisation du build WebSphere Commerce (Gradle, Docker).",
+        "Accompagnement des équipes front sur React."
+      ]
+    },
+    "edelia-2016": {
+      "role": "Consultant Full Stack",
+      "description": "Conception et développement de systèmes liés à la consommation d'électricité, d'eau et de gaz.",
+      "bullets": [
+        "Backend de calcul pour les thermostats connectés Sowee.",
+        "Chantier de transformation digitale sur la partie DevOps.",
+        "Application mobile hybride Mon Eco Service (design et dev fullstack)."
+      ]
+    },
+    "jcdecaux-2015": {
+      "role": "Consultant Full Stack",
+      "description": "Applications mobiles pour la maintenance du mobilier urbain du groupe.",
+      "bullets": [
+        "Backend Java 8 / Spring Boot et apps de terrain en Scrum."
+      ]
+    },
+    "lotsys-filiale-fdj-2014": {
+      "role": "Consultant Backend",
+      "description": "Études et développement sur le backend de la Française des Jeux.",
+      "bullets": [
+        "Gestion de sessions en environnement clusterisé.",
+        "Développement de l'API REST de la gateway."
+      ]
+    },
+    "mediametrie-2013": {
+      "role": "Consultant Backend",
+      "description": "Conception et développement d'API dans le cadre d'un système de mesure d'audience.",
+      "bullets": [
+        "Activités R&D en Scrum.",
+        "POC d'un outil de mesure de qualité de tagging.",
+        "Intégrateur de nomenclature Internet dans un projet global."
+      ]
+    },
+    "thales-communications-2012": {
+      "role": "Consultant Full Stack",
+      "description": "Plateforme d'analyse d'information open source — analyse de réseaux sociaux et d'opinions (labo CenTAI, R&D THALES).",
+      "bullets": [
+        "Audit de performances et optimisation de la chaîne de traitement.",
+        "Service scalable de preuve Internet.",
+        "Intégration d'une solution de load-balancing pour un outil NLP.",
+        "Interfaces GWT et templates de VMs."
+      ]
+    },
+    "mediapost-2011": {
+      "role": "Consultant Full Stack",
+      "description": "Intranet de contractualisation des imprimés publicitaires proposés par La Poste.",
+      "bullets": [
+        "POC d'une solution de test via Selenium Hub.",
+        "Animation des rituels Scrum (sprints, reviews, rétros, dailies)."
+      ]
+    },
+    "renault-bnp-paribas-la-compagnie-1818-dgfip-sfr-2004": {
+      "role": "Expériences antérieures",
+      "description": "Autres missions antérieures, détails sur demande.",
+      "bullets": []
+    }
+  },
+  "domains": {
+    "agile": {
+      "name": "Agile",
+      "description": "Je sais mettre à profit mes multiples expériences d'agilité au service d'une équipe afin d'aboutir à un produit proche du besoin avec une philosophie Craftmanship."
+    },
+    "dev": {
+      "name": "Dev",
+      "description": "J'aime développer des composants réutilisables dans un environnement clusterisé en utilisant des concepts tels que API REST, microservices, robustesse, observabilité, clean code."
+    },
+    "ops": {
+      "name": "Ops",
+      "description": "Je souhaite collaborer avec les équipes opérationnelles en pratiquant le déploiement continue et ainsi produire de la valeur pour l'entreprise en réduisant les frictions organisationnelles."
+    }
+  },
+  "studies": {
+    "francois-1er-high-school-baccalaureat-s-specialite-mathemati": {
+      "name": "Baccalauréat S - Spécialité mathématiques"
+    },
+    "coursera-control-of-mobile-robots-digital-signal-processing": {
+      "name": "Control of Mobile Robots & Digital Signal Processing"
+    },
+    "lafayette-high-school-classes-preparatoires-grandes-ecoles-p": {
+      "name": "Classes préparatoires grandes écoles - PTSI/PSI"
+    },
+    "coursera-apprentissage-automatique-ml": {
+      "name": "Apprentissage automatique - ML"
+    },
+    "conservatoire-national-des-arts-et-metiers-processeurs-de-si": {
+      "name": "processeurs de signaux et logique programmable"
+    },
+    "conservatoire-national-des-arts-et-metiers-programmation-ava": {
+      "name": "Programmation avancée des micro-contrôleurs"
+    },
+    "iut-licence-pro-systemes-informatiques-et-logiciels": {
+      "name": "Licence Pro Systèmes Informatiques et Logiciels"
+    },
+    "iut-dut-informatique": {
+      "name": "DUT Informatique"
+    }
+  },
+  "projects": {
+    "shopify-plugin-product-assistant": {
+      "description": "Extension Shopify d’assistance produit (recommandations, fiches, parcours d’achat). En cours de développement.",
+      "bullets": []
+    },
+    "cop1": {
+      "description": "Projet COP1 — développement mené en 2026.",
+      "bullets": []
+    },
+    "iamthelaw": {
+      "description": "Projet I Am The Law — développé en 2026.",
+      "bullets": []
+    },
+    "lifefindsaway": {
+      "description": "Projet LifeFindsAway — développé en 2026.",
+      "bullets": []
+    },
+    "realizator": {
+      "description": "Projet Realizator — développé en 2026.",
+      "bullets": []
+    },
+    "livestreamz": {
+      "description": "Projet autour du live streaming — développé en 2026.",
+      "bullets": []
+    },
+    "muti": {
+      "description": "MUTI — Motion Orchestration Engine : moteur d’orchestration pour enchaîner et piloter des flux motion / créatifs. Développement début 2026.",
+      "bullets": []
+    },
+    "curriculum-vitae": {
+      "description": "Mon cv professionnel actualisé fait avec amour",
+      "bullets": [
+        "design réalisé avec Tailwind CSS",
+        "conception réactive"
+      ]
+    },
+    "matiere-web": {
+      "description": "Co-fondateur et directeur de l'agence web Matière Web",
+      "bullets": []
+    },
+    "deploiement-octobot": {
+      "description": "Déployez gratuitement une instance Octobot sur le cloud Oracle.",
+      "bullets": []
+    },
+    "fizzbuzz-en-go": {
+      "description": "Fizzbuzz en Go",
+      "bullets": []
+    }
+  },
+  "hobbies": [
+    {
+      "slug": "creer-du-son",
+      "name": "Créer du son"
+    },
+    {
+      "slug": "crossovers",
+      "name": "Crossovers"
+    },
+    {
+      "slug": "rider",
+      "name": "Rider"
+    },
+    {
+      "slug": "le-systeme-de-londres",
+      "name": "Le système de Londres"
+    }
+  ],
+  "learnings": [
+    {
+      "slug": "llm",
+      "name": "LLM"
+    },
+    {
+      "slug": "aws-bedrock",
+      "name": "AWS Bedrock"
+    },
+    {
+      "slug": "mcp",
+      "name": "MCP"
+    },
+    {
+      "slug": "langchain",
+      "name": "LangChain"
+    },
+    {
+      "slug": "openrag",
+      "name": "OpenRAG"
+    },
+    {
+      "slug": "bmad",
+      "name": "BMAD"
+    }
+  ],
+  "ui": {
+    "present": "Présent",
+    "expandTech": "Afficher toutes les technologies",
+    "collapseTech": "Réduire la liste des technologies",
+    "versionFull": "Version complète",
+    "versionCompact": "Version courte",
+    "menu": "Menu",
+    "menuClose": "Fermer le menu",
+    "moreExperience": "+20 ans d'expérience",
+    "moreExperienceSuffix": "en développement fullstack et DevOps.",
+    "otherClients": "Autres clients : Edelia (EDF), JCDecaux, Lotsys (FDJ), Médiamétrie, Thales, Médiapost, BNP Paribas, Renault, SFR...",
+    "sectionContact": "Contact",
+    "sectionExperience": "Expérience",
+    "sectionEducation": "Formation",
+    "sectionProfile": "Profil"
+  }
+}

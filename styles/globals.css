@@ -2,88 +2,155 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================
+ * Design system tokens
+ * Source unique de la typographie + des espacements CV.
+ *
+ * Les composants n'écrivent plus `print:text-…` ou `print:mt-…` :
+ * il suffit d'utiliser les classes sémantiques `.cv-*` ci-dessous,
+ * la valeur s'adapte automatiquement à l'écran ou à l'impression
+ * via le bloc `@media print`.
+ *
+ * Voir aussi `docs/DESIGN_SYSTEM.md`.
+ * ============================================================ */
+:root {
+  /* Tailles typographiques */
+  --fs-h1: 3rem; /* 48px - nom */
+  --fs-h2: 1.5rem; /* 24px - titres de section */
+  --fs-title: 1rem; /* 16px - clients, diplômes, intitulés primaires */
+  --fs-body: 0.875rem; /* 14px - corps */
+  --fs-meta: 0.75rem; /* 12px - dates, méta secondaires */
+  --fs-pill: 0.75rem; /* 12px - pastilles techno */
+
+  /* Espacements verticaux entre sections */
+  --sp-section: 2.5rem;
+  --sp-section-inner: 1rem;
+  --sp-list: 0.25rem;
+
+  /* Hauteur max pastilles techno repliées (~2 lignes) */
+  --pill-collapse-h: 3.1rem;
+}
+
+@media print {
+  :root {
+    --fs-h1: 1.875rem; /* 30px */
+    --fs-h2: 1rem; /* 16px */
+    --fs-title: 0.875rem; /* 14px */
+    --fs-body: 0.75rem; /* 12px */
+    --fs-meta: 0.625rem; /* 10px */
+    --fs-pill: 0.625rem;
+
+    --sp-section: 1rem;
+    --sp-section-inner: 0.5rem;
+    --sp-list: 0.125rem;
+
+    --pill-collapse-h: 2.65rem;
+  }
+}
+
 @layer components {
-  /**
-   * Liste sous titre de section (Learnings, Hobbies, Projects, Studies, …).
-   * Même écart vertical partout (space-y-1 = 0.25rem), mobile comme desktop.
-   */
+  /* ----- Sections ----- */
+  .cv-section {
+    margin-top: var(--sp-section);
+  }
+
+  .cv-section-title {
+    @apply border-b pb-1 font-semibold;
+    font-size: var(--fs-h2);
+  }
+
+  /* Liste simple sous une section (Learnings, Hobbies, Projects, Studies). */
   .cv-section-simple-list {
-    @apply mt-4 space-y-1;
+    @apply mt-4;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-list);
   }
 
-  /**
-   * Bloc « Niveau de formation » : EducationLevel utilise toujours heading / primary / muted ci-dessous
-   * (CV court inclus). Les classes `*-compact` restent disponibles pour d’autres écrans si besoin.
-   */
-  .cv-education-muted {
-    @apply text-sm leading-snug text-gray-400 print:text-xs;
+  /* ----- Typographie générique ----- */
+  .cv-text-body {
+    font-size: var(--fs-body);
+    line-height: 1.4;
   }
 
-  .cv-education-muted-compact {
-    @apply text-xs leading-snug text-gray-400 print:text-[10px];
+  .cv-text-meta {
+    font-size: var(--fs-meta);
+    line-height: 1.4;
   }
 
-  /** Colonne gauche : lignes « fortes » (Bac+5, diplôme, titre d’étude) — même corps partout. */
+  .cv-text-title {
+    font-size: var(--fs-title);
+    line-height: 1.35;
+  }
+
+  /* ----- Bloc Niveau de formation ----- */
+  .cv-education-heading,
   .cv-education-primary {
-    @apply text-base leading-snug text-purple-300 print:text-sm;
+    @apply font-normal text-purple-300;
+    font-size: var(--fs-title);
+    line-height: 1.35;
   }
 
-  .cv-education-primary-compact {
-    @apply text-sm leading-snug text-purple-300 print:text-xs;
+  .cv-education-muted {
+    @apply text-gray-400;
+    font-size: var(--fs-body);
+    line-height: 1.35;
   }
 
-  /* Même corps que .cv-education-primary (Bac+5 aligné sur Bac +3). */
-  .cv-education-heading {
-    @apply text-base font-normal leading-snug text-purple-300 print:text-sm;
-  }
-
-  .cv-education-heading-compact {
-    @apply text-sm font-normal leading-snug text-purple-300 print:text-xs;
-  }
-
-  /**
-   * Études (StudyDisplay) — titres au même corps que le bloc Niveau de formation (primary).
-   */
+  /* ----- Études ----- */
   .cv-study-title {
-    @apply text-base font-normal leading-snug text-cv-section print:text-sm;
+    @apply font-normal text-cv-section;
+    font-size: var(--fs-title);
+    line-height: 1.35;
   }
 
   .cv-study-meta {
-    @apply text-sm font-normal leading-snug text-gray-400 print:text-xs;
+    @apply font-normal text-gray-400;
+    font-size: var(--fs-body);
+    line-height: 1.35;
   }
 
   .cv-study-year {
-    @apply text-sm font-normal tabular-nums leading-snug text-cv-section print:text-xs;
+    @apply font-normal tabular-nums text-cv-section;
+    font-size: var(--fs-body);
+    line-height: 1.35;
   }
 
-  .cv-study-title-compact {
-    @apply text-sm font-normal leading-snug text-cv-section print:text-xs;
-  }
-
-  .cv-study-year-compact {
-    @apply text-xs font-normal tabular-nums leading-snug text-gray-400 print:text-[10px];
-  }
-
-  /**
-   * Corps de mission : même taille que .cv-education-muted (ex. « Backed by 20 years… »).
-   */
+  /* ----- Description mission ----- */
   .cv-job-description {
-    @apply text-left text-sm leading-snug text-cv-body-muted md:text-justify print:text-justify print:text-xs;
+    @apply text-left text-cv-body-muted md:text-justify print:text-justify;
+    font-size: var(--fs-body);
+    line-height: 1.4;
   }
 
-  /**
-   * Ligne titre (gauche) + date ou méta (droite) : alignement bas du flex.
-   * Les spans de droite portent en plus `self-end` (JobDisplay, project) pour le rendu mobile / WebKit.
-   */
+  /* ----- Lignes "titre + méta" ----- */
   .cv-row-with-side-meta {
     @apply flex items-end justify-between gap-2;
   }
 
-  /**
-   * Études : année à droite sur la 1re ligne (baseline) si le diplôme revient à la ligne.
-   */
   .cv-row-study-title-year {
     @apply flex items-baseline justify-between gap-2;
+  }
+
+  /* ----- Pastilles ----- */
+  .cv-pill {
+    @apply inline-flex whitespace-nowrap rounded border px-2 py-0.5;
+    font-size: var(--fs-pill);
+    line-height: 1.2;
+  }
+
+  .cv-pill-skill {
+    @apply text-cv-tag-text;
+    border-color: rgb(96 165 250 / 0.5); /* cv-tag-border (blue-400) at 50% */
+  }
+
+  .cv-pill-job {
+    @apply text-cv-jobs;
+    border-color: rgb(249 168 212 / 0.45); /* cv-jobs (pink-300) at 45% */
+  }
+
+  .cv-pill-link {
+    @apply hover:border-cv-tag-text hover:text-cv-tag-text-hover transition-colors;
   }
 }
 
@@ -92,42 +159,45 @@ html {
   font-family: 'Raleway', sans-serif;
 }
 
-/* Print styles */
+/* ============================================================
+ * Impression : ajustements globaux uniquement.
+ * Tout le reste passe par les variables CSS ci-dessus.
+ * ============================================================ */
 @media print {
-  /* Force color printing */
   body {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
     color-adjust: exact !important;
   }
 
-  /* Page setup */
   @page {
     size: A4;
     margin: 8mm;
   }
 
-  /* Hide non-printable elements */
-  .print\:hidden {
-    display: none !important;
-  }
-
-  /* Container adjustments */
   .container {
     max-width: 100% !important;
     padding: 0 !important;
   }
 
-  /* Prevent page breaks inside elements */
   section,
   li {
     break-inside: avoid;
     page-break-inside: avoid;
   }
 
-  /* Links - show as normal text */
   a {
     text-decoration: none !important;
     color: inherit !important;
+  }
+
+  /* `data-print="off"` cache l'élément à l'impression sans toucher au JSX. */
+  [data-print='off'] {
+    display: none !important;
+  }
+
+  /* `data-print="on"` force l'affichage à l'impression. */
+  [data-print='on'] {
+    display: revert !important;
   }
 }
