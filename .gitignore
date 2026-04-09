@@ -51,3 +51,6 @@ backups
 playwright-report/
 test-results/
 storybook-static
+
+# claude code
+.claude/
