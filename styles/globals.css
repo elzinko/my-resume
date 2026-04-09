@@ -210,7 +210,7 @@
   }
 
   .cv-study-year-compact {
-    @apply text-xs font-normal tabular-nums leading-snug text-gray-400 print:text-[10px];
+    @apply text-xs font-normal tabular-nums leading-snug print:text-[10px];
   }
 
   /**

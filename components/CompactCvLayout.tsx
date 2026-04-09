@@ -177,8 +177,8 @@ export default function CompactCvLayout({
             pillsCompact
           />
 
-          {/* Skills — masqué à l'impression via `.cv-short-skills-block` dans `@media print` */}
-          <section className="cv-short-skills-block mb-6">
+          {/* Skills — masqué pour le moment (écran + impression). */}
+          <section className="cv-short-skills-block mb-6 hidden">
             <h2 className="border-b pb-1 text-2xl font-semibold text-cv-tag-text">
               {t.skills}
             </h2>

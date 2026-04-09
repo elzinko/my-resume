@@ -57,7 +57,7 @@ export default function StudyDisplay({
           {study.name}
         </span>
         {endYear && (
-          <span className="cv-study-year-compact min-w-max shrink-0 whitespace-nowrap">
+          <span className={`cv-study-year-compact min-w-max shrink-0 whitespace-nowrap ${color}`}>
             {endYear}
           </span>
         )}

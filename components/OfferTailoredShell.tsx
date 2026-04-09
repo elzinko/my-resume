@@ -22,7 +22,7 @@ import type { Locale } from 'i18n-config';
  * L’adéquation poste (pastilles) est uniquement sous le rôle / coordonnées via `Headers`.
  */
 const OFFER_EDUCATION_LEVEL_SECTION_CLASS =
-  'mt-10 max-md:mt-0 max-md:order-[1] md:order-[1] print:order-[50] print-preview:hidden print-preview:order-[50]';
+  'mt-10 max-md:mt-0 max-md:order-[20] md:order-[1] print:order-[50] print-preview:hidden print-preview:order-[50]';
 
 export default function OfferTailoredShell({
   lang,
@@ -71,12 +71,18 @@ export default function OfferTailoredShell({
               <Domains locale={lang} />
             </div>
 
-            <div className="cv-page-split">
+            <div className="cv-page-split max-md:gap-y-10">
+              {/**
+               * Mobile: `max-md:contents` fait de chaque enfant de #left un
+               * item direct de `.cv-page-split` afin de pouvoir intercaler
+               * #main (Jobs) AVANT Studies grâce à `max-md:order-*`.
+               * Desktop/print: #left redevient un vrai bloc (`md:flex …`).
+               */}
               <div
                 id="left"
-                className="flex w-full min-w-0 flex-col print:order-first print:col-span-1 md:order-first md:col-span-1"
+                className="min-w-0 max-md:contents md:order-first md:col-span-1 md:flex md:w-full md:flex-col print:order-first print:col-span-1"
               >
-                <div className="cv-print-desktop-sidebar-group w-full">
+                <div className="cv-print-desktop-sidebar-group w-full max-md:order-[10]">
                   {/* @ts-expect-error Server Component */}
                   <Contact locale={lang} />
                 </div>
@@ -84,11 +90,15 @@ export default function OfferTailoredShell({
                   content={educationLevel}
                   sectionClassName={OFFER_EDUCATION_LEVEL_SECTION_CLASS}
                 />
-                {/* @ts-expect-error Server Component */}
-                <Skills locale={lang} sectionId={false} />
-                {/* @ts-expect-error Server Component */}
-                <Studies locale={lang} />
-                <div className="cv-print-desktop-tail-group max-md:order-[4] md:order-[4]">
+                <div className="max-md:order-[50]">
+                  {/* @ts-expect-error Server Component */}
+                  <Skills locale={lang} sectionId={false} />
+                </div>
+                <div className="max-md:order-[40]">
+                  {/* @ts-expect-error Server Component */}
+                  <Studies locale={lang} />
+                </div>
+                <div className="cv-print-desktop-tail-group max-md:order-[60] md:order-[4]">
                   {/* @ts-expect-error Server Component */}
                   <Projects locale={lang} />
                   {/* @ts-expect-error Server Component */}
@@ -99,7 +109,7 @@ export default function OfferTailoredShell({
               </div>
               <div
                 id="main"
-                className="w-full min-w-0 print:col-span-2 md:col-span-2"
+                className="w-full min-w-0 max-md:order-[30] print:col-span-2 md:col-span-2"
               >
                 {/* @ts-expect-error Server Component */}
                 <Jobs locale={lang} />
