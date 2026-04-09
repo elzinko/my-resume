@@ -34,7 +34,7 @@ function EducationBlockRow({
       : 'cv-education-primary-compact';
 
   return (
-    <div className="space-y-0.5 print:space-y-1">
+    <div className="space-y-0.5">
       {pillLevelLabel ? (
         <p className="m-0 leading-snug">
           <Pill color="education" compact={pillsCompact}>
@@ -67,10 +67,10 @@ export default function EducationLevel({
 
   return (
     <section id="education-level" className={sectionClassName}>
-      <h2 className="border-b pb-1 text-2xl font-semibold text-purple-300 print:pb-0.5 print:text-sm">
+      <h2 className="border-b pb-1 text-2xl font-semibold text-purple-300">
         {content.title}
       </h2>
-      <div className="cv-education-level-blocks mt-4 grid grid-cols-1 gap-y-3 font-normal print:mt-2 print:gap-y-2 print-preview:mt-2 print-preview:gap-y-2">
+      <div className="cv-education-level-blocks mt-4 grid grid-cols-1 gap-y-3 font-normal">
         {rows.map((row) => (
           <EducationBlockRow
             key={row.id}

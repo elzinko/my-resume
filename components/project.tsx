@@ -26,12 +26,15 @@ export default function project({
   project: projectData,
   yearOnly = false,
   hideDatesPrint = false,
+  compact = false,
 }: {
   project: any;
   /** Afficher uniquement l'année (ex. « 2021 ») au lieu de MM/YYYY - MM/YYYY. */
   yearOnly?: boolean;
   /** Masquer les dates à l'impression (print + print-preview). */
   hideDatesPrint?: boolean;
+  /** Taille réduite (même typo que Studies compact). */
+  compact?: boolean;
 }) {
   const fullDates = formatDates(projectData.startDate, projectData.endDate);
   const dates = yearOnly
@@ -49,13 +52,45 @@ export default function project({
   const titleParts = [name, client || null, location || null].filter(Boolean);
   const titleText = titleParts.join(' — ');
 
+  const href = projectData.link || '#';
+
+  /* ------------------------------------------------------------------ */
+  /*  Compact : même markup que StudyDisplay compact (flex titre + date) */
+  /* ------------------------------------------------------------------ */
+  if (compact) {
+    const compactTitle = projectData.link ? (
+      <a
+        href={href}
+        className="cv-study-title-compact min-w-0 flex-1 text-cv-tag-text underline-offset-2 hover:underline print:!text-cv-tag-text"
+      >
+        {name}
+      </a>
+    ) : (
+      <span className="cv-study-title-compact min-w-0 flex-1 text-cv-tag-text print:!text-cv-tag-text">
+        {name}
+      </span>
+    );
+
+    return (
+      <div id={id} className="cv-row-study-title-year">
+        {compactTitle}
+        {dates && (
+          <span className="cv-study-year-compact min-w-max shrink-0 whitespace-nowrap text-cv-tag-text print:!text-cv-tag-text">
+            {dates}
+          </span>
+        )}
+      </div>
+    );
+  }
+
+  /* ------------------------------------------------------------------ */
+  /*  Default : grille titre / description / dates (CV complet)          */
+  /* ------------------------------------------------------------------ */
   const description =
     typeof projectData.description === 'string'
       ? projectData.description.trim()
       : '';
   const hasDesc = description.length > 0;
-
-  const href = projectData.link || '#';
 
   const titleInner = (
     <>
@@ -67,15 +102,17 @@ export default function project({
     </>
   );
 
+  const titleTypo = 'text-base font-normal leading-snug text-cv-tag-text print:text-sm';
+
   const titleEl = projectData.link ? (
     <a
       href={href}
-      className="text-base font-normal leading-snug text-cv-tag-text underline-offset-2 hover:underline print:text-sm"
+      className={`${titleTypo} underline-offset-2 hover:underline`}
     >
       {titleInner}
     </a>
   ) : (
-    <span className="text-base font-normal leading-snug text-cv-tag-text print:text-sm">
+    <span className={titleTypo}>
       {titleInner}
     </span>
   );

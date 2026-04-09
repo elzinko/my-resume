@@ -37,6 +37,11 @@ export default async function hobbies({
               link={hobby.link}
               className="text-orange-300 print:!text-orange-300"
             />
+            {hobby.description ? (
+              <span className="cv-hobby-desc ml-1 text-sm text-cv-body-muted">
+                — {hobby.description}
+              </span>
+            ) : null}
           </li>
         ))}
       </ul>

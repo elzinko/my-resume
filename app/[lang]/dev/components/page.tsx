@@ -62,9 +62,9 @@ export default async function DevComponentsPage({
     skillsNode,
     domainsNode,
     studiesDefaultNode,
-    studiesCondensedNode,
     hobbiesNode,
     projectsNode,
+    projectsNarrowNode,
     jobsNode,
   ] = await Promise.all([
     (Header as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang }),
@@ -73,9 +73,9 @@ export default async function DevComponentsPage({
     (Skills as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang }),
     (Domains as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang }),
     (Studies as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang }),
-    (Studies as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang, condensed: true }),
     (Hobbies as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang }),
     (Projects as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang }),
+    (Projects as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang, yearOnly: true }),
     (Jobs as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang }),
   ]);
 
@@ -155,11 +155,6 @@ export default async function DevComponentsPage({
     </div>
   );
 
-  /** Force le rendu « short CV » : projets en ligne sans description, listes loisirs/veille en `a / b / c`. */
-  const ShortFrame = ({ children }: { children: React.ReactNode }) => (
-    <div className="cv-short-page">{children}</div>
-  );
-
   const stories: Array<{ id: string; title: string; node: React.ReactNode }> = [
     { id: 'header', title: 'Header (assemblé)', node: headerNode },
     {
@@ -169,8 +164,14 @@ export default async function DevComponentsPage({
     },
     {
       id: 'header-toolbar-mobile',
-      title: 'Header · Toolbar (mobile)',
-      node: <Narrow>{headerToolbarNode}</Narrow>,
+      title: 'Header · Toolbar (mobile, iframe 390px)',
+      node: (
+        <iframe
+          src={`/${lang}?cvViewport=mobile`}
+          style={{ width: 390, height: 60, border: '1px dashed #cbd5e1', borderRadius: 4 }}
+          title="Mobile toolbar preview"
+        />
+      ),
     },
     {
       id: 'header-content',
@@ -187,11 +188,11 @@ export default async function DevComponentsPage({
       title: 'Header · Contact strip (compact, sous le rôle)',
       node: headerContactStripNode,
     },
-    { id: 'about', title: 'About', node: aboutNode },
+    { id: 'about', title: 'About (+ pastille niveau de formation)', node: aboutNode },
     { id: 'contact', title: 'Contact', node: contactDefaultNode },
     { id: 'skills', title: 'Skills', node: skillsNode },
     { id: 'domains', title: 'Domains (3 colonnes)', node: domainsNode },
-    ...(data?.allDomainsModels || []).map((domain: any, i: number) => ({
+    ...(data?.allDomainsModels || []).slice(0, 1).map((domain: any, i: number) => ({
       id: `domain-${domain.id || i}`,
       title: `Domain · ${domain.name || `#${i}`}`,
       node: (
@@ -219,7 +220,6 @@ export default async function DevComponentsPage({
       ),
     },
     { id: 'studies-default', title: 'Studies (default)', node: studiesDefaultNode },
-    { id: 'studies-condensed', title: 'Studies (condensed)', node: studiesCondensedNode },
     {
       id: 'studies-narrow',
       title: 'Studies (narrow container — mobile / sidebar)',
@@ -234,13 +234,8 @@ export default async function DevComponentsPage({
     { id: 'projects', title: 'Projects (default)', node: projectsNode },
     {
       id: 'projects-narrow',
-      title: 'Projects (narrow container — mobile)',
-      node: <Narrow>{projectsNode}</Narrow>,
-    },
-    {
-      id: 'projects-short',
-      title: 'Projects (short CV — titres + dates seulement)',
-      node: <ShortFrame>{projectsNode}</ShortFrame>,
+      title: 'Projects (narrow — colonne 1/3 / mobile, année seule)',
+      node: <Narrow>{projectsNarrowNode}</Narrow>,
     },
     { id: 'jobs', title: 'Jobs (full CV)', node: jobsNode },
     {

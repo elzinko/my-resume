@@ -23,7 +23,7 @@ export default async function jobs({ locale }: { locale: Locale }) {
         <h2 className="border-b pb-1 text-2xl font-semibold text-cv-jobs">
           {data?.jobsTitle?.title}
         </h2>
-        <ul className="mt-4 space-y-4 print:space-y-4">
+        <ul className="cv-section-body-gap space-y-4 print:space-y-4">
           {jobsList.map((job: any, index: number) => (
             <li key={job.client + index}>
               <Job job={job} locale={locale} />

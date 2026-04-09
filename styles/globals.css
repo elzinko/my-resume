@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /**
+   * Espacement entre la barre de titre (border-b) et le contenu de la section.
+   * Token unique utilisé par cv-section-simple-list, Jobs, etc. pour garantir
+   * un rythme homogène dans toutes les sections du CV.
+   */
+  --cv-section-body-gap: 1rem; /* = mt-4 */
+}
+
 @layer components {
   /**
    * Rythme vertical « section majeure » : 2.5rem (`mt-10` / `gap-10`).
@@ -41,8 +50,17 @@
    * Liste sous titre de section (Learnings, Hobbies, Projects, Studies, …).
    * Même écart vertical partout (space-y-1 = 0.25rem), mobile comme desktop.
    */
+  /**
+   * Espacement entre un titre `h2 border-b` et le contenu qui suit.
+   * Token CSS `--cv-section-body-gap` réutilisable partout.
+   */
+  .cv-section-body-gap {
+    margin-top: var(--cv-section-body-gap);
+  }
+
   .cv-section-simple-list {
-    @apply mt-4 space-y-1;
+    margin-top: var(--cv-section-body-gap);
+    @apply space-y-1;
   }
 
   /**
@@ -131,8 +149,12 @@
    * Veille / loisirs : conteneur étroit (< 36rem) = liste verticale (`.cv-section-simple-list`) ;
    * conteneur large (≥ 36rem) = une ligne avec séparateur ` / ` (espaces de part et d’autre).
    */
+  /**
+   * Veille : conteneur large = ligne inline avec `/`.
+   * Loisirs : toujours en liste verticale (descriptions visibles en grand, masquées en étroit).
+   */
   @container (min-width: 36rem) {
-    .cv-cq-section .cv-cq-link-list {
+    .cv-cq-section[data-cv-section='learnings'] .cv-cq-link-list {
       display: flex;
       flex-wrap: wrap;
       align-items: baseline;
@@ -140,19 +162,27 @@
       column-gap: 0;
     }
 
-    .cv-cq-section .cv-cq-link-list > li {
+    .cv-cq-section[data-cv-section='learnings'] .cv-cq-link-list > li {
       display: inline;
       margin-top: 0 !important;
     }
 
     .cv-cq-section[data-cv-section='learnings'] .cv-cq-link-list > li + li::before {
-      content: ' / ';
+      content: '/';
+      display: inline-block;
+      padding-inline: 0.35em;
       color: rgb(20 184 166 / 0.8);
     }
+  }
 
-    .cv-cq-section[data-cv-section='hobbies'] .cv-cq-link-list > li + li::before {
-      content: ' / ';
-      color: rgb(251 191 36 / 0.9);
+  /* Loisirs : descriptions visibles en conteneur large, masquées en étroit. */
+  .cv-cq-section[data-cv-section='hobbies'] .cv-hobby-desc {
+    display: none;
+  }
+
+  @container (min-width: 36rem) {
+    .cv-cq-section[data-cv-section='hobbies'] .cv-hobby-desc {
+      display: inline;
     }
   }
 
@@ -356,12 +386,25 @@ html {
     column-gap: 0.75rem !important;
   }
 
-  .cv-short-page #domains .cv-domains-grid > div:first-child {
+  .cv-short-page #domains .cv-domains-grid > div {
     margin-top: 0 !important;
   }
 
   .cv-short-page .cv-page-split {
     column-gap: 0.75rem !important;
+    margin-top: 0.5rem !important;
+    gap-y: 0 !important;
+    row-gap: 0 !important;
+  }
+
+  /* Niveau de formation short : compacter le bloc pour tenir en 1 page */
+  .cv-short-page #education-level .cv-education-level-blocks {
+    margin-top: 0.5rem !important;
+    gap: 0.5rem !important;
+  }
+
+  .cv-short-page #education-level h2 {
+    margin-bottom: 0 !important;
   }
 
   /* Pied de bloc expériences */
@@ -379,34 +422,6 @@ html {
   .cv-short-page #main > section > ul > li {
     break-inside: auto;
     page-break-inside: auto;
-  }
-
-  /* Projets : ligne condensée « a / b / c » au lieu d'une liste verticale */
-  .cv-short-page [data-cv-section='projects'] .cv-project-screen {
-    display: none !important;
-  }
-
-  .cv-short-page [data-cv-section='projects'] .cv-project-print {
-    display: inline !important;
-  }
-
-  .cv-short-page [data-cv-section='projects'] .cv-cq-project-list {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    align-items: baseline !important;
-    row-gap: 0.25rem !important;
-    column-gap: 0 !important;
-    list-style: none !important;
-  }
-
-  .cv-short-page [data-cv-section='projects'] .cv-cq-project-list > li {
-    display: inline !important;
-    margin-top: 0 !important;
-  }
-
-  .cv-short-page [data-cv-section='projects'] .cv-cq-project-list > li + li::before {
-    content: ' / ' !important;
-    color: rgb(96 165 250 / 0.85) !important;
   }
 
   /* Études court : peut se couper entre les lignes */
@@ -431,7 +446,15 @@ html {
     page-break-after: auto !important;
   }
 
+  /* Profil : marges internes compactées */
+  .cv-short-page .cv-short-about {
+    margin-top: 0.25rem !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
   .cv-short-page section#domains {
+    margin-top: 0.25rem !important;
     margin-bottom: 0;
     padding-bottom: 0;
     break-before: auto !important;
@@ -447,16 +470,12 @@ html {
     display: none !important;
   }
 
-  /* Titre « Niveau de formation » : même taille que les autres h2 dans le CV court
-   * (le `print:text-sm` du composant est conçu pour la colonne étroite du CV long). */
-  .cv-short-page #education-level h2 {
-    font-size: 1.5rem !important;
-    line-height: 2rem !important;
-  }
 
-  /* Projets : mt-2 pour aligner sur Études (au lieu du mt-4 de .cv-section-simple-list) */
-  .cv-short-page .cv-cq-project-list {
-    margin-top: 0.5rem !important;
+  /* Projets court : titres et dates en bleu malgré `a { color: inherit }`. */
+  .cv-short-page [data-cv-section='projects'] a,
+  .cv-short-page [data-cv-section='projects'] .cv-study-title-compact,
+  .cv-short-page [data-cv-section='projects'] .cv-study-year-compact {
+    @apply !text-cv-tag-text;
   }
 
   /* ================================================================
@@ -512,6 +531,7 @@ html {
     list-style: none !important;
     padding-left: 0 !important;
     margin: 0 !important;
+    margin-top: var(--cv-section-body-gap) !important;
   }
 
   .cv-full-cv-print-root [data-cv-section='projects'] .cv-cq-project-list > li {
@@ -538,6 +558,7 @@ html {
     list-style: none !important;
     padding-left: 0 !important;
     margin: 0 !important;
+    margin-top: var(--cv-section-body-gap) !important;
   }
 
   .cv-full-cv-print-root [data-cv-section='learnings'] .cv-cq-link-list > li,
@@ -554,6 +575,11 @@ html {
   .cv-full-cv-print-root [data-cv-section='learnings'] .cv-cq-link-list > li + li::before,
   .cv-full-cv-print-root [data-cv-section='hobbies'] .cv-cq-link-list > li + li::before {
     content: none !important;
+  }
+
+  /** Loisirs print : descriptions toujours visibles. */
+  .cv-full-cv-print-root [data-cv-section='hobbies'] .cv-hobby-desc {
+    display: inline !important;
   }
 
   .cv-full-cv-print-root section {
@@ -619,6 +645,7 @@ html {
   .cv-full-cv-print-root .cv-project-print span {
     @apply !text-cv-tag-text;
   }
+
 }
 
 /**
@@ -668,6 +695,7 @@ html {
   list-style: none !important;
   padding-left: 0 !important;
   margin: 0 !important;
+  margin-top: var(--cv-section-body-gap) !important;
 }
 
 .cv-print-preview .cv-full-cv-print-root [data-cv-section='projects'] .cv-cq-project-list > li {
@@ -687,12 +715,28 @@ html {
   display: block !important;
 }
 
+/** Aperçu `?print` : titres projets en bleu (comme à l'écran). */
+.cv-print-preview .cv-full-cv-print-root .cv-project-title-area a,
+.cv-print-preview .cv-full-cv-print-root .cv-project-title-area span,
+.cv-print-preview .cv-full-cv-print-root .cv-project-print a,
+.cv-print-preview .cv-full-cv-print-root .cv-project-print span {
+  color: rgb(147 197 253) !important; /* blue-300 = cv-tag-text */
+}
+
+/** CV court print-preview : projets en bleu. */
+.cv-print-preview .cv-short-page [data-cv-section='projects'] a,
+.cv-print-preview .cv-short-page [data-cv-section='projects'] .cv-study-title-compact,
+.cv-print-preview .cv-short-page [data-cv-section='projects'] .cv-study-year-compact {
+  color: rgb(147 197 253) !important; /* blue-300 = cv-tag-text */
+}
+
 .cv-print-preview .cv-full-cv-print-root [data-cv-section='learnings'] .cv-cq-link-list,
 .cv-print-preview .cv-full-cv-print-root [data-cv-section='hobbies'] .cv-cq-link-list {
   display: block !important;
   list-style: none !important;
   padding-left: 0 !important;
   margin: 0 !important;
+  margin-top: var(--cv-section-body-gap) !important;
 }
 
 .cv-print-preview .cv-full-cv-print-root [data-cv-section='learnings'] .cv-cq-link-list > li,
@@ -709,6 +753,11 @@ html {
 .cv-print-preview .cv-full-cv-print-root [data-cv-section='learnings'] .cv-cq-link-list > li + li::before,
 .cv-print-preview .cv-full-cv-print-root [data-cv-section='hobbies'] .cv-cq-link-list > li + li::before {
   content: none !important;
+}
+
+/** Loisirs print-preview : descriptions toujours visibles (contournement container query). */
+.cv-print-preview .cv-full-cv-print-root [data-cv-section='hobbies'] .cv-hobby-desc {
+  display: inline !important;
 }
 
 /**
@@ -735,17 +784,35 @@ html {
   padding-bottom: 0.5rem !important;
 }
 
-/* Titre « Niveau de formation » en print-preview short : même taille que les autres h2. */
-.cv-print-preview .cv-layout-short #education-level h2 {
-  font-size: 1.5rem !important;
-  line-height: 2rem !important;
+/**
+ * Short CV print-preview : mêmes compactages que `@media print` pour que
+ * `?print=1` soit identique au rendu Cmd+P. Un seul endroit pour les deux.
+ */
+.cv-print-preview .cv-short-page .cv-page-split {
+  margin-top: 0.5rem !important;
+  row-gap: 0 !important;
+}
+
+.cv-print-preview .cv-short-page .cv-short-about {
+  margin-top: 0.25rem !important;
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.cv-print-preview .cv-short-page section#domains {
+  margin-top: 0.25rem !important;
+}
+
+.cv-print-preview .cv-short-page #education-level .cv-education-level-blocks {
+  margin-top: 0.5rem !important;
+  gap: 0.5rem !important;
 }
 
 /**
- * Pages offre — aperçu `?print` : veille / loisirs en une ligne avec ` / ` (espaces de part et d’autre).
+ * Pages offre — aperçu `?print` : veille en une ligne avec `/`.
+ * Loisirs : liste verticale avec descriptions (même rendu que le storybook).
  */
-.cv-print-preview .cv-offer-tailored-shell .cv-full-cv-print-root [data-cv-section='learnings'] .cv-cq-link-list,
-.cv-print-preview .cv-offer-tailored-shell .cv-full-cv-print-root [data-cv-section='hobbies'] .cv-cq-link-list {
+.cv-print-preview .cv-offer-tailored-shell .cv-full-cv-print-root [data-cv-section=’learnings’] .cv-cq-link-list {
   display: flex !important;
   flex-wrap: wrap !important;
   align-items: baseline !important;
@@ -754,32 +821,28 @@ html {
   list-style: none !important;
   padding-left: 0 !important;
   margin: 0 !important;
+  margin-top: var(--cv-section-body-gap) !important;
 }
 
-.cv-print-preview .cv-offer-tailored-shell .cv-full-cv-print-root [data-cv-section='learnings'] .cv-cq-link-list > li,
-.cv-print-preview .cv-offer-tailored-shell .cv-full-cv-print-root [data-cv-section='hobbies'] .cv-cq-link-list > li {
+.cv-print-preview .cv-offer-tailored-shell .cv-full-cv-print-root [data-cv-section=’learnings’] .cv-cq-link-list > li {
   display: inline !important;
   margin-top: 0 !important;
 }
 
-.cv-print-preview .cv-offer-tailored-shell .cv-full-cv-print-root [data-cv-section='learnings'] .cv-cq-link-list > li:first-child,
-.cv-print-preview .cv-offer-tailored-shell .cv-full-cv-print-root [data-cv-section='hobbies'] .cv-cq-link-list > li:first-child {
+.cv-print-preview .cv-offer-tailored-shell .cv-full-cv-print-root [data-cv-section=’learnings’] .cv-cq-link-list > li:first-child {
   margin-top: 0 !important;
 }
 
-.cv-print-preview .cv-offer-tailored-shell .cv-full-cv-print-root [data-cv-section='learnings'] .cv-cq-link-list > li + li::before {
-  content: '/' !important;
+.cv-print-preview .cv-offer-tailored-shell .cv-full-cv-print-root [data-cv-section=’learnings’] .cv-cq-link-list > li + li::before {
+  content: ‘/’ !important;
   display: inline-block !important;
   color: rgb(20 184 166 / 0.8) !important;
-  /* Espaces de part et d’autre : en flex, les espaces dans `content` peuvent s’effondrer. */
   padding-inline: 0.35em !important;
 }
 
-.cv-print-preview .cv-offer-tailored-shell .cv-full-cv-print-root [data-cv-section='hobbies'] .cv-cq-link-list > li + li::before {
-  content: '/' !important;
-  display: inline-block !important;
-  color: rgb(251 191 36 / 0.9) !important;
-  padding-inline: 0.35em !important;
+/** Loisirs offre print-preview : descriptions toujours visibles. */
+.cv-print-preview .cv-offer-tailored-shell .cv-full-cv-print-root [data-cv-section=’hobbies’] .cv-hobby-desc {
+  display: inline !important;
 }
 
 .cv-print-preview .cv-full-cv-print-root section {

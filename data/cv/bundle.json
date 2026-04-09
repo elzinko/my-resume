@@ -1706,7 +1706,7 @@
       },
       {
         "id": "82548346",
-        "name": "Control of Mobile Robots & Digital Signal Processing",
+        "name": "Contrôle de robots mobiles & Traitement du signal numérique",
         "startDate": "2011-09-01",
         "endDate": "2013-07-01",
         "establishment": "Coursera",
@@ -1881,7 +1881,7 @@
         "link": "https://github.com/elzinko/realizator",
         "startDate": "2026-01-15",
         "endDate": null,
-        "description": "Application web qui génère des démos vidéo automatiquement à partir d’URL : scénario personnalisable, puis rendu vidéo.",
+        "description": "Application web qui génère des démos vidéo automatiquement.",
         "frameworks": [
           {
             "id": "81826170",
@@ -1909,7 +1909,7 @@
         "link": "https://github.com/elzinko/livestreamz",
         "startDate": "2026-01-15",
         "endDate": null,
-        "description": "Application qui transforme le téléphone en caméra pour du streaming temps réel fiable — sur le principe de DroidCam, avec une stabilité renforcée.",
+        "description": "Application qui transforme le téléphone en caméra pour du streaming temps réel fiable.",
         "frameworks": [
           {
             "id": "81826170",
@@ -1955,62 +1955,6 @@
           {
             "id": "cvtag-muti",
             "name": "product"
-          }
-        ]
-      },
-      {
-        "id": "81826200",
-        "name": "Curriculum Vitae",
-        "link": "https://github.com/elzinko/my-resume",
-        "startDate": null,
-        "endDate": "2023-03-16",
-        "description": "Mon cv professionnel actualisé fait avec amour",
-        "frameworks": [
-          {
-            "id": "81826170",
-            "name": "NextJS",
-            "link": ""
-          },
-          {
-            "id": "81826172",
-            "name": "Tailwind CSS",
-            "link": ""
-          },
-          {
-            "id": "81826186",
-            "name": "DatoCMS",
-            "link": ""
-          },
-          {
-            "id": "81826176",
-            "name": "Github",
-            "link": ""
-          },
-          {
-            "id": "81826185",
-            "name": "Copilot",
-            "link": ""
-          },
-          {
-            "id": "81826173",
-            "name": "Vercel",
-            "link": ""
-          }
-        ],
-        "bullets": [
-          {
-            "id": "81826198",
-            "text": "design réalisé avec Tailwind CSS"
-          },
-          {
-            "id": "81826199",
-            "text": "conception réactive"
-          }
-        ],
-        "tags": [
-          {
-            "id": "81981928",
-            "name": "code"
           }
         ]
       },
@@ -2071,93 +2015,30 @@
         ]
       },
       {
-        "id": "82932189",
-        "name": "Déploiement Octobot",
-        "link": "https://github.com/elzinko/octobot",
-        "startDate": null,
-        "endDate": "2023-02-01",
-        "description": "Déployez gratuitement une instance Octobot sur le cloud Oracle.",
+        "id": "cvproj-byhere-2026",
+        "name": "byhere",
+        "title": "ByHere",
+        "link": null,
+        "startDate": "2026-03-01",
+        "endDate": null,
+        "description": "Application de visite guidée en voiture : itinéraires commentés et points d'intérêt géolocalisés.",
         "frameworks": [
           {
-            "id": "82456127",
-            "name": "Docker",
+            "id": "81826170",
+            "name": "NextJS",
             "link": ""
           },
           {
-            "id": "82594135",
-            "name": "docker-compose",
-            "link": ""
-          },
-          {
-            "id": "82522197",
-            "name": "Python",
-            "link": "https://www.python.org/"
-          },
-          {
-            "id": "90902398",
-            "name": "Oracle cloud",
-            "link": "https://www.oracle.com/fr/cloud/"
-          }
-        ],
-        "bullets": [],
-        "tags": [
-          {
-            "id": "82932186",
-            "name": "octobot"
-          },
-          {
-            "id": "82932187",
-            "name": "cicd"
-          },
-          {
-            "id": "82932188",
-            "name": "crypto"
-          }
-        ]
-      },
-      {
-        "id": "82933230",
-        "name": "Fizzbuzz en Go",
-        "link": "https://github.com/elzinko/go-fizzbuzz",
-        "startDate": null,
-        "endDate": "2021-01-09",
-        "description": "Fizzbuzz en Go",
-        "frameworks": [
-          {
-            "id": "82456107",
-            "name": "Go",
-            "link": "https://go.dev/"
-          },
-          {
-            "id": "82456127",
-            "name": "Docker",
-            "link": ""
-          },
-          {
-            "id": "82459635",
-            "name": "rest",
-            "link": ""
-          },
-          {
-            "id": "82456116",
-            "name": "Swagger",
-            "link": ""
-          },
-          {
-            "id": "82933040",
-            "name": "Gin",
+            "id": "82456019",
+            "name": "React",
             "link": ""
           }
         ],
         "bullets": [],
         "tags": [
           {
-            "id": "82933051",
-            "name": "dev"
-          },
-          {
-            "id": "82933052",
-            "name": "fun"
+            "id": "cvtag-byhere",
+            "name": "product"
           }
         ]
       }
@@ -2165,22 +2046,26 @@
     "allHobbiesModels": [
       {
         "id": "81779577",
-        "name": "Créer du son",
+        "name": "Ableton",
+        "description": "Production musicale avec Ableton Live, Max4Live et développement Python pour contrôleurs MIDI.",
         "link": "https://soundcloud.com/zebra-music-459073993/sets/la-base"
       },
       {
         "id": "81779962",
         "name": "Crossovers",
+        "description": "Basket, étude du jeu et des statistiques.",
         "link": "https://hoopstudy.com/"
       },
       {
         "id": "81780862",
         "name": "Rider",
+        "description": "VTT dans la forêt de Fontainebleau, Portes du Soleil et ailleurs.",
         "link": "https://www.passportesdusoleil.com/"
       },
       {
         "id": "81781610",
         "name": "Le système de Londres",
+        "description": "Échecs en ligne : système de Londres, défense Caro-Kann.",
         "link": "https://www.chess.com/fr"
       }
     ],
@@ -4098,7 +3983,7 @@
         "link": "https://github.com/elzinko/realizator",
         "startDate": "2026-01-15",
         "endDate": null,
-        "description": "Web app that builds video demos automatically from URLs: you design a customizable scenario, and it generates the video.",
+        "description": "Web app that builds video demos automatically.",
         "frameworks": [
           {
             "id": "81826170",
@@ -4126,7 +4011,7 @@
         "link": "https://github.com/elzinko/livestreamz",
         "startDate": "2026-01-15",
         "endDate": null,
-        "description": "App that turns your phone into a camera for reliable real-time streaming—in the spirit of DroidCam, with greater stability.",
+        "description": "App that turns your phone into a camera for reliable real-time streaming.",
         "frameworks": [
           {
             "id": "81826170",
@@ -4172,62 +4057,6 @@
           {
             "id": "cvtag-muti",
             "name": "product"
-          }
-        ]
-      },
-      {
-        "id": "81826200",
-        "name": "Resume",
-        "link": "https://github.com/elzinko/my-resume",
-        "startDate": null,
-        "endDate": "2023-03-16",
-        "description": "My own professional resume made with love",
-        "frameworks": [
-          {
-            "id": "81826170",
-            "name": "NextJS",
-            "link": ""
-          },
-          {
-            "id": "81826172",
-            "name": "Tailwind CSS",
-            "link": ""
-          },
-          {
-            "id": "81826186",
-            "name": "DatoCMS",
-            "link": ""
-          },
-          {
-            "id": "81826176",
-            "name": "Github",
-            "link": ""
-          },
-          {
-            "id": "81826185",
-            "name": "Copilot",
-            "link": ""
-          },
-          {
-            "id": "81826173",
-            "name": "Vercel",
-            "link": ""
-          }
-        ],
-        "bullets": [
-          {
-            "id": "81826196",
-            "text": "own design with tailwind"
-          },
-          {
-            "id": "81826197",
-            "text": "mobile ready"
-          }
-        ],
-        "tags": [
-          {
-            "id": "81981928",
-            "name": "code"
           }
         ]
       },
@@ -4288,93 +4117,30 @@
         ]
       },
       {
-        "id": "82932189",
-        "name": "Octobot deployment",
-        "link": "https://github.com/elzinko/octobot",
-        "startDate": null,
-        "endDate": "2023-02-01",
-        "description": "Deploy freely an Octobot instance on an Oracle cloud free tier.",
+        "id": "cvproj-byhere-2026",
+        "name": "byhere",
+        "title": "ByHere",
+        "link": null,
+        "startDate": "2026-03-01",
+        "endDate": null,
+        "description": "Guided car tour app: narrated routes with geolocated points of interest.",
         "frameworks": [
           {
-            "id": "82456127",
-            "name": "Docker",
+            "id": "81826170",
+            "name": "NextJS",
             "link": ""
           },
           {
-            "id": "82594135",
-            "name": "docker-compose",
-            "link": ""
-          },
-          {
-            "id": "82522197",
-            "name": "Python",
-            "link": "https://www.python.org/"
-          },
-          {
-            "id": "90902398",
-            "name": "Oracle cloud",
-            "link": "https://www.oracle.com/fr/cloud/"
-          }
-        ],
-        "bullets": [],
-        "tags": [
-          {
-            "id": "82932186",
-            "name": "octobot"
-          },
-          {
-            "id": "82932187",
-            "name": "cicd"
-          },
-          {
-            "id": "82932188",
-            "name": "crypto"
-          }
-        ]
-      },
-      {
-        "id": "82933230",
-        "name": "Go Fizzbuzz",
-        "link": "https://github.com/elzinko/go-fizzbuzz",
-        "startDate": null,
-        "endDate": "2021-01-09",
-        "description": "Fizzbuzz project using Golang",
-        "frameworks": [
-          {
-            "id": "82456107",
-            "name": "Go",
-            "link": "https://go.dev/"
-          },
-          {
-            "id": "82456127",
-            "name": "Docker",
-            "link": ""
-          },
-          {
-            "id": "82459635",
-            "name": "rest",
-            "link": ""
-          },
-          {
-            "id": "82456116",
-            "name": "Swagger",
-            "link": ""
-          },
-          {
-            "id": "82933040",
-            "name": "Gin",
+            "id": "82456019",
+            "name": "React",
             "link": ""
           }
         ],
         "bullets": [],
         "tags": [
           {
-            "id": "82933051",
-            "name": "dev"
-          },
-          {
-            "id": "82933052",
-            "name": "fun"
+            "id": "cvtag-byhere",
+            "name": "product"
           }
         ]
       }
@@ -4382,22 +4148,26 @@
     "allHobbiesModels": [
       {
         "id": "81779577",
-        "name": "Creating music",
+        "name": "Ableton",
+        "description": "Music production with Ableton Live, Max4Live and Python development for MIDI controllers.",
         "link": "https://soundcloud.com/zebra-music-459073993/sets/la-base"
       },
       {
         "id": "81779962",
         "name": "Crossovers",
+        "description": "Basketball, game study and statistics.",
         "link": "https://hoopstudy.com/"
       },
       {
         "id": "81780862",
         "name": "Riding the hills",
+        "description": "Mountain biking in Fontainebleau forest, Portes du Soleil and beyond.",
         "link": "https://www.passportesdusoleil.com/"
       },
       {
         "id": "81781610",
         "name": "London system or Caro-Kann",
+        "description": "Online chess: London system, Caro-Kann defense.",
         "link": "https://www.chess.com/fr"
       }
     ],

@@ -197,26 +197,26 @@ export default function CompactCvLayout({
             <h2 className="border-b pb-1 text-2xl font-semibold text-teal-300">
               {t.education}
             </h2>
-            <ul className="mt-2 space-y-1">
+            <ul className="cv-section-body-gap space-y-1">
               {data.studies.map((study) => (
                 <StudyDisplay key={study.id} study={study} compact={true} />
               ))}
             </ul>
           </section>
 
-          {/* Projets : mêmes composants / classes que le CV long (`cv-cq-section`, `Project`). */}
+          {/* Projets : même structure flex que les études (compact). */}
           <section
             id="projects"
             data-cv-section="projects"
-            className="cv-cq-section mb-6"
+            className="mb-6"
           >
             <h2 className="border-b pb-1 text-2xl font-semibold text-cv-tag-text">
               {data.projectsTitle}
             </h2>
-            <ul className="cv-section-simple-list cv-cq-project-list max-md:mt-6">
+            <ul className="cv-section-body-gap space-y-1">
               {data.projects.map((project: any) => (
                 <li key={project.id}>
-                  <Project project={project} yearOnly hideDatesPrint />
+                  <Project project={project} yearOnly compact />
                 </li>
               ))}
             </ul>
@@ -229,7 +229,7 @@ export default function CompactCvLayout({
             <h2 className="border-b pb-1 text-2xl font-semibold text-cv-jobs">
               {t.experience}
             </h2>
-            <ul className="mt-2 space-y-4">
+            <ul className="cv-section-body-gap space-y-4">
               {recentJobs.map((job, idx) => (
                 <li key={idx}>
                   <JobDisplay
