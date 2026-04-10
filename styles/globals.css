@@ -745,17 +745,10 @@ html {
   padding-bottom: 0.5rem !important;
 }
 
-/**
- * Short CV print-preview : mêmes compactages que `@media print` pour que
- * `?print=1` soit identique au rendu Cmd+P. Un seul endroit pour les deux.
+/*
+ * Short CV print-preview : WYSIWYG — plus de compactage spécifique.
+ * Le rendu `?print=1` est identique à l'affichage normal.
  */
-.cv-print-preview .cv-short-page .cv-page-split {
-  column-gap: 0.75rem !important;
-}
-
-.cv-print-preview .cv-short-page .cv-short-about {
-  padding-bottom: 0 !important;
-}
 
 .cv-print-preview .cv-short-page #education-level .cv-education-level-blocks {
   margin-top: 0.5rem !important;

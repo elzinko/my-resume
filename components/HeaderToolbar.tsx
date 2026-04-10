@@ -366,7 +366,7 @@ export default function HeaderToolbar({
               shortDefaultOfferId={shortDefaultOfferId}
             />
           </Suspense>
-          {showPrintPreviewToggle ? (
+          {showPrintPreviewToggle && !shortLang ? (
             <Suspense fallback={null}>
               <PrintPreviewToggleLink />
             </Suspense>
@@ -441,7 +441,7 @@ export default function HeaderToolbar({
                 onNavigate={close}
               />
             </Suspense>
-            {showPrintPreviewToggle ? (
+            {showPrintPreviewToggle && !shortLang ? (
               <Suspense fallback={null}>
                 <PrintPreviewToggleLink onNavigate={close} />
               </Suspense>
