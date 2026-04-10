@@ -366,12 +366,7 @@ export default function HeaderToolbar({
               shortDefaultOfferId={shortDefaultOfferId}
             />
           </Suspense>
-          {/* Print preview toggle retiré : WYSIWYG — écran = impression. */}
-          {isCvPrintLayoutToolbarEnabled() ? (
-            <Suspense fallback={null}>
-              <DevMobilePreviewButton />
-            </Suspense>
-          ) : null}
+          {/* Print preview + Mobile preview retirés : WYSIWYG. */}
           <ToolbarIconList
             onPrint={runPrint}
             printTitle={printTitle}
@@ -392,7 +387,7 @@ export default function HeaderToolbar({
       />
 
       <div
-        className="fixed inset-x-0 top-0 z-[90] flex items-center gap-2 bg-white/90 px-4 pb-3 backdrop-blur-md supports-[backdrop-filter]:bg-white/80 print:hidden md:hidden"
+        className="fixed inset-x-0 top-0 z-[90] flex items-center gap-2 bg-white/90 px-8 pb-3 backdrop-blur-md supports-[backdrop-filter]:bg-white/80 print:hidden md:hidden"
         style={{
           paddingTop: 'max(0.75rem, env(safe-area-inset-top, 0px))',
         }}
@@ -437,12 +432,6 @@ export default function HeaderToolbar({
                 onNavigate={close}
               />
             </Suspense>
-            {/* Print preview toggle retiré : WYSIWYG — écran = impression. */}
-            {isCvPrintLayoutToolbarEnabled() ? (
-              <Suspense fallback={null}>
-                <DevMobilePreviewButton onNavigate={close} />
-              </Suspense>
-            ) : null}
             <ToolbarIconList
               onNavigate={close}
               listClassName={rowListClass}

@@ -40,7 +40,7 @@ export default function HeaderContent({
         {/* Bloc texte : nom + rôle + coordonnées, alignés à droite */}
         <div className="flex flex-col items-end text-right">
           <h1
-            className={`text-3xl font-extrabold leading-tight text-blue-600 md:text-5xl md:leading-none lg:text-7xl ${
+            className={`text-3xl font-extrabold leading-tight text-blue-400 md:text-5xl md:leading-none lg:text-7xl ${
               compactPrint
                 ? 'print:text-3xl print:leading-tight'
                 : 'print:text-5xl print:leading-none'
@@ -58,7 +58,7 @@ export default function HeaderContent({
             {role}
           </p>
           {belowRole ? (
-            <div className="mt-1 w-full md:mt-2 print:mt-2">{belowRole}</div>
+            <div className="mt-1 hidden w-full md:mt-2 md:block print:mt-2 print:block">{belowRole}</div>
           ) : null}
         </div>
 

@@ -155,26 +155,52 @@ export default function CompactCvLayout({
 
       {children}
 
+      {/* Mobile-only : Adéquation poste + Coordonnées, hors grille, avant Expérience. */}
+      <div className="mt-6 space-y-6 md:hidden print:hidden">
+        <Suspense fallback={null}>
+          <JobFitSection
+            lang={lang}
+            defaultOfferId={defaultOfferId}
+            educationLevel={data.educationLevel}
+            variant="compact"
+          />
+        </Suspense>
+        <section>
+          <div className="border-b pb-1">
+            <h2 className="min-w-0 text-2xl font-semibold text-pink-300">
+              {data.titles.contact || (lang === 'fr' ? 'Coordonnées' : 'Contact')}
+            </h2>
+          </div>
+          <ContactDisplay
+            contact={data.contact}
+            cvShortInlineRows
+            locale={lang}
+          />
+        </section>
+      </div>
+
       {/* Colonne gauche 1/3 + expériences 2/3 (grille alignée sur les domaines) */}
       <div className="cv-page-split mt-8">
         <div
           id="left"
           className="order-last flex w-full min-w-0 flex-col md:order-first md:col-span-1 print:order-first print:col-span-1"
         >
-          {/* Adéquation poste : niveau de formation + compétences techniques (compact). */}
-          <Suspense fallback={null}>
-            <JobFitSection
-              lang={lang}
-              defaultOfferId={defaultOfferId}
-              educationLevel={data.educationLevel}
-              variant="compact"
-            />
-          </Suspense>
+          {/* Adéquation poste : masqué en mobile (dupliqué hors grille). */}
+          <div className="hidden md:block print:block">
+            <Suspense fallback={null}>
+              <JobFitSection
+                lang={lang}
+                defaultOfferId={defaultOfferId}
+                educationLevel={data.educationLevel}
+                variant="compact"
+              />
+            </Suspense>
+          </div>
 
-          {/* Coordonnées (label : valeur) dans la colonne gauche. */}
-          <section id="cv-short-contact" className="mb-6">
+          {/* Coordonnées (label : valeur) dans la colonne gauche — masqué en mobile (dupliqué hors grille). */}
+          <section id="cv-short-contact" className="mb-6 hidden md:block print:block">
             <div className="border-b pb-1">
-              <h2 className="min-w-0 text-2xl font-semibold text-cv-jobs">
+              <h2 className="min-w-0 text-2xl font-semibold text-pink-300">
                 {data.titles.contact || (lang === 'fr' ? 'Coordonnées' : 'Contact')}
               </h2>
             </div>

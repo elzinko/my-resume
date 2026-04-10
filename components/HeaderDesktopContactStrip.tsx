@@ -41,7 +41,7 @@ export default function HeaderDesktopContactStrip({
 
   return (
     <div
-      className={`cv-header-contact-strip mt-2 flex w-full flex-col ${alignItems} gap-0.5 ${textAlign} text-sm leading-snug text-pink-200 md:mt-0 md:pb-1 md:text-lg md:leading-snug print:mt-0 print:flex ${printAlignItems} print:gap-0.5 print:pb-0.5 ${printTextAlign} print:text-lg print:leading-snug print:text-pink-200`}
+      className={`cv-header-contact-strip mt-2 flex w-full flex-col ${alignItems} gap-0.5 ${textAlign} text-sm leading-snug text-cv-body-muted md:mt-0 md:pb-1 md:text-lg md:leading-snug print:mt-0 print:flex ${printAlignItems} print:gap-0.5 print:pb-0.5 ${printTextAlign} print:text-lg print:leading-snug print:text-cv-body-muted`}
       aria-label="Contact"
     >
       {email ? (
@@ -60,7 +60,7 @@ export default function HeaderDesktopContactStrip({
             href={mapsHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-inherit no-underline hover:underline hover:decoration-pink-200 hover:underline-offset-2"
+            className="text-inherit no-underline hover:underline hover:decoration-current/70 hover:underline-offset-2"
             title={locationTitle}
           >
             {location}
