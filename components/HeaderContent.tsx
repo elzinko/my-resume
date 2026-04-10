@@ -37,7 +37,7 @@ export default function HeaderContent({
   return (
     <div
       className={`header-content pb-0 pt-2 max-md:pt-0 md:py-20 ${
-        compactPrint ? 'print:py-1.5' : 'print:py-4'
+        compactPrint ? 'print:pt-8 print:pb-2' : 'print:py-4'
       }`}
     >
       {/*
@@ -51,17 +51,17 @@ export default function HeaderContent({
           <h1
             className={`text-3xl font-extrabold leading-tight text-right text-blue-600 md:text-5xl md:leading-none md:text-right lg:text-7xl ${
               compactPrint
-                ? 'print:text-2xl print:leading-tight print:text-right'
+                ? 'print:text-3xl print:leading-tight print:text-right'
                 : 'print:text-3xl print:text-right'
             }`}
           >
             {name}
           </h1>
           <p
-            className={`mt-1 text-lg leading-snug text-right text-teal-300 md:mt-5 md:text-3xl md:leading-normal md:text-right ${
+            className={`mt-1 text-lg leading-snug text-right text-cv-section md:mt-5 md:text-3xl md:leading-normal md:text-right ${
               compactPrint
-                ? 'print:mt-0.5 print:text-sm print:leading-snug print:text-teal-500 print:text-right'
-                : 'print:mt-1 print:text-lg print:text-teal-500 print:text-right'
+                ? 'print:mt-0.5 print:text-base print:leading-snug print:text-cv-section print:text-right'
+                : 'print:mt-1 print:text-lg print:text-cv-section print:text-right'
             }`}
           >
             {role}

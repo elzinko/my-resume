@@ -12,20 +12,32 @@ interface JobFitSectionProps {
   lang: Locale;
   defaultOfferId: string | null;
   educationLevel: EducationLevelContent;
-  /** 'grid' = 3 colonnes (CV complet), 'compact' = colonne unique (CV court). */
-  variant?: 'grid' | 'compact';
+  /** 'full' = liste verticale avec detail (CV complet), 'compact' = pastilles inline (CV court). */
+  variant?: 'full' | 'compact';
 }
 
+/** Pastille orange (label + metrique optionnelle). */
+const pillCls =
+  'cv-pill-match inline-flex max-w-full shrink-0 items-baseline gap-x-1.5 whitespace-nowrap px-2 py-0.5 text-xs font-medium print:gap-1 print:px-1.5 print:py-0.5 print:text-[10px] md:text-sm';
+
+/** Metrique (annees) dans la pastille — plus discret. */
+const metricCls =
+  'text-[10px] font-normal tabular-nums text-orange-200/95 print:text-[9px] print:!text-orange-300 md:text-xs';
+
+/** Badge client discret (fond colore, sans bordure). */
+const clientBadgeCls =
+  'inline-block whitespace-nowrap rounded bg-orange-300/15 px-1.5 py-0.5 text-[10px] font-normal text-orange-200/80 print:bg-orange-300/10 print:px-1 print:py-0 print:text-[8px] print:!text-orange-300/70 md:text-xs';
+
 /**
- * Section « Adequation poste » : pastilles orange — niveau de formation +
- * competences techniques (Java, JavaScript par defaut, ou offre si presente).
- * Chaque pastille affiche le label et le nombre d'annees d'experience.
+ * Section « Adequation poste » :
+ * - full : une ligne par entree (badge + detail clients ou texte)
+ * - compact : pastilles inline (CV court)
  */
 export default function JobFitSection({
   lang,
   defaultOfferId,
   educationLevel,
-  variant = 'grid',
+  variant = 'full',
 }: JobFitSectionProps) {
   const offerData = useShortOfferMatchData(lang, defaultOfferId);
 
@@ -41,39 +53,29 @@ export default function JobFitSection({
   const sectionTitle =
     lang === 'en' ? 'Job fit' : 'Adequation poste';
 
-  // Pastille orange avec label + metrique (annees)
-  const pillBase =
-    'cv-pill-match inline-flex max-w-full shrink-0 flex-wrap items-baseline gap-x-1.5 whitespace-nowrap px-2 py-0.5 text-xs font-medium print:gap-1 print:px-1.5 print:py-0.5 print:text-[10px] md:text-sm';
-  const metricCls =
-    'text-[10px] font-normal tabular-nums text-orange-200/95 print:text-[9px] print:!text-orange-300 md:text-xs';
-
+  /* ── Compact : pastilles inline uniquement (CV court) ── */
   if (variant === 'compact') {
     return (
       <section id="job-fit" className="mb-6" aria-label={sectionTitle}>
         <h2 className="border-b pb-1 text-2xl font-semibold text-orange-300">
           {sectionTitle}
         </h2>
-        <div className="mt-2 flex flex-wrap items-center gap-1.5 print:gap-1">
+        <div className="cv-section-body-gap flex flex-wrap items-center gap-1.5 print:gap-1">
           {/* Education level pill */}
-          <span className={pillBase}>
+          <span className={pillCls}>
             <span className="min-w-0 truncate">{educationLevel.levelPrimary}</span>
-            <span className={metricCls}>{educationLevel.effectiveLevelDetail}</span>
           </span>
 
           {/* Tech pills */}
           {entries.map((entry, index) => {
-            const hasMatches = entry.matchedClients.length > 0;
-            const showYears = hasMatches || entry.yearsFromOverride === true;
+            const showYears =
+              entry.matchedClients.length > 0 || entry.yearsFromOverride === true;
             const yearsLabel = showYears
               ? formatMatchYears(entry.totalYears, l)
               : '\u2014';
 
             return (
-              <span
-                key={`${index}-${entry.label}`}
-                className={pillBase}
-                aria-label={`${entry.label}, ${showYears ? yearsLabel : lang === 'en' ? 'not practiced' : 'non pratiquee'}`}
-              >
+              <span key={`${index}-${entry.label}`} className={pillCls}>
                 <span className="min-w-0 truncate">{entry.label}</span>
                 <span className={metricCls}>{yearsLabel}</span>
               </span>
@@ -84,7 +86,7 @@ export default function JobFitSection({
     );
   }
 
-  // variant === 'grid' — 3 columns like Domains
+  /* ── Full : une ligne par entree avec detail ── */
   return (
     <section
       id="job-fit"
@@ -96,35 +98,49 @@ export default function JobFitSection({
           {sectionTitle}
         </h2>
       </div>
-      <div className="cv-domains-grid">
-        {/* Column 1: Education level */}
-        <div className="mt-0 min-w-0 md:mt-4">
-          <span className={pillBase}>
+
+      <ul className="mt-3 space-y-2.5 md:mt-4 md:space-y-3 print:mt-2 print:space-y-1.5">
+        {/* Education level row */}
+        <li className="flex flex-wrap items-baseline gap-x-2 gap-y-1 print:gap-x-1.5">
+          <span className={pillCls}>
             <span className="min-w-0 truncate">{educationLevel.levelPrimary}</span>
           </span>
-          <p className="cv-about-domain-print-body mt-1.5 text-sm leading-snug text-cv-body-muted print:mt-4 print:min-h-0 md:mt-4 md:min-h-[100px] md:text-base md:leading-normal">
+          <span className="text-sm text-cv-body-muted print:text-[10px] md:text-base">
             {educationLevel.effectiveLevelDetail}
-          </p>
-        </div>
+          </span>
+        </li>
 
-        {/* Column 2+: Tech entries */}
+        {/* Tech entry rows */}
         {entries.map((entry, index) => {
-          const hasMatches = entry.matchedClients.length > 0;
-          const showYears = hasMatches || entry.yearsFromOverride === true;
+          const showYears =
+            entry.matchedClients.length > 0 || entry.yearsFromOverride === true;
           const yearsLabel = showYears
             ? formatMatchYears(entry.totalYears, l)
             : '\u2014';
+          const clients = entry.matchedClients;
 
           return (
-            <div key={`${index}-${entry.label}`} className="mt-0 min-w-0 md:mt-4">
-              <span className={pillBase}>
+            <li
+              key={`${index}-${entry.label}`}
+              className="flex flex-wrap items-baseline gap-x-2 gap-y-1 print:gap-x-1.5"
+            >
+              <span className={pillCls}>
                 <span className="min-w-0 truncate">{entry.label}</span>
                 <span className={metricCls}>{yearsLabel}</span>
               </span>
-            </div>
+              {clients.length > 0 && (
+                <span className="flex flex-wrap items-baseline gap-1 print:gap-0.5">
+                  {clients.map((c) => (
+                    <span key={c.client} className={clientBadgeCls}>
+                      {c.client}
+                    </span>
+                  ))}
+                </span>
+              )}
+            </li>
           );
         })}
-      </div>
+      </ul>
     </section>
   );
 }

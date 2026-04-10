@@ -1,6 +1,6 @@
 import '../../../../styles/globals.css';
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { Locale } from '../../../../i18n-config';
 import { getCvData } from '@/lib/cv-data';
@@ -201,29 +201,37 @@ export default async function DevComponentsPage({
       ),
     })),
     {
-      id: 'job-fit-grid',
-      title: 'Job Fit (3 colonnes — CV complet)',
+      id: 'job-fit-full',
+      title: 'Job Fit (liste avec clients — CV complet)',
       node: (
-        <JobFitSection
-          lang={lang}
-          defaultOfferId={null}
-          educationLevel={educationLevel}
-          variant="grid"
-        />
+        <div className="rounded-lg bg-slate-900 p-4 text-gray-200">
+          <Suspense fallback={<p className="text-sm text-slate-400">Chargement Job Fit…</p>}>
+            <JobFitSection
+              lang={lang}
+              defaultOfferId={null}
+              educationLevel={educationLevel}
+              variant="full"
+            />
+          </Suspense>
+        </div>
       ),
     },
     {
       id: 'job-fit-compact',
       title: 'Job Fit (compact — CV court, sidebar)',
       node: (
-        <Narrow>
-          <JobFitSection
-            lang={lang}
-            defaultOfferId={null}
-            educationLevel={educationLevel}
-            variant="compact"
-          />
-        </Narrow>
+        <div className="rounded-lg bg-slate-900 p-4 text-gray-200">
+          <Narrow>
+            <Suspense fallback={<p className="text-sm text-slate-400">Chargement Job Fit…</p>}>
+              <JobFitSection
+                lang={lang}
+                defaultOfferId={null}
+                educationLevel={educationLevel}
+                variant="compact"
+              />
+            </Suspense>
+          </Narrow>
+        </div>
       ),
     },
     { id: 'studies-default', title: 'Studies (default)', node: studiesDefaultNode },

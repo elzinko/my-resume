@@ -125,11 +125,6 @@ export default async function ShortPage({
         lang={lang}
         headerName={data?.header?.name || ''}
         headerRole={data?.header?.role || ''}
-        headerContact={{
-          email: data?.contact?.email ?? '',
-          phone: data?.contact?.phone ?? '',
-          location: data?.contact?.location ?? '',
-        }}
         defaultOfferId={defaultOfferId}
         hideMalt={hideMalt}
       >

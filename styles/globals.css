@@ -436,9 +436,6 @@ html {
 
   .cv-short-page .cv-page-split {
     column-gap: 0.75rem !important;
-    margin-top: 0.5rem !important;
-    gap-y: 0 !important;
-    row-gap: 0 !important;
   }
 
   /* Niveau de formation short : compacter le bloc pour tenir en 1 page */
@@ -490,15 +487,12 @@ html {
     page-break-after: auto !important;
   }
 
-  /* Profil : marges internes compactées */
+  /* Profil : marges internes compactées — WYSIWYG (mêmes valeurs qu'à l'écran) */
   .cv-short-page .cv-short-about {
-    margin-top: 0.25rem !important;
-    margin-bottom: 0 !important;
     padding-bottom: 0 !important;
   }
 
   .cv-short-page section#domains {
-    margin-top: 0.25rem !important;
     margin-bottom: 0;
     padding-bottom: 0;
     break-before: auto !important;
@@ -756,18 +750,11 @@ html {
  * `?print=1` soit identique au rendu Cmd+P. Un seul endroit pour les deux.
  */
 .cv-print-preview .cv-short-page .cv-page-split {
-  margin-top: 0.5rem !important;
-  row-gap: 0 !important;
+  column-gap: 0.75rem !important;
 }
 
 .cv-print-preview .cv-short-page .cv-short-about {
-  margin-top: 0.25rem !important;
-  margin-bottom: 0 !important;
   padding-bottom: 0 !important;
-}
-
-.cv-print-preview .cv-short-page section#domains {
-  margin-top: 0.25rem !important;
 }
 
 .cv-print-preview .cv-short-page #education-level .cv-education-level-blocks {

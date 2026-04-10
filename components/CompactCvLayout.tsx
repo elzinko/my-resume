@@ -3,6 +3,7 @@
 import React, { Suspense } from 'react';
 import Skill from './skill';
 import Domain from './domain';
+import ContactDisplay from './ContactDisplay';
 import JobDisplay from './JobDisplay';
 import StudyDisplay from './StudyDisplay';
 import JobFitSection from './JobFitSection';
@@ -155,7 +156,7 @@ export default function CompactCvLayout({
       {children}
 
       {/* Colonne gauche 1/3 + expériences 2/3 (grille alignée sur les domaines) */}
-      <div className="cv-page-split mt-6">
+      <div className="cv-page-split mt-8">
         <div
           id="left"
           className="order-last flex w-full min-w-0 flex-col md:order-first md:col-span-1 print:order-first print:col-span-1"
@@ -169,6 +170,20 @@ export default function CompactCvLayout({
               variant="compact"
             />
           </Suspense>
+
+          {/* Coordonnées (label : valeur) dans la colonne gauche. */}
+          <section id="cv-short-contact" className="mb-6">
+            <div className="border-b pb-1">
+              <h2 className="min-w-0 text-2xl font-semibold text-cv-jobs">
+                {data.titles.contact || (lang === 'fr' ? 'Coordonnées' : 'Contact')}
+              </h2>
+            </div>
+            <ContactDisplay
+              contact={data.contact}
+              cvShortInlineRows
+              locale={lang}
+            />
+          </section>
 
           {/* Skills — masqué pour le moment (écran + impression). */}
           <section className="cv-short-skills-block mb-6 hidden">
@@ -187,12 +202,12 @@ export default function CompactCvLayout({
             id="studies"
             className="cv-short-studies-section mb-6"
           >
-            <h2 className="border-b pb-1 text-2xl font-semibold text-teal-300">
+            <h2 className="border-b pb-1 text-2xl font-semibold text-purple-300">
               {t.education}
             </h2>
             <ul className="cv-section-body-gap space-y-1">
               {data.studies.map((study) => (
-                <StudyDisplay key={study.id} study={study} compact={true} />
+                <StudyDisplay key={study.id} study={study} compact={true} color="text-purple-300" />
               ))}
             </ul>
           </section>

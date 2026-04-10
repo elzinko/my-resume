@@ -77,7 +77,7 @@ export default function OfferTailoredShell({
                 lang={lang}
                 defaultOfferId={defaultOfferId}
                 educationLevel={educationLevel}
-                variant="grid"
+                variant="full"
               />
             </Suspense>
             {/* @ts-expect-error Server Component */}

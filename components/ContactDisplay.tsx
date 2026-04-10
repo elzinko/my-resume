@@ -77,7 +77,7 @@ export default function ContactDisplay({
     const valueWrap = 'min-w-0 text-right';
 
     return (
-      <ul className="cv-short-contact-rows mt-2 space-y-1.5 md:space-y-1 print:mt-0.5 print:space-y-0.5">
+      <ul className="cv-short-contact-rows cv-section-body-gap space-y-1.5 md:space-y-1 print:space-y-0.5">
         <li className={row}>
           <strong className={labelCls}>{contact.emailTitle}</strong>
           <a
