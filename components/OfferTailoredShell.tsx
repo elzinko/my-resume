@@ -12,7 +12,6 @@ import FullCvPrintPreviewEffect from '@/components/FullCvPrintPreviewEffect';
 import ContactLocationProvider from '@/components/ContactLocationProvider';
 import JobFrameworkDisplayProvider from '@/components/JobFrameworkDisplayProvider';
 import { buildContactLocationHref } from '@/lib/contact-maps';
-import { getProfileEducationBadgeLabel } from '@/lib/education-level-content';
 import type { ContactLocationOverlay } from '@/lib/offer-contact-from-params';
 import type { EducationLevelContent } from '@/lib/education-level-content';
 import type { Locale } from 'i18n-config';
@@ -52,7 +51,6 @@ export default function OfferTailoredShell({
     };
 
   const defaultOfferId = process.env.SHORT_CV_OFFER_ID?.trim() || null;
-  const educationLabel = getProfileEducationBadgeLabel(educationLevel, lang);
 
   return (
     <JobFrameworkDisplayProvider priorityTokens={frameworkDisplayPriorityTokens}>
@@ -71,16 +69,17 @@ export default function OfferTailoredShell({
           <div className="cv-full-cv-print-root">
             {/* @ts-expect-error Server Component */}
             <About locale={lang} educationLevel={educationLevel} />
-            {/* Adéquation poste : niveau de formation + compétences offre */}
+            {/* @ts-expect-error Server Component */}
+            <Domains locale={lang} />
+            {/* Adéquation poste : niveau de formation + compétences techniques */}
             <Suspense fallback={null}>
               <JobFitSection
                 lang={lang}
                 defaultOfferId={defaultOfferId}
-                educationLabel={educationLabel}
+                educationLevel={educationLevel}
+                variant="grid"
               />
             </Suspense>
-            {/* @ts-expect-error Server Component */}
-            <Domains locale={lang} />
             {/* @ts-expect-error Server Component */}
             <Jobs locale={lang} />
             {/* @ts-expect-error Server Component */}

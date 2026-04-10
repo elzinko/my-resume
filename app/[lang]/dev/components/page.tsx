@@ -17,9 +17,7 @@ import Learnings from '../../learnings';
 import Projects from '../../projects';
 import Jobs from '../../jobs';
 import Header from '../../header';
-import EducationLevel from '@/components/EducationLevel';
-import ProfileEducationBadge from '@/components/ProfileEducationBadge';
-import { getProfileEducationBadgeLabel } from '@/lib/education-level-content';
+import JobFitSection from '@/components/JobFitSection';
 import HeaderToolbar from '@/components/HeaderToolbar';
 import HeaderContent from '@/components/HeaderContent';
 import HeaderDesktopContactStrip from '@/components/HeaderDesktopContactStrip';
@@ -189,7 +187,7 @@ export default async function DevComponentsPage({
       title: 'Header · Contact strip (compact, sous le rôle)',
       node: headerContactStripNode,
     },
-    { id: 'about', title: 'About (+ pastille niveau de formation)', node: aboutNode },
+    { id: 'about', title: 'About (profil)', node: aboutNode },
     { id: 'contact', title: 'Contact', node: contactDefaultNode },
     { id: 'skills', title: 'Skills', node: skillsNode },
     { id: 'domains', title: 'Domains (3 colonnes)', node: domainsNode },
@@ -203,21 +201,29 @@ export default async function DevComponentsPage({
       ),
     })),
     {
-      id: 'education-level',
-      title: 'Niveau de formation',
+      id: 'job-fit-grid',
+      title: 'Job Fit (3 colonnes — CV complet)',
       node: (
-        <Narrow>
-          <EducationLevel content={educationLevel} pillsCompact />
-        </Narrow>
+        <JobFitSection
+          lang={lang}
+          defaultOfferId={null}
+          educationLevel={educationLevel}
+          variant="grid"
+        />
       ),
     },
     {
-      id: 'profile-education-badge',
-      title: 'Niveau de formation · pastille condensée (sous le profil)',
+      id: 'job-fit-compact',
+      title: 'Job Fit (compact — CV court, sidebar)',
       node: (
-        <ProfileEducationBadge
-          label={getProfileEducationBadgeLabel(educationLevel, lang)}
-        />
+        <Narrow>
+          <JobFitSection
+            lang={lang}
+            defaultOfferId={null}
+            educationLevel={educationLevel}
+            variant="compact"
+          />
+        </Narrow>
       ),
     },
     { id: 'studies-default', title: 'Studies (default)', node: studiesDefaultNode },

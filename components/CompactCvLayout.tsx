@@ -1,13 +1,11 @@
 'use client';
 
 import React, { Suspense } from 'react';
-import ProfileEducationBadge from '@/components/ProfileEducationBadge';
-import { getProfileEducationBadgeLabel } from '@/lib/education-level-content';
 import Skill from './skill';
 import Domain from './domain';
 import JobDisplay from './JobDisplay';
 import StudyDisplay from './StudyDisplay';
-import EducationLevel from './EducationLevel';
+import JobFitSection from './JobFitSection';
 import ExperienceClosingBlock from './ExperienceClosingBlock';
 import ShortCvOnlineDetailLink from './ShortCvOnlineDetailLink';
 import Project from './project';
@@ -75,9 +73,7 @@ interface CompactCvLayoutProps {
   lang: 'fr' | 'en';
   /** `SHORT_CV_OFFER_ID` : lien « CV en ligne » même sans `?offer=` dans l'URL. */
   defaultOfferId?: string | null;
-  /** Contenu injecté après la pastille niveau (ex. pastilles adéquation offre). */
-  afterBadge?: React.ReactNode;
-  /** Emplacement réservé pour extensions (ex. adéquation offre) — non utilisé par défaut. */
+  /** Emplacement réservé pour extensions — non utilisé par défaut. */
   children?: React.ReactNode;
 }
 
@@ -85,7 +81,6 @@ export default function CompactCvLayout({
   data,
   lang,
   defaultOfferId = null,
-  afterBadge,
   children,
 }: CompactCvLayoutProps) {
   // Fallback labels if bundle.json titles are empty
@@ -128,11 +123,6 @@ export default function CompactCvLayout({
     .filter((job) => !SHORT_CV_EXCLUDED_CLIENTS.has(job.client))
     .slice(0, SHORT_CV_MAX_JOBS);
 
-  const profileBadgeLabel = getProfileEducationBadgeLabel(
-    data.educationLevel,
-    lang,
-  );
-
   return (
     <div className="cv-layout-short">
       {/* About - Full width section (same style as full CV) */}
@@ -146,10 +136,6 @@ export default function CompactCvLayout({
           </h2>
         </div>
         <p className="mt-4 text-cv-body-muted">{data.about}</p>
-        <div className="mt-2 flex flex-wrap items-center gap-x-1.5 gap-y-1 py-1">
-          <ProfileEducationBadge label={profileBadgeLabel} />
-          {afterBadge}
-        </div>
       </section>
 
       {/* Domains - Full width (même grille 1/3 que le CV complet) */}
@@ -174,12 +160,15 @@ export default function CompactCvLayout({
           id="left"
           className="order-last flex w-full min-w-0 flex-col md:order-first md:col-span-1 print:order-first print:col-span-1"
         >
-          {/* Niveau de formation : même bloc que le CV long (une colonne, y compris à l'impression). */}
-          <EducationLevel
-            content={data.educationLevel}
-            sectionClassName="mb-6"
-            pillsCompact
-          />
+          {/* Adéquation poste : niveau de formation + compétences techniques (compact). */}
+          <Suspense fallback={null}>
+            <JobFitSection
+              lang={lang}
+              defaultOfferId={defaultOfferId}
+              educationLevel={data.educationLevel}
+              variant="compact"
+            />
+          </Suspense>
 
           {/* Skills — masqué pour le moment (écran + impression). */}
           <section className="cv-short-skills-block mb-6 hidden">

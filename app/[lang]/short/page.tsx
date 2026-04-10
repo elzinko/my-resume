@@ -11,7 +11,6 @@ import CompactCvLayout, { CompactCvData } from '@/components/CompactCvLayout';
 import { getEducationLevelContent } from '@/lib/education-level-content';
 import formatDates from '@/lib/date';
 import ShortPageWrapper from '@/components/ShortPageWrapper';
-import ShortHeaderJobFitPills from '@/components/ShortHeaderJobFitPills';
 import FullCvPrintPreviewEffect from '@/components/FullCvPrintPreviewEffect';
 import ShortAutoprint from '@/components/ShortAutoprint';
 import { getOffer } from '@/data/offers';
@@ -141,14 +140,6 @@ export default async function ShortPage({
         data={compactData}
         lang={lang as 'fr' | 'en'}
         defaultOfferId={defaultOfferId}
-        afterBadge={
-          <Suspense fallback={null}>
-            <ShortHeaderJobFitPills
-              lang={lang}
-              defaultOfferId={defaultOfferId}
-            />
-          </Suspense>
-        }
       />
     </ShortPageWrapper>
     </>

@@ -27,6 +27,38 @@ function matchCatalog(): ReturnType<typeof buildMatchCatalogFromBundle> {
 /** CV court : au plus N lignes (offre catalogue ou paramètres GET). */
 export const SHORT_PROFILE_MATCH_MAX = 3;
 
+/**
+ * Exigences par défaut (sans offre) : Java + JavaScript — utilisées
+ * par le bloc « Adéquation poste » quand aucun `?offer` / `?requirement` n'est fourni.
+ */
+const DEFAULT_REQUIREMENTS: import('@/data/offers/types').MatchRequirement[] = [
+  { label: 'Java', keywords: ['java'] },
+  {
+    label: 'JavaScript',
+    keywords: [
+      'typescript',
+      'javascript',
+      'node.js',
+      'vue.js',
+      'react',
+      'next.js',
+      'angular',
+    ],
+  },
+];
+
+/**
+ * Entrées par défaut (Java, JavaScript) calculées depuis les missions du bundle.
+ */
+export function computeDefaultMatchData(
+  locale: Locale,
+): MatchDisplayData {
+  const slice = locale === 'fr' ? b.fr : b.en;
+  const jobs: JobForMatching[] = (slice.allJobsModels || []) as JobForMatching[];
+  const entries = buildMatchEntries(DEFAULT_REQUIREMENTS, jobs);
+  return { entries };
+}
+
 function hasReadableMatchParams(sp: URLSearchParams): boolean {
   const hasSpec = Boolean(sp.get('spec')?.trim());
   const hasCompany = Boolean(sp.get('company')?.trim());
