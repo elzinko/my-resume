@@ -38,12 +38,54 @@
   }
 
   /**
-   * Colonne gauche (1/3) + missions (2/3). Mobile : une colonne, `gap-y-10` aligné sur
-   * `.cv-flow-mobile-stack` et `mt-10` des sections. Desktop : `gap-y-0`, marges portées par les sections.
+   * Colonne gauche (1/3) + missions (2/3) — utilisé par le CV court (CompactCvLayout).
+   * Le CV long utilise désormais un flux linéaire via `.cv-full-cv-print-root`.
    */
   .cv-page-split {
     @apply grid grid-cols-1 grid-rows-none gap-y-10 max-md:mt-10 md:grid-cols-3 md:gap-x-10 md:gap-y-0 md:items-start;
     @apply print:grid print:grid-cols-3 print:gap-x-4 print:gap-y-0 print:items-start;
+  }
+
+  /**
+   * CV long — layout unifié : une seule colonne linéaire, identique à l'impression.
+   * Remplace l'ancien layout 2 colonnes (sidebar + missions) sur desktop.
+   * `mt-10` desktop / `mt-20` mobile (clearance de la toolbar fixe).
+   */
+  .cv-full-cv-print-root {
+    @apply mt-10 flex flex-col gap-10 max-md:mt-20 print:mt-0;
+  }
+
+  .cv-full-cv-print-root section {
+    margin-top: 0 !important;
+  }
+
+  /**
+   * CV long — Apprentissages : toujours en liste verticale avec descriptions,
+   * jamais en ligne avec `/` (override la container query ≥ 36rem).
+   */
+  .cv-full-cv-print-root [data-cv-section='learnings'] .cv-cq-link-list {
+    display: block !important;
+    list-style: none !important;
+    padding-left: 0 !important;
+    margin: 0 !important;
+    margin-top: var(--cv-section-body-gap) !important;
+  }
+
+  .cv-full-cv-print-root [data-cv-section='learnings'] .cv-cq-link-list > li {
+    display: block !important;
+    margin-top: 0.25rem !important;
+  }
+
+  .cv-full-cv-print-root [data-cv-section='learnings'] .cv-cq-link-list > li:first-child {
+    margin-top: 0 !important;
+  }
+
+  .cv-full-cv-print-root [data-cv-section='learnings'] .cv-cq-link-list > li + li::before {
+    content: none !important;
+  }
+
+  .cv-full-cv-print-root [data-cv-section='learnings'] .cv-learning-desc {
+    display: inline !important;
   }
 
   /**
@@ -484,39 +526,6 @@ html {
    * === FULL CV — ajustements print ===============================
    * ================================================================ */
   /**
-   * CV long + pages offre : à l’impression, une seule colonne dans l’ordre métier
-   * (résumé → domaines → expériences → études → projets → veille → loisirs ; adéquation = en-tête uniquement).
-   * Compétences : masquées en PDF / aperçu `?print`. Niveau de formation : bloc colonne gauche (pastille Profil masquée).
-   * Mise en page PDF = logique « desktop » ; projets / veille / loisirs en blocs détaillés, pas condensés.
-   * Coordonnées : bloc Contact en colonne gauche (CV long) ; CV court = bandeau sous le rôle uniquement.
-   * `display: contents` sur les grilles / colonnes remonte les sections comme enfants flex.
-   */
-  .cv-full-cv-print-root {
-    display: flex;
-    flex-direction: column;
-    /* Même rythme que `mt-10` entre sections (2.5rem) — les `section` ont margin-top annulé. */
-    gap: 2.5rem;
-  }
-
-  .cv-full-cv-print-root .cv-flow-mobile-stack {
-    display: contents;
-  }
-
-  .cv-full-cv-print-root .cv-page-split {
-    display: contents;
-  }
-
-  .cv-full-cv-print-root #left,
-  .cv-full-cv-print-root #main {
-    display: contents;
-  }
-
-  .cv-full-cv-print-root .cv-print-desktop-sidebar-group,
-  .cv-full-cv-print-root .cv-print-desktop-tail-group {
-    display: contents !important;
-  }
-
-  /**
    * CV long / offre : projets comme à l’écran (grille titre / description / dates), liste empilée
    * sans puces (comme `#studies` / `.cv-section-simple-list`), pas la ligne unique « a / b / c ».
    */
@@ -585,10 +594,6 @@ html {
     display: inline !important;
   }
 
-  .cv-full-cv-print-root section {
-    margin-top: 0 !important;
-  }
-
   .cv-full-cv-print-root #jobs,
   .cv-full-cv-print-root #jobs > ul {
     break-before: auto !important;
@@ -652,39 +657,10 @@ html {
 }
 
 /**
- * Aperçu impression (écran) : `?print` sur le CV long — même flux qu’en @media print
- * (une colonne après le header, ordre des sections via utilitaires `print-preview:order-*`).
+ * Aperçu impression (écran) : `?print` sur le CV long.
+ * Le layout linéaire est désormais le défaut ; ces règles ajustent le formatage
+ * des sections (projets, veille, loisirs) pour l’aperçu `?print`.
  */
-.cv-print-preview .cv-full-cv-print-root {
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-}
-
-.cv-print-preview .cv-full-cv-print-root .cv-flow-mobile-stack {
-  display: contents;
-}
-
-.cv-print-preview .cv-full-cv-print-root .cv-page-split {
-  display: contents;
-}
-
-.cv-print-preview .cv-full-cv-print-root #left,
-.cv-print-preview .cv-full-cv-print-root #main {
-  display: contents;
-}
-
-.cv-print-preview .cv-full-cv-print-root .cv-print-desktop-sidebar-group,
-.cv-print-preview .cv-full-cv-print-root .cv-print-desktop-tail-group {
-  display: contents !important;
-}
-
-/** Aperçu impression : métas d’études visibles (comme en PDF, malgré le conteneur étroit à l’écran). */
-.cv-print-preview .cv-full-cv-print-root .cv-study-meta {
-  display: block !important;
-}
-
-/** Aperçu `?print` CV long : projets / veille / loisirs comme en PDF (détail multi-lignes, sans puces). */
 .cv-print-preview .cv-full-cv-print-root [data-cv-section='projects'] .cv-project-screen {
   display: grid !important;
 }
@@ -764,19 +740,6 @@ html {
   display: inline !important;
 }
 
-/**
- * Pages offre (`cv-offer-tailored-shell`) — aperçu `?print` : pastille niveau sous le résumé
- * (bloc « Education level » masqué dans la colonne).
- */
-/**
- * Coordonnées : le wrapper `.cv-print-desktop-sidebar-group` a ailleurs `display: contents !important`
- * en aperçu `?print`, ce qui annule `print-preview:hidden` et remonte la section Contact dans le flux
- * (au-dessus des jobs). Ici on masque tout le groupe pour les pages offre uniquement.
- */
-.cv-print-preview .cv-offer-tailored-shell .cv-full-cv-print-root .cv-print-desktop-sidebar-group {
-  display: none !important;
-}
-
 .cv-print-preview .cv-offer-tailored-shell .cv-profile-education-badge,
 .cv-print-preview .cv-layout-short .cv-profile-education-badge {
   display: inline-flex !important;
@@ -848,10 +811,6 @@ html {
 .cv-print-preview .cv-offer-tailored-shell .cv-full-cv-print-root [data-cv-section=’hobbies’] .cv-hobby-desc,
 .cv-print-preview .cv-offer-tailored-shell .cv-full-cv-print-root [data-cv-section=’learnings’] .cv-learning-desc {
   display: inline !important;
-}
-
-.cv-print-preview .cv-full-cv-print-root section {
-  margin-top: 0 !important;
 }
 
 .cv-print-preview .cv-full-cv-print-root #jobs {

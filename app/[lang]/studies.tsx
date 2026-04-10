@@ -23,7 +23,7 @@ export default async function studies({
   return (
     <section
       id="studies"
-      className="cv-cq-section mt-10 max-md:mt-0 max-md:order-[3] md:order-[3] print:order-[95] print-preview:order-[95]"
+      className="cv-cq-section mt-10 print:order-[95] print-preview:order-[95]"
     >
       <h2 className="border-b pb-1 text-2xl font-semibold text-cv-section">
         {data?.studiesTitle?.title}

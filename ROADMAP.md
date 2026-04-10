@@ -1,27 +1,10 @@
 # Roadmap
 
-## Unification layout CV complet (supprimer le dual-mode écran/print)
+## ~~Unification layout CV complet (supprimer le dual-mode écran/print)~~ ✓ Fait
 
-**Contexte** : le CV complet a deux modes d'affichage différents — un layout 2 colonnes (sidebar + missions) à l'écran, et un layout linéaire (type `?print=1`) à l'impression. Cela génère beaucoup de CSS conditionnel (`cv-print-preview`, `cv-full-cv-print-root`, `display: contents`, `print:order-*`, etc.) et rend le code difficile à maintenir.
+Layout unifié en une seule colonne linéaire. Le CV complet (`OfferTailoredShell`) utilise `flex flex-col gap-10` par défaut — plus de grille 2 colonnes sur desktop. Les overrides `@media print` et `.cv-print-preview` redondants ont été retirés. Il reste du CSS print-preview pour le formatage des sections (projets, veille, loisirs) et `FullCvPrintPreviewEffect` / `?print` sont conservés pour les différences mineures de rendu impression.
 
-**Objectif** : toujours afficher le CV complet dans le layout linéaire (celui de `?print=1`), que ce soit à l'écran ou à l'impression. Un seul rendu, zéro divergence.
-
-**Impact** :
-
-- Supprimer le layout 2 colonnes de `OfferTailoredShell` (`cv-page-split`, `#left`, `#main`)
-- Supprimer des centaines de lignes de CSS dual-mode dans `globals.css`
-- Retirer les classes `print-preview:*` et `cv-print-preview` devenues inutiles
-- Simplifier les composants qui gèrent les deux modes (`display: contents`, `max-md:contents`, etc.)
-- Le paramètre `?print=1` et `FullCvPrintPreviewEffect` deviennent obsolètes
-
-**Plan** :
-
-1. Créer une branche dédiée `refactor/unified-layout`
-2. Refaire `OfferTailoredShell` en flux linéaire unique (sections empilées)
-3. Nettoyer `globals.css` : supprimer tout le CSS `.cv-print-preview` et les overrides `@media print` devenus redondants
-4. Tester toutes les pages (full, short, offer, dev/components)
-5. Vérifier le PDF export (Cmd+P) — doit être identique à l'écran
-6. Supprimer `FullCvPrintPreviewEffect` et le paramètre `?print`
+**Nettoyage futur** : retirer entièrement `?print` / `FullCvPrintPreviewEffect` / les classes `print-preview:*` devenues quasi-inutiles.
 
 ## Migration Next.js 14 → 15+ (ou 16)
 
