@@ -174,6 +174,7 @@ export default function CompactCvLayout({
           <ContactDisplay
             contact={data.contact}
             cvShortInlineRows
+            showLabels={false}
             locale={lang}
           />
         </section>
@@ -207,6 +208,7 @@ export default function CompactCvLayout({
             <ContactDisplay
               contact={data.contact}
               cvShortInlineRows
+              showLabels={false}
               locale={lang}
             />
           </section>

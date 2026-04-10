@@ -23,6 +23,11 @@ interface ContactDisplayProps {
    * CV court : chaque ligne = libellé à gauche / valeur à droite (mobile, tablette, impression).
    */
   cvShortInlineRows?: boolean;
+  /**
+   * Masquer les libellés visuellement (sr-only pour accessibilité / LLM).
+   * Les valeurs sont affichées seules, alignées à gauche, avec une couleur plus marquée.
+   */
+  showLabels?: boolean;
   locale?: Locale;
 }
 
@@ -68,9 +73,44 @@ export default function ContactDisplay({
   contact,
   compact = false,
   cvShortInlineRows = false,
+  showLabels = true,
   locale = 'fr',
 }: ContactDisplayProps) {
   if (cvShortInlineRows) {
+    // Mode sans labels : valeurs seules, alignées à gauche, couleur plus marquée.
+    if (!showLabels) {
+      const valueCls =
+        'text-sm text-pink-300 md:text-sm print:text-[9px] print:leading-tight';
+
+      return (
+        <ul className="cv-short-contact-rows cv-section-body-gap space-y-1 md:space-y-0.5 print:space-y-0.5">
+          <li>
+            <span className="sr-only">{contact.emailTitle} : </span>
+            <a href={`mailto:${contact.email}`} className={`${valueCls} break-all`}>
+              {contact.email}
+            </a>
+          </li>
+          <li>
+            <span className="sr-only">{contact.phoneTitle} : </span>
+            <a
+              href={`tel:${contact.phone.replace(/\s/g, '')}`}
+              className={`${valueCls} tabular-nums`}
+            >
+              {contact.phone}
+            </a>
+          </li>
+          <li>
+            <span className="sr-only">{contact.locationTitle} : </span>
+            <LocationLinkBlock
+              location={contact.location}
+              locale={locale}
+              className={valueCls}
+            />
+          </li>
+        </ul>
+      );
+    }
+
     const row =
       'flex w-full flex-row items-baseline justify-between gap-2 text-sm text-pink-200 md:gap-3 print:gap-2 print:text-[9px] print:leading-tight';
     const labelCls = 'shrink-0 font-semibold text-cv-jobs';
