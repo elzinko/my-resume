@@ -102,12 +102,12 @@ export default async function DevComponentsPage({
     <HeaderContent name={headerName} role={headerRole} />
   );
 
-  /** HeaderContent avec coordonnées compactes sous le rôle (variante CV court / print). */
+  /** HeaderContent avec coordonnées compactes sous le rôle (variante CV complet). */
   const headerContentWithContactNode = (
     <HeaderContent
       name={headerName}
       role={headerRole}
-      afterRole={
+      belowRole={
         <div className="w-full">{headerContactStripNode}</div>
       }
     />

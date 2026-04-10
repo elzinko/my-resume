@@ -7,76 +7,67 @@ interface HeaderContentProps {
   role: string;
   /** CV court : en-tête plus compact à l'impression pour gagner de la hauteur sur A4. */
   compactPrint?: boolean;
-  /** Ex. coordonnées sans titres, alignées à droite (desktop CV long uniquement). */
-  afterRole?: ReactNode;
-  /** Ex. pastilles adéquation sous le sous-titre (rôle). */
+  /** Coordonnées compactes sous le sous-titre. */
   belowRole?: ReactNode;
 }
 
 /**
  * En-tête du CV.
  *
- * Layout desktop / print (md+) :
- *   ┌─────────────────────────┬──────────────────┐
- *   │  Thomas Couderc    (→)  │  (←)  email      │
- *   │  Dev fullstack Senior   │       phone       │
- *   │                         │       location    │
- *   └─────────────────────────┴──────────────────┘
- *   Colonne gauche = nom + rôle alignés à droite.
- *   Colonne droite = coordonnées alignées à gauche.
+ * Layout : bloc texte aligné à droite + barre verticale décorative.
+ *   ┌──────────────────────────────────┐
+ *   │          Thomas Couderc    ┃     │
+ *   │  Développeur fullstack Sr  ┃     │
+ *   │    email · tel · lieu      ┃     │
+ *   └──────────────────────────────────┘
+ *   Tout est aligné à droite. La barre verticale sert d'accent visuel discret.
  *
- * Mobile (< md) : tout stacked, aligné à droite, inchangé.
+ * `compactPrint` : tailles réduites à l'impression (CV court A4).
  */
 export default function HeaderContent({
   name,
   role,
   compactPrint = false,
-  afterRole,
   belowRole,
 }: HeaderContentProps) {
   return (
     <div
       className={`header-content pb-0 pt-2 max-md:pt-0 md:py-20 ${
-        compactPrint ? 'print:pt-8 print:pb-2' : 'print:py-4'
+        compactPrint ? 'print:py-8' : 'print:py-20'
       }`}
     >
-      {/*
-        Mobile : single column, right-aligned (justify-items-end).
-        Desktop+ : 2 columns miroir — nom|coordonnées.
-        Le `1fr auto` laisse le bloc coordonnées prendre sa largeur naturelle.
-      */}
-      <div className="grid w-full justify-items-end md:grid-cols-[1fr_auto] md:items-end md:gap-x-8 print:grid-cols-[1fr_auto] print:items-end print:gap-x-6">
-        {/* — Colonne gauche : nom + rôle, alignés à droite dans la colonne — */}
-        <div className="md:justify-self-end print:justify-self-end">
+      <div className="flex w-full items-stretch justify-end gap-4 md:gap-6 print:gap-4">
+        {/* Bloc texte : nom + rôle + coordonnées, alignés à droite */}
+        <div className="flex flex-col items-end text-right">
           <h1
-            className={`text-3xl font-extrabold leading-tight text-right text-blue-600 md:text-5xl md:leading-none md:text-right lg:text-7xl ${
+            className={`text-3xl font-extrabold leading-tight text-blue-600 md:text-5xl md:leading-none lg:text-7xl ${
               compactPrint
-                ? 'print:text-3xl print:leading-tight print:text-right'
-                : 'print:text-3xl print:text-right'
+                ? 'print:text-3xl print:leading-tight'
+                : 'print:text-5xl print:leading-none'
             }`}
           >
             {name}
           </h1>
           <p
-            className={`mt-1 text-lg leading-snug text-right text-cv-section md:mt-5 md:text-3xl md:leading-normal md:text-right ${
+            className={`mt-1 text-lg leading-snug text-cv-section md:mt-3 md:text-3xl md:leading-normal ${
               compactPrint
-                ? 'print:mt-0.5 print:text-base print:leading-snug print:text-cv-section print:text-right'
-                : 'print:mt-1 print:text-lg print:text-cv-section print:text-right'
+                ? 'print:mt-0.5 print:text-base print:leading-snug'
+                : 'print:mt-3 print:text-3xl print:leading-normal'
             }`}
           >
             {role}
           </p>
+          {belowRole ? (
+            <div className="mt-1 w-full md:mt-2 print:mt-2">{belowRole}</div>
+          ) : null}
         </div>
-        {/* — Colonne droite : coordonnées, alignées à gauche — */}
-        {afterRole ? (
-          <div className="w-full max-w-full justify-self-stretch md:w-auto md:justify-self-start print:w-auto print:justify-self-start">
-            {afterRole}
-          </div>
-        ) : null}
+
+        {/* Barre verticale décorative */}
+        <div
+          className="w-1 shrink-0 self-stretch rounded-full bg-gradient-to-b from-blue-400/40 via-teal-300/30 to-pink-300/20 md:w-1.5 print:w-1"
+          aria-hidden
+        />
       </div>
-      {belowRole ? (
-        <div className="w-full max-w-full">{belowRole}</div>
-      ) : null}
     </div>
   );
 }

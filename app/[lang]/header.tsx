@@ -30,7 +30,7 @@ export default async function Header({
       <HeaderContent
         name={data?.header?.name}
         role={data?.header?.role}
-        afterRole={
+        belowRole={
           offerPrintContactStrip ? (
             <div className="w-full">
               <HeaderDesktopContactStrip
@@ -38,6 +38,7 @@ export default async function Header({
                 phone={offerPrintContactStrip.phone}
                 location={offerPrintContactStrip.location}
                 locale={locale}
+                align="right"
               />
             </div>
           ) : undefined

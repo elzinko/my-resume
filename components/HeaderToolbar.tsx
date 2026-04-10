@@ -366,11 +366,7 @@ export default function HeaderToolbar({
               shortDefaultOfferId={shortDefaultOfferId}
             />
           </Suspense>
-          {showPrintPreviewToggle && !shortLang ? (
-            <Suspense fallback={null}>
-              <PrintPreviewToggleLink />
-            </Suspense>
-          ) : null}
+          {/* Print preview toggle retiré : WYSIWYG — écran = impression. */}
           {isCvPrintLayoutToolbarEnabled() ? (
             <Suspense fallback={null}>
               <DevMobilePreviewButton />
@@ -441,11 +437,7 @@ export default function HeaderToolbar({
                 onNavigate={close}
               />
             </Suspense>
-            {showPrintPreviewToggle && !shortLang ? (
-              <Suspense fallback={null}>
-                <PrintPreviewToggleLink onNavigate={close} />
-              </Suspense>
-            ) : null}
+            {/* Print preview toggle retiré : WYSIWYG — écran = impression. */}
             {isCvPrintLayoutToolbarEnabled() ? (
               <Suspense fallback={null}>
                 <DevMobilePreviewButton onNavigate={close} />

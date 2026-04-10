@@ -1471,27 +1471,15 @@
         "location": "Gennevilliers",
         "startDate": "2012-01-01",
         "endDate": "2013-01-01",
-        "description": "Projet au sein de l'équipe R&D du laboratoire d'Etudes Amont CenTAI de THALES",
+        "description": "Développement d'un service scalable de preuve Internet",
         "bullets": [
           {
             "id": "82627895",
-            "text": "Audit de performances / Optimisation de la chaîne de traitement"
+            "text": "Projet au sein de l'équipe R&D du laboratoire d'Études Amont CenTAI de THALES"
           },
           {
             "id": "82627896",
-            "text": "Developpement d'un service scalable de preuve Internet"
-          },
-          {
-            "id": "82627897",
-            "text": "Participation à l'intégration d'une solution de loadbalancing pour un outil de NLP"
-          },
-          {
-            "id": "82627898",
-            "text": "Développement d'interfaces GWT"
-          },
-          {
-            "id": "82627899",
-            "text": "Mise en place de templates de machines virtuelles"
+            "text": "Conception et développement d'un service scalable de collecte et certification de preuves numériques"
           }
         ],
         "frameworks": [
@@ -3579,27 +3567,15 @@
         "location": "Gennevilliers",
         "startDate": "2012-01-01",
         "endDate": "2013-01-01",
-        "description": "Project within the R&D team of the CenTAI Upstream Studies laboratory of THALES",
+        "description": "Development of a scalable Internet proof service",
         "bullets": [
           {
             "id": "82627890",
-            "text": "Performance audit / Optimization of the processing chain"
+            "text": "Project within the R&D team of the THALES CenTAI Upstream Studies laboratory"
           },
           {
             "id": "82627891",
-            "text": "Development of a scalable Internet proof service"
-          },
-          {
-            "id": "82627892",
-            "text": "Participation in the integration of a loadbalancing solution for an NLP tool"
-          },
-          {
-            "id": "82627893",
-            "text": "Development of GWT interfaces"
-          },
-          {
-            "id": "82627894",
-            "text": "Setting up virtual machine templates"
+            "text": "Design and development of a scalable digital evidence collection and certification service"
           }
         ],
         "frameworks": [

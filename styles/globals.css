@@ -739,11 +739,7 @@ html {
   display: inline-flex !important;
 }
 
-/* Short CV : header plus compact (écran + print-preview). */
-.cv-short-page .header-content {
-  padding-top: 2rem !important;
-  padding-bottom: 0.5rem !important;
-}
+/* Short CV : header — même padding que le composant (compactPrint → print:py-8). */
 
 /*
  * Short CV print-preview : WYSIWYG — plus de compactage spécifique.
