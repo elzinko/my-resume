@@ -49,7 +49,7 @@ export default function HeaderContent({
         {/* — Colonne gauche : nom + rôle, alignés à droite dans la colonne — */}
         <div className="md:justify-self-end print:justify-self-end">
           <h1
-            className={`text-3xl font-extrabold leading-tight text-blue-600 md:text-5xl md:leading-none md:text-right lg:text-7xl ${
+            className={`text-3xl font-extrabold leading-tight text-right text-blue-600 md:text-5xl md:leading-none md:text-right lg:text-7xl ${
               compactPrint
                 ? 'print:text-2xl print:leading-tight print:text-right'
                 : 'print:text-3xl print:text-right'
@@ -58,7 +58,7 @@ export default function HeaderContent({
             {name}
           </h1>
           <p
-            className={`mt-1 text-lg leading-snug text-teal-300 md:mt-5 md:text-3xl md:leading-normal md:text-right ${
+            className={`mt-1 text-lg leading-snug text-right text-teal-300 md:mt-5 md:text-3xl md:leading-normal md:text-right ${
               compactPrint
                 ? 'print:mt-0.5 print:text-sm print:leading-snug print:text-teal-500 print:text-right'
                 : 'print:mt-1 print:text-lg print:text-teal-500 print:text-right'

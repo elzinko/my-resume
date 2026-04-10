@@ -23,6 +23,7 @@ GET /{lang}?company=...&title=...&requirement=Libellé:mot1,mot2&requirement=...
 | `requirement` | **oui** (au moins une) | Répéter le paramètre pour chaque ligne d’exigence |
 | `req`         | (alias)                | Même format que `requirement`                     |
 | `reqY`        | non                    | Répétable : années d’exp. affichées pour la **même ligne** que le *i*-ème `requirement` / `req` (remplace le calcul auto) |
+| `contract`    | non                    | `cdi` ou `freelance` — masque le lien Malt en CDI |
 | `id`          | non                    | Identifiant interne (sinon dérivé de `company`)   |
 | `spec`        | non                    | Si présent et décodable (cf. §2), remplace les autres paramètres d’offre |
 
@@ -66,6 +67,7 @@ GET /{lang}?spec={base64url}
 | `company`      | string                      | oui         |
 | `title`        | string ou `{ "fr", "en" }`  | oui         |
 | `requirements` | `[{ "label", "keywords", "experienceYearsOverride?" }]` | oui         |
+| `contract`     | `"cdi"` ou `"freelance"`    | non         |
 | `id`, `url`    | string                      | non         |
 
 ### Encodage

@@ -7,6 +7,7 @@ const offer: JobOffer = {
     fr: 'Chef de Projet Java Full Stack',
     en: 'Java Full Stack Project Manager',
   },
+  contract: 'cdi',
   requirements: [
     {
       label: 'Java EE / JSF',

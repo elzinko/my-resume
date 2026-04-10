@@ -32,3 +32,15 @@ npm run build
 - **JSON compact base64** : `/{lang}?spec=…`
 
 Détails, exemples et limites : **[docs/OFFER_CUSTOM_ENDPOINT.md](docs/OFFER_CUSTOM_ENDPOINT.md)**.
+
+## Liens utiles
+
+| Ressource | Chemin / URL |
+| --------- | ------------ |
+| Données CV (FR + EN) | [`data/cv/bundle.json`](data/cv/bundle.json) |
+| Offres catalogue | [`data/offers/`](data/offers/) |
+| Storybook maison (dev) | `http://localhost:3000/{lang}/dev/components` |
+| Storybook (Chromatic) | `http://localhost:6006` (`pnpm storybook`) |
+| Rendus PDF / screenshots | [`renders/`](renders/) -- [`renders/index.html`](renders/index.html) |
+| Documentation offre custom | [`docs/OFFER_CUSTOM_ENDPOINT.md`](docs/OFFER_CUSTOM_ENDPOINT.md) |
+| Guide LLM | [`.llm/README.md`](.llm/README.md) |

@@ -31,6 +31,7 @@ export default function OfferTailoredShell({
   headerContactStrip,
   frameworkDisplayPriorityTokens = [],
   contactLocation,
+  hideMalt,
 }: {
   lang: Locale;
   educationLevel: EducationLevelContent;
@@ -44,6 +45,8 @@ export default function OfferTailoredShell({
   frameworkDisplayPriorityTokens?: string[];
   /** Lien Maps / itinéraire et durée affichée (optionnel). */
   contactLocation?: ContactLocationOverlay;
+  /** Masquer le lien Malt (ex. offre CDI). */
+  hideMalt?: boolean;
 }) {
   const resolvedContact: ContactLocationOverlay =
     contactLocation ?? {
@@ -70,6 +73,7 @@ export default function OfferTailoredShell({
           <Headers
             locale={lang}
             offerPrintContactStrip={headerContactStrip}
+            hideMalt={hideMalt}
           />
 
           <div className="cv-full-cv-print-root">

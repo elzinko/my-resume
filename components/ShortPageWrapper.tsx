@@ -21,6 +21,8 @@ interface ShortPageWrapperProps {
   defaultOfferId?: string | null;
   /** Pastilles adéquation sous le rôle : à envelopper en `<Suspense>` côté page serveur si besoin de `useSearchParams`. */
   belowRole?: ReactNode;
+  /** Masquer le lien Malt (ex. offre CDI). */
+  hideMalt?: boolean;
 }
 
 export default function ShortPageWrapper({
@@ -31,6 +33,7 @@ export default function ShortPageWrapper({
   headerContact,
   defaultOfferId = null,
   belowRole,
+  hideMalt,
 }: ShortPageWrapperProps) {
   const locale = lang as Locale;
 
@@ -41,6 +44,7 @@ export default function ShortPageWrapper({
           <HeaderToolbar
             shortLang={lang}
             shortDefaultOfferId={defaultOfferId}
+            hideMalt={hideMalt}
           />
         </div>
         <HeaderContent

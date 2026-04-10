@@ -151,12 +151,14 @@ function ToolbarIconList({
   onPrint,
   printTitle,
   printAriaLabel,
+  hideMalt,
 }: {
   onNavigate?: () => void;
   listClassName?: string;
   onPrint: () => void;
   printTitle: string;
   printAriaLabel: string;
+  hideMalt?: boolean;
 }) {
   const handlePrint = () => {
     onNavigate?.();
@@ -171,9 +173,11 @@ function ToolbarIconList({
       <li>
         <LogoGithub onNavigate={onNavigate} />
       </li>
-      <li>
-        <LogoMalt onNavigate={onNavigate} />
-      </li>
+      {!hideMalt && (
+        <li>
+          <LogoMalt onNavigate={onNavigate} />
+        </li>
+      )}
       <li>
         <LogoPrint
           onClick={handlePrint}
@@ -294,9 +298,11 @@ function PrintPreviewToggleLink({
 export default function HeaderToolbar({
   shortLang,
   shortDefaultOfferId,
+  hideMalt,
 }: {
   shortLang?: string;
   shortDefaultOfferId?: string | null;
+  hideMalt?: boolean;
 }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -374,6 +380,7 @@ export default function HeaderToolbar({
             onPrint={runPrint}
             printTitle={printTitle}
             printAriaLabel={printAriaLabel}
+            hideMalt={hideMalt}
           />
         </div>
       </div>
@@ -450,6 +457,7 @@ export default function HeaderToolbar({
               onPrint={runPrint}
               printTitle={printTitle}
               printAriaLabel={printAriaLabel}
+              hideMalt={hideMalt}
             />
           </div>
         </div>

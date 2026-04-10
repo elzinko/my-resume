@@ -14,6 +14,7 @@ import ShortPageWrapper from '@/components/ShortPageWrapper';
 import ShortHeaderJobFitPills from '@/components/ShortHeaderJobFitPills';
 import FullCvPrintPreviewEffect from '@/components/FullCvPrintPreviewEffect';
 import ShortAutoprint from '@/components/ShortAutoprint';
+import { getOffer } from '@/data/offers';
 import type { Metadata } from 'next';
 
 function generateDocumentTitle(
@@ -49,6 +50,8 @@ export default async function ShortPage({
 }) {
   const data: any = await getCvData(lang);
   const defaultOfferId = process.env.SHORT_CV_OFFER_ID?.trim() || null;
+  const defaultOffer = defaultOfferId ? getOffer(defaultOfferId) : undefined;
+  const hideMalt = defaultOffer?.contract === 'cdi';
 
   const compactData: CompactCvData = {
     header: {
@@ -129,6 +132,7 @@ export default async function ShortPage({
           location: data?.contact?.location ?? '',
         }}
         defaultOfferId={defaultOfferId}
+        hideMalt={hideMalt}
       >
       <Suspense fallback={null}>
         <ShortAutoprint />

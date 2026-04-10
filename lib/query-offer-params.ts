@@ -1,4 +1,4 @@
-import type { JobOffer, MatchRequirement } from '@/data/offers/types';
+import type { ContractType, JobOffer, MatchRequirement } from '@/data/offers/types';
 import { decodeOfferSpecParam } from '@/lib/dynamic-offer-spec';
 import {
   catalogIdSet,
@@ -113,12 +113,19 @@ export function buildOfferFromQueryParams(
       .replace(/[^a-z0-9-]/g, '')
       .slice(0, 40)}`;
 
+  const contractRaw = sp.get('contract')?.trim().toLowerCase();
+  const contract: ContractType | undefined =
+    contractRaw === 'cdi' || contractRaw === 'freelance'
+      ? contractRaw
+      : undefined;
+
   return enrichJobOfferRequirements(
     {
       id,
       company,
       title: { fr: titleFrSafe, en: titleEnSafe },
       requirements,
+      contract,
     },
     catalog,
   );

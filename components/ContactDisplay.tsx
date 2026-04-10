@@ -50,7 +50,7 @@ function LocationLinkBlock({
         href={mapsHref}
         target="_blank"
         rel="noopener noreferrer"
-        className="min-w-0 break-words text-inherit underline decoration-current/40 underline-offset-2 hover:decoration-current/70"
+        className="min-w-0 break-words text-inherit no-underline hover:underline hover:decoration-current/70 hover:underline-offset-2"
         title={title}
       >
         {location}

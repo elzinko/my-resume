@@ -7,6 +7,7 @@ const offer: JobOffer = {
     fr: 'Développeur Full Stack Expérimenté - IA Factory',
     en: 'Senior Full Stack Developer - IA Factory',
   },
+  contract: 'cdi',
   requirements: [
     {
       label: 'Python / Backend',
