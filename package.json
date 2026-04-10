@@ -8,6 +8,7 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
+    "dev:all": "next dev & storybook dev -p 6006",
     "dev:clean": "rm -rf .next .turbo 2>/dev/null; next dev",
     "dev:fresh": "rm -rf .next .turbo node_modules/.cache 2>/dev/null; next dev",
     "ngrok": "ngrok http 3000",
