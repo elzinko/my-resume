@@ -1,19 +1,18 @@
 import { Suspense } from 'react';
 import About from '@/app/[lang]/about';
 import Headers from '@/app/[lang]/header';
-import Contact from '@/app/[lang]/contact';
 import Studies from '@/app/[lang]/studies';
 import Domains from '@/app/[lang]/domains';
 import Learnings from '@/app/[lang]/learnings';
 import Hobbies from '@/app/[lang]/hobbies';
 import Jobs from '@/app/[lang]/jobs';
 import Projects from '@/app/[lang]/projects';
-import EducationLevel from '@/components/EducationLevel';
-import ShortHeaderJobFitPills from '@/components/ShortHeaderJobFitPills';
+import JobFitSection from '@/components/JobFitSection';
 import FullCvPrintPreviewEffect from '@/components/FullCvPrintPreviewEffect';
 import ContactLocationProvider from '@/components/ContactLocationProvider';
 import JobFrameworkDisplayProvider from '@/components/JobFrameworkDisplayProvider';
 import { buildContactLocationHref } from '@/lib/contact-maps';
+import { getProfileEducationBadgeLabel } from '@/lib/education-level-content';
 import type { ContactLocationOverlay } from '@/lib/offer-contact-from-params';
 import type { EducationLevelContent } from '@/lib/education-level-content';
 import type { Locale } from 'i18n-config';
@@ -53,12 +52,7 @@ export default function OfferTailoredShell({
     };
 
   const defaultOfferId = process.env.SHORT_CV_OFFER_ID?.trim() || null;
-
-  const jobFitPills = (
-    <Suspense fallback={null}>
-      <ShortHeaderJobFitPills lang={lang} defaultOfferId={defaultOfferId} />
-    </Suspense>
-  );
+  const educationLabel = getProfileEducationBadgeLabel(educationLevel, lang);
 
   return (
     <JobFrameworkDisplayProvider priorityTokens={frameworkDisplayPriorityTokens}>
@@ -76,7 +70,15 @@ export default function OfferTailoredShell({
 
           <div className="cv-full-cv-print-root">
             {/* @ts-expect-error Server Component */}
-            <About locale={lang} educationLevel={educationLevel} afterBadge={jobFitPills} />
+            <About locale={lang} educationLevel={educationLevel} />
+            {/* Adéquation poste : niveau de formation + compétences offre */}
+            <Suspense fallback={null}>
+              <JobFitSection
+                lang={lang}
+                defaultOfferId={defaultOfferId}
+                educationLabel={educationLabel}
+              />
+            </Suspense>
             {/* @ts-expect-error Server Component */}
             <Domains locale={lang} />
             {/* @ts-expect-error Server Component */}
@@ -89,19 +91,6 @@ export default function OfferTailoredShell({
             <Learnings locale={lang} />
             {/* @ts-expect-error Server Component */}
             <Hobbies locale={lang} />
-
-            {/* Coordonnées et niveau de formation — visibles uniquement à l'impression
-                (les infos sont déjà dans le bandeau header et la pastille Profil). */}
-            <div className="hidden print:contents">
-              {/* @ts-expect-error Server Component */}
-              <Contact locale={lang} />
-            </div>
-            <div className="hidden print:contents">
-              <EducationLevel
-                content={educationLevel}
-                sectionClassName="print:order-[50]"
-              />
-            </div>
           </div>
         </div>
       </ContactLocationProvider>

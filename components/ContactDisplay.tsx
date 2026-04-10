@@ -145,13 +145,13 @@ export default function ContactDisplay({
 
   /** Mobile : libellé à gauche / valeur à droite ; `md+` : pile comme la colonne gauche ; print : pile dans chaque cellule de grille. */
   const stackLi =
-    'mt-1 flex flex-row items-baseline justify-between gap-2 gap-x-3 text-pink-200 md:flex-col md:items-stretch md:gap-0 print:mt-0 print:block print:flex-none print-preview:mt-0 print-preview:block print-preview:flex-none';
+    'mt-1 flex flex-row items-baseline justify-between gap-2 gap-x-3 text-pink-200 md:flex-col md:items-stretch md:gap-0';
   const stackLabel = 'shrink-0 text-base font-bold text-cv-jobs';
   const stackValue =
     'block min-w-0 text-right text-base md:mt-0 md:text-left print:text-left';
 
   return (
-    <ul className="cv-contact-stack mr-1 mt-4 print:mt-2 print:grid print:grid-cols-3 print:gap-x-4 print:gap-y-1 print:[&>li]:mt-0 print-preview:grid print-preview:grid-cols-3 print-preview:gap-x-10 print-preview:gap-y-1 print-preview:[&>li]:mt-0">
+    <ul className="cv-contact-stack mr-1 mt-4 print:mt-2">
       <li className={stackLi}>
         <strong className={stackLabel}>{contact.emailTitle}</strong>
         <a
