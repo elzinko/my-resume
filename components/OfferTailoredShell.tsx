@@ -85,7 +85,7 @@ export default function OfferTailoredShell({
             {headerContactStrip.email && (
               <section className="cv-mobile-section-mt">
                 <div className="border-b pb-1">
-                  <h2 className="min-w-0 text-2xl font-semibold text-pink-300">
+                  <h2 className="min-w-0 text-2xl font-semibold text-rose-300">
                     {lang === 'fr' ? 'Coordonnées' : 'Contact'}
                   </h2>
                 </div>

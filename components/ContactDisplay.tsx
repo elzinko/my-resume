@@ -80,7 +80,7 @@ export default function ContactDisplay({
     // Mode sans labels : valeurs seules, alignées à gauche, couleur plus marquée.
     if (!showLabels) {
       const valueCls =
-        'text-sm text-pink-300 md:text-sm print:text-[9px] print:leading-tight';
+        'text-sm text-rose-300 md:text-sm print:text-[9px] print:leading-tight';
 
       return (
         <ul className="cv-short-contact-rows cv-section-body-gap space-y-1 md:space-y-0.5 print:space-y-0.5">

@@ -85,7 +85,7 @@ function DevMobilePreviewButton({ onNavigate }: { onNavigate?: () => void }) {
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="h-4 w-4 md:h-5 md:w-5"
+        className="h-5 w-5"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -128,7 +128,7 @@ function FullVersionFromShortLink({
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="h-4 w-4 md:h-5 md:w-5"
+        className="h-5 w-5"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -265,7 +265,7 @@ function PrintPreviewToggleLink({
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="h-4 w-4 shrink-0 md:h-5 md:w-5"
+        className="h-5 w-5 shrink-0"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -381,7 +381,7 @@ export default function HeaderToolbar({
         className="w-full shrink-0 md:hidden"
         style={{
           height:
-            'calc(max(0.75rem, env(safe-area-inset-top, 0px)) + 2rem + 0.75rem)',
+            'calc(max(0.75rem, env(safe-area-inset-top, 0px)) + 2.5rem + 0.75rem)',
         }}
         aria-hidden
       />
@@ -446,7 +446,7 @@ export default function HeaderToolbar({
         <button
           type="button"
           data-testid="cv-mobile-menu-toggle"
-          className="relative inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-slate-400/40 bg-white text-slate-700 shadow-sm transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/60 focus-visible:ring-offset-2"
+          className="relative inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-slate-400/40 bg-white text-slate-700 shadow-sm transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/60 focus-visible:ring-offset-2"
           aria-expanded={open}
           aria-controls="cv-mobile-nav"
           aria-haspopup="dialog"
@@ -455,7 +455,7 @@ export default function HeaderToolbar({
         >
           {open ? (
             <svg
-              className="h-5 w-5"
+              className="h-6 w-6"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -470,7 +470,7 @@ export default function HeaderToolbar({
             </svg>
           ) : (
             <svg
-              className="h-5 w-5"
+              className="h-6 w-6"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"

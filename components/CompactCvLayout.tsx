@@ -167,7 +167,7 @@ export default function CompactCvLayout({
         </Suspense>
         <section>
           <div className="border-b pb-1">
-            <h2 className="min-w-0 text-2xl font-semibold text-pink-300">
+            <h2 className="min-w-0 text-2xl font-semibold text-rose-300">
               {data.titles.contact || (lang === 'fr' ? 'Coordonnées' : 'Contact')}
             </h2>
           </div>
