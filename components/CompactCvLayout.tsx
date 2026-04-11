@@ -175,6 +175,7 @@ export default function CompactCvLayout({
             contact={data.contact}
             cvShortInlineRows
             showLabels={false}
+            compact={true}
             locale={lang}
           />
         </section>
@@ -209,6 +210,7 @@ export default function CompactCvLayout({
               contact={data.contact}
               cvShortInlineRows
               showLabels={false}
+              compact={true}
               locale={lang}
             />
           </section>
@@ -233,7 +235,7 @@ export default function CompactCvLayout({
             <h2 className="border-b pb-1 text-2xl font-semibold text-purple-300">
               {t.education}
             </h2>
-            <ul className="cv-section-body-gap space-y-1">
+            <ul className="cv-section-simple-list">
               {data.studies.map((study) => (
                 <StudyDisplay key={study.id} study={study} compact={true} color="text-purple-300" />
               ))}
@@ -249,7 +251,7 @@ export default function CompactCvLayout({
             <h2 className="border-b pb-1 text-2xl font-semibold text-cv-tag-text">
               {data.projectsTitle}
             </h2>
-            <ul className="cv-section-body-gap space-y-1">
+            <ul className="cv-section-simple-list">
               {data.projects.map((project: any) => (
                 <li key={project.id}>
                   <Project project={project} compact />

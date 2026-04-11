@@ -76,15 +76,24 @@ export default function ContactDisplay({
   showLabels = true,
   locale = 'fr',
 }: ContactDisplayProps) {
+  const ctx = useContactLocation();
+
   if (cvShortInlineRows) {
     // Mode sans labels : valeurs seules, alignées à gauche, couleur rose-300.
+    // Structure identique aux autres listes simples (Études, Projets) :
+    // <ul cv-section-simple-list> → <li> → <a> (pas de wrapper div).
     if (!showLabels) {
+      const sizeToken = compact ? 'cv-contact-value-compact' : 'cv-contact-value';
       const valueCls =
-        'text-sm text-rose-300';
+        `${sizeToken} text-rose-300`;
       const linkCls = 'no-underline hover:underline hover:decoration-rose-300/50 hover:underline-offset-2';
+      const mapsHref = ctx?.mapsHref ?? buildContactLocationHref();
+      const isDirections = ctx?.isDirections ?? false;
+      const loc = ctx?.locale ?? locale;
+      const locationTitle = contactLocationLinkTitle(loc, isDirections);
 
       return (
-        <ul className="cv-short-contact-rows cv-section-body-gap space-y-1">
+        <ul className="cv-short-contact-rows cv-section-simple-list">
           <li>
             <span className="sr-only">{contact.emailTitle} : </span>
             <a href={`mailto:${contact.email}`} className={`${valueCls} ${linkCls} break-all`}>
@@ -102,11 +111,15 @@ export default function ContactDisplay({
           </li>
           <li>
             <span className="sr-only">{contact.locationTitle} : </span>
-            <LocationLinkBlock
-              location={contact.location}
-              locale={locale}
-              className={valueCls}
-            />
+            <a
+              href={mapsHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${valueCls} ${linkCls}`}
+              title={locationTitle}
+            >
+              {contact.location}
+            </a>
           </li>
         </ul>
       );

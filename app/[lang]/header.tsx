@@ -1,6 +1,5 @@
 import HeaderToolbar from '@/components/HeaderToolbar';
 import HeaderContent from '@/components/HeaderContent';
-import HeaderDesktopContactStrip from '@/components/HeaderDesktopContactStrip';
 import { getCvData } from '@/lib/cv-data';
 import { Locale } from 'i18n-config';
 import React from 'react';

@@ -289,6 +289,17 @@
   }
 
   /**
+   * Coordonnées (ContactDisplay showLabels=false) — mêmes corps que Études.
+   */
+  .cv-contact-value {
+    @apply text-base leading-snug print:text-sm;
+  }
+
+  .cv-contact-value-compact {
+    @apply text-sm leading-snug print:text-xs;
+  }
+
+  /**
    * Résumé (About) + paragraphes des colonnes Agile / Dev / Ops : même taille à l’impression
    * (évite `print:text-base` sur les domaines alors que le profil reste en `text-sm`).
    */

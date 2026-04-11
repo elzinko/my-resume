@@ -14,7 +14,7 @@ import JobFrameworkDisplayProvider from '@/components/JobFrameworkDisplayProvide
 import { buildContactLocationHref } from '@/lib/contact-maps';
 import type { ContactLocationOverlay } from '@/lib/offer-contact-from-params';
 import type { EducationLevelContent } from '@/lib/education-level-content';
-import HeaderDesktopContactStrip from '@/components/HeaderDesktopContactStrip';
+import ContactDisplay from '@/components/ContactDisplay';
 import type { Locale } from 'i18n-config';
 /**
  * Mise en page commune des pages CV « sur mesure » (custom / match).
@@ -91,14 +91,19 @@ export default function OfferTailoredShell({
                     {lang === 'fr' ? 'Coordonnées' : 'Contact'}
                   </h2>
                 </div>
-                <div className="cv-section-body-gap">
-                  <HeaderDesktopContactStrip
-                    email={headerContactStrip.email}
-                    phone={headerContactStrip.phone}
-                    location={headerContactStrip.location}
-                    locale={lang}
-                  />
-                </div>
+                <ContactDisplay
+                  contact={{
+                    emailTitle: 'Email',
+                    email: headerContactStrip.email,
+                    phoneTitle: lang === 'fr' ? 'Téléphone' : 'Phone',
+                    phone: headerContactStrip.phone,
+                    locationTitle: lang === 'fr' ? 'Localisation' : 'Location',
+                    location: headerContactStrip.location,
+                  }}
+                  cvShortInlineRows
+                  showLabels={false}
+                  locale={lang}
+                />
               </section>
             )}
             {/* @ts-expect-error Server Component */}
