@@ -32,8 +32,8 @@ export default function HeaderContent({
 }: HeaderContentProps) {
   return (
     <div
-      className={`header-content pb-0 pt-2 max-md:pt-0 md:py-20 ${
-        compactPrint ? 'print:py-8' : 'print:py-20'
+      className={`header-content pb-0 pt-2 max-md:pt-0 md:py-12 ${
+        compactPrint ? 'print:py-8' : 'print:py-12'
       }`}
     >
       <div className="flex w-full items-stretch justify-end gap-4 md:gap-6 print:gap-4">
