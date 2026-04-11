@@ -84,6 +84,11 @@ jobs:
           # If source files changed but packages didn't, rebuild from a prior cache.
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
+      - name: Verify lock file is in sync
+        run: |
+          npm install --package-lock-only
+          git diff --exit-code package-lock.json || \
+            (echo "::error::package-lock.json is out of sync with package.json. Run 'npm install' and commit the lock file." && exit 1)
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Export CV JSON from DatoCMS
