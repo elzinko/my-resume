@@ -5,7 +5,8 @@ import Domain from './Domain';
 const sampleDomain = {
   id: 'dev',
   name: 'Fullstack Development',
-  description: 'Architecture hexagonale, DDD, clean code. React, Node.js, TypeScript, Java.',
+  description:
+    'Architecture hexagonale, DDD, clean code. React, Node.js, TypeScript, Java.',
   competencies: [
     { id: '1', name: 'Clean Code' },
     { id: '2', name: 'DDD' },

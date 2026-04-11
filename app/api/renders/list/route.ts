@@ -18,7 +18,8 @@ export async function GET() {
   const exts = new Set(['.png', '.pdf']);
 
   const files = fs.existsSync(dir)
-    ? fs.readdirSync(dir)
+    ? fs
+        .readdirSync(dir)
         .filter((f) => exts.has(path.extname(f).toLowerCase()))
         .map((f) => {
           const stat = fs.statSync(path.join(dir, f));

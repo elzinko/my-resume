@@ -36,7 +36,7 @@ export default function HeaderContent({
         compactPrint ? 'print:py-8' : 'print:py-12'
       }`}
     >
-      <div className="flex w-full items-stretch justify-end gap-4 md:gap-6 print:gap-4">
+      <div className="flex w-full items-stretch justify-end gap-4 print:gap-4 md:gap-6">
         {/* Bloc texte : nom + rôle + coordonnées, alignés à droite */}
         <div className="flex flex-col items-end text-right">
           <h1
@@ -58,13 +58,15 @@ export default function HeaderContent({
             {role}
           </p>
           {belowRole ? (
-            <div className="mt-1 hidden w-full md:mt-2 md:block print:mt-2 print:block">{belowRole}</div>
+            <div className="mt-1 hidden w-full print:mt-2 print:block md:mt-2 md:block">
+              {belowRole}
+            </div>
           ) : null}
         </div>
 
         {/* Barre verticale décorative */}
         <div
-          className="w-1 shrink-0 self-stretch rounded-full bg-gradient-to-b from-blue-400/40 to-teal-300/25 md:w-1.5 print:w-1"
+          className="w-1 shrink-0 self-stretch rounded-full bg-gradient-to-b from-blue-400/40 to-teal-300/25 print:w-1 md:w-1.5"
           aria-hidden
         />
       </div>

@@ -57,10 +57,7 @@ export default function LocaleSwitcher({
     return next.join('/') || `/${locale}`;
   };
 
-  const href = withQuery(
-    redirectedPathName(targetLocale),
-    searchParams,
-  );
+  const href = withQuery(redirectedPathName(targetLocale), searchParams);
   const ariaLabel = SWITCH_TITLE[targetLocale][currentLocale];
 
   return (

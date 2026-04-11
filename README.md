@@ -39,12 +39,12 @@ Encodage CLI : `npm run encode-offer-spec -- path/to/offer.json`
 
 ## Liens utiles
 
-| Ressource | Chemin / URL |
-| --------- | ------------ |
-| Données CV (FR + EN) | [`data/cv/bundle.json`](data/cv/bundle.json) |
-| Types offre (interfaces TS) | [`data/offers/types.ts`](data/offers/types.ts) |
-| Guide LLM (statique) | [`.llm/README.md`](.llm/README.md) |
-| Guide LLM (dynamique) | `GET /api/llm-guide` |
-| Storybook maison (dev) | `http://localhost:3000/{lang}/dev/components` |
-| Storybook (Chromatic) | `http://localhost:6006` (`pnpm storybook`) |
-| Rendus PDF / screenshots | [`renders/`](renders/) -- [`renders/index.html`](renders/index.html) |
+| Ressource                   | Chemin / URL                                                         |
+| --------------------------- | -------------------------------------------------------------------- |
+| Données CV (FR + EN)        | [`data/cv/bundle.json`](data/cv/bundle.json)                         |
+| Types offre (interfaces TS) | [`data/offers/types.ts`](data/offers/types.ts)                       |
+| Guide LLM (statique)        | [`.llm/README.md`](.llm/README.md)                                   |
+| Guide LLM (dynamique)       | `GET /api/llm-guide`                                                 |
+| Storybook maison (dev)      | `http://localhost:3000/{lang}/dev/components`                        |
+| Storybook (Chromatic)       | `http://localhost:6006` (`pnpm storybook`)                           |
+| Rendus PDF / screenshots    | [`renders/`](renders/) -- [`renders/index.html`](renders/index.html) |

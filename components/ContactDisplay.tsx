@@ -49,13 +49,15 @@ function LocationLinkBlock({
 
   return (
     <div
-      className={`flex w-full min-w-0 flex-wrap items-baseline justify-between gap-x-2 gap-y-0.5 ${className ?? ''}`.trim()}
+      className={`flex w-full min-w-0 flex-wrap items-baseline justify-between gap-x-2 gap-y-0.5 ${
+        className ?? ''
+      }`.trim()}
     >
       <a
         href={mapsHref}
         target="_blank"
         rel="noopener noreferrer"
-        className="min-w-0 break-words text-inherit no-underline hover:underline hover:decoration-current/70 hover:underline-offset-2"
+        className="hover:decoration-current/70 min-w-0 break-words text-inherit no-underline hover:underline hover:underline-offset-2"
         title={title}
       >
         {location}
@@ -83,10 +85,12 @@ export default function ContactDisplay({
     // Structure identique aux autres listes simples (Études, Projets) :
     // <ul cv-section-simple-list> → <li> → <a> (pas de wrapper div).
     if (!showLabels) {
-      const sizeToken = compact ? 'cv-contact-value-compact' : 'cv-contact-value';
-      const valueCls =
-        `${sizeToken} text-rose-300`;
-      const linkCls = 'no-underline hover:underline hover:decoration-rose-300/50 hover:underline-offset-2';
+      const sizeToken = compact
+        ? 'cv-contact-value-compact'
+        : 'cv-contact-value';
+      const valueCls = `${sizeToken} text-rose-300`;
+      const linkCls =
+        'no-underline hover:underline hover:decoration-rose-300/50 hover:underline-offset-2';
       const mapsHref = ctx?.mapsHref ?? buildContactLocationHref();
       const isDirections = ctx?.isDirections ?? false;
       const loc = ctx?.locale ?? locale;
@@ -96,7 +100,10 @@ export default function ContactDisplay({
         <ul className="cv-short-contact-rows cv-section-simple-list">
           <li className="cv-row-simple-item">
             <span className="sr-only">{contact.emailTitle} : </span>
-            <a href={`mailto:${contact.email}`} className={`${valueCls} ${linkCls} break-all`}>
+            <a
+              href={`mailto:${contact.email}`}
+              className={`${valueCls} ${linkCls} break-all`}
+            >
               {contact.email}
             </a>
           </li>
@@ -131,7 +138,7 @@ export default function ContactDisplay({
     const valueWrap = 'min-w-0 text-right';
 
     return (
-      <ul className="cv-short-contact-rows cv-section-body-gap space-y-1.5 md:space-y-1 print:space-y-0.5">
+      <ul className="cv-short-contact-rows cv-section-body-gap space-y-1.5 print:space-y-0.5 md:space-y-1">
         <li className={row}>
           <strong className={labelCls}>{contact.emailTitle}</strong>
           <a
@@ -179,7 +186,9 @@ export default function ContactDisplay({
           <strong className="shrink-0 text-cv-jobs">
             {contact.phoneTitle || 'Tél.'}
           </strong>
-          <span className="min-w-0 text-right tabular-nums">{contact.phone}</span>
+          <span className="min-w-0 text-right tabular-nums">
+            {contact.phone}
+          </span>
         </li>
         <li className={row}>
           <strong className="shrink-0 text-cv-jobs">
@@ -226,11 +235,11 @@ export default function ContactDisplay({
       </li>
       <li className={stackLi}>
         <strong className={stackLabel}>{contact.locationTitle}</strong>
-        <div className="min-w-0 text-right md:w-full md:text-left print:text-left">
+        <div className="min-w-0 text-right print:text-left md:w-full md:text-left">
           <LocationLinkBlock
             location={contact.location}
             locale={locale}
-            className="justify-end md:mt-0.5 md:justify-between print:justify-between"
+            className="justify-end print:justify-between md:mt-0.5 md:justify-between"
           />
         </div>
       </li>

@@ -116,8 +116,21 @@ function SnapshotCard({
   isPdf?: boolean;
 }) {
   return (
-    <div style={{ background: '#16213e', borderRadius: '8px', padding: '0.75rem', overflow: 'hidden' }}>
-      <h3 style={{ color: '#a5b4fc', fontSize: '0.95rem', marginBottom: '0.5rem' }}>
+    <div
+      style={{
+        background: '#16213e',
+        borderRadius: '8px',
+        padding: '0.75rem',
+        overflow: 'hidden',
+      }}
+    >
+      <h3
+        style={{
+          color: '#a5b4fc',
+          fontSize: '0.95rem',
+          marginBottom: '0.5rem',
+        }}
+      >
         {label}{' '}
         <span
           className={tagClass}
@@ -169,8 +182,18 @@ function SnapshotCard({
 
 function LiveCard({ label, src }: { label: string; src: string }) {
   return (
-    <div style={{ background: '#16213e', borderRadius: '8px', padding: '0.75rem' }}>
-      <h3 style={{ color: '#a5b4fc', fontSize: '0.95rem', marginBottom: '0.5rem' }}>{label}</h3>
+    <div
+      style={{ background: '#16213e', borderRadius: '8px', padding: '0.75rem' }}
+    >
+      <h3
+        style={{
+          color: '#a5b4fc',
+          fontSize: '0.95rem',
+          marginBottom: '0.5rem',
+        }}
+      >
+        {label}
+      </h3>
       <iframe
         src={src}
         style={{
@@ -196,7 +219,9 @@ export default function DevRendersPage() {
   const [bust, setBust] = useState(Date.now());
   const [lastGenerated, setLastGenerated] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState<'snapshots' | 'live'>('snapshots');
-  const [expandedVariant, setExpandedVariant] = useState<string | null>('short');
+  const [expandedVariant, setExpandedVariant] = useState<string | null>(
+    'short',
+  );
 
   // Fetch last generated time
   const refreshList = useCallback(() => {
@@ -238,12 +263,25 @@ export default function DevRendersPage() {
       }}
     >
       {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '2rem' }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          marginBottom: '2rem',
+        }}
+      >
         <div>
           <h1 style={{ fontSize: '2rem', color: '#5eead4', margin: 0 }}>
             CV Renders Comparison
           </h1>
-          <p style={{ color: '#94a3b8', marginTop: '0.5rem', fontSize: '0.9rem' }}>
+          <p
+            style={{
+              color: '#94a3b8',
+              marginTop: '0.5rem',
+              fontSize: '0.9rem',
+            }}
+          >
             Compare screen, print-preview, and PDF output side by side.
             {lastGenerated ? (
               <span style={{ marginLeft: '1rem', color: '#64748b' }}>
@@ -315,7 +353,16 @@ export default function DevRendersPage() {
               </>
             ) : (
               <>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   <path d="M21 12a9 9 0 1 1-9-9" />
                   <polyline points="21 3 21 12 12 12" />
                 </svg>
@@ -371,12 +418,23 @@ export default function DevRendersPage() {
               maxHeight: '80vh',
               display: 'flex',
               flexDirection: 'column',
-              border: `1px solid ${genState === 'error' ? '#7f1d1d' : '#14532d'}`,
+              border: `1px solid ${
+                genState === 'error' ? '#7f1d1d' : '#14532d'
+              }`,
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-              <h3 style={{ color: '#94a3b8', margin: 0, fontSize: '0.95rem' }}>Generation Log</h3>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: '1rem',
+              }}
+            >
+              <h3 style={{ color: '#94a3b8', margin: 0, fontSize: '0.95rem' }}>
+                Generation Log
+              </h3>
               <button
                 onClick={() => setShowLog(false)}
                 style={{
@@ -431,11 +489,15 @@ export default function DevRendersPage() {
         {VARIANTS.map((v) => (
           <button
             key={v.id}
-            onClick={() => setExpandedVariant(expandedVariant === v.id ? null : v.id)}
+            onClick={() =>
+              setExpandedVariant(expandedVariant === v.id ? null : v.id)
+            }
             style={{
               padding: '0.3rem 0.75rem',
               borderRadius: '4px',
-              border: `1px solid ${expandedVariant === v.id ? '#5eead4' : '#334155'}`,
+              border: `1px solid ${
+                expandedVariant === v.id ? '#5eead4' : '#334155'
+              }`,
               background: expandedVariant === v.id ? '#1e3a5f' : 'transparent',
               color: expandedVariant === v.id ? '#5eead4' : '#94a3b8',
               cursor: 'pointer',
@@ -453,7 +515,10 @@ export default function DevRendersPage() {
           key={v.id}
           style={{
             marginBottom: '2rem',
-            display: expandedVariant === null || expandedVariant === v.id ? 'block' : 'none',
+            display:
+              expandedVariant === null || expandedVariant === v.id
+                ? 'block'
+                : 'none',
           }}
         >
           <h2
@@ -465,42 +530,90 @@ export default function DevRendersPage() {
               marginBottom: '1rem',
               cursor: 'pointer',
             }}
-            onClick={() => setExpandedVariant(expandedVariant === v.id ? null : v.id)}
+            onClick={() =>
+              setExpandedVariant(expandedVariant === v.id ? null : v.id)
+            }
           >
             {v.title}
           </h2>
 
           {activeTab === 'live' ? (
             /* -------- Live iframes -------- */
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <div
+              style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
+            >
               {/* Row 1: Screen — FR | EN */}
               <div>
-                <h3 style={{ color: '#94a3b8', fontSize: '0.85rem', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                <h3
+                  style={{
+                    color: '#94a3b8',
+                    fontSize: '0.85rem',
+                    marginBottom: '0.5rem',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em',
+                  }}
+                >
                   Screen
                 </h3>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1fr 1fr',
+                    gap: '1rem',
+                  }}
+                >
                   {v.langs.map((l) => (
-                    <LiveCard key={l.lang} label={`${l.lang} Screen`} src={l.screenPath} />
+                    <LiveCard
+                      key={l.lang}
+                      label={`${l.lang} Screen`}
+                      src={l.screenPath}
+                    />
                   ))}
                 </div>
               </div>
               {/* Row 2: Print Preview — FR | EN */}
               <div>
-                <h3 style={{ color: '#94a3b8', fontSize: '0.85rem', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                <h3
+                  style={{
+                    color: '#94a3b8',
+                    fontSize: '0.85rem',
+                    marginBottom: '0.5rem',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em',
+                  }}
+                >
                   Print Preview
                 </h3>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1fr 1fr',
+                    gap: '1rem',
+                  }}
+                >
                   {v.langs.map((l) => (
-                    <LiveCard key={l.lang} label={`${l.lang} Print Preview`} src={l.previewPath} />
+                    <LiveCard
+                      key={l.lang}
+                      label={`${l.lang} Print Preview`}
+                      src={l.previewPath}
+                    />
                   ))}
                 </div>
               </div>
             </div>
           ) : (
             /* -------- Snapshots -------- */
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <div
+              style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
+            >
               {/* Row 1: Screen + Print Preview — 4 columns */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(4, 1fr)',
+                  gap: '1rem',
+                }}
+              >
                 {v.langs.map((l) => (
                   <SnapshotCard
                     key={`${l.lang}-screen`}
@@ -523,7 +636,13 @@ export default function DevRendersPage() {
                 ))}
               </div>
               {/* Row 2: Mobile + PDF — 4 columns */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(4, 1fr)',
+                  gap: '1rem',
+                }}
+              >
                 {v.langs.map((l) => (
                   <SnapshotCard
                     key={`${l.lang}-mobile`}

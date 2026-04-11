@@ -125,10 +125,7 @@ export default function CompactCvLayout({
   return (
     <div className="cv-layout-short">
       {/* About - Full width section (same style as full CV) */}
-      <section
-        id="cv-short-about"
-        className="cv-short-about mt-4 pb-1 mb-1"
-      >
+      <section id="cv-short-about" className="cv-short-about mb-1 mt-4 pb-1">
         <div className="border-b pb-1">
           <h2 className="min-w-0 text-2xl font-semibold text-cv-section">
             {t.about}
@@ -154,7 +151,7 @@ export default function CompactCvLayout({
       {children}
 
       {/* Mobile-only : Adéquation poste + Coordonnées, hors grille, avant Expérience. */}
-      <div className="mt-6 space-y-6 md:hidden print:hidden">
+      <div className="mt-6 space-y-6 print:hidden md:hidden">
         <Suspense fallback={null}>
           <JobFitSection
             lang={lang}
@@ -165,7 +162,8 @@ export default function CompactCvLayout({
         <section>
           <div className="border-b pb-1">
             <h2 className="min-w-0 text-2xl font-semibold text-rose-300">
-              {data.titles.contact || (lang === 'fr' ? 'Coordonnées' : 'Contact')}
+              {data.titles.contact ||
+                (lang === 'fr' ? 'Coordonnées' : 'Contact')}
             </h2>
           </div>
           <ContactDisplay
@@ -182,10 +180,10 @@ export default function CompactCvLayout({
       <div className="cv-page-split mt-8">
         <div
           id="left"
-          className="order-last flex w-full min-w-0 flex-col md:order-first md:col-span-1 print:order-first print:col-span-1"
+          className="order-last flex w-full min-w-0 flex-col print:order-first print:col-span-1 md:order-first md:col-span-1"
         >
           {/* Adéquation poste : masqué en mobile (dupliqué hors grille). */}
-          <div className="hidden md:block print:block">
+          <div className="hidden print:block md:block">
             <Suspense fallback={null}>
               <JobFitSection
                 lang={lang}
@@ -196,10 +194,14 @@ export default function CompactCvLayout({
           </div>
 
           {/* Coordonnées (label : valeur) dans la colonne gauche — masqué en mobile (dupliqué hors grille). */}
-          <section id="cv-short-contact" className="mb-6 hidden md:block print:block">
+          <section
+            id="cv-short-contact"
+            className="mb-6 hidden print:block md:block"
+          >
             <div className="border-b pb-1">
               <h2 className="min-w-0 text-2xl font-semibold text-rose-300">
-                {data.titles.contact || (lang === 'fr' ? 'Coordonnées' : 'Contact')}
+                {data.titles.contact ||
+                  (lang === 'fr' ? 'Coordonnées' : 'Contact')}
               </h2>
             </div>
             <ContactDisplay
@@ -224,26 +226,24 @@ export default function CompactCvLayout({
           </section>
 
           {/* Études sans détail (établissement masqué) — même titre que le CV long (#studies). */}
-          <section
-            id="studies"
-            className="cv-short-studies-section mb-6"
-          >
+          <section id="studies" className="cv-short-studies-section mb-6">
             <h2 className="border-b pb-1 text-2xl font-semibold text-purple-300">
               {t.education}
             </h2>
             <ul className="cv-section-simple-list">
               {data.studies.map((study) => (
-                <StudyDisplay key={study.id} study={study} compact={true} color="text-purple-300" />
+                <StudyDisplay
+                  key={study.id}
+                  study={study}
+                  compact={true}
+                  color="text-purple-300"
+                />
               ))}
             </ul>
           </section>
 
           {/* Projets : même structure flex que les études (compact). */}
-          <section
-            id="projects"
-            data-cv-section="projects"
-            className="mb-6"
-          >
+          <section id="projects" data-cv-section="projects" className="mb-6">
             <h2 className="border-b pb-1 text-2xl font-semibold text-cv-tag-text">
               {data.projectsTitle}
             </h2>
@@ -257,7 +257,10 @@ export default function CompactCvLayout({
           </section>
         </div>
 
-        <div id="main" className="w-full min-w-0 md:col-span-2 print:col-span-2">
+        <div
+          id="main"
+          className="w-full min-w-0 print:col-span-2 md:col-span-2"
+        >
           {/* Experience - Reusing JobDisplay component */}
           <section>
             <h2 className="border-b pb-1 text-2xl font-semibold text-cv-jobs">
@@ -282,9 +285,7 @@ export default function CompactCvLayout({
               moreClientsLine={moreClientsLine}
             />
             <Suspense fallback={null}>
-              <ShortCvOnlineDetailLink
-                lang={lang}
-              />
+              <ShortCvOnlineDetailLink lang={lang} />
             </Suspense>
           </section>
         </div>

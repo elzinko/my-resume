@@ -3,12 +3,46 @@ import type { Meta, StoryObj } from '@storybook/react';
 import LearningsDisplay from './LearningsDisplay';
 
 const sampleItems = [
-  { id: '1', name: 'LLM', link: '#', description: 'Agents, RAG, prompt engineering et integration dans des produits SaaS.' },
-  { id: '2', name: 'AWS Bedrock', link: '#', description: "Orchestration d'agents IA manages et modeles fondation AWS." },
-  { id: '3', name: 'MCP', link: '#', description: "Protocole d'integration d'outils pour modeles de langage." },
-  { id: '4', name: 'LangChain', link: '#', description: "Framework d'orchestration de chaines LLM et agents conversationnels." },
-  { id: '5', name: 'OpenRAG', link: '#', description: 'Pipeline RAG open source : indexation, recherche vectorielle, generation.' },
-  { id: '6', name: 'BMAD', link: '#', description: 'Methodologie de cadrage produit assistee par IA multi-agents.' },
+  {
+    id: '1',
+    name: 'LLM',
+    link: '#',
+    description:
+      'Agents, RAG, prompt engineering et integration dans des produits SaaS.',
+  },
+  {
+    id: '2',
+    name: 'AWS Bedrock',
+    link: '#',
+    description: "Orchestration d'agents IA manages et modeles fondation AWS.",
+  },
+  {
+    id: '3',
+    name: 'MCP',
+    link: '#',
+    description: "Protocole d'integration d'outils pour modeles de langage.",
+  },
+  {
+    id: '4',
+    name: 'LangChain',
+    link: '#',
+    description:
+      "Framework d'orchestration de chaines LLM et agents conversationnels.",
+  },
+  {
+    id: '5',
+    name: 'OpenRAG',
+    link: '#',
+    description:
+      'Pipeline RAG open source : indexation, recherche vectorielle, generation.',
+  },
+  {
+    id: '6',
+    name: 'BMAD',
+    link: '#',
+    description:
+      'Methodologie de cadrage produit assistee par IA multi-agents.',
+  },
 ];
 
 const meta: Meta<typeof LearningsDisplay> = {

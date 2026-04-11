@@ -49,9 +49,14 @@ export default async function Page({
   const matchCatalog = getMatchCatalog();
   const sp = recordToURLSearchParams(searchParams);
   const offer = resolveOfferFromUrlParams(sp, matchCatalog);
-  const contractParam = typeof searchParams?.contract === 'string' ? searchParams.contract : undefined;
+  const contractParam =
+    typeof searchParams?.contract === 'string'
+      ? searchParams.contract
+      : undefined;
   const contract: ContractType | undefined =
-    contractParam === 'cdi' || contractParam === 'freelance' ? contractParam : undefined;
+    contractParam === 'cdi' || contractParam === 'freelance'
+      ? contractParam
+      : undefined;
   const { priorityTokens, contactLocation } = offerPriorityTokensAndContact(
     offer,
     sp,

@@ -36,7 +36,10 @@ test('sortChronologicalDesc does not mutate original array', () => {
 });
 
 test('byEndThenStart returns endDate when present', () => {
-  assert.equal(byEndThenStart({ startDate: '2020-01', endDate: '2023-06' }), '2023-06');
+  assert.equal(
+    byEndThenStart({ startDate: '2020-01', endDate: '2023-06' }),
+    '2023-06',
+  );
 });
 
 test('byEndThenStart returns startDate when no endDate', () => {
@@ -60,11 +63,11 @@ test('byEndThenStart returns empty string when no dates', () => {
 test('sortChronologicalDesc with byEndThenStart sorts jobs correctly', () => {
   const jobs = [
     { startDate: '2018-01', endDate: '2020-06' },
-    { startDate: '2023-01' },                       // ongoing, no endDate
+    { startDate: '2023-01' }, // ongoing, no endDate
     { startDate: '2020-07', endDate: '2022-12' },
   ];
   const sorted = sortChronologicalDesc(jobs, byEndThenStart);
-  assert.equal(sorted[0].startDate, '2023-01');    // ongoing sorted by startDate
+  assert.equal(sorted[0].startDate, '2023-01'); // ongoing sorted by startDate
   assert.equal(sorted[1].endDate, '2022-12');
   assert.equal(sorted[2].endDate, '2020-06');
 });

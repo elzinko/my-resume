@@ -21,10 +21,11 @@ export async function POST(request: Request) {
   }
 
   // Determine the app's own origin so Playwright hits the running dev server
-  const origin =
-    request.headers.get('x-forwarded-host')
-      ? `${request.headers.get('x-forwarded-proto') || 'http'}://${request.headers.get('x-forwarded-host')}`
-      : new URL(request.url).origin;
+  const origin = request.headers.get('x-forwarded-host')
+    ? `${
+        request.headers.get('x-forwarded-proto') || 'http'
+      }://${request.headers.get('x-forwarded-host')}`
+    : new URL(request.url).origin;
 
   const script = path.join(process.cwd(), 'renders', 'generate.mjs');
 
@@ -52,10 +53,7 @@ export async function POST(request: Request) {
 
     child.on('error', (err) => {
       resolve(
-        NextResponse.json(
-          { ok: false, error: err.message },
-          { status: 500 },
-        ),
+        NextResponse.json({ ok: false, error: err.message }, { status: 500 }),
       );
     });
   });

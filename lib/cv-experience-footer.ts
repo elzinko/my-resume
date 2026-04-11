@@ -5,8 +5,12 @@ export const SHORT_CV_MAX_JOBS = 8;
 
 export const SHORT_CV_EXCLUDED_CLIENTS = new Set(['RelevanC']);
 
-export function jobsAfterShortWindow<T extends { client: string }>(allJobs: T[]): T[] {
-  const filtered = allJobs.filter((j) => !SHORT_CV_EXCLUDED_CLIENTS.has(j.client));
+export function jobsAfterShortWindow<T extends { client: string }>(
+  allJobs: T[],
+): T[] {
+  const filtered = allJobs.filter(
+    (j) => !SHORT_CV_EXCLUDED_CLIENTS.has(j.client),
+  );
   return filtered.slice(SHORT_CV_MAX_JOBS);
 }
 
@@ -26,12 +30,16 @@ const FALLBACK: Record<Locale, ExperienceClosingLabels> = {
   },
 };
 
-export function getExperienceClosingLabels(locale: Locale): ExperienceClosingLabels {
+export function getExperienceClosingLabels(
+  locale: Locale,
+): ExperienceClosingLabels {
   return FALLBACK[locale];
 }
 
 /** Liste des clients pour les missions non détaillées sur le CV court (ordre bundle). */
-function remainingClientNames<T extends { client: string }>(allJobs: T[]): string[] {
+function remainingClientNames<T extends { client: string }>(
+  allJobs: T[],
+): string[] {
   const rest = jobsAfterShortWindow(allJobs);
   return rest.map((j) => j.client.trim()).filter(Boolean);
 }
@@ -52,10 +60,9 @@ export function formatRemainingClientsForShortCv<T extends { client: string }>(
 /**
  * CV complet : même jeu de noms que le CV court (missions hors fenêtre), reformulé pour une synthèse en bas de liste.
  */
-export function formatRemainingClientsRecapForFullCv<T extends { client: string }>(
-  allJobs: T[],
-  locale: Locale,
-): string | null {
+export function formatRemainingClientsRecapForFullCv<
+  T extends { client: string },
+>(allJobs: T[], locale: Locale): string | null {
   const names = remainingClientNames(allJobs);
   if (names.length === 0) return null;
   const joined = names.join(', ');

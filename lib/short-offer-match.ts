@@ -48,11 +48,10 @@ const DEFAULT_REQUIREMENTS: import('@/data/offers/types').MatchRequirement[] = [
 /**
  * Entrées par défaut (Java, JavaScript) calculées depuis les missions du bundle.
  */
-export function computeDefaultMatchData(
-  locale: Locale,
-): MatchDisplayData {
+export function computeDefaultMatchData(locale: Locale): MatchDisplayData {
   const slice = locale === 'fr' ? b.fr : b.en;
-  const jobs: JobForMatching[] = (slice.allJobsModels || []) as JobForMatching[];
+  const jobs: JobForMatching[] = (slice.allJobsModels ||
+    []) as JobForMatching[];
   const entries = buildMatchEntries(DEFAULT_REQUIREMENTS, jobs);
   return { entries };
 }
@@ -78,10 +77,10 @@ export function computeShortUrlMatchData(
   if (!offer) return null;
 
   const slice = locale === 'fr' ? b.fr : b.en;
-  const jobs: JobForMatching[] = (slice.allJobsModels || []) as JobForMatching[];
+  const jobs: JobForMatching[] = (slice.allJobsModels ||
+    []) as JobForMatching[];
 
   const entries = buildMatchEntries(offer.requirements, jobs);
 
   return { entries: entries.slice(0, SHORT_PROFILE_MATCH_MAX) };
 }
-

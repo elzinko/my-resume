@@ -35,9 +35,7 @@ const meta: Meta<typeof StudyDisplay> = {
     compact: { control: 'boolean' },
     condensed: { control: 'boolean' },
   },
-  decorators: [
-    (Story) => <div className="max-w-[420px] p-4">{Story()}</div>,
-  ],
+  decorators: [(Story) => <div className="max-w-[420px] p-4">{Story()}</div>],
 };
 
 export default meta;
@@ -52,9 +50,7 @@ export const Condensed: Story = {
 export const Compact: Story = {
   args: { compact: true },
   decorators: [
-    (Story) => (
-      <ul className="list-none p-0 max-w-[420px] m-0">{Story()}</ul>
-    ),
+    (Story) => <ul className="m-0 max-w-[420px] list-none p-0">{Story()}</ul>,
   ],
 };
 

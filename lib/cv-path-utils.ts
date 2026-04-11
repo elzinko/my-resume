@@ -14,7 +14,10 @@ export function stripBasePath(pathname: string, basePath: string): string {
 /** Compatible `URLSearchParams` et retour de `useSearchParams()` (Next). */
 type QueryStringable = { toString(): string };
 
-export function withQuery(path: string, sp: URLSearchParams | QueryStringable): string {
+export function withQuery(
+  path: string,
+  sp: URLSearchParams | QueryStringable,
+): string {
   const q = sp.toString();
   return q ? `${path}?${q}` : path;
 }

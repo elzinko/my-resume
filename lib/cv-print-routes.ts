@@ -32,7 +32,8 @@ export function localeFromCvPrintPreviewPathname(
   const parts = pathname.split('/').filter(Boolean);
   if (parts.length === 0) return null;
   const lang = parts[0];
-  if (!(i18n.locales as readonly string[]).includes(lang as string)) return null;
+  if (!(i18n.locales as readonly string[]).includes(lang as string))
+    return null;
   if (parts.length === 1) return lang as Locale;
   if (parts.length === 2 && parts[1] === 'short') return lang as Locale;
   return null;

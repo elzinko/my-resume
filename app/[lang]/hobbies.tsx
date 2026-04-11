@@ -26,10 +26,7 @@ export default async function hobbies({
       data-cv-section="hobbies"
       className={`cv-cq-section ${sectionClass}`}
     >
-      <HobbiesDisplay
-        title={data?.hobbiesTitle?.title}
-        items={items}
-      />
+      <HobbiesDisplay title={data?.hobbiesTitle?.title} items={items} />
     </section>
   );
 }

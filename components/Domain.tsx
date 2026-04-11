@@ -57,7 +57,9 @@ function DevDomainTagsFromUrl({ compact }: { compact: boolean }) {
   const [tags, setTags] = useState<DevTagFive>(() => DEV_PRESETS.default);
 
   useLayoutEffect(() => {
-    setTags(resolveDevDomainTagsFromSearchParams(new URLSearchParams(queryKey)));
+    setTags(
+      resolveDevDomainTagsFromSearchParams(new URLSearchParams(queryKey)),
+    );
   }, [queryKey]);
 
   return <DomainFiveTagsRow tags={tags} compact={compact} />;
@@ -69,7 +71,9 @@ function OpsDomainTagsFromUrl({ compact }: { compact: boolean }) {
   const [tags, setTags] = useState<OpsTagFive>(() => OPS_PRESETS.aws);
 
   useLayoutEffect(() => {
-    setTags(resolveOpsDomainTagsFromSearchParams(new URLSearchParams(queryKey)));
+    setTags(
+      resolveOpsDomainTagsFromSearchParams(new URLSearchParams(queryKey)),
+    );
   }, [queryKey]);
 
   return <DomainFiveTagsRow tags={tags} compact={compact} />;
@@ -107,13 +111,17 @@ export default function Domain({
   const titleBlock =
     accent === 'verticalBar' ? (
       <div
-        className={`flex items-stretch gap-1.5 text-cv-section ${compact ? 'print:gap-1' : ''}`}
+        className={`flex items-stretch gap-1.5 text-cv-section ${
+          compact ? 'print:gap-1' : ''
+        }`}
       >
         <span
-          className="shrink-0 self-stretch w-0.5 rounded-full bg-current print:w-px"
+          className="w-0.5 shrink-0 self-stretch rounded-full bg-current print:w-px"
           aria-hidden
         />
-        <h2 className={`min-w-0 flex-1 leading-tight ${titleTypo}`}>{domain.name}</h2>
+        <h2 className={`min-w-0 flex-1 leading-tight ${titleTypo}`}>
+          {domain.name}
+        </h2>
       </div>
     ) : (
       <h2 className={`border-b pb-0.5 md:pb-1 ${titleTypo}`}>{domain.name}</h2>
@@ -123,8 +131,8 @@ export default function Domain({
     <div
       className={
         compact
-          ? 'mt-4 min-w-0 flex flex-col print:mt-1.5'
-          : 'mt-4 min-w-0 flex flex-col'
+          ? 'mt-4 flex min-w-0 flex-col print:mt-1.5'
+          : 'mt-4 flex min-w-0 flex-col'
       }
     >
       {titleBlock}

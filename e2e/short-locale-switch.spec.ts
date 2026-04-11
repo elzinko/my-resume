@@ -21,7 +21,9 @@ test.describe('Short CV locale', () => {
     await expect(page).toHaveURL(/\/en\/short/);
   });
 
-  test('switching locale preserves query params on short CV', async ({ page }) => {
+  test('switching locale preserves query params on short CV', async ({
+    page,
+  }) => {
     await page.goto('/fr/short?company=TestCo&requirement=Java:java');
     await expect(page).toHaveURL(/company=TestCo/);
     await page

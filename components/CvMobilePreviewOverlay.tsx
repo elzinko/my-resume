@@ -36,7 +36,10 @@ export default function CvMobilePreviewOverlay() {
       return;
     }
     setIframeSrc(
-      buildCvMobilePreviewIframeSrc(pathname, new URLSearchParams(searchParams.toString())),
+      buildCvMobilePreviewIframeSrc(
+        pathname,
+        new URLSearchParams(searchParams.toString()),
+      ),
     );
   }, [active, pathname, searchParams]);
 

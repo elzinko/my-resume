@@ -6,11 +6,12 @@ const meta: Meta<typeof JobExperienceBody> = {
   title: 'CV/JobExperienceBody',
   component: JobExperienceBody,
   args: {
-    description: "Conception et developpement d'une plateforme SaaS de gestion de contenu avec architecture microservices.",
+    description:
+      "Conception et developpement d'une plateforme SaaS de gestion de contenu avec architecture microservices.",
     descriptionShort: 'Plateforme SaaS de gestion de contenu.',
     bullets: [
       { id: '1', text: 'Architecture microservices avec Docker et Kubernetes' },
-      { id: '2', text: "Pipeline CI/CD avec GitLab et deploiement continu" },
+      { id: '2', text: 'Pipeline CI/CD avec GitLab et deploiement continu' },
       { id: '3', text: 'API REST et GraphQL pour les clients mobiles et web' },
     ],
     locale: 'fr',
@@ -43,10 +44,14 @@ export const WithoutBullets: Story = {
 export const English: Story = {
   args: {
     locale: 'en',
-    description: 'Design and development of a SaaS content management platform with microservices architecture.',
+    description:
+      'Design and development of a SaaS content management platform with microservices architecture.',
     descriptionShort: 'SaaS content management platform.',
     bullets: [
-      { id: '1', text: 'Microservices architecture with Docker and Kubernetes' },
+      {
+        id: '1',
+        text: 'Microservices architecture with Docker and Kubernetes',
+      },
       { id: '2', text: 'CI/CD pipeline with GitLab and continuous deployment' },
     ],
   },

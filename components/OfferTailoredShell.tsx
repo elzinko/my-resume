@@ -49,14 +49,15 @@ export default function OfferTailoredShell({
   /** Type de contrat : adapte les textes Profil et Domaines. */
   contract?: ContractType;
 }) {
-  const resolvedContact: ContactLocationOverlay =
-    contactLocation ?? {
-      mapsHref: buildContactLocationHref(),
-      isDirections: false,
-    };
+  const resolvedContact: ContactLocationOverlay = contactLocation ?? {
+    mapsHref: buildContactLocationHref(),
+    isDirections: false,
+  };
 
   return (
-    <JobFrameworkDisplayProvider priorityTokens={frameworkDisplayPriorityTokens}>
+    <JobFrameworkDisplayProvider
+      priorityTokens={frameworkDisplayPriorityTokens}
+    >
       <ContactLocationProvider value={resolvedContact} locale={lang}>
         <div className="cv-offer-tailored-shell">
           <Suspense fallback={null}>
@@ -70,9 +71,13 @@ export default function OfferTailoredShell({
           />
 
           <div className="cv-full-cv-print-root">
-            <div className="mb-2 max-md:contents print:order-[10] print-preview:order-[10]">
+            <div className="mb-2 print-preview:order-[10] print:order-[10] max-md:contents">
               {/* @ts-expect-error Server Component */}
-              <About locale={lang} educationLevel={educationLevel} contract={contract} />
+              <About
+                locale={lang}
+                educationLevel={educationLevel}
+                contract={contract}
+              />
               {/* @ts-expect-error Server Component */}
               <Domains locale={lang} contract={contract} />
             </div>
@@ -86,7 +91,7 @@ export default function OfferTailoredShell({
             </Suspense>
             {/* Coordonnées : après Adéquation poste, même placement que le CV court. */}
             {headerContactStrip.email && (
-              <section className="cv-mobile-section-mt print:order-[30] print-preview:order-[30]">
+              <section className="cv-mobile-section-mt print-preview:order-[30] print:order-[30]">
                 <div className="border-b pb-1">
                   <h2 className="min-w-0 text-2xl font-semibold text-rose-300">
                     {lang === 'fr' ? 'Coordonnées' : 'Contact'}

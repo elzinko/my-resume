@@ -34,8 +34,7 @@ export default function JobExperienceBody({
   const hookLine = isLegacy ? longText : shortText;
   /** CV court (compact) : pas de puces, écran comme impression. */
   const showBullets = !compact && Boolean(bullets?.length);
-  const showToggle =
-    Boolean(shortText) || Boolean(longText) || showBullets;
+  const showToggle = Boolean(shortText) || Boolean(longText) || showBullets;
 
   useEffect(() => {
     onExpandedChange?.(expanded);
@@ -57,7 +56,9 @@ export default function JobExperienceBody({
         {bullets.map((bullet) => (
           <li key={bullet.id}>
             {bullet.link ? (
-              <a href={bullet.link} target="_blank" rel="noopener noreferrer">{bullet.text}</a>
+              <a href={bullet.link} target="_blank" rel="noopener noreferrer">
+                {bullet.text}
+              </a>
             ) : (
               bullet.text
             )}

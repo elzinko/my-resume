@@ -1,8 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('CDI contract mode', () => {
-  const CDI_ABOUT_TEXT =
-    'Agile fullstack engineer with 20 years of experience';
+  const CDI_ABOUT_TEXT = 'Agile fullstack engineer with 20 years of experience';
   const DEFAULT_ABOUT_TEXT =
     'I am an agile fullstack consultant passionate about open source';
 

@@ -15,6 +15,11 @@ export default function Study({
   condensed = false,
 }: StudyProps) {
   return (
-    <StudyDisplay study={study} compact={compact} condensed={condensed} color="text-purple-300" />
+    <StudyDisplay
+      study={study}
+      compact={compact}
+      condensed={condensed}
+      color="text-purple-300"
+    />
   );
 }

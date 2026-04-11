@@ -4,9 +4,7 @@ import type { JobOffer } from '@/data/offers/types';
  * Représente une offre du bundle (`data/offers`) comme paramètres GET sur `/{lang}`
  * (la route `/offer/match` n'existe plus : la racine accepte les mêmes query params).
  */
-export function jobOfferToMatchSearchParams(
-  offer: JobOffer,
-): URLSearchParams {
+export function jobOfferToMatchSearchParams(offer: JobOffer): URLSearchParams {
   const sp = new URLSearchParams();
   sp.set('company', offer.company);
   sp.set('title_fr', offer.title.fr);

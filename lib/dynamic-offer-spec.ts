@@ -1,4 +1,8 @@
-import type { ContractType, JobOffer, MatchRequirement } from '@/data/offers/types';
+import type {
+  ContractType,
+  JobOffer,
+  MatchRequirement,
+} from '@/data/offers/types';
 import { enrichJobOfferRequirements } from '@/lib/match-catalog';
 import type { MatchCatalog } from '@/lib/match-catalog-schema';
 
@@ -108,7 +112,12 @@ export function parseJobOfferFromUnknown(
   const workAddress = trimStr(o.workAddress, 500) || undefined;
   let commuteLabel = trimStr(o.commuteLabel, 80) || undefined;
   const cm = o.commuteMinutes ?? o.commute_minutes;
-  if (!commuteLabel && typeof cm === 'number' && Number.isFinite(cm) && cm >= 0) {
+  if (
+    !commuteLabel &&
+    typeof cm === 'number' &&
+    Number.isFinite(cm) &&
+    cm >= 0
+  ) {
     commuteLabel = `~${Math.round(cm)} min`;
   }
 

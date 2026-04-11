@@ -16,7 +16,10 @@ interface LearningsDisplayProps {
   items: LearningItem[];
 }
 
-export default function LearningsDisplay({ title, items }: LearningsDisplayProps) {
+export default function LearningsDisplay({
+  title,
+  items,
+}: LearningsDisplayProps) {
   return (
     <>
       <h2 className="border-b pb-1 text-2xl font-semibold text-teal-300">

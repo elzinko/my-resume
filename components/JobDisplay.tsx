@@ -105,7 +105,13 @@ export default function JobDisplay({
       <div>
         <div className="cv-row-with-side-meta">
           <span className="min-w-0 flex-1 text-sm font-bold leading-snug text-cv-jobs print:text-[10px] print:leading-tight">
-            {job.clientUrl ? <a href={job.clientUrl} target="_blank" rel="noopener noreferrer">{job.client}</a> : job.client}
+            {job.clientUrl ? (
+              <a href={job.clientUrl} target="_blank" rel="noopener noreferrer">
+                {job.client}
+              </a>
+            ) : (
+              job.client
+            )}
           </span>
           <span className="min-w-max shrink-0 self-end text-cv-meta font-normal tabular-nums leading-snug text-cv-jobs print:!inline print:text-[8px] max-md:hidden">
             {compactDateLine}
@@ -135,7 +141,7 @@ export default function JobDisplay({
         <div
           className={
             !detailsOpen && hidePillsUntilDetailOpen
-              ? 'max-md:hidden print:!block'
+              ? 'print:!block max-md:hidden'
               : ''
           }
         >
@@ -156,7 +162,13 @@ export default function JobDisplay({
     <div id={slugifyClient(job.client)}>
       <div className="cv-row-with-side-meta">
         <span className="min-w-0 flex-1 text-base font-bold leading-snug text-cv-jobs print:text-sm">
-          {job.clientUrl ? <a href={job.clientUrl} target="_blank" rel="noopener noreferrer">{job.client}</a> : job.client}
+          {job.clientUrl ? (
+            <a href={job.clientUrl} target="_blank" rel="noopener noreferrer">
+              {job.client}
+            </a>
+          ) : (
+            job.client
+          )}
         </span>
         <span className="min-w-max shrink-0 self-end text-cv-meta font-normal tabular-nums leading-snug text-cv-jobs print:!inline print:text-xs max-md:hidden">
           {dates}
@@ -181,7 +193,7 @@ export default function JobDisplay({
       <div
         className={
           !detailsOpen && hidePillsUntilDetailOpen
-            ? 'max-md:hidden print:!block'
+            ? 'print:!block max-md:hidden'
             : ''
         }
       >

@@ -11,9 +11,7 @@ const meta: Meta<typeof HeaderToolbar> = {
       navigation: { pathname: '/fr', query: {} },
     },
   },
-  decorators: [
-    (Story) => <div className="max-w-[960px] p-4">{Story()}</div>,
-  ],
+  decorators: [(Story) => <div className="max-w-[960px] p-4">{Story()}</div>],
 };
 
 export default meta;

@@ -43,7 +43,10 @@ function jobCorpusForLooseMatch(job: JobForMatching): string {
   return parts.join(' ');
 }
 
-function jobMatchesFrameworkId(job: JobForMatching, keywords: string[]): boolean {
+function jobMatchesFrameworkId(
+  job: JobForMatching,
+  keywords: string[],
+): boolean {
   const frameworks = job.frameworks || [];
   return keywords.some((kw) => frameworks.some((fw) => fw.id === kw));
 }
@@ -107,8 +110,18 @@ function computeYears(startDate: string, endDate?: string): number {
 }
 
 function deduplicateClients(
-  clients: Array<{ client: string; clientUrl?: string; startDate: string; endDate?: string }>,
-): Array<{ client: string; clientUrl?: string; startDate: string; endDate?: string }> {
+  clients: Array<{
+    client: string;
+    clientUrl?: string;
+    startDate: string;
+    endDate?: string;
+  }>,
+): Array<{
+  client: string;
+  clientUrl?: string;
+  startDate: string;
+  endDate?: string;
+}> {
   const byClient = new Map<
     string,
     { client: string; clientUrl?: string; startDate: string; endDate?: string }

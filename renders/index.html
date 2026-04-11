@@ -1,186 +1,265 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CV Renders Comparison</title>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: system-ui, -apple-system, sans-serif; background: #1a1a2e; color: #e0e0e0; padding: 2rem; }
-  h1 { text-align: center; margin-bottom: 2rem; font-size: 2rem; color: #5eead4; }
-  h2 { margin: 2rem 0 1rem; font-size: 1.5rem; color: #93c5fd; border-bottom: 1px solid #334155; padding-bottom: 0.5rem; }
-  h3 { margin: 1rem 0 0.5rem; font-size: 1.1rem; color: #a5b4fc; }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CV Renders Comparison</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, sans-serif;
+        background: #1a1a2e;
+        color: #e0e0e0;
+        padding: 2rem;
+      }
+      h1 {
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 2rem;
+        color: #5eead4;
+      }
+      h2 {
+        margin: 2rem 0 1rem;
+        font-size: 1.5rem;
+        color: #93c5fd;
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5rem;
+      }
+      h3 {
+        margin: 1rem 0 0.5rem;
+        font-size: 1.1rem;
+        color: #a5b4fc;
+      }
 
-  .section { margin-bottom: 3rem; }
+      .section {
+        margin-bottom: 3rem;
+      }
 
-  .compare-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-  }
+      .compare-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
 
-  .compare-col { background: #16213e; border-radius: 8px; padding: 1rem; overflow: hidden; }
-  .compare-col h3 { margin-top: 0; }
+      .compare-col {
+        background: #16213e;
+        border-radius: 8px;
+        padding: 1rem;
+        overflow: hidden;
+      }
+      .compare-col h3 {
+        margin-top: 0;
+      }
 
-  .compare-col img {
-    width: 100%;
-    height: auto;
-    border: 1px solid #334155;
-    border-radius: 4px;
-    cursor: zoom-in;
-  }
-  .compare-col img:hover { border-color: #5eead4; }
+      .compare-col img {
+        width: 100%;
+        height: auto;
+        border: 1px solid #334155;
+        border-radius: 4px;
+        cursor: zoom-in;
+      }
+      .compare-col img:hover {
+        border-color: #5eead4;
+      }
 
-  .compare-col iframe, .compare-col embed {
-    width: 100%;
-    height: 800px;
-    border: 1px solid #334155;
-    border-radius: 4px;
-    background: white;
-  }
+      .compare-col iframe,
+      .compare-col embed {
+        width: 100%;
+        height: 800px;
+        border: 1px solid #334155;
+        border-radius: 4px;
+        background: white;
+      }
 
-  .tag {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    margin-left: 0.5rem;
-  }
-  .tag-screen { background: #14532d; color: #86efac; }
-  .tag-preview { background: #1e3a5f; color: #93c5fd; }
-  .tag-pdf { background: #7f1d1d; color: #fca5a5; }
-  .tag-mobile { background: #4a1d96; color: #c4b5fd; }
-  .tag-chrome { background: #78350f; color: #fde68a; }
+      .tag {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-left: 0.5rem;
+      }
+      .tag-screen {
+        background: #14532d;
+        color: #86efac;
+      }
+      .tag-preview {
+        background: #1e3a5f;
+        color: #93c5fd;
+      }
+      .tag-pdf {
+        background: #7f1d1d;
+        color: #fca5a5;
+      }
+      .tag-mobile {
+        background: #4a1d96;
+        color: #c4b5fd;
+      }
+      .tag-chrome {
+        background: #78350f;
+        color: #fde68a;
+      }
 
-  .mobile-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-  }
-  .mobile-row img { max-width: 390px; }
+      .mobile-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+      .mobile-row img {
+        max-width: 390px;
+      }
 
-  details { margin: 1rem 0; }
-  summary { cursor: pointer; color: #5eead4; font-weight: 600; }
-  summary:hover { color: #99f6e4; }
+      details {
+        margin: 1rem 0;
+      }
+      summary {
+        cursor: pointer;
+        color: #5eead4;
+        font-weight: 600;
+      }
+      summary:hover {
+        color: #99f6e4;
+      }
 
-  .note { background: #1e293b; padding: 1rem; border-radius: 6px; border-left: 3px solid #f59e0b; margin: 1rem 0; font-size: 0.9rem; color: #fcd34d; }
-</style>
-</head>
-<body>
+      .note {
+        background: #1e293b;
+        padding: 1rem;
+        border-radius: 6px;
+        border-left: 3px solid #f59e0b;
+        margin: 1rem 0;
+        font-size: 0.9rem;
+        color: #fcd34d;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CV Renders Comparison</h1>
+    <p style="text-align: center; color: #94a3b8; margin-bottom: 2rem">
+      Generated automatically with Playwright. Compare screen, print-preview
+      (?print=1), and actual PDF output side by side.
+    </p>
 
-<h1>CV Renders Comparison</h1>
-<p style="text-align:center; color:#94a3b8; margin-bottom:2rem;">
-  Generated automatically with Playwright. Compare screen, print-preview (?print=1), and actual PDF output side by side.
-</p>
+    <!-- FR SHORT -->
+    <div class="section">
+      <h2>FR Short <code>/fr/short</code></h2>
+      <div class="note">
+        Point principal : le rendu <strong>screen</strong> (gauche) et
+        <strong>?print=1</strong> (centre) doivent correspondre au
+        <strong>PDF</strong> (droite). Si le PDF est different, c'est un
+        probleme de CSS <code>@media print</code> vs
+        <code>.cv-print-preview</code>.
+      </div>
+      <div class="compare-row">
+        <div class="compare-col">
+          <h3>Screen <span class="tag tag-screen">live</span></h3>
+          <img src="fr-short-screen.png" alt="FR Short - screen" />
+        </div>
+        <div class="compare-col">
+          <h3>Print Preview <span class="tag tag-preview">?print=1</span></h3>
+          <img
+            src="fr-short-print-preview.png"
+            alt="FR Short - print preview"
+          />
+        </div>
+        <div class="compare-col">
+          <h3>PDF (CSS margins) <span class="tag tag-pdf">1mm</span></h3>
+          <embed src="fr-short-print.pdf" type="application/pdf" />
+        </div>
+        <div class="compare-col">
+          <h3>PDF (Chrome margins) <span class="tag tag-chrome">10mm</span></h3>
+          <embed src="fr-short-print-chrome.pdf" type="application/pdf" />
+        </div>
+      </div>
+      <div class="note">
+        <strong>Chrome Cmd+P :</strong> Pense a cocher
+        <em>Graphiques d'arriere-plan</em>, mettre <em>Marges: Aucune</em>, et
+        decocher <em>En-tetes et pieds de page</em>.
+      </div>
+    </div>
 
-<!-- FR SHORT -->
-<div class="section">
-  <h2>FR Short <code>/fr/short</code></h2>
-  <div class="note">
-    Point principal : le rendu <strong>screen</strong> (gauche) et <strong>?print=1</strong> (centre) doivent correspondre au <strong>PDF</strong> (droite).
-    Si le PDF est different, c'est un probleme de CSS <code>@media print</code> vs <code>.cv-print-preview</code>.
-  </div>
-  <div class="compare-row">
-    <div class="compare-col">
-      <h3>Screen <span class="tag tag-screen">live</span></h3>
-      <img src="fr-short-screen.png" alt="FR Short - screen" />
+    <!-- EN SHORT -->
+    <div class="section">
+      <h2>EN Short <code>/en/short</code></h2>
+      <div class="compare-row">
+        <div class="compare-col">
+          <h3>Screen <span class="tag tag-screen">live</span></h3>
+          <img src="en-short-screen.png" alt="EN Short - screen" />
+        </div>
+        <div class="compare-col">
+          <h3>Print Preview <span class="tag tag-preview">?print=1</span></h3>
+          <img
+            src="en-short-print-preview.png"
+            alt="EN Short - print preview"
+          />
+        </div>
+        <div class="compare-col">
+          <h3>PDF (CSS margins) <span class="tag tag-pdf">1mm</span></h3>
+          <embed src="en-short-print.pdf" type="application/pdf" />
+        </div>
+        <div class="compare-col">
+          <h3>PDF (Chrome margins) <span class="tag tag-chrome">10mm</span></h3>
+          <embed src="en-short-print-chrome.pdf" type="application/pdf" />
+        </div>
+      </div>
     </div>
-    <div class="compare-col">
-      <h3>Print Preview <span class="tag tag-preview">?print=1</span></h3>
-      <img src="fr-short-print-preview.png" alt="FR Short - print preview" />
-    </div>
-    <div class="compare-col">
-      <h3>PDF (CSS margins) <span class="tag tag-pdf">1mm</span></h3>
-      <embed src="fr-short-print.pdf" type="application/pdf" />
-    </div>
-    <div class="compare-col">
-      <h3>PDF (Chrome margins) <span class="tag tag-chrome">10mm</span></h3>
-      <embed src="fr-short-print-chrome.pdf" type="application/pdf" />
-    </div>
-  </div>
-  <div class="note">
-    <strong>Chrome Cmd+P :</strong> Pense a cocher <em>Graphiques d'arriere-plan</em>, mettre <em>Marges: Aucune</em>, et decocher <em>En-tetes et pieds de page</em>.
-  </div>
-</div>
 
-<!-- EN SHORT -->
-<div class="section">
-  <h2>EN Short <code>/en/short</code></h2>
-  <div class="compare-row">
-    <div class="compare-col">
-      <h3>Screen <span class="tag tag-screen">live</span></h3>
-      <img src="en-short-screen.png" alt="EN Short - screen" />
+    <!-- FR FULL -->
+    <div class="section">
+      <h2>FR Full <code>/fr</code></h2>
+      <div class="compare-row">
+        <div class="compare-col">
+          <h3>Screen <span class="tag tag-screen">live</span></h3>
+          <img src="fr-full-screen.png" alt="FR Full - screen" />
+        </div>
+        <div class="compare-col">
+          <h3>Print Preview <span class="tag tag-preview">?print=1</span></h3>
+          <img src="fr-full-print-preview.png" alt="FR Full - print preview" />
+        </div>
+        <div class="compare-col">
+          <h3>PDF (Cmd+P) <span class="tag tag-pdf">@media print</span></h3>
+          <embed src="fr-full-print.pdf" type="application/pdf" />
+        </div>
+      </div>
     </div>
-    <div class="compare-col">
-      <h3>Print Preview <span class="tag tag-preview">?print=1</span></h3>
-      <img src="en-short-print-preview.png" alt="EN Short - print preview" />
-    </div>
-    <div class="compare-col">
-      <h3>PDF (CSS margins) <span class="tag tag-pdf">1mm</span></h3>
-      <embed src="en-short-print.pdf" type="application/pdf" />
-    </div>
-    <div class="compare-col">
-      <h3>PDF (Chrome margins) <span class="tag tag-chrome">10mm</span></h3>
-      <embed src="en-short-print-chrome.pdf" type="application/pdf" />
-    </div>
-  </div>
-</div>
 
-<!-- FR FULL -->
-<div class="section">
-  <h2>FR Full <code>/fr</code></h2>
-  <div class="compare-row">
-    <div class="compare-col">
-      <h3>Screen <span class="tag tag-screen">live</span></h3>
-      <img src="fr-full-screen.png" alt="FR Full - screen" />
+    <!-- EN FULL -->
+    <div class="section">
+      <h2>EN Full <code>/en</code></h2>
+      <div class="compare-row">
+        <div class="compare-col">
+          <h3>Screen <span class="tag tag-screen">live</span></h3>
+          <img src="en-full-screen.png" alt="EN Full - screen" />
+        </div>
+        <div class="compare-col">
+          <h3>Print Preview <span class="tag tag-preview">?print=1</span></h3>
+          <img src="en-full-print-preview.png" alt="EN Full - print preview" />
+        </div>
+        <div class="compare-col">
+          <h3>PDF (Cmd+P) <span class="tag tag-pdf">@media print</span></h3>
+          <embed src="en-full-print.pdf" type="application/pdf" />
+        </div>
+      </div>
     </div>
-    <div class="compare-col">
-      <h3>Print Preview <span class="tag tag-preview">?print=1</span></h3>
-      <img src="fr-full-print-preview.png" alt="FR Full - print preview" />
-    </div>
-    <div class="compare-col">
-      <h3>PDF (Cmd+P) <span class="tag tag-pdf">@media print</span></h3>
-      <embed src="fr-full-print.pdf" type="application/pdf" />
-    </div>
-  </div>
-</div>
 
-<!-- EN FULL -->
-<div class="section">
-  <h2>EN Full <code>/en</code></h2>
-  <div class="compare-row">
-    <div class="compare-col">
-      <h3>Screen <span class="tag tag-screen">live</span></h3>
-      <img src="en-full-screen.png" alt="EN Full - screen" />
+    <!-- MOBILE -->
+    <div class="section">
+      <h2>Mobile (390px)</h2>
+      <div class="mobile-row">
+        <div class="compare-col">
+          <h3>FR Full <span class="tag tag-mobile">390px</span></h3>
+          <img src="fr-full-mobile.png" alt="FR Full - mobile" />
+        </div>
+        <div class="compare-col">
+          <h3>EN Full <span class="tag tag-mobile">390px</span></h3>
+          <img src="en-full-mobile.png" alt="EN Full - mobile" />
+        </div>
+      </div>
     </div>
-    <div class="compare-col">
-      <h3>Print Preview <span class="tag tag-preview">?print=1</span></h3>
-      <img src="en-full-print-preview.png" alt="EN Full - print preview" />
-    </div>
-    <div class="compare-col">
-      <h3>PDF (Cmd+P) <span class="tag tag-pdf">@media print</span></h3>
-      <embed src="en-full-print.pdf" type="application/pdf" />
-    </div>
-  </div>
-</div>
-
-<!-- MOBILE -->
-<div class="section">
-  <h2>Mobile (390px)</h2>
-  <div class="mobile-row">
-    <div class="compare-col">
-      <h3>FR Full <span class="tag tag-mobile">390px</span></h3>
-      <img src="fr-full-mobile.png" alt="FR Full - mobile" />
-    </div>
-    <div class="compare-col">
-      <h3>EN Full <span class="tag tag-mobile">390px</span></h3>
-      <img src="en-full-mobile.png" alt="EN Full - mobile" />
-    </div>
-  </div>
-</div>
-
-</body>
+  </body>
 </html>

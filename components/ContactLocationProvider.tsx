@@ -8,9 +8,8 @@ export type ContactLocationContextValue = ContactLocationOverlay & {
   locale: Locale;
 };
 
-const ContactLocationContext = createContext<ContactLocationContextValue | null>(
-  null,
-);
+const ContactLocationContext =
+  createContext<ContactLocationContextValue | null>(null);
 
 export function useContactLocation(): ContactLocationContextValue | null {
   return useContext(ContactLocationContext);

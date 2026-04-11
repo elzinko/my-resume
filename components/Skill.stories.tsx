@@ -10,7 +10,9 @@ const meta: Meta<typeof Skill> = {
     compact: false,
   },
   argTypes: { compact: { control: 'boolean' } },
-  decorators: [(Story) => <div className="flex flex-wrap gap-2 p-4">{Story()}</div>],
+  decorators: [
+    (Story) => <div className="flex flex-wrap gap-2 p-4">{Story()}</div>,
+  ],
 };
 
 export default meta;

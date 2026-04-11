@@ -26,9 +26,7 @@ const meta: Meta<typeof ContactDisplay> = {
     compact: { control: 'boolean' },
     cvShortInlineRows: { control: 'boolean' },
   },
-  decorators: [
-    (Story) => <div className="max-w-[480px] p-4">{Story()}</div>,
-  ],
+  decorators: [(Story) => <div className="max-w-[480px] p-4">{Story()}</div>],
 };
 
 export default meta;

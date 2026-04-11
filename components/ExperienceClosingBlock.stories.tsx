@@ -14,9 +14,7 @@ const meta: Meta<typeof ExperienceClosingBlock> = {
   argTypes: {
     moreClientsLine: { control: 'text' },
   },
-  decorators: [
-    (Story) => <div className="max-w-[720px] p-4">{Story()}</div>,
-  ],
+  decorators: [(Story) => <div className="max-w-[720px] p-4">{Story()}</div>],
 };
 
 export default meta;

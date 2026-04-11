@@ -35,8 +35,8 @@ function formatStudyYear(startDate?: string, endDate?: string): string | null {
 }
 
 function studyMetaLine(study: StudyData): string {
-  const parts = [study.location, study.establishment].filter(
-    (p): p is string => Boolean(p && String(p).trim()),
+  const parts = [study.location, study.establishment].filter((p): p is string =>
+    Boolean(p && String(p).trim()),
   );
   return parts.join(' / ');
 }
@@ -57,7 +57,9 @@ export default function StudyDisplay({
           {study.name}
         </span>
         {endYear && (
-          <span className={`cv-study-year-compact min-w-max shrink-0 whitespace-nowrap ${color}`}>
+          <span
+            className={`cv-study-year-compact min-w-max shrink-0 whitespace-nowrap ${color}`}
+          >
             {endYear}
           </span>
         )}

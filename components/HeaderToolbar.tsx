@@ -71,7 +71,11 @@ function DevMobilePreviewButton({ onNavigate }: { onNavigate?: () => void }) {
     const next = new URLSearchParams(searchParams.toString());
     next.set(CV_VIEWPORT_PARAM, CV_VIEWPORT_MOBILE_VALUE);
     const q = next.toString();
-    router.push(q ? `${pathname}?${q}` : `${pathname}?${CV_VIEWPORT_PARAM}=${CV_VIEWPORT_MOBILE_VALUE}`);
+    router.push(
+      q
+        ? `${pathname}?${q}`
+        : `${pathname}?${CV_VIEWPORT_PARAM}=${CV_VIEWPORT_MOBILE_VALUE}`,
+    );
   }, [pathname, searchParams, router, onNavigate]);
 
   return (
@@ -195,10 +199,7 @@ function ModeControl({
 }) {
   if (shortLang) {
     return (
-      <FullVersionFromShortLink
-        shortLang={shortLang}
-        onNavigate={onNavigate}
-      />
+      <FullVersionFromShortLink shortLang={shortLang} onNavigate={onNavigate} />
     );
   }
   return (
@@ -213,11 +214,7 @@ function ModeControl({
 }
 
 /** CV long ou CV court : bascule `?print=1`. */
-function PrintPreviewToggleLink({
-  onNavigate,
-}: {
-  onNavigate?: () => void;
-}) {
+function PrintPreviewToggleLink({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
   const sp = useSearchParams();
   const loc = localeFromCvPrintPreviewPathname(pathname);
@@ -253,7 +250,7 @@ function PrintPreviewToggleLink({
   return (
     <Link
       href={href}
-      className={`${cvHeaderModeBtn} print:hidden max-w-[11rem] truncate text-xs font-normal text-slate-500 hover:text-slate-800`}
+      className={`${cvHeaderModeBtn} max-w-[11rem] truncate text-xs font-normal text-slate-500 hover:text-slate-800 print:hidden`}
       title={title}
       onClick={() => onNavigate?.()}
     >
@@ -353,9 +350,7 @@ export default function HeaderToolbar({
         </Suspense>
         <div className="flex flex-wrap items-center justify-end gap-3">
           <Suspense fallback={null}>
-            <ModeControl
-              shortLang={shortLang}
-            />
+            <ModeControl shortLang={shortLang} />
           </Suspense>
           {/* Print preview + Mobile preview retirés : WYSIWYG. */}
           <ToolbarIconList
@@ -417,10 +412,7 @@ export default function HeaderToolbar({
             }
           >
             <Suspense fallback={null}>
-              <ModeControl
-                shortLang={shortLang}
-                onNavigate={close}
-              />
+              <ModeControl shortLang={shortLang} onNavigate={close} />
             </Suspense>
             <ToolbarIconList
               onNavigate={close}

@@ -34,18 +34,18 @@ is derived from this same file at server startup by
 GET /{lang}?company=<name>&requirement=<Label:kw1,kw2>[&...]
 ```
 
-| Parameter    | Required | Description                                                |
-| ------------ | -------- | ---------------------------------------------------------- |
-| `company`    | yes      | Company name                                               |
-| `title`      | no       | Job title (applied to both FR and EN)                      |
-| `title_fr`   | no       | French job title                                           |
-| `title_en`   | no       | English job title                                          |
-| `requirement`| yes (1+) | Repeatable. Format: `Label:keyword1,keyword2`              |
-| `req`        | alias    | Short alias for `requirement`                              |
-| `reqY`       | no       | Override displayed years for the i-th requirement          |
-| `contract`   | no       | `cdi` or `freelance` (hides Malt link when `cdi`)         |
-| `spec`       | no       | Base64url JSON blob (overrides other offer params)         |
-| `id`         | no       | Internal offer identifier                                  |
+| Parameter     | Required | Description                                        |
+| ------------- | -------- | -------------------------------------------------- |
+| `company`     | yes      | Company name                                       |
+| `title`       | no       | Job title (applied to both FR and EN)              |
+| `title_fr`    | no       | French job title                                   |
+| `title_en`    | no       | English job title                                  |
+| `requirement` | yes (1+) | Repeatable. Format: `Label:keyword1,keyword2`      |
+| `req`         | alias    | Short alias for `requirement`                      |
+| `reqY`        | no       | Override displayed years for the i-th requirement  |
+| `contract`    | no       | `cdi` or `freelance` (hides Malt link when `cdi`)  |
+| `spec`        | no       | Base64url JSON blob (overrides other offer params) |
+| `id`          | no       | Internal offer identifier                          |
 
 ### Requirement format
 
@@ -56,6 +56,7 @@ Each `requirement` value follows the pattern `Label:keyword1,keyword2`:
   skill catalog. Use lowercase text or catalog `@id` references.
 
 Example:
+
 ```
 requirement=React:react,nextjs,typescript
 requirement=Cloud+AWS:aws,ec2,s3,lambda
@@ -84,11 +85,13 @@ The `contract` parameter adapts the CV for the type of position:
 ## Example URLs
 
 French, two requirements:
+
 ```
 /fr?company=Safran&title=Dev+Full+Stack&requirement=Java:java,spring&requirement=Docker:docker,kubernetes&contract=cdi
 ```
 
 English, with catalog id:
+
 ```
 /en?company=Acme&title=Engineer&requirement=React:@abc123&requirement=AWS:aws,s3
 ```
@@ -109,13 +112,13 @@ See `lib/dynamic-offer-spec.ts` for encoding helpers.
 
 ## Key project files
 
-| File | Role |
-| ---- | ---- |
-| `data/cv/bundle.json` | All CV content (FR + EN) |
-| `lib/match-catalog-from-bundle.ts` | Derives match catalog from bundle |
-| `lib/query-offer-params.ts` | Parses URL query params into offer |
-| `lib/dynamic-offer-spec.ts` | JSON <-> base64url encoding |
-| `lib/cv-contract-text.ts` | Resolves CDI/freelance text variants |
-| `app/[lang]/page.tsx` | Main CV page (handles offer params) |
-| `app/[lang]/short/page.tsx` | Short (1-page) CV |
-| `app/api/llm-guide/route.ts` | Dynamic LLM guide with tech catalog |
+| File                               | Role                                 |
+| ---------------------------------- | ------------------------------------ |
+| `data/cv/bundle.json`              | All CV content (FR + EN)             |
+| `lib/match-catalog-from-bundle.ts` | Derives match catalog from bundle    |
+| `lib/query-offer-params.ts`        | Parses URL query params into offer   |
+| `lib/dynamic-offer-spec.ts`        | JSON <-> base64url encoding          |
+| `lib/cv-contract-text.ts`          | Resolves CDI/freelance text variants |
+| `app/[lang]/page.tsx`              | Main CV page (handles offer params)  |
+| `app/[lang]/short/page.tsx`        | Short (1-page) CV                    |
+| `app/api/llm-guide/route.ts`       | Dynamic LLM guide with tech catalog  |

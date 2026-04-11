@@ -13,7 +13,10 @@ import formatDates from '@/lib/date';
 import ShortPageWrapper from '@/components/ShortPageWrapper';
 import FullCvPrintPreviewEffect from '@/components/FullCvPrintPreviewEffect';
 import ShortAutoprint from '@/components/ShortAutoprint';
-import { resolveAboutText, resolveDomainDescription } from '@/lib/cv-contract-text';
+import {
+  resolveAboutText,
+  resolveDomainDescription,
+} from '@/lib/cv-contract-text';
 import type { ContractType } from '@/data/offers/types';
 import type { Metadata } from 'next';
 
@@ -40,9 +43,14 @@ export default async function ShortPage({
   searchParams?: Record<string, string | string[] | undefined>;
 }) {
   const data: any = await getCvData(lang);
-  const contractParam = typeof searchParams?.contract === 'string' ? searchParams.contract : undefined;
+  const contractParam =
+    typeof searchParams?.contract === 'string'
+      ? searchParams.contract
+      : undefined;
   const contract: ContractType | undefined =
-    contractParam === 'cdi' || contractParam === 'freelance' ? contractParam : undefined;
+    contractParam === 'cdi' || contractParam === 'freelance'
+      ? contractParam
+      : undefined;
   const hideMalt = contract === 'cdi';
 
   const compactData: CompactCvData = {
@@ -121,14 +129,11 @@ export default async function ShortPage({
         headerRole={data?.header?.role || ''}
         hideMalt={hideMalt}
       >
-      <Suspense fallback={null}>
-        <ShortAutoprint />
-      </Suspense>
-      <CompactCvLayout
-        data={compactData}
-        lang={lang as 'fr' | 'en'}
-      />
-    </ShortPageWrapper>
+        <Suspense fallback={null}>
+          <ShortAutoprint />
+        </Suspense>
+        <CompactCvLayout data={compactData} lang={lang as 'fr' | 'en'} />
+      </ShortPageWrapper>
     </>
   );
 }

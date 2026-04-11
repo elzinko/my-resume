@@ -15,7 +15,10 @@ const sampleJob = {
   bullets: [
     { id: 'b1', text: 'Lead d’une squad de 5 développeurs (agile SAFe).' },
     { id: 'b2', text: 'Réduction de 40 % du TTFB grâce au SSR + cache.' },
-    { id: 'b3', text: 'Mise en place des pipelines de tests e2e (Playwright).' },
+    {
+      id: 'b3',
+      text: 'Mise en place des pipelines de tests e2e (Playwright).',
+    },
   ],
   frameworks: [
     { id: 'react', name: 'React' },
@@ -40,9 +43,7 @@ const meta: Meta<typeof JobDisplay> = {
     locale: { control: 'select', options: ['fr', 'en'] },
     presentLabel: { control: 'text' },
   },
-  decorators: [
-    (Story) => <div className="max-w-[720px] p-4">{Story()}</div>,
-  ],
+  decorators: [(Story) => <div className="max-w-[720px] p-4">{Story()}</div>],
 };
 
 export default meta;

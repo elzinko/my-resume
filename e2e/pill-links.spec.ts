@@ -65,9 +65,7 @@ test.describe('Pill links', () => {
       await expect(blablaLink).toHaveText('BlaBlaCar');
 
       // Edelia should link to edelia.fr
-      const edeliaLink = jobsSection.locator(
-        'a[href="https://www.edelia.fr"]',
-      );
+      const edeliaLink = jobsSection.locator('a[href="https://www.edelia.fr"]');
       await expect(edeliaLink).toBeVisible();
       await expect(edeliaLink).toHaveAttribute('target', '_blank');
       await expect(edeliaLink).toHaveText('Edelia');

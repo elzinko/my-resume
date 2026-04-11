@@ -20,6 +20,7 @@ export function resolveDomainDescription(
   domain: { description?: string; descriptionCdi?: string } | undefined | null,
   contract?: ContractType,
 ): string {
-  if (contract === 'cdi' && domain?.descriptionCdi) return domain.descriptionCdi;
+  if (contract === 'cdi' && domain?.descriptionCdi)
+    return domain.descriptionCdi;
   return domain?.description || '';
 }

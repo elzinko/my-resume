@@ -1,4 +1,7 @@
-import type { MatchCatalog, MatchCatalogEntry } from '@/lib/match-catalog-schema';
+import type {
+  MatchCatalog,
+  MatchCatalogEntry,
+} from '@/lib/match-catalog-schema';
 import {
   MATCH_CATALOG_VERSION,
   deriveMatchTokensFromName,

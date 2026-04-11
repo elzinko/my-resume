@@ -96,7 +96,8 @@ export default function project({
     </>
   );
 
-  const titleTypo = 'text-base font-normal leading-snug text-cv-tag-text print:text-sm';
+  const titleTypo =
+    'text-base font-normal leading-snug text-cv-tag-text print:text-sm';
 
   const titleEl = projectData.link ? (
     <a
@@ -106,9 +107,7 @@ export default function project({
       {titleInner}
     </a>
   ) : (
-    <span className={titleTypo}>
-      {titleInner}
-    </span>
+    <span className={titleTypo}>{titleInner}</span>
   );
 
   const printLinkClass =
@@ -119,21 +118,29 @@ export default function project({
       {titleText}
     </a>
   ) : (
-    <span className="text-cv-tag-text print:!text-cv-tag-text">{titleText}</span>
+    <span className="text-cv-tag-text print:!text-cv-tag-text">
+      {titleText}
+    </span>
   );
 
   return (
     <>
       <div
         id={id}
-        className={`cv-project-screen cv-project-row${hasDesc ? '' : ' cv-project-row--no-desc'}`}
+        className={`cv-project-screen cv-project-row${
+          hasDesc ? '' : ' cv-project-row--no-desc'
+        }`}
       >
         <div className="cv-project-title-area">{titleEl}</div>
         {hasDesc ? (
           <p className="cv-project-desc-area cv-study-meta">{description}</p>
         ) : null}
         {dates ? (
-          <span className={`cv-project-date-area min-w-max shrink-0 text-sm font-normal tabular-nums leading-snug text-cv-tag-text print:text-xs${hideDatesPrint ? ' print:hidden print-preview:hidden' : ''}`}>
+          <span
+            className={`cv-project-date-area min-w-max shrink-0 text-sm font-normal tabular-nums leading-snug text-cv-tag-text print:text-xs${
+              hideDatesPrint ? ' print-preview:hidden print:hidden' : ''
+            }`}
+          >
             {dates}
           </span>
         ) : null}

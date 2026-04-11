@@ -3,10 +3,20 @@ import type { Meta, StoryObj } from '@storybook/react';
 import HobbiesDisplay from './HobbiesDisplay';
 
 const sampleItems = [
-  { id: '1', name: 'Course a pied', link: '#', description: 'Semi-marathon, trail.' },
+  {
+    id: '1',
+    name: 'Course a pied',
+    link: '#',
+    description: 'Semi-marathon, trail.',
+  },
   { id: '2', name: 'Musique', link: '#', description: 'Guitare, piano.' },
   { id: '3', name: 'Open source', link: '#' },
-  { id: '4', name: 'Voyage', link: '#', description: 'Asie du Sud-Est, Amerique latine.' },
+  {
+    id: '4',
+    name: 'Voyage',
+    link: '#',
+    description: 'Asie du Sud-Est, Amerique latine.',
+  },
 ];
 
 const meta: Meta<typeof HobbiesDisplay> = {

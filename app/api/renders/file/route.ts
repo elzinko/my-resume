@@ -19,7 +19,9 @@ const MIME: Record<string, string> = {
  * Ex : `fr-short-print.pdf` → { lang: 'fr', mode: 'short' }
  *      `en-full-print.pdf`  → { lang: 'en', mode: 'full' }
  */
-function parseRenderFilename(name: string): { lang: string; mode: 'full' | 'short' } | null {
+function parseRenderFilename(
+  name: string,
+): { lang: string; mode: 'full' | 'short' } | null {
   const m = name.match(/^(fr|en)-(full|short)-/);
   if (!m) return null;
   return { lang: m[1], mode: m[2] as 'full' | 'short' };
@@ -68,7 +70,11 @@ export async function GET(request: NextRequest) {
       try {
         const data: any = await getCvData(parsed.lang as 'fr' | 'en');
         const candidateName = data?.header?.name || 'CV';
-        const title = generateDocumentTitle(candidateName, parsed.lang, parsed.mode);
+        const title = generateDocumentTitle(
+          candidateName,
+          parsed.lang,
+          parsed.mode,
+        );
         headers['Content-Disposition'] = `inline; filename="${title}.pdf"`;
       } catch {
         // Fallback: use raw filename

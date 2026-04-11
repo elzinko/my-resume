@@ -25,16 +25,9 @@ export default function ShortPageWrapper({
     <>
       <header className="relative z-[70] print:mb-1">
         <div className="print:hidden">
-          <HeaderToolbar
-            shortLang={lang}
-            hideMalt={hideMalt}
-          />
+          <HeaderToolbar shortLang={lang} hideMalt={hideMalt} />
         </div>
-        <HeaderContent
-          name={headerName}
-          role={headerRole}
-          compactPrint
-        />
+        <HeaderContent name={headerName} role={headerRole} compactPrint />
       </header>
       {children}
     </>

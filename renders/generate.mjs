@@ -32,10 +32,16 @@ async function pdf(url, filename, opts = {}) {
     path: path.join(OUT, filename),
     preferCSSPageSize: !opts.chromeMargins,
     printBackground: true,
-    ...(opts.chromeMargins ? { format: 'A4', margin: { top: '10mm', right: '10mm', bottom: '10mm', left: '10mm' } } : {}),
+    ...(opts.chromeMargins
+      ? {
+          format: 'A4',
+          margin: { top: '10mm', right: '10mm', bottom: '10mm', left: '10mm' },
+        }
+      : {}),
   });
   const buf = fs.readFileSync(path.join(OUT, filename));
-  const pages = (buf.toString('latin1').match(/\/Type\s*\/Page[^s]/g) || []).length;
+  const pages = (buf.toString('latin1').match(/\/Type\s*\/Page[^s]/g) || [])
+    .length;
   console.log(`  pdf: ${filename} (${pages} pages)`);
   await ctx.close();
 }
@@ -46,28 +52,40 @@ console.log('=== Generating renders ===');
 console.log('\n[FR Short CV]');
 await screenshot(`${BASE}/fr/short`, 'fr-short-screen.png');
 await screenshot(`${BASE}/fr/short?print=1`, 'fr-short-print-preview.png');
-await screenshot(`${BASE}/fr/short`, 'fr-short-mobile.png', { viewport: { width: 390, height: 844 }, dpr: 2 });
+await screenshot(`${BASE}/fr/short`, 'fr-short-mobile.png', {
+  viewport: { width: 390, height: 844 },
+  dpr: 2,
+});
 await pdf(`${BASE}/fr/short`, 'fr-short-print.pdf', { chromeMargins: true });
 
 // EN Short
 console.log('\n[EN Short CV]');
 await screenshot(`${BASE}/en/short`, 'en-short-screen.png');
 await screenshot(`${BASE}/en/short?print=1`, 'en-short-print-preview.png');
-await screenshot(`${BASE}/en/short`, 'en-short-mobile.png', { viewport: { width: 390, height: 844 }, dpr: 2 });
+await screenshot(`${BASE}/en/short`, 'en-short-mobile.png', {
+  viewport: { width: 390, height: 844 },
+  dpr: 2,
+});
 await pdf(`${BASE}/en/short`, 'en-short-print.pdf', { chromeMargins: true });
 
 // FR Full
 console.log('\n[FR Full CV]');
 await screenshot(`${BASE}/fr`, 'fr-full-screen.png');
 await screenshot(`${BASE}/fr?print=1`, 'fr-full-print-preview.png');
-await screenshot(`${BASE}/fr`, 'fr-full-mobile.png', { viewport: { width: 390, height: 844 }, dpr: 2 });
+await screenshot(`${BASE}/fr`, 'fr-full-mobile.png', {
+  viewport: { width: 390, height: 844 },
+  dpr: 2,
+});
 await pdf(`${BASE}/fr`, 'fr-full-print.pdf');
 
 // EN Full
 console.log('\n[EN Full CV]');
 await screenshot(`${BASE}/en`, 'en-full-screen.png');
 await screenshot(`${BASE}/en?print=1`, 'en-full-print-preview.png');
-await screenshot(`${BASE}/en`, 'en-full-mobile.png', { viewport: { width: 390, height: 844 }, dpr: 2 });
+await screenshot(`${BASE}/en`, 'en-full-mobile.png', {
+  viewport: { width: 390, height: 844 },
+  dpr: 2,
+});
 await pdf(`${BASE}/en`, 'en-full-print.pdf');
 
 await b.close();

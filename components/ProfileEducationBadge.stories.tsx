@@ -8,9 +8,7 @@ const meta: Meta<typeof ProfileEducationBadge> = {
   args: {
     label: 'Équivalent Bac+5',
   },
-  decorators: [
-    (Story) => <div className="p-4">{Story()}</div>,
-  ],
+  decorators: [(Story) => <div className="p-4">{Story()}</div>],
 };
 
 export default meta;

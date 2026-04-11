@@ -7,7 +7,13 @@ const solidColorMap = {
   orange: 'bg-orange-300',
 } as const;
 
-type PillColor = keyof typeof solidColorMap | 'skill' | 'jobs' | 'domain' | 'education' | 'match';
+type PillColor =
+  | keyof typeof solidColorMap
+  | 'skill'
+  | 'jobs'
+  | 'domain'
+  | 'education'
+  | 'match';
 
 type PillSize = 's' | 'm' | 'l';
 
@@ -75,7 +81,11 @@ export default function Pill({
     const classes = compact
       ? 'cv-pill-jobs whitespace-nowrap px-1 py-0.5 text-[9px] print:text-[8px]'
       : 'cv-pill-jobs whitespace-nowrap px-1.5 py-0.5 text-[10px] md:px-2 md:py-1 md:text-xs';
-    return <Tag className={classes} {...linkProps}>{children}</Tag>;
+    return (
+      <Tag className={classes} {...linkProps}>
+        {children}
+      </Tag>
+    );
   }
 
   /* ── Domain (teal) ── */
@@ -83,7 +93,11 @@ export default function Pill({
     const classes = compact
       ? 'cv-pill-domain shrink-0 whitespace-nowrap px-2 py-0.5 text-xs font-medium leading-snug print:px-1.5 print:py-0.5 print:text-[10px] md:px-2.5 md:py-1 md:text-sm'
       : 'cv-pill-domain shrink-0 whitespace-nowrap px-2 py-0.5 text-xs font-medium leading-snug md:px-2.5 md:py-1 md:text-sm print:px-1.5 print:py-0.5 print:text-[10px]';
-    return <Tag className={classes} {...linkProps}>{children}</Tag>;
+    return (
+      <Tag className={classes} {...linkProps}>
+        {children}
+      </Tag>
+    );
   }
 
   /* ── Skill (bleu) ── */
@@ -91,7 +105,11 @@ export default function Pill({
     const classes = compact
       ? 'cv-pill-skill whitespace-nowrap px-1 py-0.5 text-[9px] print:text-[8px]'
       : 'cv-pill-skill whitespace-nowrap px-1.5 py-0.5 text-[10px] md:px-2 md:py-1 md:text-xs';
-    return <Tag className={classes} {...linkProps}>{children}</Tag>;
+    return (
+      <Tag className={classes} {...linkProps}>
+        {children}
+      </Tag>
+    );
   }
 
   /* ── Education (violet) ── */
@@ -99,7 +117,11 @@ export default function Pill({
     const classes = compact
       ? 'cv-pill-education inline-block max-w-full px-1.5 py-0.5 text-xs leading-snug print:px-1.5 print:py-0.5 print:text-[10px]'
       : 'cv-pill-education inline-block max-w-full px-2 py-0.5 text-sm leading-snug md:px-2.5 md:py-1 md:text-base print:text-sm';
-    return <Tag className={classes} {...linkProps}>{children}</Tag>;
+    return (
+      <Tag className={classes} {...linkProps}>
+        {children}
+      </Tag>
+    );
   }
 
   /* ── Legacy solid colors (fuchsia, orange) ── */
@@ -108,5 +130,9 @@ export default function Pill({
     ? `whitespace-nowrap rounded ${bg} px-1 py-0.5 text-[9px] text-white print:text-[8px]`
     : `whitespace-nowrap rounded ${bg} px-1.5 py-0.5 text-[10px] text-white md:px-2 md:py-1 md:text-xs`;
 
-  return <Tag className={classes} {...linkProps}>{children}</Tag>;
+  return (
+    <Tag className={classes} {...linkProps}>
+      {children}
+    </Tag>
+  );
 }

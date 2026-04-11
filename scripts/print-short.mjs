@@ -9,7 +9,12 @@ const ctx = await browser.newContext();
 const page = await ctx.newPage();
 await page.goto(url, { waitUntil: 'networkidle' });
 await page.emulateMedia({ media: 'print' });
-await page.pdf({ path: out, format: 'A4', printBackground: true, margin: { top: '5mm', right: '5mm', bottom: '5mm', left: '5mm' } });
+await page.pdf({
+  path: out,
+  format: 'A4',
+  printBackground: true,
+  margin: { top: '5mm', right: '5mm', bottom: '5mm', left: '5mm' },
+});
 await page.screenshot({ path: pngOut, fullPage: true });
 await browser.close();
 console.log('PDF:', out);

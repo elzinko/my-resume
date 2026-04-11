@@ -1,7 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import type { JobOffer } from '../data/offers/types';
-import { jobOfferToMatchHref, jobOfferToMatchSearchParams } from './offer-to-match-url';
+import {
+  jobOfferToMatchHref,
+  jobOfferToMatchSearchParams,
+} from './offer-to-match-url';
 
 const mockOffer: JobOffer = {
   id: 'test-java',

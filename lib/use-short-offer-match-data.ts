@@ -9,9 +9,7 @@ import type { Locale } from 'i18n-config';
 /**
  * Resolution d'offre dynamique (query params) pour le bloc "Adequation" du CV court.
  */
-export function useShortOfferMatchData(
-  lang: Locale,
-): MatchDisplayData | null {
+export function useShortOfferMatchData(lang: Locale): MatchDisplayData | null {
   const searchParams = useSearchParams();
   const queryKey = searchParams.toString();
 

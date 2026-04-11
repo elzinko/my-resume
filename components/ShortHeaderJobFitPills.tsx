@@ -1,6 +1,9 @@
 'use client';
 
-import { formatMatchYears, type MatchYearsLang } from '@/lib/format-match-years';
+import {
+  formatMatchYears,
+  type MatchYearsLang,
+} from '@/lib/format-match-years';
 import { useShortOfferMatchData } from '@/lib/use-short-offer-match-data';
 import Pill from '@/components/Pill';
 import type { Locale } from 'i18n-config';
@@ -24,7 +27,7 @@ export default function ShortHeaderJobFitPills({
   const listLabel =
     lang === 'en'
       ? 'Role fit at a glance, years of experience per requirement'
-      : "Adequation poste (apercu), annees d\u2019experience par exigence";
+      : 'Adequation poste (apercu), annees d\u2019experience par exigence';
 
   return (
     <div
@@ -36,8 +39,7 @@ export default function ShortHeaderJobFitPills({
       <ul className="m-0 flex max-w-full list-none flex-wrap items-center gap-1.5 p-0 print:gap-1">
         {entries.map((entry, index) => {
           const hasMatches = entry.matchedClients.length > 0;
-          const showYears =
-            hasMatches || entry.yearsFromOverride === true;
+          const showYears = hasMatches || entry.yearsFromOverride === true;
           const yearsLabel = showYears
             ? formatMatchYears(entry.totalYears, l)
             : '\u2014';
@@ -45,8 +47,8 @@ export default function ShortHeaderJobFitPills({
           const ariaYears = showYears
             ? yearsLabel
             : lang === 'en'
-              ? 'not practiced'
-              : 'non pratiquee';
+            ? 'not practiced'
+            : 'non pratiquee';
 
           return (
             <li

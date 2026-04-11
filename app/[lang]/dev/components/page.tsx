@@ -66,16 +66,37 @@ export default async function DevComponentsPage({
     projectsNode,
     jobsNode,
   ] = await Promise.all([
-    (Header as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang }),
-    (About as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang, educationLevel }),
-    (Contact as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang }),
-    (Skills as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang }),
-    (Domains as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang }),
-    (Studies as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang }),
-    (Hobbies as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang }),
-    (Learnings as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang }),
-    (Projects as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang }),
-    (Jobs as unknown as (p: any) => Promise<React.ReactElement>)({ locale: lang }),
+    (Header as unknown as (p: any) => Promise<React.ReactElement>)({
+      locale: lang,
+    }),
+    (About as unknown as (p: any) => Promise<React.ReactElement>)({
+      locale: lang,
+      educationLevel,
+    }),
+    (Contact as unknown as (p: any) => Promise<React.ReactElement>)({
+      locale: lang,
+    }),
+    (Skills as unknown as (p: any) => Promise<React.ReactElement>)({
+      locale: lang,
+    }),
+    (Domains as unknown as (p: any) => Promise<React.ReactElement>)({
+      locale: lang,
+    }),
+    (Studies as unknown as (p: any) => Promise<React.ReactElement>)({
+      locale: lang,
+    }),
+    (Hobbies as unknown as (p: any) => Promise<React.ReactElement>)({
+      locale: lang,
+    }),
+    (Learnings as unknown as (p: any) => Promise<React.ReactElement>)({
+      locale: lang,
+    }),
+    (Projects as unknown as (p: any) => Promise<React.ReactElement>)({
+      locale: lang,
+    }),
+    (Jobs as unknown as (p: any) => Promise<React.ReactElement>)({
+      locale: lang,
+    }),
   ]);
 
   const headerName: string = data?.header?.name ?? '';
@@ -107,9 +128,7 @@ export default async function DevComponentsPage({
     <HeaderContent
       name={headerName}
       role={headerRole}
-      belowRole={
-        <div className="w-full">{headerContactStripNode}</div>
-      }
+      belowRole={<div className="w-full">{headerContactStripNode}</div>}
     />
   );
 
@@ -167,7 +186,12 @@ export default async function DevComponentsPage({
       node: (
         <iframe
           src={`/${lang}?cvViewport=mobile`}
-          style={{ width: 390, height: 60, border: '1px dashed #cbd5e1', borderRadius: 4 }}
+          style={{
+            width: 390,
+            height: 60,
+            border: '1px dashed #cbd5e1',
+            borderRadius: 4,
+          }}
           title="Mobile toolbar preview"
         />
       ),
@@ -191,24 +215,29 @@ export default async function DevComponentsPage({
     { id: 'contact', title: 'Contact', node: contactDefaultNode },
     { id: 'skills', title: 'Skills', node: skillsNode },
     { id: 'domains', title: 'Domains (3 colonnes)', node: domainsNode },
-    ...(data?.allDomainsModels || []).slice(0, 1).map((domain: any, i: number) => ({
-      id: `domain-${domain.id || i}`,
-      title: `Domain · ${domain.name || `#${i}`}`,
-      node: (
-        <div className="max-w-sm">
-          <Domain key={domain.id} domain={domain} />
-        </div>
-      ),
-    })),
+    ...(data?.allDomainsModels || [])
+      .slice(0, 1)
+      .map((domain: any, i: number) => ({
+        id: `domain-${domain.id || i}`,
+        title: `Domain · ${domain.name || `#${i}`}`,
+        node: (
+          <div className="max-w-sm">
+            <Domain key={domain.id} domain={domain} />
+          </div>
+        ),
+      })),
     {
       id: 'job-fit-full',
       title: 'Job Fit (liste avec clients — CV complet)',
       node: (
         <div className="rounded-lg bg-slate-900 p-4 text-gray-200">
-          <Suspense fallback={<p className="text-sm text-slate-400">Chargement Job Fit…</p>}>
+          <Suspense
+            fallback={
+              <p className="text-sm text-slate-400">Chargement Job Fit…</p>
+            }
+          >
             <JobFitSection
               lang={lang}
-
               educationLevel={educationLevel}
               variant="full"
             />
@@ -222,10 +251,13 @@ export default async function DevComponentsPage({
       node: (
         <div className="rounded-lg bg-slate-900 p-4 text-gray-200">
           <Narrow>
-            <Suspense fallback={<p className="text-sm text-slate-400">Chargement Job Fit…</p>}>
+            <Suspense
+              fallback={
+                <p className="text-sm text-slate-400">Chargement Job Fit…</p>
+              }
+            >
               <JobFitSection
                 lang={lang}
-  
                 educationLevel={educationLevel}
                 variant="compact"
               />
@@ -234,7 +266,11 @@ export default async function DevComponentsPage({
         </div>
       ),
     },
-    { id: 'studies-default', title: 'Studies (default)', node: studiesDefaultNode },
+    {
+      id: 'studies-default',
+      title: 'Studies (default)',
+      node: studiesDefaultNode,
+    },
     {
       id: 'studies-narrow',
       title: 'Studies (narrow container — mobile / sidebar)',
@@ -246,13 +282,22 @@ export default async function DevComponentsPage({
       title: 'Hobbies (narrow container — mobile / sidebar)',
       node: <Narrow>{hobbiesNode}</Narrow>,
     },
-    { id: 'learnings', title: 'Learnings (large container — descriptions visibles)', node: learningsNode },
+    {
+      id: 'learnings',
+      title: 'Learnings (large container — descriptions visibles)',
+      node: learningsNode,
+    },
     {
       id: 'learnings-narrow',
-      title: 'Learnings (narrow container — mobile / sidebar, sans descriptions)',
+      title:
+        'Learnings (narrow container — mobile / sidebar, sans descriptions)',
       node: <Narrow>{learningsNode}</Narrow>,
     },
-    { id: 'projects', title: 'Projects (default — année seule)', node: projectsNode },
+    {
+      id: 'projects',
+      title: 'Projects (default — année seule)',
+      node: projectsNode,
+    },
     {
       id: 'projects-narrow',
       title: 'Projects (narrow — mobile / sidebar)',
@@ -268,7 +313,9 @@ export default async function DevComponentsPage({
           presentLabel={presentLabel}
           locale={lang}
         />
-      ) : <p>Aucun job</p>,
+      ) : (
+        <p>Aucun job</p>
+      ),
     },
     {
       id: 'job-single-compact',
@@ -280,7 +327,9 @@ export default async function DevComponentsPage({
           presentLabel={presentLabel}
           locale={lang}
         />
-      ) : <p>Aucun job</p>,
+      ) : (
+        <p>Aucun job</p>
+      ),
     },
     {
       id: 'jobs-short',
@@ -290,13 +339,13 @@ export default async function DevComponentsPage({
   ];
 
   return (
-    <main className="mx-auto max-w-5xl px-6 py-10 text-cv-body">
+    <main className="text-cv-body mx-auto max-w-5xl px-6 py-10">
       <header className="mb-10">
         <h1 className="text-3xl font-semibold">Dev · Components storybook</h1>
         <p className="mt-2 text-sm text-cv-body-muted">
           Chaque carte rend une section CV de façon isolée avec les données
-          réelles (<code>data/cv/bundle.json</code>, locale <code>{lang}</code>).
-          Aide à valider visuellement un composant sans toucher aux layouts
+          réelles (<code>data/cv/bundle.json</code>, locale <code>{lang}</code>
+          ). Aide à valider visuellement un composant sans toucher aux layouts
           Full / Short / mobile.
         </p>
         <nav className="mt-4 flex flex-wrap gap-2 text-xs">
@@ -324,7 +373,7 @@ export default async function DevComponentsPage({
             key={s.id}
             id={`story-${s.id}`}
             data-story={s.id}
-            className="rounded-lg border border-white/15 bg-white p-6 text-slate-900 shadow-sm"
+            className="border-white/15 rounded-lg border bg-white p-6 text-slate-900 shadow-sm"
           >
             <h2 className="mb-4 text-xs uppercase tracking-wider text-slate-500">
               {s.title}

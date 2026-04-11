@@ -98,7 +98,10 @@ function getParam(sp: URLSearchParams, a: string, b: string): string | null {
 function parseExplicitFive(sp: URLSearchParams): DevTagFive | null {
   const raw = getParam(sp, 'devTags', 'dev_tags');
   if (!raw) return null;
-  const parts = raw.split(',').map((s) => s.trim()).filter(Boolean);
+  const parts = raw
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
   if (parts.length !== 5) return null;
   const resolved: string[] = [];
   for (const p of parts) {

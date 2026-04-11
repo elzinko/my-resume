@@ -14,9 +14,7 @@ const meta: Meta<typeof HeaderDesktopContactStrip> = {
   argTypes: {
     locale: { control: 'select', options: ['fr', 'en'] },
   },
-  decorators: [
-    (Story) => <div className="max-w-[600px] p-4">{Story()}</div>,
-  ],
+  decorators: [(Story) => <div className="max-w-[600px] p-4">{Story()}</div>],
 };
 
 export default meta;

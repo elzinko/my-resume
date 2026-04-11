@@ -13,9 +13,7 @@ const meta: Meta<typeof HeaderContent> = {
   argTypes: {
     compactPrint: { control: 'boolean' },
   },
-  decorators: [
-    (Story) => <div className="max-w-[800px] p-4">{Story()}</div>,
-  ],
+  decorators: [(Story) => <div className="max-w-[800px] p-4">{Story()}</div>],
 };
 
 export default meta;

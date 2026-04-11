@@ -26,10 +26,7 @@ export default async function Header({
         <HeaderToolbar hideMalt={hideMalt} />
       </div>
 
-      <HeaderContent
-        name={data?.header?.name}
-        role={data?.header?.role}
-      />
+      <HeaderContent name={data?.header?.name} role={data?.header?.role} />
     </header>
   );
 }

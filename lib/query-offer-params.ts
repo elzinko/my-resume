@@ -1,9 +1,10 @@
-import type { ContractType, JobOffer, MatchRequirement } from '@/data/offers/types';
+import type {
+  ContractType,
+  JobOffer,
+  MatchRequirement,
+} from '@/data/offers/types';
 import { decodeOfferSpecParam } from '@/lib/dynamic-offer-spec';
-import {
-  catalogIdSet,
-  enrichJobOfferRequirements,
-} from '@/lib/match-catalog';
+import { catalogIdSet, enrichJobOfferRequirements } from '@/lib/match-catalog';
 import type { MatchCatalog } from '@/lib/match-catalog-schema';
 
 const MAX_REQUIREMENTS = 24;
