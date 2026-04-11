@@ -7,6 +7,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 /* ------------------------------------------------------------------ */
 
 type GenerateState = 'idle' | 'running' | 'done' | 'error';
+type LangFilter = 'FR' | 'EN' | 'all';
 
 /* ------------------------------------------------------------------ */
 /*  Variant definitions — FR + EN grouped per variant                  */
@@ -222,6 +223,7 @@ export default function DevRendersPage() {
   const [expandedVariant, setExpandedVariant] = useState<string | null>(
     'short',
   );
+  const [langFilter, setLangFilter] = useState<LangFilter>('FR');
 
   // Fetch last generated time
   const refreshList = useCallback(() => {
@@ -291,6 +293,33 @@ export default function DevRendersPage() {
           </p>
         </div>
         <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+          {/* Language filter */}
+          <div
+            style={{
+              display: 'flex',
+              borderRadius: '6px',
+              overflow: 'hidden',
+              border: '1px solid #334155',
+            }}
+          >
+            {(['FR', 'EN', 'all'] as const).map((opt) => (
+              <button
+                key={opt}
+                onClick={() => setLangFilter(opt)}
+                style={{
+                  padding: '0.4rem 0.75rem',
+                  background: langFilter === opt ? '#334155' : 'transparent',
+                  color: langFilter === opt ? '#f0abfc' : '#94a3b8',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: '0.85rem',
+                  fontWeight: 600,
+                }}
+              >
+                {opt === 'all' ? 'FR + EN' : opt}
+              </button>
+            ))}
+          </div>
           {/* Tab switcher */}
           <div
             style={{
@@ -537,136 +566,154 @@ export default function DevRendersPage() {
             {v.title}
           </h2>
 
-          {activeTab === 'live' ? (
-            /* -------- Live iframes -------- */
-            <div
-              style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
-            >
-              {/* Row 1: Screen — FR | EN */}
-              <div>
-                <h3
-                  style={{
-                    color: '#94a3b8',
-                    fontSize: '0.85rem',
-                    marginBottom: '0.5rem',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.05em',
-                  }}
-                >
-                  Screen
-                </h3>
+          {(() => {
+            const langs =
+              langFilter === 'all'
+                ? v.langs
+                : v.langs.filter((l) => l.lang === langFilter);
+            const colCount = langs.length === 1 ? 2 : 4;
+
+            return activeTab === 'live' ? (
+              /* -------- Live iframes -------- */
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '1rem',
+                }}
+              >
+                {/* Row 1: Screen */}
+                <div>
+                  <h3
+                    style={{
+                      color: '#94a3b8',
+                      fontSize: '0.85rem',
+                      marginBottom: '0.5rem',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.05em',
+                    }}
+                  >
+                    Screen
+                  </h3>
+                  <div
+                    style={{
+                      display: 'grid',
+                      gridTemplateColumns:
+                        langs.length === 1 ? '1fr' : '1fr 1fr',
+                      gap: '1rem',
+                    }}
+                  >
+                    {langs.map((l) => (
+                      <LiveCard
+                        key={l.lang}
+                        label={`${l.lang} Screen`}
+                        src={l.screenPath}
+                      />
+                    ))}
+                  </div>
+                </div>
+                {/* Row 2: Print Preview */}
+                <div>
+                  <h3
+                    style={{
+                      color: '#94a3b8',
+                      fontSize: '0.85rem',
+                      marginBottom: '0.5rem',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.05em',
+                    }}
+                  >
+                    Print Preview
+                  </h3>
+                  <div
+                    style={{
+                      display: 'grid',
+                      gridTemplateColumns:
+                        langs.length === 1 ? '1fr' : '1fr 1fr',
+                      gap: '1rem',
+                    }}
+                  >
+                    {langs.map((l) => (
+                      <LiveCard
+                        key={l.lang}
+                        label={`${l.lang} Print Preview`}
+                        src={l.previewPath}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              /* -------- Snapshots -------- */
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '1rem',
+                }}
+              >
+                {/* Row 1: Screen + Print Preview */}
                 <div
                   style={{
                     display: 'grid',
-                    gridTemplateColumns: '1fr 1fr',
+                    gridTemplateColumns: `repeat(${colCount}, 1fr)`,
                     gap: '1rem',
                   }}
                 >
-                  {v.langs.map((l) => (
-                    <LiveCard
-                      key={l.lang}
+                  {langs.map((l) => (
+                    <SnapshotCard
+                      key={`${l.lang}-screen`}
                       label={`${l.lang} Screen`}
-                      src={l.screenPath}
+                      tag="desktop"
+                      tagClass="tag-screen"
+                      file={l.screen}
+                      bust={bust}
+                    />
+                  ))}
+                  {langs.map((l) => (
+                    <SnapshotCard
+                      key={`${l.lang}-preview`}
+                      label={`${l.lang} Print Preview`}
+                      tag="?print=1"
+                      tagClass="tag-preview"
+                      file={l.printPreview}
+                      bust={bust}
                     />
                   ))}
                 </div>
-              </div>
-              {/* Row 2: Print Preview — FR | EN */}
-              <div>
-                <h3
-                  style={{
-                    color: '#94a3b8',
-                    fontSize: '0.85rem',
-                    marginBottom: '0.5rem',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.05em',
-                  }}
-                >
-                  Print Preview
-                </h3>
+                {/* Row 2: Mobile + PDF */}
                 <div
                   style={{
                     display: 'grid',
-                    gridTemplateColumns: '1fr 1fr',
+                    gridTemplateColumns: `repeat(${colCount}, 1fr)`,
                     gap: '1rem',
                   }}
                 >
-                  {v.langs.map((l) => (
-                    <LiveCard
-                      key={l.lang}
-                      label={`${l.lang} Print Preview`}
-                      src={l.previewPath}
+                  {langs.map((l) => (
+                    <SnapshotCard
+                      key={`${l.lang}-mobile`}
+                      label={`${l.lang} Mobile`}
+                      tag="390px"
+                      tagClass="tag-mobile"
+                      file={l.mobile}
+                      bust={bust}
+                    />
+                  ))}
+                  {langs.map((l) => (
+                    <SnapshotCard
+                      key={`${l.lang}-pdf`}
+                      label={`${l.lang} PDF`}
+                      tag="A4"
+                      tagClass="tag-pdf"
+                      file={l.pdf}
+                      bust={bust}
+                      isPdf
                     />
                   ))}
                 </div>
               </div>
-            </div>
-          ) : (
-            /* -------- Snapshots -------- */
-            <div
-              style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
-            >
-              {/* Row 1: Screen + Print Preview — 4 columns */}
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(4, 1fr)',
-                  gap: '1rem',
-                }}
-              >
-                {v.langs.map((l) => (
-                  <SnapshotCard
-                    key={`${l.lang}-screen`}
-                    label={`${l.lang} Screen`}
-                    tag="desktop"
-                    tagClass="tag-screen"
-                    file={l.screen}
-                    bust={bust}
-                  />
-                ))}
-                {v.langs.map((l) => (
-                  <SnapshotCard
-                    key={`${l.lang}-preview`}
-                    label={`${l.lang} Print Preview`}
-                    tag="?print=1"
-                    tagClass="tag-preview"
-                    file={l.printPreview}
-                    bust={bust}
-                  />
-                ))}
-              </div>
-              {/* Row 2: Mobile + PDF — 4 columns */}
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(4, 1fr)',
-                  gap: '1rem',
-                }}
-              >
-                {v.langs.map((l) => (
-                  <SnapshotCard
-                    key={`${l.lang}-mobile`}
-                    label={`${l.lang} Mobile`}
-                    tag="390px"
-                    tagClass="tag-mobile"
-                    file={l.mobile}
-                    bust={bust}
-                  />
-                ))}
-                {v.langs.map((l) => (
-                  <SnapshotCard
-                    key={`${l.lang}-pdf`}
-                    label={`${l.lang} PDF`}
-                    tag="A4"
-                    tagClass="tag-pdf"
-                    file={l.pdf}
-                    bust={bust}
-                    isPdf
-                  />
-                ))}
-              </div>
-            </div>
-          )}
+            );
+          })()}
         </section>
       ))}
 
