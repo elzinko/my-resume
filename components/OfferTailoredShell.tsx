@@ -68,7 +68,7 @@ export default function OfferTailoredShell({
           />
 
           <div className="cv-full-cv-print-root">
-            <div className="max-md:contents print:order-[10] print-preview:order-[10]">
+            <div className="mb-2 max-md:contents print:order-[10] print-preview:order-[10]">
               {/* @ts-expect-error Server Component */}
               <About locale={lang} educationLevel={educationLevel} />
               {/* @ts-expect-error Server Component */}
