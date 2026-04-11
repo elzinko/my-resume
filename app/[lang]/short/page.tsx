@@ -78,6 +78,7 @@ export default async function ShortPage({
       const [start, end] = dates ? dates.split(' - ') : ['', ''];
       return {
         client: j.client,
+        clientUrl: j.clientUrl,
         role: j.role?.name || '',
         location: j.location,
         startDate: start || '',

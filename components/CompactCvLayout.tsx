@@ -48,13 +48,14 @@ export interface CompactCvData {
   }>;
   jobs: Array<{
     client: string;
+    clientUrl?: string;
     role: string;
     location: string;
     startDate: string;
     endDate?: string;
     description: string;
     descriptionShort?: string;
-    bullets?: Array<{ id: string; text: string }>;
+    bullets?: Array<{ id: string; text: string; link?: string }>;
     frameworks: Array<{ id: string; name: string }>;
   }>;
   studies: Array<{
