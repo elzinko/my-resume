@@ -107,10 +107,6 @@ The JSON schema supports: `company`, `title` (string or `{fr, en}`),
 
 See `lib/dynamic-offer-spec.ts` for encoding helpers.
 
-## Full documentation
-
-[docs/OFFER_CUSTOM_ENDPOINT.md](../docs/OFFER_CUSTOM_ENDPOINT.md)
-
 ## Key project files
 
 | File | Role |
@@ -119,7 +115,7 @@ See `lib/dynamic-offer-spec.ts` for encoding helpers.
 | `lib/match-catalog-from-bundle.ts` | Derives match catalog from bundle |
 | `lib/query-offer-params.ts` | Parses URL query params into offer |
 | `lib/dynamic-offer-spec.ts` | JSON <-> base64url encoding |
+| `lib/cv-contract-text.ts` | Resolves CDI/freelance text variants |
 | `app/[lang]/page.tsx` | Main CV page (handles offer params) |
 | `app/[lang]/short/page.tsx` | Short (1-page) CV |
 | `app/api/llm-guide/route.ts` | Dynamic LLM guide with tech catalog |
-| `docs/OFFER_CUSTOM_ENDPOINT.md` | Full endpoint documentation |

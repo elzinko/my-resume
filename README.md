@@ -28,19 +28,23 @@ npm run build
 
 ## CV personnalisé par annonce (URL dynamique + LLM)
 
-- **Paramètres lisibles dans l’URL** : `/{lang}?company=…&requirement=Libellé:mots` (voir la doc).
+- **Paramètres lisibles** : `/{lang}?company=…&requirement=Libellé:mots&contract=cdi`
 - **JSON compact base64** : `/{lang}?spec=…`
+- **Type de contrat** : `?contract=cdi` adapte les textes profil/domaines pour un poste permanent ; `freelance` par défaut.
+- **Guide LLM dynamique** : `GET /api/llm-guide` — markdown auto-généré avec le catalogue de technos complet et des exemples d’URLs.
 
-Détails, exemples et limites : **[docs/OFFER_CUSTOM_ENDPOINT.md](docs/OFFER_CUSTOM_ENDPOINT.md)**.
+Plafonds (longueurs, nombre d’exigences) : `lib/dynamic-offer-spec.ts`, `lib/query-offer-params.ts`. URLs limitées à ~2k caractères par le navigateur ; au-delà, préférer `spec` base64.
+
+Encodage CLI : `npm run encode-offer-spec -- path/to/offer.json`
 
 ## Liens utiles
 
 | Ressource | Chemin / URL |
 | --------- | ------------ |
 | Données CV (FR + EN) | [`data/cv/bundle.json`](data/cv/bundle.json) |
-| Offres catalogue | [`data/offers/`](data/offers/) |
+| Types offre (interfaces TS) | [`data/offers/types.ts`](data/offers/types.ts) |
+| Guide LLM (statique) | [`.llm/README.md`](.llm/README.md) |
+| Guide LLM (dynamique) | `GET /api/llm-guide` |
 | Storybook maison (dev) | `http://localhost:3000/{lang}/dev/components` |
 | Storybook (Chromatic) | `http://localhost:6006` (`pnpm storybook`) |
 | Rendus PDF / screenshots | [`renders/`](renders/) -- [`renders/index.html`](renders/index.html) |
-| Documentation offre custom | [`docs/OFFER_CUSTOM_ENDPOINT.md`](docs/OFFER_CUSTOM_ENDPOINT.md) |
-| Guide LLM | [`.llm/README.md`](.llm/README.md) |
