@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getMatchCatalog } from '@/lib/match-catalog-server';
+import { getJobCatalog } from '@/lib/job-catalog-server';
 import { SHORT_PROFILE_MATCH_MAX } from '@/lib/short-offer-match';
 
 export const dynamic = 'force-dynamic';
@@ -15,6 +16,14 @@ export async function GET() {
   const catalog = getMatchCatalog();
   const catalogRows = catalog.entries
     .map((e) => `| ${e.id} | ${e.name} | ${e.matchTokens.join(', ')} |`)
+    .join('\n');
+
+  const jobCatalog = getJobCatalog();
+  const jobRows = jobCatalog
+    .map(
+      (j) =>
+        `| ${j.slug} | ${j.client} | ${j.role} | ${j.startDate} → ${j.endDate ?? 'present'} | ${j.frameworks.join(', ')} |`,
+    )
     .join('\n');
 
   const markdown = `# CV Dynamique -- Guide LLM
@@ -45,6 +54,7 @@ GET /{lang}?company=<nom>&requirement=<Label:kw1,kw2>[&...]
 | \`req\` | alias | Alias court pour \`requirement\` |
 | \`reqY\` | non | Annees d'experience affichees pour le i-eme requirement (remplace le calcul auto) |
 | \`contract\` | non | \`cdi\` ou \`freelance\` -- adapte textes profil/domaines, masque Malt en CDI |
+| \`job\` | non | Repetable. Slug d'une mission a mettre en avant (voir catalogue ci-dessous) |
 | \`spec\` | non | JSON base64url (remplace les autres params d'offre si present) |
 | \`id\` | non | Identifiant interne optionnel |
 
@@ -77,6 +87,27 @@ Les mots-cles texte fonctionnent aussi (matching insensible a la ponctuation).
 | ID | Nom | Tokens de matching |
 | -- | --- | ------------------ |
 ${catalogRows}
+
+## Catalogue des missions
+
+> ${jobCatalog.length} missions. Genere depuis \`data/cv/bundle.json\`.
+> Utiliser le slug dans le parametre \`job\` pour mettre en avant une mission sur le CV court.
+
+| Slug | Client | Role | Periode | Frameworks |
+| ---- | ------ | ---- | ------- | ---------- |
+${jobRows}
+
+### Mise en avant de missions (parametre \`job\`)
+
+Le parametre \`job\` est repetable. Il accepte le slug de la mission (colonne "Slug" ci-dessus).
+Sur le CV court, les missions mises en avant sont affichees avec tous les details (description,
+puces, frameworks). Les missions intermediaires non selectionnees sont compressees en une ligne
+(client + dates uniquement), preservant la continuite de la timeline.
+
+Exemple :
+\`\`\`
+/fr/short?company=Thales&requirement=Java:java&job=jpb-systeme&job=celsius-energy&job=thales-communications
+\`\`\`
 
 ## Exemples d'URLs
 
@@ -120,6 +151,7 @@ Schema JSON decode :
   "title": "string | { fr: string, en: string }",
   "requirements": [{ "label": "string", "keywords": ["string"], "experienceYearsOverride?": "number" }],
   "contract": "cdi | freelance (optionnel)",
+  "highlightedJobs": ["slug1", "slug2"] ,
   "id": "string (optionnel)",
   "url": "string (optionnel)"
 }

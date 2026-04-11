@@ -25,4 +25,6 @@ export interface JobOffer {
   workAddress?: string;
   /** Libellé discret affiché à côté du lieu (ex. durée de trajet). */
   commuteLabel?: string;
+  /** Slugs de missions à mettre en avant (CV court). Valeurs = slug client sans préfixe "mission-". */
+  highlightedJobs?: string[];
 }

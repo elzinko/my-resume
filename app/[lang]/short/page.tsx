@@ -53,6 +53,14 @@ export default async function ShortPage({
       : undefined;
   const hideMalt = contract === 'cdi';
 
+  // Missions mises en avant par le LLM (param `job`, répétable)
+  const jobParam = searchParams?.job;
+  const highlightedJobSlugs: string[] | undefined = jobParam
+    ? (Array.isArray(jobParam) ? jobParam : [jobParam])
+        .map((s) => s.trim())
+        .filter(Boolean)
+    : undefined;
+
   const compactData: CompactCvData = {
     header: {
       name: data?.header?.name || '',
@@ -132,7 +140,11 @@ export default async function ShortPage({
         <Suspense fallback={null}>
           <ShortAutoprint />
         </Suspense>
-        <CompactCvLayout data={compactData} lang={lang as 'fr' | 'en'} />
+        <CompactCvLayout
+          data={compactData}
+          lang={lang as 'fr' | 'en'}
+          highlightedJobSlugs={highlightedJobSlugs}
+        />
       </ShortPageWrapper>
     </>
   );

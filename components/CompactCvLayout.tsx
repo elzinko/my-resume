@@ -17,6 +17,7 @@ import {
   SHORT_CV_EXCLUDED_CLIENTS,
   SHORT_CV_MAX_JOBS,
 } from '@/lib/cv-experience-footer';
+import { buildJobSections, type JobSection } from '@/lib/job-selection';
 
 export interface CompactCvData {
   header: {
@@ -73,6 +74,8 @@ export interface CompactCvData {
 interface CompactCvLayoutProps {
   data: CompactCvData;
   lang: 'fr' | 'en';
+  /** Slugs de missions à mettre en avant (ex. "jpb-systeme"). Vide = comportement chrono par défaut. */
+  highlightedJobSlugs?: string[];
   /** Emplacement réservé pour extensions — non utilisé par défaut. */
   children?: React.ReactNode;
 }
@@ -80,6 +83,7 @@ interface CompactCvLayoutProps {
 export default function CompactCvLayout({
   data,
   lang,
+  highlightedJobSlugs,
   children,
 }: CompactCvLayoutProps) {
   // Fallback labels if bundle.json titles are empty
@@ -117,10 +121,19 @@ export default function CompactCvLayout({
   const closing = getExperienceClosingLabels(lang);
   const moreClientsLine = formatRemainingClientsForShortCv(data.jobs, lang);
 
-  // Missions récentes sans puces ; fenêtre alignée sur `lib/cv-experience-footer`.
-  const recentJobs = data.jobs
-    .filter((job) => !SHORT_CV_EXCLUDED_CLIENTS.has(job.client))
-    .slice(0, SHORT_CV_MAX_JOBS);
+  // Missions : mode mis-en-avant (featured/stub) ou chronologique (défaut).
+  type Job = (typeof data.jobs)[number];
+  const jobSections: JobSection<Job>[] | null = buildJobSections(
+    data.jobs,
+    highlightedJobSlugs,
+  );
+
+  // Fallback : première tranche chronologique (comportement historique).
+  const recentJobs = jobSections
+    ? null
+    : data.jobs
+        .filter((job) => !SHORT_CV_EXCLUDED_CLIENTS.has(job.client))
+        .slice(0, SHORT_CV_MAX_JOBS);
 
   return (
     <div className="cv-layout-short">
@@ -266,23 +279,75 @@ export default function CompactCvLayout({
             <h2 className="border-b pb-1 text-2xl font-semibold text-cv-jobs">
               {t.experience}
             </h2>
-            <ul className="cv-section-body-gap space-y-4">
-              {recentJobs.map((job, idx) => (
-                <li key={idx}>
-                  <JobDisplay
-                    job={job}
-                    compact={true}
-                    presentLabel={t.present}
-                    locale={lang}
-                  />
-                </li>
-              ))}
-            </ul>
+
+            {jobSections ? (
+              /* ── Mode mis-en-avant : featured + stubs ── */
+              <ul className="cv-section-body-gap space-y-4">
+                {jobSections.map((section, idx) =>
+                  section.type === 'featured' ? (
+                    <li key={`f-${idx}`}>
+                      <JobDisplay
+                        job={section.job}
+                        compact={true}
+                        presentLabel={t.present}
+                        locale={lang}
+                      />
+                    </li>
+                  ) : (
+                    <li
+                      key={`s-${idx}`}
+                      className="border-l-2 border-slate-600/40 py-1 pl-3 text-xs leading-relaxed text-cv-body-muted/70 print:text-[9px]"
+                    >
+                      {section.jobs.map((j, i) => (
+                        <span key={i}>
+                          {i > 0 && (
+                            <span className="mx-1 text-slate-500">·</span>
+                          )}
+                          <span className="font-medium text-cv-body-muted">
+                            {j.clientUrl ? (
+                              <a
+                                href={j.clientUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                {j.client}
+                              </a>
+                            ) : (
+                              j.client
+                            )}
+                          </span>
+                          {j.startDate && (
+                            <span className="ml-1 text-slate-500">
+                              ({j.startDate}
+                              {j.endDate ? ` – ${j.endDate}` : ''})
+                            </span>
+                          )}
+                        </span>
+                      ))}
+                    </li>
+                  ),
+                )}
+              </ul>
+            ) : (
+              /* ── Mode chronologique par défaut ── */
+              <ul className="cv-section-body-gap space-y-4">
+                {recentJobs!.map((job, idx) => (
+                  <li key={idx}>
+                    <JobDisplay
+                      job={job}
+                      compact={true}
+                      presentLabel={t.present}
+                      locale={lang}
+                    />
+                  </li>
+                ))}
+              </ul>
+            )}
 
             <ExperienceClosingBlock
               moreExperience={closing.moreExperience}
               moreExperienceTail={closing.moreExperienceTail}
-              moreClientsLine={moreClientsLine}
+              moreClientsLine={jobSections ? null : moreClientsLine}
             />
             <Suspense fallback={null}>
               <ShortCvOnlineDetailLink lang={lang} />

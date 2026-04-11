@@ -120,6 +120,10 @@ export function buildOfferFromQueryParams(
       ? contractRaw
       : undefined;
 
+  const jobParams = sp.getAll('job').map((s) => s.trim()).filter(Boolean);
+  const highlightedJobs =
+    jobParams.length > 0 ? jobParams.slice(0, 24) : undefined;
+
   return enrichJobOfferRequirements(
     {
       id,
@@ -127,6 +131,7 @@ export function buildOfferFromQueryParams(
       title: { fr: titleFrSafe, en: titleEnSafe },
       requirements,
       contract,
+      ...(highlightedJobs ? { highlightedJobs } : {}),
     },
     catalog,
   );

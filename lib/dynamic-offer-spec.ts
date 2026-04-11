@@ -121,6 +121,14 @@ export function parseJobOfferFromUnknown(
     commuteLabel = `~${Math.round(cm)} min`;
   }
 
+  const hjRaw = o.highlightedJobs ?? o.highlighted_jobs;
+  const highlightedJobs = Array.isArray(hjRaw)
+    ? hjRaw
+        .map((v: unknown) => (typeof v === 'string' ? v.trim() : ''))
+        .filter(Boolean)
+        .slice(0, 24)
+    : undefined;
+
   return enrichJobOfferRequirements(
     {
       id,
@@ -131,6 +139,7 @@ export function parseJobOfferFromUnknown(
       ...(contract ? { contract } : {}),
       ...(workAddress ? { workAddress } : {}),
       ...(commuteLabel ? { commuteLabel } : {}),
+      ...(highlightedJobs?.length ? { highlightedJobs } : {}),
     },
     catalog,
   );
