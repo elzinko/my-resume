@@ -37,8 +37,8 @@
    * même gabarit horizontal que `.cv-page-split` (1/3 + 1/3 + 1/3).
    */
   .cv-domains-grid {
-    @apply grid w-full grid-cols-1 grid-rows-none gap-2 md:grid-cols-3 md:gap-x-10 md:gap-y-0 md:items-start;
-    @apply print:grid print:grid-cols-3 print:gap-x-4 print:gap-y-0 print:items-start;
+    @apply grid w-full grid-cols-1 grid-rows-none gap-2 md:grid-cols-3 md:gap-x-10 md:gap-y-0 md:items-stretch;
+    @apply print:grid print:grid-cols-3 print:gap-x-4 print:gap-y-0 print:items-stretch;
   }
 
   /**
@@ -379,6 +379,11 @@
     @apply print:border-orange-300/60 print:!text-orange-300;
   }
 
+  .cv-pill-match-borderless {
+    @apply rounded bg-orange-300/15 font-normal text-orange-300 transition-colors;
+    @apply print:bg-orange-300/10 print:!text-orange-300;
+  }
+
   /** Métrique « X ans » à côté du critère : même fond, sans bordure. */
   .cv-pill-match-metric {
     @apply rounded bg-orange-300/10 font-semibold tabular-nums text-orange-300;
@@ -617,6 +622,11 @@ html {
     page-break-inside: auto !important;
   }
 
+  /* Espacement avant la section Experience pour eviter un titre orphelin en bas de page. */
+  .cv-print-jobs-group {
+    padding-top: 1rem;
+  }
+
   /* Hide non-printable elements */
   .print\:hidden {
     display: none !important;
@@ -845,5 +855,9 @@ html {
 .cv-print-preview .cv-full-cv-print-root #jobs {
   break-before: auto !important;
   page-break-before: auto !important;
+}
+
+.cv-print-preview .cv-print-jobs-group {
+  padding-top: 1rem;
 }
 

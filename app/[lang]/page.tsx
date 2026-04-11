@@ -9,6 +9,7 @@ import { getEducationLevelContent } from '@/lib/education-level-content';
 import { offerPriorityTokensAndContact } from '@/lib/offer-page-data';
 import { resolveOfferFromUrlParams } from '@/lib/query-offer-params';
 import { recordToURLSearchParams } from '@/lib/search-params-to-url';
+import type { ContractType } from '@/data/offers/types';
 
 export const dynamic = 'force-dynamic';
 
@@ -48,6 +49,9 @@ export default async function Page({
   const matchCatalog = getMatchCatalog();
   const sp = recordToURLSearchParams(searchParams);
   const offer = resolveOfferFromUrlParams(sp, matchCatalog);
+  const contractParam = typeof searchParams?.contract === 'string' ? searchParams.contract : undefined;
+  const contract: ContractType | undefined =
+    contractParam === 'cdi' || contractParam === 'freelance' ? contractParam : undefined;
   const { priorityTokens, contactLocation } = offerPriorityTokensAndContact(
     offer,
     sp,
@@ -67,8 +71,8 @@ export default async function Page({
       }}
       frameworkDisplayPriorityTokens={priorityTokens}
       contactLocation={contactLocation}
-      hideMalt={offer?.contract === 'cdi'}
-      contract={offer?.contract}
+      hideMalt={contract === 'cdi'}
+      contract={contract}
     />
   );
 }

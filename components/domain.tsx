@@ -33,8 +33,8 @@ function DomainFiveTagsRow({
   compact: boolean;
 }) {
   const rowClass = compact
-    ? 'mt-2 flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 py-1 print:mt-1 print:gap-x-1 print:py-0.5'
-    : 'mt-2 flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 py-1';
+    ? 'mt-auto flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 py-1 print:mt-1 print:gap-x-1 print:py-0.5'
+    : 'mt-auto flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 py-1';
 
   return (
     <div className={rowClass}>
@@ -123,16 +123,16 @@ export default function Domain({
     <div
       className={
         compact
-          ? 'mt-4 min-w-0 print:mt-1.5'
-          : 'mt-4 min-w-0'
+          ? 'mt-4 min-w-0 flex flex-col print:mt-1.5'
+          : 'mt-4 min-w-0 flex flex-col'
       }
     >
       {titleBlock}
       <p
         className={
           compact
-            ? 'mt-4 text-cv-body-muted print:mt-1 print:text-[8px] print:leading-tight'
-            : 'mt-4 text-cv-body-muted'
+            ? 'mt-4 flex-1 text-cv-body-muted print:mt-1 print:text-[8px] print:leading-tight'
+            : 'mt-4 flex-1 text-cv-body-muted'
         }
       >
         {domain.description}
@@ -147,8 +147,8 @@ export default function Domain({
             <div
               className={
                 compact
-                  ? 'mt-2 flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 py-1 print:mt-1 print:gap-x-1 print:py-0.5'
-                  : 'mt-2 flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 py-1'
+                  ? 'mt-auto flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 py-1 print:mt-1 print:gap-x-1 print:py-0.5'
+                  : 'mt-auto flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 py-1'
               }
             >
               {domain.competencies.map((competency) => (

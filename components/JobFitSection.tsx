@@ -7,6 +7,7 @@ import type { EducationLevelContent } from '@/lib/education-level-content';
 import type { MatchDisplayData } from '@/lib/match-display-types';
 import type { Locale } from 'i18n-config';
 import { useMemo } from 'react';
+import Pill from '@/components/Pill';
 
 interface JobFitSectionProps {
   lang: Locale;
@@ -14,18 +15,6 @@ interface JobFitSectionProps {
   /** 'full' = liste verticale avec detail (CV complet), 'compact' = pastilles inline (CV court). */
   variant?: 'full' | 'compact';
 }
-
-/** Pastille orange (label + metrique optionnelle). */
-const pillCls =
-  'cv-pill-match inline-flex max-w-full shrink-0 items-baseline gap-x-1.5 whitespace-nowrap px-2 py-0.5 text-xs font-medium print:gap-1 print:px-1.5 print:py-0.5 print:text-[10px] md:text-sm';
-
-/** Metrique (annees) dans la pastille — plus discret. */
-const metricCls =
-  'text-[10px] font-normal tabular-nums text-orange-200/95 print:text-[9px] print:!text-orange-300 md:text-xs';
-
-/** Badge client discret (fond colore, sans bordure). */
-const clientBadgeCls =
-  'inline-block whitespace-nowrap rounded bg-orange-300/15 px-1.5 py-0.5 text-[10px] font-normal text-orange-200/80 print:bg-orange-300/10 print:px-1 print:py-0 print:text-[8px] print:!text-orange-300/70 md:text-xs';
 
 /**
  * Section « Adequation poste » :
@@ -60,9 +49,9 @@ export default function JobFitSection({
         </h2>
         <div className="cv-section-body-gap flex flex-wrap items-center gap-1.5 print:gap-1">
           {/* Education level pill */}
-          <span className={pillCls}>
-            <span className="min-w-0 truncate">{educationLevel.levelPrimary}</span>
-          </span>
+          <Pill color="match" compact>
+            {educationLevel.levelPrimary}
+          </Pill>
 
           {/* Tech pills */}
           {entries.map((entry, index) => {
@@ -73,10 +62,14 @@ export default function JobFitSection({
               : '\u2014';
 
             return (
-              <span key={`${index}-${entry.label}`} className={pillCls}>
-                <span className="min-w-0 truncate">{entry.label}</span>
-                <span className={metricCls}>{yearsLabel}</span>
-              </span>
+              <Pill
+                key={`${index}-${entry.label}`}
+                color="match"
+                compact
+                metric={yearsLabel}
+              >
+                {entry.label}
+              </Pill>
             );
           })}
         </div>
@@ -100,9 +93,9 @@ export default function JobFitSection({
       <ul className="mt-3 space-y-2.5 md:mt-4 md:space-y-3 print:mt-2 print:space-y-1.5">
         {/* Education level row */}
         <li className="flex flex-wrap items-baseline gap-x-2 gap-y-1 print:gap-x-1.5">
-          <span className={pillCls}>
-            <span className="min-w-0 truncate">{educationLevel.levelPrimary}</span>
-          </span>
+          <Pill color="match">
+            {educationLevel.levelPrimary}
+          </Pill>
           <span className="text-sm text-cv-body-muted print:text-[10px] md:text-base">
             {educationLevel.effectiveLevelDetail}
           </span>
@@ -122,16 +115,15 @@ export default function JobFitSection({
               key={`${index}-${entry.label}`}
               className="flex flex-wrap items-baseline gap-x-2 gap-y-1 print:gap-x-1.5"
             >
-              <span className={pillCls}>
-                <span className="min-w-0 truncate">{entry.label}</span>
-                <span className={metricCls}>{yearsLabel}</span>
-              </span>
+              <Pill color="match" metric={yearsLabel}>
+                {entry.label}
+              </Pill>
               {clients.length > 0 && (
                 <span className="flex flex-wrap items-baseline gap-1 print:gap-0.5">
                   {clients.map((c) => (
-                    <span key={c.client} className={clientBadgeCls}>
+                    <Pill key={c.client} color="match" size="s" border={false}>
                       {c.client}
-                    </span>
+                    </Pill>
                   ))}
                 </span>
               )}

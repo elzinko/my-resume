@@ -20,7 +20,7 @@ export default async function jobs({ locale }: { locale: Locale }) {
         id="jobs"
         className="mt-10 max-md:mt-0 break-before-page print:break-before-auto"
       >
-        <h2 className="border-b pb-1 text-2xl font-semibold text-cv-jobs">
+        <h2 className="border-b pb-1 text-2xl font-semibold text-cv-jobs print:break-after-avoid">
           {data?.jobsTitle?.title}
         </h2>
         <ul className="cv-section-body-gap space-y-4 print:space-y-4">
