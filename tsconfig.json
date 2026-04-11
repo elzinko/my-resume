@@ -22,7 +22,7 @@
     "baseUrl": ".",
     "paths": {
       "@/app/*": ["app/*"],
-      "@/common /*": ["common/*"],
+      "@/common/*": ["common/*"],
       "@/components/*": ["components/*"],
       "@/lib/*": ["lib/*"],
       "@/data/*": ["data/*"]
@@ -34,7 +34,6 @@
     "**/*.tsx",
     "next.config.js",
     ".next/types/**/*.ts",
-    "app/[lang]/frameworks.tsx.backup"
   ],
   "exclude": [
     "node_modules",

@@ -111,14 +111,6 @@
   }
 
   /**
-   * Bloc condensé une ligne (projets / veille / loisirs) : marge sous le h2
-   * alignée partout (`mt-4`, `print:mt-2`).
-   */
-  .cv-section-condensed-inline {
-    @apply mt-4 print:mt-2 md:mt-4;
-  }
-
-  /**
    * Sections dont le rendu dépend de la largeur disponible (container queries) :
    * projets (titre / description / date), études (méta lieu), veille et loisirs (liste vs slashs).
    */
@@ -240,10 +232,6 @@
    */
   .cv-education-muted {
     @apply text-sm leading-snug text-gray-400 print:text-xs;
-  }
-
-  .cv-education-muted-compact {
-    @apply text-xs leading-snug text-gray-400 print:text-[10px];
   }
 
   /** Colonne gauche : lignes « fortes » (Bac+5, diplôme, titre d’étude) — même corps partout. */
@@ -384,16 +372,6 @@
     @apply print:bg-orange-300/10 print:!text-orange-300;
   }
 
-  /** Métrique « X ans » à côté du critère : même fond, sans bordure. */
-  .cv-pill-match-metric {
-    @apply rounded bg-orange-300/10 font-semibold tabular-nums text-orange-300;
-    @apply print:!text-orange-300;
-  }
-
-  /** Carte critère dans « Adéquation avec le poste » (offres). */
-  .cv-match-requirement-card {
-    @apply rounded-lg border border-orange-300/50 bg-orange-300/10 p-3 print:p-2 max-md:p-2 max-md:rounded-md;
-  }
 }
 
 html {
