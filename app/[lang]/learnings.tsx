@@ -1,6 +1,5 @@
-import CustomLink from '@/components/customLink';
+import LearningsDisplay from '@/components/LearningsDisplay';
 import { getCvData } from '@/lib/cv-data';
-import { learningLinkLabel } from '@/lib/learning-label';
 import { Locale } from 'i18n-config';
 import React from 'react';
 
@@ -27,20 +26,7 @@ export default async function learnings({
       data-cv-section="learnings"
       className={`cv-cq-section ${sectionClass}`}
     >
-      <h2 className="border-b pb-1 text-2xl font-semibold text-teal-300">
-        {data?.learningsTitle?.title}
-      </h2>
-      <ul className="cv-section-simple-list cv-cq-link-list max-md:mt-6">
-        {items.map((learning: any) => (
-          <li className="text-teal-300" key={learning.id}>
-            <CustomLink
-              name={learningLinkLabel(learning)}
-              link={learning.link}
-              className="text-teal-300 print:!text-teal-300"
-            />
-          </li>
-        ))}
-      </ul>
+      <LearningsDisplay title={data?.learningsTitle?.title} items={items} />
     </section>
   );
 }

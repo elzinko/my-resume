@@ -10,9 +10,14 @@ let cachedCatalog: MatchCatalog | null = null;
 /** Catalogue de match dérivé de `data/cv/bundle.json` (mémoïsé par process). */
 export function getMatchCatalog(): MatchCatalog {
   if (!cachedCatalog) {
-    const b = bundleJson as { fr?: CvSliceForMatchCatalog; en?: CvSliceForMatchCatalog };
+    const b = bundleJson as {
+      fr?: CvSliceForMatchCatalog;
+      en?: CvSliceForMatchCatalog;
+    };
     if (!b.fr || !b.en) {
-      throw new Error('data/cv/bundle.json doit contenir les clés "fr" et "en"');
+      throw new Error(
+        'data/cv/bundle.json doit contenir les clés "fr" et "en"',
+      );
     }
     cachedCatalog = buildMatchCatalogFromBundle({ fr: b.fr, en: b.en });
   }

@@ -16,7 +16,9 @@ function trimLabel(s: string | null | undefined): string | undefined {
   return t || undefined;
 }
 
-function commuteFromMinutesParam(raw: string | null | undefined): string | undefined {
+function commuteFromMinutesParam(
+  raw: string | null | undefined,
+): string | undefined {
   if (!raw) return undefined;
   const n = Number(raw.trim().replace(',', '.'));
   if (!Number.isFinite(n) || n < 0) return undefined;

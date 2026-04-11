@@ -1,28 +1,27 @@
 import { Suspense } from 'react';
 import About from '@/app/[lang]/about';
 import Headers from '@/app/[lang]/header';
-import Contact from '@/app/[lang]/contact';
 import Studies from '@/app/[lang]/studies';
-import Skills from '@/app/[lang]/skills';
 import Domains from '@/app/[lang]/domains';
 import Learnings from '@/app/[lang]/learnings';
 import Hobbies from '@/app/[lang]/hobbies';
 import Jobs from '@/app/[lang]/jobs';
 import Projects from '@/app/[lang]/projects';
-import EducationLevel from '@/components/EducationLevel';
+import JobFitSection from '@/components/JobFitSection';
 import FullCvPrintPreviewEffect from '@/components/FullCvPrintPreviewEffect';
 import ContactLocationProvider from '@/components/ContactLocationProvider';
 import JobFrameworkDisplayProvider from '@/components/JobFrameworkDisplayProvider';
 import { buildContactLocationHref } from '@/lib/contact-maps';
 import type { ContactLocationOverlay } from '@/lib/offer-contact-from-params';
 import type { EducationLevelContent } from '@/lib/education-level-content';
+import ContactDisplay from '@/components/ContactDisplay';
+import type { ContractType } from '@/data/offers/types';
 import type { Locale } from 'i18n-config';
 /**
  * Mise en page commune des pages CV « sur mesure » (custom / match).
- * L’adéquation poste (pastilles) est uniquement sous le rôle / coordonnées via `Headers`.
+ * Layout unifié : une seule colonne linéaire (identique à l'aperçu `?print=1`).
+ * L'adéquation poste (pastilles) est uniquement sous le rôle / coordonnées via `Headers`.
  */
-const OFFER_EDUCATION_LEVEL_SECTION_CLASS =
-  'mt-10 max-md:mt-0 max-md:order-[1] md:order-[1] print:order-[50] print-preview:hidden print-preview:order-[50]';
 
 export default function OfferTailoredShell({
   lang,
@@ -30,6 +29,8 @@ export default function OfferTailoredShell({
   headerContactStrip,
   frameworkDisplayPriorityTokens = [],
   contactLocation,
+  hideMalt,
+  contract,
 }: {
   lang: Locale;
   educationLevel: EducationLevelContent;
@@ -43,15 +44,20 @@ export default function OfferTailoredShell({
   frameworkDisplayPriorityTokens?: string[];
   /** Lien Maps / itinéraire et durée affichée (optionnel). */
   contactLocation?: ContactLocationOverlay;
+  /** Masquer le lien Malt (ex. offre CDI). */
+  hideMalt?: boolean;
+  /** Type de contrat : adapte les textes Profil et Domaines. */
+  contract?: ContractType;
 }) {
-  const resolvedContact: ContactLocationOverlay =
-    contactLocation ?? {
-      mapsHref: buildContactLocationHref(),
-      isDirections: false,
-    };
+  const resolvedContact: ContactLocationOverlay = contactLocation ?? {
+    mapsHref: buildContactLocationHref(),
+    isDirections: false,
+  };
 
   return (
-    <JobFrameworkDisplayProvider priorityTokens={frameworkDisplayPriorityTokens}>
+    <JobFrameworkDisplayProvider
+      priorityTokens={frameworkDisplayPriorityTokens}
+    >
       <ContactLocationProvider value={resolvedContact} locale={lang}>
         <div className="cv-offer-tailored-shell">
           <Suspense fallback={null}>
@@ -61,50 +67,61 @@ export default function OfferTailoredShell({
           <Headers
             locale={lang}
             offerPrintContactStrip={headerContactStrip}
+            hideMalt={hideMalt}
           />
 
           <div className="cv-full-cv-print-root">
-            <div className="cv-flow-mobile-stack">
+            <div className="mb-2 print-preview:order-[10] max-md:contents print:order-[10]">
               {/* @ts-expect-error Server Component */}
-              <About locale={lang} educationLevel={educationLevel} />
+              <About
+                locale={lang}
+                educationLevel={educationLevel}
+                contract={contract}
+              />
               {/* @ts-expect-error Server Component */}
-              <Domains locale={lang} />
+              <Domains locale={lang} contract={contract} />
             </div>
-
-            <div className="cv-page-split">
-              <div
-                id="left"
-                className="flex w-full min-w-0 flex-col print:order-first print:col-span-1 md:order-first md:col-span-1"
-              >
-                <div className="cv-print-desktop-sidebar-group w-full">
-                  {/* @ts-expect-error Server Component */}
-                  <Contact locale={lang} />
+            {/* Adéquation poste : niveau de formation + compétences techniques */}
+            <Suspense fallback={null}>
+              <JobFitSection
+                lang={lang}
+                educationLevel={educationLevel}
+                variant="full"
+              />
+            </Suspense>
+            {/* Coordonnées : après Adéquation poste, même placement que le CV court. */}
+            {headerContactStrip.email && (
+              <section className="cv-mobile-section-mt print-preview:order-[30] print:order-[30]">
+                <div className="border-b pb-1">
+                  <h2 className="min-w-0 text-2xl font-semibold text-rose-300">
+                    {lang === 'fr' ? 'Coordonnées' : 'Contact'}
+                  </h2>
                 </div>
-                <EducationLevel
-                  content={educationLevel}
-                  sectionClassName={OFFER_EDUCATION_LEVEL_SECTION_CLASS}
+                <ContactDisplay
+                  contact={{
+                    emailTitle: 'Email',
+                    email: headerContactStrip.email,
+                    phoneTitle: lang === 'fr' ? 'Téléphone' : 'Phone',
+                    phone: headerContactStrip.phone,
+                    locationTitle: lang === 'fr' ? 'Localisation' : 'Location',
+                    location: headerContactStrip.location,
+                  }}
+                  cvShortInlineRows
+                  showLabels={false}
+                  locale={lang}
                 />
-                {/* @ts-expect-error Server Component */}
-                <Skills locale={lang} sectionId={false} />
-                {/* @ts-expect-error Server Component */}
-                <Studies locale={lang} />
-                <div className="cv-print-desktop-tail-group max-md:order-[4] md:order-[4]">
-                  {/* @ts-expect-error Server Component */}
-                  <Projects locale={lang} />
-                  {/* @ts-expect-error Server Component */}
-                  <Learnings locale={lang} />
-                  {/* @ts-expect-error Server Component */}
-                  <Hobbies locale={lang} />
-                </div>
-              </div>
-              <div
-                id="main"
-                className="w-full min-w-0 print:col-span-2 md:col-span-2"
-              >
-                {/* @ts-expect-error Server Component */}
-                <Jobs locale={lang} />
-              </div>
-            </div>
+              </section>
+            )}
+            {/* @ts-expect-error Server Component */}
+            <Jobs locale={lang} />
+            {/* @ts-expect-error Server Component */}
+            <Studies locale={lang} />
+            {/* @ts-expect-error Server Component */}
+            <Projects locale={lang} />
+            {/* @ts-expect-error Server Component */}
+            <Learnings locale={lang} />
+            {/* @ts-expect-error Server Component */}
+            <Hobbies locale={lang} />
           </div>
         </div>
       </ContactLocationProvider>

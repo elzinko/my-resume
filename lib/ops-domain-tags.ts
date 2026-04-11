@@ -83,7 +83,10 @@ export function opsTagAllowlistLabels(): string[] {
 function parseExplicitFive(sp: URLSearchParams): OpsTagFive | null {
   const raw = getParam(sp, 'opsTags', 'ops_tags');
   if (!raw) return null;
-  const parts = raw.split(',').map((s) => s.trim()).filter(Boolean);
+  const parts = raw
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
   if (parts.length !== 5) return null;
   const resolved: string[] = [];
   for (const p of parts) {
@@ -126,7 +129,9 @@ function cloudFromParams(sp: URLSearchParams): OpsTagFive | null {
   return OPS_PRESETS[key] ?? null;
 }
 
-function cloudBoostFromKeyword(kw: string): Partial<Record<keyof typeof OPS_PRESETS, number>> {
+function cloudBoostFromKeyword(
+  kw: string,
+): Partial<Record<keyof typeof OPS_PRESETS, number>> {
   const k = kw.toLowerCase();
   const out: Partial<Record<keyof typeof OPS_PRESETS, number>> = {};
   if (k.includes('google') || k === 'gcp' || k.includes('gcp')) out.gcp = 5;

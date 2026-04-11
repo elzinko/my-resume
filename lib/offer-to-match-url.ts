@@ -1,12 +1,10 @@
 import type { JobOffer } from '@/data/offers/types';
 
 /**
- * Représente une offre du bundle (`data/offers`) comme paramètres GET `/offer/match`
- * (remplace l’ancienne route `/offer/{id}`).
+ * Représente une offre du bundle (`data/offers`) comme paramètres GET sur `/{lang}`
+ * (la route `/offer/match` n'existe plus : la racine accepte les mêmes query params).
  */
-export function jobOfferToMatchSearchParams(
-  offer: JobOffer,
-): URLSearchParams {
+export function jobOfferToMatchSearchParams(offer: JobOffer): URLSearchParams {
   const sp = new URLSearchParams();
   sp.set('company', offer.company);
   sp.set('title_fr', offer.title.fr);
@@ -16,6 +14,7 @@ export function jobOfferToMatchSearchParams(
     const kw = r.keywords.join(',');
     if (label && kw) sp.append('requirement', `${label}:${kw}`);
   }
+  if (offer.contract) sp.set('contract', offer.contract);
   const wa = offer.workAddress?.trim();
   if (wa) sp.set('workAddress', wa);
   const cl = offer.commuteLabel?.trim();
@@ -25,5 +24,5 @@ export function jobOfferToMatchSearchParams(
 
 export function jobOfferToMatchHref(lang: string, offer: JobOffer): string {
   const q = jobOfferToMatchSearchParams(offer).toString();
-  return q ? `/${lang}/offer/match?${q}` : `/${lang}/offer/match`;
+  return q ? `/${lang}?${q}` : `/${lang}`;
 }

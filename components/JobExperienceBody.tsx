@@ -6,7 +6,7 @@ import type { Locale } from 'i18n-config';
 export interface JobExperienceBodyProps {
   descriptionShort?: string | null;
   description: string;
-  bullets?: Array<{ id: string; text: string }>;
+  bullets?: Array<{ id: string; text: string; link?: string }>;
   locale: Locale;
   compact?: boolean;
   /** Mobile : notifie l’ouverture du détail (ex. afficher les pastilles techno). */
@@ -34,8 +34,7 @@ export default function JobExperienceBody({
   const hookLine = isLegacy ? longText : shortText;
   /** CV court (compact) : pas de puces, écran comme impression. */
   const showBullets = !compact && Boolean(bullets?.length);
-  const showToggle =
-    Boolean(shortText) || Boolean(longText) || showBullets;
+  const showToggle = Boolean(shortText) || Boolean(longText) || showBullets;
 
   useEffect(() => {
     onExpandedChange?.(expanded);
@@ -55,7 +54,15 @@ export default function JobExperienceBody({
     showBullets && bullets && bullets.length > 0 ? (
       <ul className={`cv-job-description mx-4 my-2 list-disc ${extraClass}`}>
         {bullets.map((bullet) => (
-          <li key={bullet.id}>{bullet.text}</li>
+          <li key={bullet.id}>
+            {bullet.link ? (
+              <a href={bullet.link} target="_blank" rel="noopener noreferrer">
+                {bullet.text}
+              </a>
+            ) : (
+              bullet.text
+            )}
+          </li>
         ))}
       </ul>
     ) : null;
@@ -63,7 +70,7 @@ export default function JobExperienceBody({
   return (
     <>
       {/* Écran large + impression : contenu complet */}
-      <div className="hidden print:block lg:block">
+      <div className="hidden lg:block print:block">
         {isLegacy ? (
           hookLine ? (
             <p className={pClass}>{hookLine}</p>
@@ -78,7 +85,7 @@ export default function JobExperienceBody({
       </div>
 
       {/* Mobile écran uniquement : replié = pas de texte, seulement le bouton si contenu */}
-      <div className="print:hidden lg:hidden">
+      <div className="lg:hidden print:hidden">
         {showToggle ? (
           <>
             <button

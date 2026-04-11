@@ -3,6 +3,7 @@ import type { MatchEntry } from '@/lib/match-display-types';
 
 export interface JobForMatching {
   client: string;
+  clientUrl?: string;
   startDate: string;
   endDate?: string;
   description?: string;
@@ -42,7 +43,10 @@ function jobCorpusForLooseMatch(job: JobForMatching): string {
   return parts.join(' ');
 }
 
-function jobMatchesFrameworkId(job: JobForMatching, keywords: string[]): boolean {
+function jobMatchesFrameworkId(
+  job: JobForMatching,
+  keywords: string[],
+): boolean {
   const frameworks = job.frameworks || [];
   return keywords.some((kw) => frameworks.some((fw) => fw.id === kw));
 }
@@ -106,11 +110,21 @@ function computeYears(startDate: string, endDate?: string): number {
 }
 
 function deduplicateClients(
-  clients: Array<{ client: string; startDate: string; endDate?: string }>,
-): Array<{ client: string; startDate: string; endDate?: string }> {
+  clients: Array<{
+    client: string;
+    clientUrl?: string;
+    startDate: string;
+    endDate?: string;
+  }>,
+): Array<{
+  client: string;
+  clientUrl?: string;
+  startDate: string;
+  endDate?: string;
+}> {
   const byClient = new Map<
     string,
-    { client: string; startDate: string; endDate?: string }
+    { client: string; clientUrl?: string; startDate: string; endDate?: string }
   >();
   for (const entry of clients) {
     const existing = byClient.get(entry.client);
@@ -124,6 +138,9 @@ function deduplicateClients(
         existing.endDate = undefined;
       } else if (existing.endDate && entry.endDate > existing.endDate) {
         existing.endDate = entry.endDate;
+      }
+      if (!existing.clientUrl && entry.clientUrl) {
+        existing.clientUrl = entry.clientUrl;
       }
     }
   }
@@ -141,6 +158,7 @@ export function buildMatchEntries(
   return requirements.map((req) => {
     const matched: Array<{
       client: string;
+      clientUrl?: string;
       startDate: string;
       endDate?: string;
     }> = [];
@@ -149,6 +167,7 @@ export function buildMatchEntries(
       if (jobMatchesRequirement(job, req.keywords)) {
         matched.push({
           client: job.client,
+          clientUrl: job.clientUrl,
           startDate: job.startDate,
           endDate: job.endDate,
         });

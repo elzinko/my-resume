@@ -11,13 +11,13 @@ import React, {
 } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import LocaleSwitcher from '@/components/locale-switcher';
+import LocaleSwitcher from '@/components/LocaleSwitcher';
 import CvModeToggle from '@/components/CvModeToggle';
 import { fullHrefFromShortPath } from '@/lib/cv-mode-nav';
 import LogoLinkedin from '@/components/LogoLinkedin';
-import LogoGithub from '@/components/logoGithub';
-import LogoMalt from '@/components/logoMalt';
-import LogoPrint from '@/components/logoPrint';
+import LogoGithub from '@/components/LogoGithub';
+import LogoMalt from '@/components/LogoMalt';
+import LogoPrint from '@/components/LogoPrint';
 import {
   cvHeaderModeBtn,
   isCvPrintLayoutToolbarEnabled,
@@ -71,7 +71,11 @@ function DevMobilePreviewButton({ onNavigate }: { onNavigate?: () => void }) {
     const next = new URLSearchParams(searchParams.toString());
     next.set(CV_VIEWPORT_PARAM, CV_VIEWPORT_MOBILE_VALUE);
     const q = next.toString();
-    router.push(q ? `${pathname}?${q}` : `${pathname}?${CV_VIEWPORT_PARAM}=${CV_VIEWPORT_MOBILE_VALUE}`);
+    router.push(
+      q
+        ? `${pathname}?${q}`
+        : `${pathname}?${CV_VIEWPORT_PARAM}=${CV_VIEWPORT_MOBILE_VALUE}`,
+    );
   }, [pathname, searchParams, router, onNavigate]);
 
   return (
@@ -85,7 +89,7 @@ function DevMobilePreviewButton({ onNavigate }: { onNavigate?: () => void }) {
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="h-4 w-4 md:h-5 md:w-5"
+        className="h-5 w-5"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -106,18 +110,15 @@ function DevMobilePreviewButton({ onNavigate }: { onNavigate?: () => void }) {
 /** Lien « Version complète » depuis `/[lang]/short` : reprend `fullHrefFromShortPath` + query. */
 function FullVersionFromShortLink({
   shortLang,
-  shortDefaultOfferId,
   onNavigate,
 }: {
   shortLang: string;
-  shortDefaultOfferId?: string | null;
   onNavigate?: () => void;
 }) {
   const searchParams = useSearchParams();
   const href = fullHrefFromShortPath(
     shortLang,
     new URLSearchParams(searchParams.toString()),
-    { defaultOfferId: shortDefaultOfferId ?? null },
   );
   return (
     <Link
@@ -128,7 +129,7 @@ function FullVersionFromShortLink({
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="h-4 w-4 md:h-5 md:w-5"
+        className="h-5 w-5"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -151,12 +152,14 @@ function ToolbarIconList({
   onPrint,
   printTitle,
   printAriaLabel,
+  hideMalt,
 }: {
   onNavigate?: () => void;
   listClassName?: string;
   onPrint: () => void;
   printTitle: string;
   printAriaLabel: string;
+  hideMalt?: boolean;
 }) {
   const handlePrint = () => {
     onNavigate?.();
@@ -171,9 +174,11 @@ function ToolbarIconList({
       <li>
         <LogoGithub onNavigate={onNavigate} />
       </li>
-      <li>
-        <LogoMalt onNavigate={onNavigate} />
-      </li>
+      {!hideMalt && (
+        <li>
+          <LogoMalt onNavigate={onNavigate} />
+        </li>
+      )}
       <li>
         <LogoPrint
           onClick={handlePrint}
@@ -187,20 +192,14 @@ function ToolbarIconList({
 
 function ModeControl({
   shortLang,
-  shortDefaultOfferId,
   onNavigate,
 }: {
   shortLang?: string;
-  shortDefaultOfferId?: string | null;
   onNavigate?: () => void;
 }) {
   if (shortLang) {
     return (
-      <FullVersionFromShortLink
-        shortLang={shortLang}
-        shortDefaultOfferId={shortDefaultOfferId}
-        onNavigate={onNavigate}
-      />
+      <FullVersionFromShortLink shortLang={shortLang} onNavigate={onNavigate} />
     );
   }
   return (
@@ -214,12 +213,8 @@ function ModeControl({
   );
 }
 
-/** CV long, CV court, `/offer/match` & `/offer/custom` : bascule `?print=1`. */
-function PrintPreviewToggleLink({
-  onNavigate,
-}: {
-  onNavigate?: () => void;
-}) {
+/** CV long ou CV court : bascule `?print=1`. */
+function PrintPreviewToggleLink({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
   const sp = useSearchParams();
   const loc = localeFromCvPrintPreviewPathname(pathname);
@@ -255,11 +250,34 @@ function PrintPreviewToggleLink({
   return (
     <Link
       href={href}
-      className={`${cvHeaderModeBtn} print:hidden max-w-[11rem] truncate text-xs font-normal text-slate-500 hover:text-slate-800`}
+      className={`${cvHeaderModeBtn} max-w-[11rem] truncate text-xs font-normal text-slate-500 hover:text-slate-800 print:hidden`}
       title={title}
       onClick={() => onNavigate?.()}
     >
-      {label}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-5 w-5 shrink-0"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        strokeWidth={2}
+        aria-hidden
+      >
+        {active ? (
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        ) : (
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+          />
+        )}
+      </svg>
+      <span className="hidden md:inline">{label}</span>
     </Link>
   );
 }
@@ -270,10 +288,10 @@ function PrintPreviewToggleLink({
  */
 export default function HeaderToolbar({
   shortLang,
-  shortDefaultOfferId,
+  hideMalt,
 }: {
   shortLang?: string;
-  shortDefaultOfferId?: string | null;
+  hideMalt?: boolean;
 }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -324,7 +342,7 @@ export default function HeaderToolbar({
   return (
     <>
       <div
-        className="hidden print:hidden md:flex md:w-full md:flex-row md:items-center md:justify-between"
+        className="hidden md:flex md:w-full md:flex-row md:items-center md:justify-between print:hidden"
         data-testid="cv-header-toolbar"
       >
         <Suspense fallback={null}>
@@ -332,25 +350,14 @@ export default function HeaderToolbar({
         </Suspense>
         <div className="flex flex-wrap items-center justify-end gap-3">
           <Suspense fallback={null}>
-            <ModeControl
-              shortLang={shortLang}
-              shortDefaultOfferId={shortDefaultOfferId}
-            />
+            <ModeControl shortLang={shortLang} />
           </Suspense>
-          {showPrintPreviewToggle ? (
-            <Suspense fallback={null}>
-              <PrintPreviewToggleLink />
-            </Suspense>
-          ) : null}
-          {isCvPrintLayoutToolbarEnabled() ? (
-            <Suspense fallback={null}>
-              <DevMobilePreviewButton />
-            </Suspense>
-          ) : null}
+          {/* Print preview + Mobile preview retirés : WYSIWYG. */}
           <ToolbarIconList
             onPrint={runPrint}
             printTitle={printTitle}
             printAriaLabel={printAriaLabel}
+            hideMalt={hideMalt}
           />
         </div>
       </div>
@@ -360,13 +367,13 @@ export default function HeaderToolbar({
         className="w-full shrink-0 md:hidden"
         style={{
           height:
-            'calc(max(0.75rem, env(safe-area-inset-top, 0px)) + 2rem + 0.75rem)',
+            'calc(max(0.75rem, env(safe-area-inset-top, 0px)) + 2.5rem + 0.75rem)',
         }}
         aria-hidden
       />
 
       <div
-        className="fixed inset-x-0 top-0 z-[90] flex items-center gap-2 bg-white/90 px-4 pb-3 backdrop-blur-md supports-[backdrop-filter]:bg-white/80 print:hidden md:hidden"
+        className="fixed inset-x-0 top-0 z-[90] flex items-center gap-2 bg-white/90 px-8 pb-3 backdrop-blur-md supports-[backdrop-filter]:bg-white/80 md:hidden print:hidden"
         style={{
           paddingTop: 'max(0.75rem, env(safe-area-inset-top, 0px))',
         }}
@@ -405,28 +412,15 @@ export default function HeaderToolbar({
             }
           >
             <Suspense fallback={null}>
-              <ModeControl
-                shortLang={shortLang}
-                shortDefaultOfferId={shortDefaultOfferId}
-                onNavigate={close}
-              />
+              <ModeControl shortLang={shortLang} onNavigate={close} />
             </Suspense>
-            {showPrintPreviewToggle ? (
-              <Suspense fallback={null}>
-                <PrintPreviewToggleLink onNavigate={close} />
-              </Suspense>
-            ) : null}
-            {isCvPrintLayoutToolbarEnabled() ? (
-              <Suspense fallback={null}>
-                <DevMobilePreviewButton onNavigate={close} />
-              </Suspense>
-            ) : null}
             <ToolbarIconList
               onNavigate={close}
               listClassName={rowListClass}
               onPrint={runPrint}
               printTitle={printTitle}
               printAriaLabel={printAriaLabel}
+              hideMalt={hideMalt}
             />
           </div>
         </div>
@@ -434,7 +428,7 @@ export default function HeaderToolbar({
         <button
           type="button"
           data-testid="cv-mobile-menu-toggle"
-          className="relative inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-slate-400/40 bg-white text-slate-700 shadow-sm transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/60 focus-visible:ring-offset-2"
+          className="relative inline-flex h-[var(--cv-toolbar-btn)] w-[var(--cv-toolbar-btn)] shrink-0 items-center justify-center rounded-md border border-slate-400/40 bg-white text-slate-700 shadow-sm transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/60 focus-visible:ring-offset-2"
           aria-expanded={open}
           aria-controls="cv-mobile-nav"
           aria-haspopup="dialog"
@@ -443,7 +437,7 @@ export default function HeaderToolbar({
         >
           {open ? (
             <svg
-              className="h-5 w-5"
+              className="h-[var(--cv-toolbar-icon)] w-[var(--cv-toolbar-icon)]"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -458,7 +452,7 @@ export default function HeaderToolbar({
             </svg>
           ) : (
             <svg
-              className="h-5 w-5"
+              className="h-[var(--cv-toolbar-icon)] w-[var(--cv-toolbar-icon)]"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"

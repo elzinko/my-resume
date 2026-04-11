@@ -1,6 +1,6 @@
 /**
  * Tri chronologique inverse sur une clé dérivée (dates ISO recommandées).
- * Réutilisable pour toute liste chargée depuis JSON, Dato ou autre.
+ * Réutilisable pour toute liste chargée depuis JSON.
  */
 export function sortChronologicalDesc<T>(
   items: readonly T[],

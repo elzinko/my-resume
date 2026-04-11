@@ -1,4 +1,7 @@
-import type { MatchCatalog, MatchCatalogEntry } from '@/lib/match-catalog-schema';
+import type {
+  MatchCatalog,
+  MatchCatalogEntry,
+} from '@/lib/match-catalog-schema';
 import {
   MATCH_CATALOG_VERSION,
   deriveMatchTokensFromName,
@@ -90,6 +93,6 @@ export function buildMatchCatalogFromBundle(bundle: {
     generatedAt: new Date().toISOString(),
     entries,
     exampleMatchUrl:
-      '/fr/offer/match?company=Example&title=Engineer&requirement=React:@81821032&requirement=Node.js:nodejs,node.js',
+      '/fr?company=Example&title=Engineer&requirement=React:@81821032&requirement=Node.js:nodejs,node.js',
   };
 }

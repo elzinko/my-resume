@@ -7,7 +7,9 @@ import { test, expect } from '@playwright/test';
 test.describe('CV desktop column alignment', () => {
   test.use({ viewport: { width: 1280, height: 900 } });
 
-  async function expectDevAlignedWithMain(page: import('@playwright/test').Page) {
+  async function expectDevAlignedWithMain(
+    page: import('@playwright/test').Page,
+  ) {
     const devCol = page.locator('#domains .cv-domains-grid > *').nth(1);
     const main = page.locator('#main');
 
@@ -27,7 +29,9 @@ test.describe('CV desktop column alignment', () => {
     ).toBeLessThanOrEqual(2);
   }
 
-  async function expectAgileAlignedWithLeft(page: import('@playwright/test').Page) {
+  async function expectAgileAlignedWithLeft(
+    page: import('@playwright/test').Page,
+  ) {
     const agileCol = page.locator('#domains .cv-domains-grid > *').first();
     const left = page.locator('#left');
 

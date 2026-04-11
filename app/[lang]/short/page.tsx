@@ -11,23 +11,16 @@ import CompactCvLayout, { CompactCvData } from '@/components/CompactCvLayout';
 import { getEducationLevelContent } from '@/lib/education-level-content';
 import formatDates from '@/lib/date';
 import ShortPageWrapper from '@/components/ShortPageWrapper';
-import ShortHeaderJobFitPills from '@/components/ShortHeaderJobFitPills';
 import FullCvPrintPreviewEffect from '@/components/FullCvPrintPreviewEffect';
 import ShortAutoprint from '@/components/ShortAutoprint';
+import {
+  resolveAboutText,
+  resolveDomainDescription,
+} from '@/lib/cv-contract-text';
+import type { ContractType } from '@/data/offers/types';
 import type { Metadata } from 'next';
 
-function generateDocumentTitle(
-  name: string,
-  lang: string,
-  mode: 'full' | 'short',
-): string {
-  const prefix = lang === 'fr' ? 'cv' : 'resume';
-  const modeLabel =
-    lang === 'fr' ? (mode === 'full' ? 'complet' : 'court') : mode;
-  const date = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-  const safeName = name.toLowerCase().replace(/\s+/g, '_');
-  return `${prefix}_${safeName}_${modeLabel}_${date}`;
-}
+import { generateDocumentTitle } from '@/lib/cv-document-title';
 
 export async function generateMetadata({
   params: { lang },
@@ -44,11 +37,29 @@ export async function generateMetadata({
 
 export default async function ShortPage({
   params: { lang },
+  searchParams,
 }: {
   params: { lang: Locale };
+  searchParams?: Record<string, string | string[] | undefined>;
 }) {
   const data: any = await getCvData(lang);
-  const defaultOfferId = process.env.SHORT_CV_OFFER_ID?.trim() || null;
+  const contractParam =
+    typeof searchParams?.contract === 'string'
+      ? searchParams.contract
+      : undefined;
+  const contract: ContractType | undefined =
+    contractParam === 'cdi' || contractParam === 'freelance'
+      ? contractParam
+      : undefined;
+  const hideMalt = contract === 'cdi';
+
+  // Missions mises en avant par le LLM (param `job`, répétable)
+  const jobParam = searchParams?.job;
+  const highlightedJobSlugs: string[] | undefined = jobParam
+    ? (Array.isArray(jobParam) ? jobParam : [jobParam])
+        .map((s) => s.trim())
+        .filter(Boolean)
+    : undefined;
 
   const compactData: CompactCvData = {
     header: {
@@ -70,12 +81,12 @@ export default async function ShortPage({
       locationTitle: data?.contact?.locationTitle || '',
       location: data?.contact?.location || '',
     },
-    about: data?.about?.text || '',
+    about: resolveAboutText(data?.about, contract),
     skills: data?.allSkillsModels || [],
     domains: (data?.allDomainsModels || []).map((d: any) => ({
       id: d.id,
       name: d.name,
-      description: d.description || '',
+      description: resolveDomainDescription(d, contract),
       competencies: d.competencies || [],
     })),
     jobs: (data?.allJobsModels || []).map((j: any) => {
@@ -83,6 +94,7 @@ export default async function ShortPage({
       const [start, end] = dates ? dates.split(' - ') : ['', ''];
       return {
         client: j.client,
+        clientUrl: j.clientUrl,
         role: j.role?.name || '',
         location: j.location,
         startDate: start || '',
@@ -123,30 +135,17 @@ export default async function ShortPage({
         lang={lang}
         headerName={data?.header?.name || ''}
         headerRole={data?.header?.role || ''}
-        headerContact={{
-          email: data?.contact?.email ?? '',
-          phone: data?.contact?.phone ?? '',
-          location: data?.contact?.location ?? '',
-        }}
-        defaultOfferId={defaultOfferId}
-        belowRole={
-          <Suspense fallback={null}>
-            <ShortHeaderJobFitPills
-              lang={lang}
-              defaultOfferId={defaultOfferId}
-            />
-          </Suspense>
-        }
+        hideMalt={hideMalt}
       >
-      <Suspense fallback={null}>
-        <ShortAutoprint />
-      </Suspense>
-      <CompactCvLayout
-        data={compactData}
-        lang={lang as 'fr' | 'en'}
-        defaultOfferId={defaultOfferId}
-      />
-    </ShortPageWrapper>
+        <Suspense fallback={null}>
+          <ShortAutoprint />
+        </Suspense>
+        <CompactCvLayout
+          data={compactData}
+          lang={lang as 'fr' | 'en'}
+          highlightedJobSlugs={highlightedJobSlugs}
+        />
+      </ShortPageWrapper>
     </>
   );
 }

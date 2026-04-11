@@ -1,4 +1,8 @@
-import type { JobOffer, MatchRequirement } from '@/data/offers/types';
+import type {
+  ContractType,
+  JobOffer,
+  MatchRequirement,
+} from '@/data/offers/types';
 import { enrichJobOfferRequirements } from '@/lib/match-catalog';
 import type { MatchCatalog } from '@/lib/match-catalog-schema';
 
@@ -99,12 +103,31 @@ export function parseJobOfferFromUnknown(
     trimStr(o.id, 80) ||
     `custom-${company.toLowerCase().replace(/\s+/g, '-').slice(0, 40)}`;
 
+  const contractRaw = trimStr(o.contract, 20).toLowerCase();
+  const contract: ContractType | undefined =
+    contractRaw === 'cdi' || contractRaw === 'freelance'
+      ? contractRaw
+      : undefined;
+
   const workAddress = trimStr(o.workAddress, 500) || undefined;
   let commuteLabel = trimStr(o.commuteLabel, 80) || undefined;
   const cm = o.commuteMinutes ?? o.commute_minutes;
-  if (!commuteLabel && typeof cm === 'number' && Number.isFinite(cm) && cm >= 0) {
+  if (
+    !commuteLabel &&
+    typeof cm === 'number' &&
+    Number.isFinite(cm) &&
+    cm >= 0
+  ) {
     commuteLabel = `~${Math.round(cm)} min`;
   }
+
+  const hjRaw = o.highlightedJobs ?? o.highlighted_jobs;
+  const highlightedJobs = Array.isArray(hjRaw)
+    ? hjRaw
+        .map((v: unknown) => (typeof v === 'string' ? v.trim() : ''))
+        .filter(Boolean)
+        .slice(0, 24)
+    : undefined;
 
   return enrichJobOfferRequirements(
     {
@@ -113,8 +136,10 @@ export function parseJobOfferFromUnknown(
       title: { fr: titleFr, en: titleEn },
       url: typeof o.url === 'string' ? trimStr(o.url, 500) : undefined,
       requirements,
+      ...(contract ? { contract } : {}),
       ...(workAddress ? { workAddress } : {}),
       ...(commuteLabel ? { commuteLabel } : {}),
+      ...(highlightedJobs?.length ? { highlightedJobs } : {}),
     },
     catalog,
   );
@@ -141,7 +166,7 @@ export function decodeOfferSpecParam(
 
 /**
  * Encode une offre en chaîne base64url (navigateur ou Node avec Buffer).
- * Utile pour construire l’URL `/{lang}/offer/custom?spec=…` depuis un script ou un LLM.
+ * Utile pour construire l’URL `/{lang}?spec=…` depuis un script ou un LLM.
  */
 export function encodeOfferSpecParam(offer: JobOffer): string {
   const json = JSON.stringify(offer);

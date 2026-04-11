@@ -1,19 +1,30 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { getOffer } from '../data/offers';
-import { jobOfferToMatchHref, jobOfferToMatchSearchParams } from './offer-to-match-url';
+import type { JobOffer } from '../data/offers/types';
+import {
+  jobOfferToMatchHref,
+  jobOfferToMatchSearchParams,
+} from './offer-to-match-url';
 
-test('jobOfferToMatchSearchParams includes company and requirements', () => {
-  const offer = getOffer('safran-java-fullstack');
-  assert.ok(offer);
-  const sp = jobOfferToMatchSearchParams(offer!);
-  assert.equal(sp.get('company'), 'Safran');
+const mockOffer: JobOffer = {
+  id: 'test-java',
+  company: 'TestCo',
+  title: { fr: 'Développeur Java', en: 'Java Developer' },
+  requirements: [
+    { label: 'Java', keywords: ['java', 'spring'] },
+    { label: 'SQL', keywords: ['sql', 'postgresql'] },
+  ],
+  contract: 'cdi',
+};
+
+test('jobOfferToMatchSearchParams includes company, requirements and contract', () => {
+  const sp = jobOfferToMatchSearchParams(mockOffer);
+  assert.equal(sp.get('company'), 'TestCo');
   assert.ok(sp.getAll('requirement').length > 0);
+  assert.equal(sp.get('contract'), 'cdi');
 });
 
 test('jobOfferToMatchHref prefixes lang and path', () => {
-  const offer = getOffer('safran-ia-factory');
-  assert.ok(offer);
-  const href = jobOfferToMatchHref('en', offer!);
-  assert.ok(href.startsWith('/en/offer/match?'));
+  const href = jobOfferToMatchHref('en', mockOffer);
+  assert.ok(href.startsWith('/en?'));
 });

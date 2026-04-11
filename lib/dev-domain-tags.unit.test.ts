@@ -26,9 +26,7 @@ test('dev_preset snake_case', () => {
 
 test('devTags five valid tokens', () => {
   const t = resolveDevDomainTagsFromSearchParams(
-    sp(
-      'devTags=java,spring%20boot,microservices,ddd,architecture',
-    ),
+    sp('devTags=java,spring%20boot,microservices,ddd,architecture'),
   );
   assert.equal(t[0], 'Java');
   assert.equal(t[1], 'Spring Boot');
@@ -40,9 +38,7 @@ test('devTags invalid count falls back', () => {
 });
 
 test('devTags unknown token falls back', () => {
-  const t = resolveDevDomainTagsFromSearchParams(
-    sp('devTags=a,b,c,d,e'),
-  );
+  const t = resolveDevDomainTagsFromSearchParams(sp('devTags=a,b,c,d,e'));
   assert.deepEqual(t, DEV_PRESETS.default);
 });
 
@@ -53,9 +49,7 @@ test('devHint react,nodejs picks react preset', () => {
 
 test('explicit devTags beats preset', () => {
   const t = resolveDevDomainTagsFromSearchParams(
-    sp(
-      'devPreset=java&devTags=python,django,fastapi,ddd,architecture',
-    ),
+    sp('devPreset=java&devTags=python,django,fastapi,ddd,architecture'),
   );
   assert.deepEqual(t, DEV_PRESETS.python);
 });

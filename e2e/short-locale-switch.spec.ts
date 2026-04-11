@@ -21,14 +21,16 @@ test.describe('Short CV locale', () => {
     await expect(page).toHaveURL(/\/en\/short/);
   });
 
-  test('switching locale preserves ?offer= on short CV', async ({ page }) => {
-    await page.goto('/fr/short?offer=safran-ia-factory');
-    await expect(page).toHaveURL(/offer=safran-ia-factory/);
+  test('switching locale preserves query params on short CV', async ({
+    page,
+  }) => {
+    await page.goto('/fr/short?company=TestCo&requirement=Java:java');
+    await expect(page).toHaveURL(/company=TestCo/);
     await page
       .getByTestId('cv-header-toolbar')
       .getByTestId('locale-switch')
       .click();
     await expect(page).toHaveURL(/\/en\/short/);
-    await expect(page).toHaveURL(/offer=safran-ia-factory/);
+    await expect(page).toHaveURL(/company=TestCo/);
   });
 });

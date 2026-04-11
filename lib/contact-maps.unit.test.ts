@@ -1,6 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { buildContactLocationHref, THOMERY_STATION_ORIGIN } from './contact-maps';
+import {
+  buildContactLocationHref,
+  THOMERY_STATION_ORIGIN,
+} from './contact-maps';
 
 test('buildContactLocationHref without work address points to search', () => {
   const href = buildContactLocationHref();

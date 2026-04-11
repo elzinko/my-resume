@@ -1,23 +1,25 @@
 'use client';
 
-import { formatMatchYears, type MatchYearsLang } from '@/lib/format-match-years';
+import {
+  formatMatchYears,
+  type MatchYearsLang,
+} from '@/lib/format-match-years';
 import { useShortOfferMatchData } from '@/lib/use-short-offer-match-data';
+import Pill from '@/components/Pill';
 import type { Locale } from 'i18n-config';
 
 interface ShortHeaderJobFitPillsProps {
   lang: Locale;
-  defaultOfferId: string | null;
 }
 
 /**
- * Bandeau sous le sous-titre (rôle) du CV court : pastilles type skills avec
- * libellé techno + années en texte lisible (ex. « 5 ans »), même source que l’adéquation.
+ * Bandeau sous le sous-titre (role) du CV court : pastilles type skills avec
+ * libelle techno + annees en texte lisible (ex. « 5 ans »), meme source que l'adequation.
  */
 export default function ShortHeaderJobFitPills({
   lang,
-  defaultOfferId,
 }: ShortHeaderJobFitPillsProps) {
-  const data = useShortOfferMatchData(lang, defaultOfferId);
+  const data = useShortOfferMatchData(lang);
   const entries = data?.entries ?? [];
   const l = lang as MatchYearsLang;
   if (entries.length === 0) return null;
@@ -25,29 +27,28 @@ export default function ShortHeaderJobFitPills({
   const listLabel =
     lang === 'en'
       ? 'Role fit at a glance, years of experience per requirement'
-      : 'Adéquation poste (aperçu), années d’expérience par exigence';
+      : 'Adequation poste (apercu), annees d\u2019experience par exigence';
 
   return (
     <div
-      className="mt-2 flex w-full flex-wrap justify-end gap-1.5 print:mt-1.5 print:gap-1 md:mt-3"
+      className="flex flex-wrap items-center gap-1.5 print:gap-1"
       data-testid="header-job-fit-pills"
       role="region"
       aria-label={listLabel}
     >
-      <ul className="m-0 flex max-w-full list-none flex-wrap justify-end gap-1.5 p-0 print:gap-1">
+      <ul className="m-0 flex max-w-full list-none flex-wrap items-center gap-1.5 p-0 print:gap-1">
         {entries.map((entry, index) => {
           const hasMatches = entry.matchedClients.length > 0;
-          const showYears =
-            hasMatches || entry.yearsFromOverride === true;
+          const showYears = hasMatches || entry.yearsFromOverride === true;
           const yearsLabel = showYears
             ? formatMatchYears(entry.totalYears, l)
-            : '—';
+            : '\u2014';
 
           const ariaYears = showYears
             ? yearsLabel
             : lang === 'en'
-              ? 'not practiced'
-              : 'non pratiquée';
+            ? 'not practiced'
+            : 'non pratiquee';
 
           return (
             <li
@@ -55,12 +56,9 @@ export default function ShortHeaderJobFitPills({
               className="m-0 p-0"
               aria-label={`${entry.label}, ${ariaYears}`}
             >
-              <span className="cv-pill-match inline-flex max-w-full flex-wrap items-baseline gap-x-1.5 whitespace-nowrap px-2 py-0.5 text-xs font-medium print:gap-1 print:px-1.5 print:py-0.5 print:text-[10px] md:text-sm">
-                <span className="min-w-0 truncate">{entry.label}</span>
-                <span className="text-[10px] font-normal tabular-nums text-orange-200/95 print:text-[9px] print:!text-orange-300 md:text-xs">
-                  {yearsLabel}
-                </span>
-              </span>
+              <Pill color="match" compact metric={yearsLabel}>
+                {entry.label}
+              </Pill>
             </li>
           );
         })}

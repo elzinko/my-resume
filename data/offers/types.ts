@@ -11,14 +11,20 @@ export interface MatchRequirement {
   experienceYearsOverride?: number;
 }
 
+export type ContractType = 'cdi' | 'freelance';
+
 export interface JobOffer {
   id: string;
   company: string;
   title: { fr: string; en: string };
   url?: string;
   requirements: MatchRequirement[];
+  /** Type de contrat : masque Malt en CDI, par défaut freelance. */
+  contract?: ContractType;
   /** Adresse du lieu de travail (itinéraire depuis la gare de Thomery). */
   workAddress?: string;
   /** Libellé discret affiché à côté du lieu (ex. durée de trajet). */
   commuteLabel?: string;
+  /** Slugs de missions à mettre en avant (CV court). Valeurs = slug client sans préfixe "mission-". */
+  highlightedJobs?: string[];
 }

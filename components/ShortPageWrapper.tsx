@@ -1,7 +1,6 @@
 'use client';
 
 import HeaderContent from './HeaderContent';
-import HeaderDesktopContactStrip from './HeaderDesktopContactStrip';
 import HeaderToolbar from './HeaderToolbar';
 import type { Locale } from 'i18n-config';
 import { ReactNode } from 'react';
@@ -11,16 +10,8 @@ interface ShortPageWrapperProps {
   lang: string;
   headerName: string;
   headerRole: string;
-  /** Coordonnées sous le rôle (écran + PDF / aperçu `?print`) — plus de bloc Contact dans le corps du CV court. */
-  headerContact?: {
-    email: string;
-    phone: string;
-    location: string;
-  };
-  /** `SHORT_CV_OFFER_ID` — lien « Version complète » cohérent sans `?offer=`. */
-  defaultOfferId?: string | null;
-  /** Pastilles adéquation sous le rôle : à envelopper en `<Suspense>` côté page serveur si besoin de `useSearchParams`. */
-  belowRole?: ReactNode;
+  /** Masquer le lien Malt (ex. offre CDI). */
+  hideMalt?: boolean;
 }
 
 export default function ShortPageWrapper({
@@ -28,39 +19,15 @@ export default function ShortPageWrapper({
   lang,
   headerName,
   headerRole,
-  headerContact,
-  defaultOfferId = null,
-  belowRole,
+  hideMalt,
 }: ShortPageWrapperProps) {
-  const locale = lang as Locale;
-
   return (
     <>
       <header className="relative z-[70] print:mb-1">
         <div className="print:hidden">
-          <HeaderToolbar
-            shortLang={lang}
-            shortDefaultOfferId={defaultOfferId}
-          />
+          <HeaderToolbar shortLang={lang} hideMalt={hideMalt} />
         </div>
-        <HeaderContent
-          name={headerName}
-          role={headerRole}
-          compactPrint
-          afterRole={
-            headerContact ? (
-              <div className="w-full">
-                <HeaderDesktopContactStrip
-                  email={headerContact.email}
-                  phone={headerContact.phone}
-                  location={headerContact.location}
-                  locale={locale}
-                />
-              </div>
-            ) : undefined
-          }
-          belowRole={belowRole}
-        />
+        <HeaderContent name={headerName} role={headerRole} compactPrint />
       </header>
       {children}
     </>

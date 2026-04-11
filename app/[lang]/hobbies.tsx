@@ -1,4 +1,4 @@
-import CustomLink from '@/components/customLink';
+import HobbiesDisplay from '@/components/HobbiesDisplay';
 import { getCvData } from '@/lib/cv-data';
 import { Locale } from 'i18n-config';
 import React from 'react';
@@ -26,20 +26,7 @@ export default async function hobbies({
       data-cv-section="hobbies"
       className={`cv-cq-section ${sectionClass}`}
     >
-      <h2 className="border-b pb-1 text-2xl font-semibold text-orange-300">
-        {data?.hobbiesTitle?.title}
-      </h2>
-      <ul className="cv-section-simple-list cv-cq-link-list max-md:mt-6">
-        {items.map((hobby: any) => (
-          <li className="text-orange-300" key={hobby.id}>
-            <CustomLink
-              name={hobby.name}
-              link={hobby.link}
-              className="text-orange-300 print:!text-orange-300"
-            />
-          </li>
-        ))}
-      </ul>
+      <HobbiesDisplay title={data?.hobbiesTitle?.title} items={items} />
     </section>
   );
 }

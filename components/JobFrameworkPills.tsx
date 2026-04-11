@@ -125,13 +125,7 @@ export default function JobFrameworkPills({
           getComputedStyle(document.documentElement).fontSize || '16',
         );
         const maxHPx = maxH + 2;
-        const k = maxFitCountSingleRowNoMore(
-          widths,
-          cw,
-          maxH,
-          gapPx,
-          maxHPx,
-        );
+        const k = maxFitCountSingleRowNoMore(widths, cw, maxH, gapPx, maxHPx);
         setVisibleCount(Math.min(cap, k));
         return;
       }
@@ -218,11 +212,7 @@ export default function JobFrameworkPills({
   const visibleFrameworks = frameworks.slice(0, visibleCount);
 
   const showLess =
-    layoutReady &&
-    !compact &&
-    expanded &&
-    !printing &&
-    frameworks.length > 0;
+    layoutReady && !compact && expanded && !printing && frameworks.length > 0;
 
   return (
     <div

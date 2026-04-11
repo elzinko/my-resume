@@ -20,14 +20,14 @@ interface ContactDisplayProps {
   contact: ContactData;
   compact?: boolean;
   /**
-   * `true` : grille 3 colonnes à partir de `md` (1 colonne en dessous).
-   * `false` : liste verticale (même rendu que la colonne gauche du CV complet).
-   */
-  condensed?: boolean;
-  /**
    * CV court : chaque ligne = libellé à gauche / valeur à droite (mobile, tablette, impression).
    */
   cvShortInlineRows?: boolean;
+  /**
+   * Masquer les libellés visuellement (sr-only pour accessibilité / LLM).
+   * Les valeurs sont affichées seules, alignées à gauche, avec une couleur plus marquée.
+   */
+  showLabels?: boolean;
   locale?: Locale;
 }
 
@@ -49,13 +49,15 @@ function LocationLinkBlock({
 
   return (
     <div
-      className={`flex w-full min-w-0 flex-wrap items-baseline justify-between gap-x-2 gap-y-0.5 ${className ?? ''}`.trim()}
+      className={`flex w-full min-w-0 flex-wrap items-baseline justify-between gap-x-2 gap-y-0.5 ${
+        className ?? ''
+      }`.trim()}
     >
       <a
         href={mapsHref}
         target="_blank"
         rel="noopener noreferrer"
-        className="min-w-0 break-words text-inherit underline decoration-current/40 underline-offset-2 hover:decoration-current/70"
+        className="hover:decoration-current/70 min-w-0 break-words text-inherit no-underline hover:underline hover:underline-offset-2"
         title={title}
       >
         {location}
@@ -72,18 +74,71 @@ function LocationLinkBlock({
 export default function ContactDisplay({
   contact,
   compact = false,
-  condensed = false,
   cvShortInlineRows = false,
+  showLabels = true,
   locale = 'fr',
 }: ContactDisplayProps) {
+  const ctx = useContactLocation();
+
   if (cvShortInlineRows) {
+    // Mode sans labels : valeurs seules, alignées à gauche, couleur rose-300.
+    // Structure identique aux autres listes simples (Études, Projets) :
+    // <ul cv-section-simple-list> → <li> → <a> (pas de wrapper div).
+    if (!showLabels) {
+      const sizeToken = compact
+        ? 'cv-contact-value-compact'
+        : 'cv-contact-value';
+      const valueCls = `${sizeToken} text-rose-300`;
+      const linkCls =
+        'no-underline hover:underline hover:decoration-rose-300/50 hover:underline-offset-2';
+      const mapsHref = ctx?.mapsHref ?? buildContactLocationHref();
+      const isDirections = ctx?.isDirections ?? false;
+      const loc = ctx?.locale ?? locale;
+      const locationTitle = contactLocationLinkTitle(loc, isDirections);
+
+      return (
+        <ul className="cv-short-contact-rows cv-section-simple-list">
+          <li className="cv-row-simple-item">
+            <span className="sr-only">{contact.emailTitle} : </span>
+            <a
+              href={`mailto:${contact.email}`}
+              className={`${valueCls} ${linkCls} break-all`}
+            >
+              {contact.email}
+            </a>
+          </li>
+          <li className="cv-row-simple-item">
+            <span className="sr-only">{contact.phoneTitle} : </span>
+            <a
+              href={`tel:${contact.phone.replace(/\s/g, '')}`}
+              className={`${valueCls} ${linkCls} tabular-nums`}
+            >
+              {contact.phone}
+            </a>
+          </li>
+          <li className="cv-row-simple-item">
+            <span className="sr-only">{contact.locationTitle} : </span>
+            <a
+              href={mapsHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${valueCls} ${linkCls}`}
+              title={locationTitle}
+            >
+              {contact.location}
+            </a>
+          </li>
+        </ul>
+      );
+    }
+
     const row =
       'flex w-full flex-row items-baseline justify-between gap-2 text-sm text-pink-200 md:gap-3 print:gap-2 print:text-[9px] print:leading-tight';
     const labelCls = 'shrink-0 font-semibold text-cv-jobs';
     const valueWrap = 'min-w-0 text-right';
 
     return (
-      <ul className="cv-short-contact-rows mt-2 space-y-1.5 md:space-y-1 print:mt-0.5 print:space-y-0.5">
+      <ul className="cv-short-contact-rows cv-section-body-gap space-y-1.5 md:space-y-1 print:space-y-0.5">
         <li className={row}>
           <strong className={labelCls}>{contact.emailTitle}</strong>
           <a
@@ -131,7 +186,9 @@ export default function ContactDisplay({
           <strong className="shrink-0 text-cv-jobs">
             {contact.phoneTitle || 'Tél.'}
           </strong>
-          <span className="min-w-0 text-right tabular-nums">{contact.phone}</span>
+          <span className="min-w-0 text-right tabular-nums">
+            {contact.phone}
+          </span>
         </li>
         <li className={row}>
           <strong className="shrink-0 text-cv-jobs">
@@ -149,53 +206,15 @@ export default function ContactDisplay({
     );
   }
 
-  if (condensed) {
-    const cell =
-      'flex min-w-0 flex-row items-baseline justify-between gap-2 text-pink-200 md:flex-col md:items-stretch md:gap-0';
-    const label =
-      'shrink-0 text-base font-bold text-cv-jobs print:text-sm md:block';
-    const value =
-      'mt-0.5 block min-w-0 text-right text-base print:text-sm md:mt-0.5 md:text-left';
-    return (
-      <div className="mt-4 grid grid-cols-1 gap-4 print:mt-2 print:grid-cols-3 print:gap-2 md:mt-4 md:grid-cols-3 md:gap-x-10 md:gap-y-2 md:items-start">
-        <div className={cell}>
-          <strong className={label}>{contact.emailTitle}</strong>
-          <a
-            href={`mailto:${contact.email}`}
-            className={`${value} break-all`}
-          >
-            {contact.email}
-          </a>
-        </div>
-        <div className={cell}>
-          <strong className={label}>{contact.phoneTitle}</strong>
-          <a href={`tel:${contact.phone}`} className={`${value} tabular-nums`}>
-            {contact.phone}
-          </a>
-        </div>
-        <div className={cell}>
-          <strong className={label}>{contact.locationTitle}</strong>
-          <div className="mt-0.5 min-w-0 text-right md:mt-0.5 md:text-left">
-            <LocationLinkBlock
-              location={contact.location}
-              locale={locale}
-              className="justify-end md:mt-0 md:justify-between"
-            />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   /** Mobile : libellé à gauche / valeur à droite ; `md+` : pile comme la colonne gauche ; print : pile dans chaque cellule de grille. */
   const stackLi =
-    'mt-1 flex flex-row items-baseline justify-between gap-2 gap-x-3 text-pink-200 md:flex-col md:items-stretch md:gap-0 print:mt-0 print:block print:flex-none print-preview:mt-0 print-preview:block print-preview:flex-none';
+    'mt-1 flex flex-row items-baseline justify-between gap-2 gap-x-3 text-pink-200 md:flex-col md:items-stretch md:gap-0';
   const stackLabel = 'shrink-0 text-base font-bold text-cv-jobs';
   const stackValue =
     'block min-w-0 text-right text-base md:mt-0 md:text-left print:text-left';
 
   return (
-    <ul className="cv-contact-stack mr-1 mt-4 print:mt-2 print:grid print:grid-cols-3 print:gap-x-4 print:gap-y-1 print:[&>li]:mt-0 print-preview:grid print-preview:grid-cols-3 print-preview:gap-x-10 print-preview:gap-y-1 print-preview:[&>li]:mt-0">
+    <ul className="cv-contact-stack mr-1 mt-4 print:mt-2">
       <li className={stackLi}>
         <strong className={stackLabel}>{contact.emailTitle}</strong>
         <a

@@ -15,12 +15,13 @@
       "phone": "+33661412725",
       "emailTitle": "E-mail",
       "email": "thomas.couderc@gmail.com",
-      "locationTitle": "Emplacement",
+      "locationTitle": "Localisation",
       "location": "Thomery (77)"
     },
     "about": {
       "title": "Profile",
-      "text": "Je suis un consultant informatique fullstack agile passionné par les technologies open source frontend et backend. J'aime développer des logiciels à l'aide de solutions cloud, le tout dans la lignée du mouvement Devops."
+      "text": "Je suis un consultant informatique fullstack agile passionné par les technologies open source frontend et backend. J'aime développer des logiciels à l'aide de solutions cloud, le tout dans la lignée du mouvement Devops.",
+      "textCdi": "Ingénieur fullstack agile avec 20 ans d'expérience, je conçois des applications robustes en environnement cloud avec une culture DevOps et craftsmanship, sur des stacks open source frontend et backend."
     },
     "skillsTitle": {
       "title": "Compétences"
@@ -29,7 +30,7 @@
       "title": "Études"
     },
     "jobsTitle": {
-      "title": "Missions"
+      "title": "Expérience professionnelle"
     },
     "projectsTitle": {
       "title": "Projets"
@@ -115,6 +116,7 @@
         "id": "78726113",
         "name": "Agile",
         "description": "Je sais mettre à profit mes multiples expériences d'agilité au service d'une équipe afin d'aboutir à un produit proche du besoin avec une philosophie software craftsmanship.",
+        "descriptionCdi": "Fort de multiples expériences agiles, j'accompagne les équipes vers un produit au plus proche du besoin, dans une démarche software craftsmanship et d'amélioration continue.",
         "position": 1,
         "competencies": [
           {
@@ -124,7 +126,7 @@
           },
           {
             "id": "90601528",
-            "name": "SAFe certified",
+            "name": "SAFe",
             "link": "https://scaledagile.com/"
           },
           {
@@ -147,7 +149,8 @@
       {
         "id": "78726111",
         "name": "Dev",
-        "description": "J'aime développer des composants réutilisables dans un environnement clusterisé en utilisant des concepts tels que API REST, microservices, robustesse, observabilité, clean code.",
+        "description": "J'aime développer des composants réutilisables dans un environnement clusterisé en utilisant des concepts tels que microservices, robustesse, observabilité, clean code.",
+        "descriptionCdi": "Je conçois des composants réutilisables dans un environnement clusterisé avec les principes microservices, robustesse, observabilité et clean code.",
         "position": 2,
         "competencies": [
           {
@@ -211,6 +214,7 @@
         "id": "78855347",
         "name": "Ops",
         "description": "Je travaille avec les opérationnels en privilégiant le déploiement continu : livrer vite de la valeur concrète tout en réduisant les frictions entre métiers et production.",
+        "descriptionCdi": "Je pratique le déploiement continu au quotidien pour livrer rapidement de la valeur concrète, en réduisant les frictions entre développement et production.",
         "position": 3,
         "competencies": [
           {
@@ -306,6 +310,7 @@
       },
       {
         "client": "JPB Système",
+        "clientUrl": "https://www.jpb-systeme.com/fr/keyprod",
         "location": "Montereau-sur-le-Jard",
         "startDate": "2024-06-10",
         "endDate": "2025-08-31",
@@ -369,6 +374,7 @@
       },
       {
         "client": "BlaBlaCar",
+        "clientUrl": "https://www.blablacar.fr",
         "location": "Paris",
         "startDate": "2023-10-01",
         "endDate": "2023-12-31",
@@ -413,6 +419,7 @@
       },
       {
         "client": "Smartch",
+        "clientUrl": "https://www.smartch.fr/",
         "location": "Paris",
         "startDate": "2023-05-01",
         "endDate": "2023-09-04",
@@ -476,6 +483,7 @@
       },
       {
         "client": "SNCF Réseaux - DGEX Solutions",
+        "clientUrl": "https://www.sncf-reseau.com",
         "location": "Saint-Denis",
         "startDate": "2022-05-01",
         "endDate": "2023-02-01",
@@ -588,6 +596,7 @@
       },
       {
         "client": "leboncoin",
+        "clientUrl": "https://www.leboncoin.fr",
         "location": "Paris",
         "startDate": "2021-08-01",
         "endDate": "2022-05-01",
@@ -676,6 +685,7 @@
       },
       {
         "client": "Celsius Energy",
+        "clientUrl": "https://celsiusenergy.com/",
         "location": "Clamart",
         "startDate": "2020-12-01",
         "endDate": "2021-08-01",
@@ -784,6 +794,7 @@
       },
       {
         "client": "RelevanC",
+        "clientUrl": "https://www.relevanc.com",
         "location": "Paris",
         "startDate": "2020-08-01",
         "endDate": "2020-12-02",
@@ -843,6 +854,7 @@
       },
       {
         "client": "Ecocea",
+        "clientUrl": "https://www.ecocealafabrique.com/",
         "location": "Paris",
         "startDate": "2019-10-01",
         "endDate": "2020-05-01",
@@ -898,6 +910,7 @@
       },
       {
         "client": "Edelia",
+        "clientUrl": "https://www.edelia.fr",
         "location": "Nanterre",
         "startDate": "2016-04-01",
         "endDate": "2019-06-01",
@@ -1161,6 +1174,7 @@
       },
       {
         "client": "JCDecaux",
+        "clientUrl": "https://www.jcdecaux.com",
         "location": "Plaisir",
         "startDate": "2015-01-01",
         "endDate": "2016-03-01",
@@ -1236,6 +1250,7 @@
       },
       {
         "client": "Lotsys Filiale FDJ",
+        "clientUrl": "https://www.fdj.fr/",
         "location": "Suresnes",
         "startDate": "2014-04-01",
         "endDate": "2014-12-01",
@@ -1335,6 +1350,7 @@
       },
       {
         "client": "Mediametrie",
+        "clientUrl": "https://www.mediametrie.fr",
         "location": "Levallois-Perret",
         "startDate": "2013-04-01",
         "endDate": "2014-03-01",
@@ -1468,30 +1484,20 @@
       },
       {
         "client": "Thales communications",
+        "clientUrl": "https://www.thalesgroup.com",
         "location": "Gennevilliers",
         "startDate": "2012-01-01",
         "endDate": "2013-01-01",
-        "description": "Projet au sein de l'équipe R&D du laboratoire d'Etudes Amont CenTAI de THALES",
+        "description": "Développement d'un service scalable de preuve Internet",
         "bullets": [
           {
             "id": "82627895",
-            "text": "Audit de performances / Optimisation de la chaîne de traitement"
+            "text": "Projet au sein de l'équipe R&D du laboratoire d'Études Amont CenTAI de THALES",
+            "link": "https://www.institutdesactuaires.com/global/gene/link.php?doc_id=1157&fg=1"
           },
           {
             "id": "82627896",
-            "text": "Developpement d'un service scalable de preuve Internet"
-          },
-          {
-            "id": "82627897",
-            "text": "Participation à l'intégration d'une solution de loadbalancing pour un outil de NLP"
-          },
-          {
-            "id": "82627898",
-            "text": "Développement d'interfaces GWT"
-          },
-          {
-            "id": "82627899",
-            "text": "Mise en place de templates de machines virtuelles"
+            "text": "Conception et développement d'un service scalable de collecte et certification de preuves numériques"
           }
         ],
         "frameworks": [
@@ -1599,6 +1605,7 @@
       },
       {
         "client": "Médiapost",
+        "clientUrl": "https://www.mediapost.fr",
         "location": "Montrouge",
         "startDate": "2011-04-01",
         "endDate": "2012-01-01",
@@ -1706,7 +1713,7 @@
       },
       {
         "id": "82548346",
-        "name": "Control of Mobile Robots & Digital Signal Processing",
+        "name": "Contrôle de robots mobiles & Traitement du signal numérique",
         "startDate": "2011-09-01",
         "endDate": "2013-07-01",
         "establishment": "Coursera",
@@ -1881,7 +1888,7 @@
         "link": "https://github.com/elzinko/realizator",
         "startDate": "2026-01-15",
         "endDate": null,
-        "description": "Application web qui génère des démos vidéo automatiquement à partir d’URL : scénario personnalisable, puis rendu vidéo.",
+        "description": "Application web qui génère des démos vidéo automatiquement.",
         "frameworks": [
           {
             "id": "81826170",
@@ -1909,7 +1916,7 @@
         "link": "https://github.com/elzinko/livestreamz",
         "startDate": "2026-01-15",
         "endDate": null,
-        "description": "Application qui transforme le téléphone en caméra pour du streaming temps réel fiable — sur le principe de DroidCam, avec une stabilité renforcée.",
+        "description": "Application qui transforme le téléphone en caméra pour du streaming temps réel fiable.",
         "frameworks": [
           {
             "id": "81826170",
@@ -1955,62 +1962,6 @@
           {
             "id": "cvtag-muti",
             "name": "product"
-          }
-        ]
-      },
-      {
-        "id": "81826200",
-        "name": "Curriculum Vitae",
-        "link": "https://github.com/elzinko/my-resume",
-        "startDate": null,
-        "endDate": "2023-03-16",
-        "description": "Mon cv professionnel actualisé fait avec amour",
-        "frameworks": [
-          {
-            "id": "81826170",
-            "name": "NextJS",
-            "link": ""
-          },
-          {
-            "id": "81826172",
-            "name": "Tailwind CSS",
-            "link": ""
-          },
-          {
-            "id": "81826186",
-            "name": "DatoCMS",
-            "link": ""
-          },
-          {
-            "id": "81826176",
-            "name": "Github",
-            "link": ""
-          },
-          {
-            "id": "81826185",
-            "name": "Copilot",
-            "link": ""
-          },
-          {
-            "id": "81826173",
-            "name": "Vercel",
-            "link": ""
-          }
-        ],
-        "bullets": [
-          {
-            "id": "81826198",
-            "text": "design réalisé avec Tailwind CSS"
-          },
-          {
-            "id": "81826199",
-            "text": "conception réactive"
-          }
-        ],
-        "tags": [
-          {
-            "id": "81981928",
-            "name": "code"
           }
         ]
       },
@@ -2071,93 +2022,30 @@
         ]
       },
       {
-        "id": "82932189",
-        "name": "Déploiement Octobot",
-        "link": "https://github.com/elzinko/octobot",
-        "startDate": null,
-        "endDate": "2023-02-01",
-        "description": "Déployez gratuitement une instance Octobot sur le cloud Oracle.",
+        "id": "cvproj-byhere-2026",
+        "name": "byhere",
+        "title": "ByHere",
+        "link": "https://byhere.fr",
+        "startDate": "2026-03-01",
+        "endDate": null,
+        "description": "Application de visite guidée en voiture : itinéraires commentés et points d'intérêt géolocalisés.",
         "frameworks": [
           {
-            "id": "82456127",
-            "name": "Docker",
+            "id": "81826170",
+            "name": "NextJS",
             "link": ""
           },
           {
-            "id": "82594135",
-            "name": "docker-compose",
-            "link": ""
-          },
-          {
-            "id": "82522197",
-            "name": "Python",
-            "link": "https://www.python.org/"
-          },
-          {
-            "id": "90902398",
-            "name": "Oracle cloud",
-            "link": "https://www.oracle.com/fr/cloud/"
-          }
-        ],
-        "bullets": [],
-        "tags": [
-          {
-            "id": "82932186",
-            "name": "octobot"
-          },
-          {
-            "id": "82932187",
-            "name": "cicd"
-          },
-          {
-            "id": "82932188",
-            "name": "crypto"
-          }
-        ]
-      },
-      {
-        "id": "82933230",
-        "name": "Fizzbuzz en Go",
-        "link": "https://github.com/elzinko/go-fizzbuzz",
-        "startDate": null,
-        "endDate": "2021-01-09",
-        "description": "Fizzbuzz en Go",
-        "frameworks": [
-          {
-            "id": "82456107",
-            "name": "Go",
-            "link": "https://go.dev/"
-          },
-          {
-            "id": "82456127",
-            "name": "Docker",
-            "link": ""
-          },
-          {
-            "id": "82459635",
-            "name": "rest",
-            "link": ""
-          },
-          {
-            "id": "82456116",
-            "name": "Swagger",
-            "link": ""
-          },
-          {
-            "id": "82933040",
-            "name": "Gin",
+            "id": "82456019",
+            "name": "React",
             "link": ""
           }
         ],
         "bullets": [],
         "tags": [
           {
-            "id": "82933051",
-            "name": "dev"
-          },
-          {
-            "id": "82933052",
-            "name": "fun"
+            "id": "cvtag-byhere",
+            "name": "product"
           }
         ]
       }
@@ -2165,22 +2053,26 @@
     "allHobbiesModels": [
       {
         "id": "81779577",
-        "name": "Créer du son",
+        "name": "Ableton",
+        "description": "Production musicale avec Ableton Live, Max4Live et développement Python pour contrôleurs MIDI.",
         "link": "https://soundcloud.com/zebra-music-459073993/sets/la-base"
       },
       {
         "id": "81779962",
         "name": "Crossovers",
+        "description": "Basket, étude du jeu et des statistiques.",
         "link": "https://hoopstudy.com/"
       },
       {
         "id": "81780862",
         "name": "Rider",
+        "description": "VTT dans la forêt de Fontainebleau, Portes du Soleil et ailleurs.",
         "link": "https://www.passportesdusoleil.com/"
       },
       {
         "id": "81781610",
         "name": "Le système de Londres",
+        "description": "Échecs en ligne : système de Londres, défense Caro-Kann.",
         "link": "https://www.chess.com/fr"
       }
     ],
@@ -2188,32 +2080,38 @@
       {
         "id": "cnZskAq6SqSbkXAmAB0KIQ",
         "name": "LLM",
-        "link": "https://www.langchain.com/"
+        "link": "https://www.langchain.com/",
+        "description": "Agents, RAG, prompt engineering et intégration dans des produits SaaS."
       },
       {
         "id": "Taq3bWZ6Stu5rt42dP1_WQ",
         "name": "AWS Bedrock",
-        "link": "https://aws.amazon.com/fr/bedrock/agents/"
+        "link": "https://aws.amazon.com/fr/bedrock/agents/",
+        "description": "Orchestration d'agents IA managés et modèles fondation AWS."
       },
       {
         "id": "UsM_i8jNSFK12ePhrc0x0g",
         "name": "MCP",
-        "link": "https://modelcontextprotocol.io/specification/2025-06-18"
+        "link": "https://modelcontextprotocol.io/specification/2025-06-18",
+        "description": "Protocole d'intégration d'outils pour modèles de langage."
       },
       {
         "id": "learn-langchain-stack",
         "name": "LangChain",
-        "link": "https://docs.langchain.com/"
+        "link": "https://docs.langchain.com/",
+        "description": "Framework d'orchestration de chaînes LLM et agents conversationnels."
       },
       {
         "id": "learn-openrag",
         "name": "OpenRAG",
-        "link": "https://docs.openr.ag/"
+        "link": "https://docs.openr.ag/",
+        "description": "Pipeline RAG open source : indexation, recherche vectorielle, génération."
       },
       {
         "id": "learn-bmad-method",
         "name": "BMAD",
-        "link": "https://docs.bmad-method.org/"
+        "link": "https://docs.bmad-method.org/",
+        "description": "Méthodologie de cadrage produit assistée par IA multi-agents."
       }
     ]
   },
@@ -2237,7 +2135,8 @@
     },
     "about": {
       "title": "Summary",
-      "text": "I am an agile fullstack consultant passionate about open source frontend and backend technologies. I like to develop software using cloud solutions, all in line with the Devops movement."
+      "text": "I am an agile fullstack consultant passionate about open source frontend and backend technologies. I like to develop software using cloud solutions, all in line with the Devops movement.",
+      "textCdi": "Agile fullstack engineer with 20 years of experience, I design robust cloud-native applications with a DevOps culture and craftsmanship mindset, using open source frontend and backend stacks."
     },
     "skillsTitle": {
       "title": "Skills"
@@ -2246,7 +2145,7 @@
       "title": "Studies"
     },
     "jobsTitle": {
-      "title": "Jobs"
+      "title": "Professional Experience"
     },
     "projectsTitle": {
       "title": "Projects"
@@ -2332,6 +2231,7 @@
         "id": "78726113",
         "name": "Agile",
         "description": "I know how to use my multiple experiences of agility in the service of a team in order to achieve a product close to the need with a software craftsmanship philosophy.",
+        "descriptionCdi": "Drawing on years of agile practice, I guide teams toward delivering the right product through software craftsmanship and continuous improvement.",
         "position": 1,
         "competencies": [
           {
@@ -2341,7 +2241,7 @@
           },
           {
             "id": "90601528",
-            "name": "SAFe certified",
+            "name": "SAFe",
             "link": "https://scaledagile.com/"
           },
           {
@@ -2365,6 +2265,7 @@
         "id": "78726111",
         "name": "Dev",
         "description": "I like to develop reusable components in a clustered environment using concepts like microservices, robustness, observability, clean code.",
+        "descriptionCdi": "I design reusable components in clustered environments applying microservices, robustness, observability and clean code principles.",
         "position": 2,
         "competencies": [
           {
@@ -2428,6 +2329,7 @@
         "id": "78855347",
         "name": "Ops",
         "description": "I want to collaborate with operational teams by practicing continuous deployment and thus produce value for the company by reducing organizational friction.",
+        "descriptionCdi": "I practice continuous deployment daily to ship value fast, reducing friction between development and production teams.",
         "position": 3,
         "competencies": [
           {
@@ -2523,6 +2425,7 @@
       },
       {
         "client": "JPB Système",
+        "clientUrl": "https://www.jpb-systeme.com/fr/keyprod",
         "location": "Montereau-sur-le-Jard",
         "startDate": "2024-06-10",
         "endDate": "2025-08-31",
@@ -2586,6 +2489,7 @@
       },
       {
         "client": "BlaBlaCar",
+        "clientUrl": "https://www.blablacar.fr",
         "location": "Paris",
         "startDate": "2023-10-01",
         "endDate": "2023-12-31",
@@ -2630,6 +2534,7 @@
       },
       {
         "client": "Smartch",
+        "clientUrl": "https://www.smartch.fr/",
         "location": "Paris",
         "startDate": "2023-05-01",
         "endDate": "2023-09-04",
@@ -2693,6 +2598,7 @@
       },
       {
         "client": "SNCF Réseaux - DGEX Solutions",
+        "clientUrl": "https://www.sncf-reseau.com",
         "location": "Saint-Denis",
         "startDate": "2022-05-01",
         "endDate": "2023-02-01",
@@ -2805,6 +2711,7 @@
       },
       {
         "client": "leboncoin",
+        "clientUrl": "https://www.leboncoin.fr",
         "location": "Paris",
         "startDate": "2021-08-01",
         "endDate": "2022-05-01",
@@ -2893,6 +2800,7 @@
       },
       {
         "client": "Celsius Energy",
+        "clientUrl": "https://celsiusenergy.com/",
         "location": "Clamart",
         "startDate": "2020-12-01",
         "endDate": "2021-08-01",
@@ -3001,6 +2909,7 @@
       },
       {
         "client": "RelevanC",
+        "clientUrl": "https://www.relevanc.com",
         "location": "Paris",
         "startDate": "2020-08-01",
         "endDate": "2020-12-02",
@@ -3060,6 +2969,7 @@
       },
       {
         "client": "Ecocea",
+        "clientUrl": "https://www.ecocealafabrique.com/",
         "location": "Paris",
         "startDate": "2019-10-01",
         "endDate": "2020-05-01",
@@ -3115,6 +3025,7 @@
       },
       {
         "client": "Edelia",
+        "clientUrl": "https://www.edelia.fr",
         "location": "Nanterre",
         "startDate": "2016-04-01",
         "endDate": "2019-06-01",
@@ -3378,6 +3289,7 @@
       },
       {
         "client": "JCDecaux",
+        "clientUrl": "https://www.jcdecaux.com",
         "location": "Plaisir",
         "startDate": "2015-01-01",
         "endDate": "2016-03-01",
@@ -3453,6 +3365,7 @@
       },
       {
         "client": "Lotsys Filiale FDJ",
+        "clientUrl": "https://www.fdj.fr/",
         "location": "Suresnes",
         "startDate": "2014-04-01",
         "endDate": "2014-12-01",
@@ -3552,6 +3465,7 @@
       },
       {
         "client": "Mediametrie",
+        "clientUrl": "https://www.mediametrie.fr",
         "location": "Levallois-Perret",
         "startDate": "2013-04-01",
         "endDate": "2014-03-01",
@@ -3685,30 +3599,20 @@
       },
       {
         "client": "Thales communications",
+        "clientUrl": "https://www.thalesgroup.com",
         "location": "Gennevilliers",
         "startDate": "2012-01-01",
         "endDate": "2013-01-01",
-        "description": "Project within the R&D team of the CenTAI Upstream Studies laboratory of THALES",
+        "description": "Development of a scalable Internet proof service",
         "bullets": [
           {
             "id": "82627890",
-            "text": "Performance audit / Optimization of the processing chain"
+            "text": "Project within the R&D team of the THALES CenTAI Upstream Studies laboratory",
+            "link": "https://www.institutdesactuaires.com/global/gene/link.php?doc_id=1157&fg=1"
           },
           {
             "id": "82627891",
-            "text": "Development of a scalable Internet proof service"
-          },
-          {
-            "id": "82627892",
-            "text": "Participation in the integration of a loadbalancing solution for an NLP tool"
-          },
-          {
-            "id": "82627893",
-            "text": "Development of GWT interfaces"
-          },
-          {
-            "id": "82627894",
-            "text": "Setting up virtual machine templates"
+            "text": "Design and development of a scalable digital evidence collection and certification service"
           }
         ],
         "frameworks": [
@@ -3816,6 +3720,7 @@
       },
       {
         "client": "Médiapost",
+        "clientUrl": "https://www.mediapost.fr",
         "location": "Montrouge",
         "startDate": "2011-04-01",
         "endDate": "2012-01-01",
@@ -4098,7 +4003,7 @@
         "link": "https://github.com/elzinko/realizator",
         "startDate": "2026-01-15",
         "endDate": null,
-        "description": "Web app that builds video demos automatically from URLs: you design a customizable scenario, and it generates the video.",
+        "description": "Web app that builds video demos automatically.",
         "frameworks": [
           {
             "id": "81826170",
@@ -4126,7 +4031,7 @@
         "link": "https://github.com/elzinko/livestreamz",
         "startDate": "2026-01-15",
         "endDate": null,
-        "description": "App that turns your phone into a camera for reliable real-time streaming—in the spirit of DroidCam, with greater stability.",
+        "description": "App that turns your phone into a camera for reliable real-time streaming.",
         "frameworks": [
           {
             "id": "81826170",
@@ -4172,62 +4077,6 @@
           {
             "id": "cvtag-muti",
             "name": "product"
-          }
-        ]
-      },
-      {
-        "id": "81826200",
-        "name": "Resume",
-        "link": "https://github.com/elzinko/my-resume",
-        "startDate": null,
-        "endDate": "2023-03-16",
-        "description": "My own professional resume made with love",
-        "frameworks": [
-          {
-            "id": "81826170",
-            "name": "NextJS",
-            "link": ""
-          },
-          {
-            "id": "81826172",
-            "name": "Tailwind CSS",
-            "link": ""
-          },
-          {
-            "id": "81826186",
-            "name": "DatoCMS",
-            "link": ""
-          },
-          {
-            "id": "81826176",
-            "name": "Github",
-            "link": ""
-          },
-          {
-            "id": "81826185",
-            "name": "Copilot",
-            "link": ""
-          },
-          {
-            "id": "81826173",
-            "name": "Vercel",
-            "link": ""
-          }
-        ],
-        "bullets": [
-          {
-            "id": "81826196",
-            "text": "own design with tailwind"
-          },
-          {
-            "id": "81826197",
-            "text": "mobile ready"
-          }
-        ],
-        "tags": [
-          {
-            "id": "81981928",
-            "name": "code"
           }
         ]
       },
@@ -4288,93 +4137,30 @@
         ]
       },
       {
-        "id": "82932189",
-        "name": "Octobot deployment",
-        "link": "https://github.com/elzinko/octobot",
-        "startDate": null,
-        "endDate": "2023-02-01",
-        "description": "Deploy freely an Octobot instance on an Oracle cloud free tier.",
+        "id": "cvproj-byhere-2026",
+        "name": "byhere",
+        "title": "ByHere",
+        "link": "https://byhere.fr",
+        "startDate": "2026-03-01",
+        "endDate": null,
+        "description": "Guided car tour app: narrated routes with geolocated points of interest.",
         "frameworks": [
           {
-            "id": "82456127",
-            "name": "Docker",
+            "id": "81826170",
+            "name": "NextJS",
             "link": ""
           },
           {
-            "id": "82594135",
-            "name": "docker-compose",
-            "link": ""
-          },
-          {
-            "id": "82522197",
-            "name": "Python",
-            "link": "https://www.python.org/"
-          },
-          {
-            "id": "90902398",
-            "name": "Oracle cloud",
-            "link": "https://www.oracle.com/fr/cloud/"
-          }
-        ],
-        "bullets": [],
-        "tags": [
-          {
-            "id": "82932186",
-            "name": "octobot"
-          },
-          {
-            "id": "82932187",
-            "name": "cicd"
-          },
-          {
-            "id": "82932188",
-            "name": "crypto"
-          }
-        ]
-      },
-      {
-        "id": "82933230",
-        "name": "Go Fizzbuzz",
-        "link": "https://github.com/elzinko/go-fizzbuzz",
-        "startDate": null,
-        "endDate": "2021-01-09",
-        "description": "Fizzbuzz project using Golang",
-        "frameworks": [
-          {
-            "id": "82456107",
-            "name": "Go",
-            "link": "https://go.dev/"
-          },
-          {
-            "id": "82456127",
-            "name": "Docker",
-            "link": ""
-          },
-          {
-            "id": "82459635",
-            "name": "rest",
-            "link": ""
-          },
-          {
-            "id": "82456116",
-            "name": "Swagger",
-            "link": ""
-          },
-          {
-            "id": "82933040",
-            "name": "Gin",
+            "id": "82456019",
+            "name": "React",
             "link": ""
           }
         ],
         "bullets": [],
         "tags": [
           {
-            "id": "82933051",
-            "name": "dev"
-          },
-          {
-            "id": "82933052",
-            "name": "fun"
+            "id": "cvtag-byhere",
+            "name": "product"
           }
         ]
       }
@@ -4382,22 +4168,26 @@
     "allHobbiesModels": [
       {
         "id": "81779577",
-        "name": "Creating music",
+        "name": "Ableton",
+        "description": "Music production with Ableton Live, Max4Live and Python development for MIDI controllers.",
         "link": "https://soundcloud.com/zebra-music-459073993/sets/la-base"
       },
       {
         "id": "81779962",
         "name": "Crossovers",
+        "description": "Basketball, game study and statistics.",
         "link": "https://hoopstudy.com/"
       },
       {
         "id": "81780862",
         "name": "Riding the hills",
+        "description": "Mountain biking in Fontainebleau forest, Portes du Soleil and beyond.",
         "link": "https://www.passportesdusoleil.com/"
       },
       {
         "id": "81781610",
         "name": "London system or Caro-Kann",
+        "description": "Online chess: London system, Caro-Kann defense.",
         "link": "https://www.chess.com/fr"
       }
     ],
@@ -4405,32 +4195,38 @@
       {
         "id": "cnZskAq6SqSbkXAmAB0KIQ",
         "name": "LLM",
-        "link": "https://www.langchain.com/"
+        "link": "https://www.langchain.com/",
+        "description": "Agents, RAG, prompt engineering and integration into SaaS products."
       },
       {
         "id": "Taq3bWZ6Stu5rt42dP1_WQ",
         "name": "AWS Bedrock",
-        "link": "https://aws.amazon.com/fr/bedrock/agents/"
+        "link": "https://aws.amazon.com/fr/bedrock/agents/",
+        "description": "Managed AI agent orchestration and AWS foundation models."
       },
       {
         "id": "UsM_i8jNSFK12ePhrc0x0g",
         "name": "MCP",
-        "link": "https://modelcontextprotocol.io/specification/2025-06-18"
+        "link": "https://modelcontextprotocol.io/specification/2025-06-18",
+        "description": "Tool integration protocol for language models."
       },
       {
         "id": "learn-langchain-stack",
         "name": "LangChain",
-        "link": "https://docs.langchain.com/"
+        "link": "https://docs.langchain.com/",
+        "description": "LLM chain orchestration framework and conversational agents."
       },
       {
         "id": "learn-openrag",
         "name": "OpenRAG",
-        "link": "https://docs.openr.ag/"
+        "link": "https://docs.openr.ag/",
+        "description": "Open-source RAG pipeline: indexing, vector search, generation."
       },
       {
         "id": "learn-bmad-method",
         "name": "BMAD",
-        "link": "https://docs.bmad-method.org/"
+        "link": "https://docs.bmad-method.org/",
+        "description": "AI-assisted multi-agent product scoping methodology."
       }
     ]
   }

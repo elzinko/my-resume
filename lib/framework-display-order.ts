@@ -43,7 +43,9 @@ function minPriorityIndex(
  * Mots-clés / ids catalogue dans l’ordre d’importance (ordre des exigences, puis ordre des mots-clés),
  * sans doublon.
  */
-export function flattenRequirementKeywordsForDisplay(offer: JobOffer): string[] {
+export function flattenRequirementKeywordsForDisplay(
+  offer: JobOffer,
+): string[] {
   const out: string[] = [];
   const seen = new Set<string>();
   for (const r of offer.requirements) {
@@ -59,10 +61,9 @@ export function flattenRequirementKeywordsForDisplay(offer: JobOffer): string[] 
 /**
  * Tri stable : d’abord les technos qui matchent l’offre (ordre des tokens), puis le reste dans l’ordre d’origine.
  */
-export function sortJobFrameworksForDisplay<T extends { id: string; name: string }>(
-  frameworks: T[],
-  priorityTokens: string[],
-): T[] {
+export function sortJobFrameworksForDisplay<
+  T extends { id: string; name: string },
+>(frameworks: T[], priorityTokens: string[]): T[] {
   if (!priorityTokens.length) return [...frameworks];
   const indexed = frameworks.map((fw, i) => ({ fw, i }));
   indexed.sort((a, b) => {

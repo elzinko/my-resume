@@ -1,9 +1,10 @@
-import type { JobOffer, MatchRequirement } from '@/data/offers/types';
+import type {
+  ContractType,
+  JobOffer,
+  MatchRequirement,
+} from '@/data/offers/types';
 import { decodeOfferSpecParam } from '@/lib/dynamic-offer-spec';
-import {
-  catalogIdSet,
-  enrichJobOfferRequirements,
-} from '@/lib/match-catalog';
+import { catalogIdSet, enrichJobOfferRequirements } from '@/lib/match-catalog';
 import type { MatchCatalog } from '@/lib/match-catalog-schema';
 
 const MAX_REQUIREMENTS = 24;
@@ -113,12 +114,24 @@ export function buildOfferFromQueryParams(
       .replace(/[^a-z0-9-]/g, '')
       .slice(0, 40)}`;
 
+  const contractRaw = sp.get('contract')?.trim().toLowerCase();
+  const contract: ContractType | undefined =
+    contractRaw === 'cdi' || contractRaw === 'freelance'
+      ? contractRaw
+      : undefined;
+
+  const jobParams = sp.getAll('job').map((s) => s.trim()).filter(Boolean);
+  const highlightedJobs =
+    jobParams.length > 0 ? jobParams.slice(0, 24) : undefined;
+
   return enrichJobOfferRequirements(
     {
       id,
       company,
       title: { fr: titleFrSafe, en: titleEnSafe },
       requirements,
+      contract,
+      ...(highlightedJobs ? { highlightedJobs } : {}),
     },
     catalog,
   );

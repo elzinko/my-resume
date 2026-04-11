@@ -19,6 +19,11 @@ interface StudyDisplayProps {
    * `false` : bloc classique titre + ligne méta (colonne gauche).
    */
   condensed?: boolean;
+  /**
+   * Classe Tailwind pour la couleur du titre + de l'année (ne dépend pas du parent).
+   * Défaut : `text-cv-section` (teal-300, vert CV).
+   */
+  color?: string;
 }
 
 function formatStudyYear(startDate?: string, endDate?: string): string | null {
@@ -30,8 +35,8 @@ function formatStudyYear(startDate?: string, endDate?: string): string | null {
 }
 
 function studyMetaLine(study: StudyData): string {
-  const parts = [study.location, study.establishment].filter(
-    (p): p is string => Boolean(p && String(p).trim()),
+  const parts = [study.location, study.establishment].filter((p): p is string =>
+    Boolean(p && String(p).trim()),
   );
   return parts.join(' / ');
 }
@@ -40,6 +45,7 @@ export default function StudyDisplay({
   study,
   compact = false,
   condensed = false,
+  color = 'text-cv-section',
 }: StudyDisplayProps) {
   if (compact) {
     const endYear = study.endDate
@@ -47,11 +53,13 @@ export default function StudyDisplay({
       : null;
     return (
       <li className="cv-row-study-title-year">
-        <span className="cv-study-title-compact min-w-0 flex-1">
+        <span className={`cv-study-title-compact min-w-0 flex-1 ${color}`}>
           {study.name}
         </span>
         {endYear && (
-          <span className="cv-study-year-compact min-w-max shrink-0 whitespace-nowrap">
+          <span
+            className={`cv-study-year-compact min-w-max shrink-0 whitespace-nowrap ${color}`}
+          >
             {endYear}
           </span>
         )}
@@ -66,9 +74,13 @@ export default function StudyDisplay({
     const titleWithMeta = meta ? `${study.name} / ${meta}` : study.name;
     return (
       <div className="cv-row-study-title-year">
-        <span className="cv-study-title min-w-0 flex-1">{titleWithMeta}</span>
+        <span className={`cv-study-title min-w-0 flex-1 ${color}`}>
+          {titleWithMeta}
+        </span>
         {year && (
-          <span className="cv-study-year min-w-max shrink-0 whitespace-nowrap">
+          <span
+            className={`cv-study-year min-w-max shrink-0 whitespace-nowrap ${color}`}
+          >
             {year}
           </span>
         )}
@@ -79,9 +91,13 @@ export default function StudyDisplay({
   return (
     <>
       <div className="cv-row-study-title-year">
-        <span className="cv-study-title min-w-0 flex-1">{study.name}</span>
+        <span className={`cv-study-title min-w-0 flex-1 ${color}`}>
+          {study.name}
+        </span>
         {year && (
-          <span className="cv-study-year min-w-max shrink-0 whitespace-nowrap">
+          <span
+            className={`cv-study-year min-w-max shrink-0 whitespace-nowrap ${color}`}
+          >
             {year}
           </span>
         )}

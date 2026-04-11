@@ -1,6 +1,5 @@
 /** Origine fixe pour les itinéraires « depuis chez moi » (gare SNCF). */
-export const THOMERY_STATION_ORIGIN =
-  'Gare de Thomery, 77810 Thomery, France';
+export const THOMERY_STATION_ORIGIN = 'Gare de Thomery, 77810 Thomery, France';
 
 /**
  * Lien Google Maps : recherche gare seule, ou itinéraire gare → lieu de travail si `workAddress` est renseigné.

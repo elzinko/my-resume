@@ -6,6 +6,7 @@ export interface MatchEntry {
   label: string;
   matchedClients: Array<{
     client: string;
+    clientUrl?: string;
     startDate: string;
     endDate?: string;
   }>;
