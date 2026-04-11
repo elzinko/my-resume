@@ -18,7 +18,7 @@ export default function logoLinkedin({ onNavigate }: LogoLinkedinProps) {
       onClick={() => onNavigate?.()}
     >
       <svg
-        className="h-4 w-4 fill-current md:h-5 md:w-5"
+        className="h-[var(--cv-toolbar-icon)] w-[var(--cv-toolbar-icon)] fill-current"
         role="img"
         viewBox="0 0 256 256"
         xmlns="http://www.w3.org/2000/svg"

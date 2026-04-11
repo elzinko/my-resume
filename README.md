@@ -2,44 +2,25 @@
 
 ![checkly](https://api.checklyhq.com/v1/badges/checks/b0fd8907-eae6-4c3f-8c79-f52d0da2667a?style=flat&theme=light)
 
-This is my own resume using [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) using [DatoCMS](https://www.datocms.com/) for data and prettied using [TailwindCSS](https://tailwindcss.com/docs/).
+CV personnel en [Next.js](https://nextjs.org/) et [Tailwind CSS](https://tailwindcss.com/docs/). Les contenus multilingues vivent dans un **fichier unique** [`data/cv/bundle.json`](data/cv/bundle.json) (clés `fr` et `en`). Le catalogue pour le matching (ids + tokens texte) est **dérivé du même fichier** au chargement côté serveur (`lib/match-catalog-from-bundle.ts`), sans artefact JSON séparé.
 
-## Getting Started
+## Démarrage
 
-### 1 - create Datocms project
-
-Want to create a [datocms](https://www.datocms.com/) similar project ?
-
-[![Clone DatoCMS project](https://dashboard.datocms.com/clone/button.svg)](https://dashboard.datocms.com/clone?projectId=96311&name=cv-thomas-couderc)
-
-### 2 - configure environment variables
-
-Create an .env file and set your Datocms variable :
-
-```env
-DATOCMS_API_URL=https://graphql.datocms.com/
-DATOCMS_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-```
-
-If the website is deployed staticaly, then you should remove Analytics using environment variable :
+Créer un `.env` si besoin (ex. déploiement statique) :
 
 ```env
 STATIC_DEPLOYMENT=true
 ```
 
-### 3 - run in dev mode
-
-First, run the development server:
+Lancer le serveur de dev :
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ouvrir [http://localhost:3000](http://localhost:3000).
 
-### 3 - build for production
-
-First, run the development server:
+Build production :
 
 ```bash
 npm run build
@@ -47,7 +28,23 @@ npm run build
 
 ## CV personnalisé par annonce (URL dynamique + LLM)
 
-- **Paramètres lisibles dans l’URL** : `/{lang}/offer/match?company=…&requirement=Libellé:mots` (voir la doc).
-- **JSON compact base64** : `/{lang}/offer/custom?spec=…`
+- **Paramètres lisibles** : `/{lang}?company=…&requirement=Libellé:mots&contract=cdi`
+- **JSON compact base64** : `/{lang}?spec=…`
+- **Type de contrat** : `?contract=cdi` adapte les textes profil/domaines pour un poste permanent ; `freelance` par défaut.
+- **Guide LLM dynamique** : `GET /api/llm-guide` — markdown auto-généré avec le catalogue de technos complet et des exemples d’URLs.
 
-Détails, exemples et limites : **[docs/OFFER_CUSTOM_ENDPOINT.md](docs/OFFER_CUSTOM_ENDPOINT.md)**.
+Plafonds (longueurs, nombre d’exigences) : `lib/dynamic-offer-spec.ts`, `lib/query-offer-params.ts`. URLs limitées à ~2k caractères par le navigateur ; au-delà, préférer `spec` base64.
+
+Encodage CLI : `npm run encode-offer-spec -- path/to/offer.json`
+
+## Liens utiles
+
+| Ressource                   | Chemin / URL                                                         |
+| --------------------------- | -------------------------------------------------------------------- |
+| Données CV (FR + EN)        | [`data/cv/bundle.json`](data/cv/bundle.json)                         |
+| Types offre (interfaces TS) | [`data/offers/types.ts`](data/offers/types.ts)                       |
+| Guide LLM (statique)        | [`.llm/README.md`](.llm/README.md)                                   |
+| Guide LLM (dynamique)       | `GET /api/llm-guide`                                                 |
+| Storybook maison (dev)      | `http://localhost:3000/{lang}/dev/components`                        |
+| Storybook (Chromatic)       | `http://localhost:6006` (`npm run storybook`)                        |
+| Rendus PDF / screenshots    | [`renders/`](renders/) -- [`renders/index.html`](renders/index.html) |

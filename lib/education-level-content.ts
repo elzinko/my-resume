@@ -23,9 +23,9 @@ const FALLBACK: Record<Locale, EducationLevelContent> = {
   },
   en: {
     title: 'Education Level',
-    levelPrimary: 'Bac+5',
+    levelPrimary: "Master's-level",
     effectiveLevelDetail: 'Backed by 20 years of professional experience',
-    diploma: "Bachelor's degree (Bac+3)",
+    diploma: "Bachelor's degree",
     diplomaDetail:
       'Professional Bachelor in Computer Science and Software Systems',
     additionalTraining: 'Continuing education',
@@ -37,7 +37,10 @@ function isRecord(v: unknown): v is Record<string, unknown> {
   return typeof v === 'object' && v !== null && !Array.isArray(v);
 }
 
-function pickString(obj: Record<string, unknown>, key: string): string | undefined {
+function pickString(
+  obj: Record<string, unknown>,
+  key: string,
+): string | undefined {
   const v = obj[key];
   return typeof v === 'string' && v.trim() !== '' ? v : undefined;
 }

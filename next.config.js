@@ -2,7 +2,18 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     unoptimized: true,
-    domains: ['www.datocms-assets.com', 'vitals.vercel-insights.com'],
+    domains: ['vitals.vercel-insights.com'],
+  },
+  /**
+   * En dev, le cache disque Webpack peut laisser des références vers d’anciens chunks
+   * (`Cannot find module './329.js'`, `vendor-chunks/...`) après sauvegardes rapides / HMR,
+   * surtout avec pnpm. Désactiver le cache évite cette boucle d’erreurs jusqu’à `rm -rf .next`.
+   */
+  webpack: (config, { dev }) => {
+    if (dev) {
+      config.cache = false;
+    }
+    return config;
   },
   // Optional: Add a trailing slash to all paths `/about` -> `/about/`
   // trailingSlash: true,

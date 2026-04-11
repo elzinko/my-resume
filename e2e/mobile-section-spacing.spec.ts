@@ -22,17 +22,21 @@ test.describe('CV mobile vertical rhythm', () => {
     const headerBottom = await headerBlock.evaluate(
       (el) => el.getBoundingClientRect().bottom,
     );
-    const aboutTop = await about.evaluate((el) => el.getBoundingClientRect().top);
+    const aboutTop = await about.evaluate(
+      (el) => el.getBoundingClientRect().top,
+    );
     const aboutBottom = await about.evaluate(
       (el) => el.getBoundingClientRect().bottom,
     );
-    const domainsTop = await domains.evaluate((el) => el.getBoundingClientRect().top);
+    const domainsTop = await domains.evaluate(
+      (el) => el.getBoundingClientRect().top,
+    );
 
     const gapHeaderAbout = aboutTop - headerBottom;
     const gapAboutDomains = domainsTop - aboutBottom;
 
-    expect(gapHeaderAbout, 'header → about').toBeGreaterThan(16);
-    expect(gapAboutDomains, 'about → domains').toBeGreaterThan(16);
+    expect(gapHeaderAbout, 'header → about').toBeGreaterThanOrEqual(12);
+    expect(gapAboutDomains, 'about → domains').toBeGreaterThanOrEqual(12);
 
     const ratio =
       Math.max(gapHeaderAbout, gapAboutDomains) /

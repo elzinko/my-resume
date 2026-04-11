@@ -1,8 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { cvHeaderModeBtn } from '@/lib/cv-header-toolbar';
+import {
+  fullHrefFromShortPath,
+  shortHrefFromOfferPath,
+} from '@/lib/cv-mode-nav';
+import { stripBasePath } from '@/lib/cv-path-utils';
+import { i18n, type Locale } from 'i18n-config';
 
 interface CvModeToggleProps {
   labels?: {
@@ -16,11 +22,25 @@ export default function CvModeToggle({
   labels = { full: 'Version complète', compact: 'Version courte' },
   onNavigate,
 }: CvModeToggleProps) {
-  const pathname = usePathname();
-  const lang = pathname?.split('/')[1] || 'fr';
-  const isShortMode = pathname?.includes('/short');
+  const pathname = usePathname() || '/';
+  const searchParams = useSearchParams();
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+  const pathForLogic = stripBasePath(pathname, basePath);
 
-  const targetUrl = isShortMode ? `/${lang}` : `/${lang}/short`;
+  const segments = pathForLogic.split('/');
+  const maybeLocale = segments[1];
+  const lang: Locale =
+    maybeLocale && i18n.locales.includes(maybeLocale as Locale)
+      ? (maybeLocale as Locale)
+      : i18n.defaultLocale;
+
+  const isShortMode = pathForLogic.includes('/short');
+
+  const sp = new URLSearchParams(searchParams.toString());
+  const targetUrl = isShortMode
+    ? fullHrefFromShortPath(lang, sp)
+    : shortHrefFromOfferPath(pathForLogic, lang, sp);
+
   const label = isShortMode ? labels.full : labels.compact;
 
   return (

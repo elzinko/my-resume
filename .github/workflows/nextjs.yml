@@ -28,8 +28,6 @@ concurrency:
   cancel-in-progress: false
 
 env: # Définition des variables d'environnement au niveau du job
-  DATOCMS_API_URL: ${{ secrets.DATOCMS_API_URL }}
-  DATOCMS_API_KEY: ${{ secrets.DATOCMS_API_KEY }}
   NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH }}
   NEXT_PUBLIC_EXPORT: ${{ vars.NEXT_PUBLIC_EXPORT || 'export' }}
   STATIC_DEPLOYMENT: ${{ vars.STATIC_DEPLOYMENT }}
@@ -86,13 +84,6 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-      - name: Export CV JSON from DatoCMS
-        run: |
-          if [ -f "${{ github.workspace }}/yarn.lock" ]; then
-            yarn export:datocms
-          else
-            npm run export:datocms
-          fi
       - name: Build with Next.js and generate out folder for static hosting
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
       - name: Upload artifact

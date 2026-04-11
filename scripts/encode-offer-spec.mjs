@@ -4,7 +4,7 @@
  *
  * Usage:
  *   node scripts/encode-offer-spec.mjs ./mon-offre.json
- *   # puis ouvrir: /fr/offer/custom?spec=<sortie>
+ *   # puis ouvrir: /fr?spec=<sortie>
  */
 import fs from 'node:fs';
 

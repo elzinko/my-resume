@@ -36,14 +36,22 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# vscode
+# IDE
 .vscode
+.idea
 
 #others
 backups
 
-# playwright (captures MCP / locale, non versionnés)
+# playwright — captures générées (MCP, @media print, screenshots manuels).
+# Convention : écrire sous playwright/print-preview/ (tout le dossier playwright reste ignoré).
 .playwright-mcp/
 /playwright/
+# Ancien emplacement à la racine du dépôt (ne plus utiliser)
+/print-previews/
 playwright-report/
 test-results/
+storybook-static
+
+# claude code
+.claude/
