@@ -1,4 +1,4 @@
-import Study from '@/components/study';
+import Study from '@/components/Study';
 import { getCvData } from '@/lib/cv-data';
 import {
   byEndThenStart,

@@ -1,4 +1,4 @@
-import Job from '@/components/job';
+import Job from '@/components/Job';
 import ExperienceClosingBlock from '@/components/ExperienceClosingBlock';
 import { getCvData } from '@/lib/cv-data';
 import {

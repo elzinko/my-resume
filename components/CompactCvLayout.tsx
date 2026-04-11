@@ -1,15 +1,15 @@
 'use client';
 
 import React, { Suspense } from 'react';
-import Skill from './skill';
-import Domain from './domain';
+import Skill from './Skill';
+import Domain from './Domain';
 import ContactDisplay from './ContactDisplay';
 import JobDisplay from './JobDisplay';
 import StudyDisplay from './StudyDisplay';
 import JobFitSection from './JobFitSection';
 import ExperienceClosingBlock from './ExperienceClosingBlock';
 import ShortCvOnlineDetailLink from './ShortCvOnlineDetailLink';
-import Project from './project';
+import Project from './Project';
 import type { EducationLevelContent } from '@/lib/education-level-content';
 import {
   formatRemainingClientsForShortCv,

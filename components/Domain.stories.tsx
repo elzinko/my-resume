@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import Domain from './domain';
+import Domain from './Domain';
 
 const sampleDomain = {
   id: 'dev',

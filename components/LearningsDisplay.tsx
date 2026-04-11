@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import CustomLink from '@/components/customLink';
+import CustomLink from '@/components/CustomLink';
 import { learningLinkLabel } from '@/lib/learning-label';
 
 export interface LearningItem {

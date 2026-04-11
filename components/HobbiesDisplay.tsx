@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import CustomLink from '@/components/customLink';
+import CustomLink from '@/components/CustomLink';
 
 export interface HobbyItem {
   id: string;

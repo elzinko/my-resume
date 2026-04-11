@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import Project from './project';
+import Project from './Project';
 
 const sampleProject = {
   id: 'my-resume',

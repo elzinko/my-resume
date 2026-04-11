@@ -9,7 +9,7 @@ import { getEducationLevelContent } from '@/lib/education-level-content';
 import About from '../../about';
 import Skills from '../../skills';
 import Domains from '../../domains';
-import Domain from '@/components/domain';
+import Domain from '@/components/Domain';
 import Contact from '../../contact';
 import Studies from '../../studies';
 import Hobbies from '../../hobbies';

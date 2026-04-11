@@ -1,4 +1,4 @@
-import Skill from '@/components/skill';
+import Skill from '@/components/Skill';
 import { getCvData } from '@/lib/cv-data';
 import { Locale } from 'i18n-config';
 import React from 'react';

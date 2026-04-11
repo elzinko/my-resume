@@ -11,13 +11,13 @@ import React, {
 } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import LocaleSwitcher from '@/components/locale-switcher';
+import LocaleSwitcher from '@/components/LocaleSwitcher';
 import CvModeToggle from '@/components/CvModeToggle';
 import { fullHrefFromShortPath } from '@/lib/cv-mode-nav';
 import LogoLinkedin from '@/components/LogoLinkedin';
-import LogoGithub from '@/components/logoGithub';
-import LogoMalt from '@/components/logoMalt';
-import LogoPrint from '@/components/logoPrint';
+import LogoGithub from '@/components/LogoGithub';
+import LogoMalt from '@/components/LogoMalt';
+import LogoPrint from '@/components/LogoPrint';
 import {
   cvHeaderModeBtn,
   isCvPrintLayoutToolbarEnabled,

@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import Skill from './skill';
+import Skill from './Skill';
 
 const meta: Meta<typeof Skill> = {
   title: 'CV/Skill',
