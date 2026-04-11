@@ -19,7 +19,7 @@
     "start": "next start",
     "start:prod": "npm run build && next start",
     "test": "npm run prettier:check && npm run lint",
-    "test:unit": "tsx --test lib/match-catalog-expand.unit.test.ts lib/tech-match-core.unit.test.ts lib/dev-domain-tags.unit.test.ts lib/ops-domain-tags.unit.test.ts lib/framework-display-order.unit.test.ts lib/contact-maps.unit.test.ts lib/offer-contact-from-params.unit.test.ts lib/cv-mode-nav.unit.test.ts lib/offer-to-match-url.unit.test.ts",
+    "test:unit": "tsx --test lib/match-catalog-expand.unit.test.ts lib/tech-match-core.unit.test.ts lib/dev-domain-tags.unit.test.ts lib/ops-domain-tags.unit.test.ts lib/framework-display-order.unit.test.ts lib/contact-maps.unit.test.ts lib/offer-contact-from-params.unit.test.ts lib/cv-mode-nav.unit.test.ts lib/offer-to-match-url.unit.test.ts lib/slug.unit.test.ts lib/format-match-years.unit.test.ts lib/sort-chronological.unit.test.ts lib/capitalize-first.unit.test.ts lib/cv-print-routes.unit.test.ts lib/cv-path-utils.unit.test.ts lib/search-params-to-url.unit.test.ts lib/date.unit.test.ts lib/cv-contract-text.unit.test.ts",
     "playwright:install": "playwright install chromium",
     "test:playwright": "playwright install chromium && playwright test",
     "clean": "rm -rf node_modules",
