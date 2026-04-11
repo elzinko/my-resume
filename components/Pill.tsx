@@ -103,8 +103,8 @@ export default function Pill({
   /* ── Skill (bleu) ── */
   if (color === 'skill') {
     const classes = compact
-      ? 'cv-pill-skill whitespace-nowrap px-1 py-0.5 text-[9px] print:text-[8px]'
-      : 'cv-pill-skill whitespace-nowrap px-1.5 py-0.5 text-[10px] md:px-2 md:py-1 md:text-xs';
+      ? 'cv-pill-skill whitespace-nowrap px-2 py-0.5 text-xs print:px-1.5 print:text-[10px] print:!text-cv-tag-text'
+      : 'cv-pill-skill whitespace-nowrap px-2 py-1 text-xs transition-colors hover:text-cv-tag-text-hover md:px-3 md:text-sm print:!text-cv-tag-text';
     return (
       <Tag className={classes} {...linkProps}>
         {children}

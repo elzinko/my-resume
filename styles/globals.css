@@ -309,12 +309,6 @@
     @apply print:text-sm print:leading-snug;
   }
 
-  /** Pastille à côté du titre Profil (même famille que `.cv-pill-domain`). */
-  .cv-profile-education-badge {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-
   /**
    * Corps de mission : text-xs mobile, text-sm md+ ; justifié partout (mobile inclus) pour aligner avec le PDF.
    * Même token `text-cv-body-muted` que le profil et les domaines (About, Domain — pas de justification).
@@ -857,11 +851,6 @@ html {
   [data-cv-section='learnings']
   .cv-learning-desc {
   display: inline !important;
-}
-
-.cv-print-preview .cv-offer-tailored-shell .cv-profile-education-badge,
-.cv-print-preview .cv-layout-short .cv-profile-education-badge {
-  display: inline-flex !important;
 }
 
 /*

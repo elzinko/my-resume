@@ -43,7 +43,7 @@ type Story = StoryObj<typeof StudyDisplay>;
 
 export const Default: Story = {};
 
-export const Condensed: Story = {
+export const WithoutDescription: Story = {
   args: { condensed: true },
 };
 

@@ -21,7 +21,3 @@ export default meta;
 type Story = StoryObj<typeof HeaderDesktopContactStrip>;
 
 export const Default: Story = {};
-
-export const EmailOnly: Story = { args: { phone: '', location: '' } };
-
-export const NoEmail: Story = { args: { email: '' } };

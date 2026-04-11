@@ -1,7 +1,7 @@
 'use client';
 
 import React, { Suspense } from 'react';
-import Skill from './Skill';
+import Pill from './Pill';
 import Domain from './Domain';
 import ContactDisplay from './ContactDisplay';
 import JobDisplay from './JobDisplay';
@@ -220,7 +220,7 @@ export default function CompactCvLayout({
             </h2>
             <div className="mt-2 flex flex-wrap gap-1.5">
               {data.skills.slice(0, 10).map((skill) => (
-                <Skill key={skill.id} skill={skill} compact={true} />
+                <Pill key={skill.id} color="skill" compact href={skill.link}>{skill.name}</Pill>
               ))}
             </div>
           </section>

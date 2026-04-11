@@ -29,30 +29,6 @@ type Story = StoryObj<typeof JobExperienceBody>;
 
 export const Default: Story = {};
 
-export const Compact: Story = {
-  args: { compact: true },
-};
-
 export const WithoutShortDescription: Story = {
   args: { descriptionShort: null },
-};
-
-export const WithoutBullets: Story = {
-  args: { bullets: [] },
-};
-
-export const English: Story = {
-  args: {
-    locale: 'en',
-    description:
-      'Design and development of a SaaS content management platform with microservices architecture.',
-    descriptionShort: 'SaaS content management platform.',
-    bullets: [
-      {
-        id: '1',
-        text: 'Microservices architecture with Docker and Kubernetes',
-      },
-      { id: '2', text: 'CI/CD pipeline with GitLab and continuous deployment' },
-    ],
-  },
 };

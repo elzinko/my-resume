@@ -1,4 +1,4 @@
-import Skill from '@/components/Skill';
+import Pill from '@/components/Pill';
 import { getCvData } from '@/lib/cv-data';
 import { Locale } from 'i18n-config';
 import React from 'react';
@@ -31,7 +31,7 @@ export default async function skills({
       </h2>
       <div className="mt-4 flex flex-wrap gap-2">
         {data?.allSkillsModels?.map((skill: any) => (
-          <Skill key={skill.id} skill={skill} />
+          <Pill key={skill.id} color="skill" href={skill.link}>{skill.name}</Pill>
         ))}
       </div>
     </section>

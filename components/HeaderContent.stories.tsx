@@ -20,13 +20,3 @@ export default meta;
 type Story = StoryObj<typeof HeaderContent>;
 
 export const Default: Story = {};
-
-export const WithBelowRole: Story = {
-  args: {
-    belowRole: (
-      <div className="mt-2 text-right text-sm text-pink-200">
-        thomas@example.com · +33 6 12 34 56 78 · Paris
-      </div>
-    ),
-  },
-};

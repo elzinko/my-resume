@@ -33,18 +33,10 @@ type Story = StoryObj<typeof Domain>;
 
 export const Default: Story = {};
 
-export const VerticalBar: Story = {
-  args: { titleAccent: 'verticalBar' },
-};
-
 export const Underline: Story = {
   args: { titleAccent: 'underline' },
 };
 
 export const Compact: Story = {
   args: { compact: true },
-};
-
-export const WithoutTags: Story = {
-  args: { showTags: false },
 };
