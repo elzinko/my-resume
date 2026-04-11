@@ -6,95 +6,76 @@ import React, { useCallback, useEffect, useState } from 'react';
 /*  Types                                                              */
 /* ------------------------------------------------------------------ */
 
-interface RenderFile {
-  name: string;
-  mtime: number;
-}
-
 type GenerateState = 'idle' | 'running' | 'done' | 'error';
 
 /* ------------------------------------------------------------------ */
-/*  Variant definitions                                                */
+/*  Variant definitions — FR + EN grouped per variant                  */
 /* ------------------------------------------------------------------ */
+
+interface VariantLang {
+  lang: string;
+  screenPath: string;
+  previewPath: string;
+  screen: string;
+  mobile: string;
+  printPreview: string;
+  pdf: string;
+}
 
 interface Variant {
   id: string;
   title: string;
-  /** Live page path for iframe (screen). */
-  screenPath: string;
-  /** Live page path for iframe (print-preview). */
-  previewPath: string;
-  /** Generated screenshot filenames. */
-  screenshots: { label: string; file: string; tag: string; tagClass: string }[];
-  /** Generated PDF filenames. */
-  pdfs: { label: string; file: string; tag: string; tagClass: string }[];
+  langs: VariantLang[];
 }
 
 const VARIANTS: Variant[] = [
   {
-    id: 'fr-short',
-    title: 'FR Short /fr/short',
-    screenPath: '/fr/short',
-    previewPath: '/fr/short?print=1',
-    screenshots: [
-      { label: 'Screen', file: 'fr-short-screen.png', tag: 'live', tagClass: 'tag-screen' },
-      { label: 'Print Preview', file: 'fr-short-print-preview.png', tag: '?print=1', tagClass: 'tag-preview' },
-    ],
-    pdfs: [
-      { label: 'PDF (CSS 1mm)', file: 'fr-short-print.pdf', tag: '1mm', tagClass: 'tag-pdf' },
-      { label: 'PDF (Chrome 10mm)', file: 'fr-short-print-chrome.pdf', tag: '10mm', tagClass: 'tag-chrome' },
-    ],
-  },
-  {
-    id: 'en-short',
-    title: 'EN Short /en/short',
-    screenPath: '/en/short',
-    previewPath: '/en/short?print=1',
-    screenshots: [
-      { label: 'Screen', file: 'en-short-screen.png', tag: 'live', tagClass: 'tag-screen' },
-      { label: 'Print Preview', file: 'en-short-print-preview.png', tag: '?print=1', tagClass: 'tag-preview' },
-    ],
-    pdfs: [
-      { label: 'PDF (CSS 1mm)', file: 'en-short-print.pdf', tag: '1mm', tagClass: 'tag-pdf' },
-      { label: 'PDF (Chrome 10mm)', file: 'en-short-print-chrome.pdf', tag: '10mm', tagClass: 'tag-chrome' },
+    id: 'short',
+    title: 'Short CV',
+    langs: [
+      {
+        lang: 'FR',
+        screenPath: '/fr/short',
+        previewPath: '/fr/short?print=1',
+        screen: 'fr-short-screen.png',
+        mobile: 'fr-short-mobile.png',
+        printPreview: 'fr-short-print-preview.png',
+        pdf: 'fr-short-print.pdf',
+      },
+      {
+        lang: 'EN',
+        screenPath: '/en/short',
+        previewPath: '/en/short?print=1',
+        screen: 'en-short-screen.png',
+        mobile: 'en-short-mobile.png',
+        printPreview: 'en-short-print-preview.png',
+        pdf: 'en-short-print.pdf',
+      },
     ],
   },
   {
-    id: 'fr-full',
-    title: 'FR Full /fr',
-    screenPath: '/fr',
-    previewPath: '/fr?print=1',
-    screenshots: [
-      { label: 'Screen', file: 'fr-full-screen.png', tag: 'live', tagClass: 'tag-screen' },
-      { label: 'Print Preview', file: 'fr-full-print-preview.png', tag: '?print=1', tagClass: 'tag-preview' },
+    id: 'full',
+    title: 'Full CV',
+    langs: [
+      {
+        lang: 'FR',
+        screenPath: '/fr',
+        previewPath: '/fr?print=1',
+        screen: 'fr-full-screen.png',
+        mobile: 'fr-full-mobile.png',
+        printPreview: 'fr-full-print-preview.png',
+        pdf: 'fr-full-print.pdf',
+      },
+      {
+        lang: 'EN',
+        screenPath: '/en',
+        previewPath: '/en?print=1',
+        screen: 'en-full-screen.png',
+        mobile: 'en-full-mobile.png',
+        printPreview: 'en-full-print-preview.png',
+        pdf: 'en-full-print.pdf',
+      },
     ],
-    pdfs: [
-      { label: 'PDF', file: 'fr-full-print.pdf', tag: '@media print', tagClass: 'tag-pdf' },
-    ],
-  },
-  {
-    id: 'en-full',
-    title: 'EN Full /en',
-    screenPath: '/en',
-    previewPath: '/en?print=1',
-    screenshots: [
-      { label: 'Screen', file: 'en-full-screen.png', tag: 'live', tagClass: 'tag-screen' },
-      { label: 'Print Preview', file: 'en-full-print-preview.png', tag: '?print=1', tagClass: 'tag-preview' },
-    ],
-    pdfs: [
-      { label: 'PDF', file: 'en-full-print.pdf', tag: '@media print', tagClass: 'tag-pdf' },
-    ],
-  },
-  {
-    id: 'mobile',
-    title: 'Mobile (390px)',
-    screenPath: '/fr',
-    previewPath: '/en',
-    screenshots: [
-      { label: 'FR Mobile', file: 'fr-full-mobile.png', tag: '390px', tagClass: 'tag-mobile' },
-      { label: 'EN Mobile', file: 'en-full-mobile.png', tag: '390px', tagClass: 'tag-mobile' },
-    ],
-    pdfs: [],
   },
 ];
 
@@ -116,6 +97,95 @@ function timeAgo(ms: number): string {
 }
 
 /* ------------------------------------------------------------------ */
+/*  Snapshot card                                                      */
+/* ------------------------------------------------------------------ */
+
+function SnapshotCard({
+  label,
+  tag,
+  tagClass,
+  file,
+  bust,
+  isPdf,
+}: {
+  label: string;
+  tag: string;
+  tagClass: string;
+  file: string;
+  bust: number;
+  isPdf?: boolean;
+}) {
+  return (
+    <div style={{ background: '#16213e', borderRadius: '8px', padding: '0.75rem', overflow: 'hidden' }}>
+      <h3 style={{ color: '#a5b4fc', fontSize: '0.95rem', marginBottom: '0.5rem' }}>
+        {label}{' '}
+        <span
+          className={tagClass}
+          style={{
+            display: 'inline-block',
+            padding: '1px 6px',
+            borderRadius: '4px',
+            fontSize: '0.7rem',
+            fontWeight: 600,
+          }}
+        >
+          {tag}
+        </span>
+      </h3>
+      {isPdf ? (
+        <embed
+          src={renderFileUrl(file, bust)}
+          type="application/pdf"
+          style={{
+            width: '100%',
+            height: '800px',
+            border: '1px solid #334155',
+            borderRadius: '4px',
+            background: 'white',
+          }}
+        />
+      ) : (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={renderFileUrl(file, bust)}
+          alt={label}
+          style={{
+            width: '100%',
+            height: 'auto',
+            border: '1px solid #334155',
+            borderRadius: '4px',
+            cursor: 'zoom-in',
+          }}
+          onClick={() => window.open(renderFileUrl(file, bust), '_blank')}
+        />
+      )}
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Live iframe card                                                   */
+/* ------------------------------------------------------------------ */
+
+function LiveCard({ label, src }: { label: string; src: string }) {
+  return (
+    <div style={{ background: '#16213e', borderRadius: '8px', padding: '0.75rem' }}>
+      <h3 style={{ color: '#a5b4fc', fontSize: '0.95rem', marginBottom: '0.5rem' }}>{label}</h3>
+      <iframe
+        src={src}
+        style={{
+          width: '100%',
+          height: '900px',
+          border: '1px solid #334155',
+          borderRadius: '4px',
+          background: 'white',
+        }}
+      />
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /*  Page                                                               */
 /* ------------------------------------------------------------------ */
 
@@ -125,7 +195,7 @@ export default function DevRendersPage() {
   const [bust, setBust] = useState(Date.now());
   const [lastGenerated, setLastGenerated] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState<'snapshots' | 'live'>('snapshots');
-  const [expandedVariant, setExpandedVariant] = useState<string | null>('fr-short');
+  const [expandedVariant, setExpandedVariant] = useState<string | null>('short');
 
   // Fetch last generated time
   const refreshList = useCallback(() => {
@@ -149,7 +219,6 @@ export default function DevRendersPage() {
       const data = await res.json();
       setGenOutput(data.output || data.error || 'Unknown result');
       setGenState(data.ok ? 'done' : 'error');
-      // Bust cache for images/PDFs
       setBust(Date.now());
     } catch (err: any) {
       setGenOutput(err.message);
@@ -344,115 +413,80 @@ export default function DevRendersPage() {
 
           {activeTab === 'live' ? (
             /* -------- Live iframes -------- */
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-              <div style={{ background: '#16213e', borderRadius: '8px', padding: '0.75rem' }}>
-                <h3 style={{ color: '#a5b4fc', fontSize: '0.95rem', marginBottom: '0.5rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              {/* Row 1: Screen — FR | EN */}
+              <div>
+                <h3 style={{ color: '#94a3b8', fontSize: '0.85rem', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                   Screen
                 </h3>
-                <iframe
-                  src={v.screenPath}
-                  style={{
-                    width: '100%',
-                    height: '900px',
-                    border: '1px solid #334155',
-                    borderRadius: '4px',
-                    background: 'white',
-                  }}
-                />
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                  {v.langs.map((l) => (
+                    <LiveCard key={l.lang} label={`${l.lang} Screen`} src={l.screenPath} />
+                  ))}
+                </div>
               </div>
-              <div style={{ background: '#16213e', borderRadius: '8px', padding: '0.75rem' }}>
-                <h3 style={{ color: '#a5b4fc', fontSize: '0.95rem', marginBottom: '0.5rem' }}>
+              {/* Row 2: Print Preview — FR | EN */}
+              <div>
+                <h3 style={{ color: '#94a3b8', fontSize: '0.85rem', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                   Print Preview
                 </h3>
-                <iframe
-                  src={v.previewPath}
-                  style={{
-                    width: '100%',
-                    height: '900px',
-                    border: '1px solid #334155',
-                    borderRadius: '4px',
-                    background: 'white',
-                  }}
-                />
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                  {v.langs.map((l) => (
+                    <LiveCard key={l.lang} label={`${l.lang} Print Preview`} src={l.previewPath} />
+                  ))}
+                </div>
               </div>
             </div>
           ) : (
-            /* -------- Snapshots (screenshots + PDFs) -------- */
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: `repeat(${v.screenshots.length + v.pdfs.length}, 1fr)`,
-                gap: '1rem',
-              }}
-            >
-              {v.screenshots.map((s) => (
-                <div
-                  key={s.file}
-                  style={{ background: '#16213e', borderRadius: '8px', padding: '0.75rem', overflow: 'hidden' }}
-                >
-                  <h3 style={{ color: '#a5b4fc', fontSize: '0.95rem', marginBottom: '0.5rem' }}>
-                    {s.label}{' '}
-                    <span
-                      className={s.tagClass}
-                      style={{
-                        display: 'inline-block',
-                        padding: '1px 6px',
-                        borderRadius: '4px',
-                        fontSize: '0.7rem',
-                        fontWeight: 600,
-                      }}
-                    >
-                      {s.tag}
-                    </span>
-                  </h3>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={renderFileUrl(s.file, bust)}
-                    alt={s.label}
-                    style={{
-                      width: '100%',
-                      height: 'auto',
-                      border: '1px solid #334155',
-                      borderRadius: '4px',
-                      cursor: 'zoom-in',
-                    }}
-                    onClick={() => window.open(renderFileUrl(s.file, bust), '_blank')}
+            /* -------- Snapshots -------- */
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              {/* Row 1: Screen + Print Preview — 4 columns */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
+                {v.langs.map((l) => (
+                  <SnapshotCard
+                    key={`${l.lang}-screen`}
+                    label={`${l.lang} Screen`}
+                    tag="desktop"
+                    tagClass="tag-screen"
+                    file={l.screen}
+                    bust={bust}
                   />
-                </div>
-              ))}
-              {v.pdfs.map((p) => (
-                <div
-                  key={p.file}
-                  style={{ background: '#16213e', borderRadius: '8px', padding: '0.75rem', overflow: 'hidden' }}
-                >
-                  <h3 style={{ color: '#a5b4fc', fontSize: '0.95rem', marginBottom: '0.5rem' }}>
-                    {p.label}{' '}
-                    <span
-                      className={p.tagClass}
-                      style={{
-                        display: 'inline-block',
-                        padding: '1px 6px',
-                        borderRadius: '4px',
-                        fontSize: '0.7rem',
-                        fontWeight: 600,
-                      }}
-                    >
-                      {p.tag}
-                    </span>
-                  </h3>
-                  <embed
-                    src={renderFileUrl(p.file, bust)}
-                    type="application/pdf"
-                    style={{
-                      width: '100%',
-                      height: '800px',
-                      border: '1px solid #334155',
-                      borderRadius: '4px',
-                      background: 'white',
-                    }}
+                ))}
+                {v.langs.map((l) => (
+                  <SnapshotCard
+                    key={`${l.lang}-preview`}
+                    label={`${l.lang} Print Preview`}
+                    tag="?print=1"
+                    tagClass="tag-preview"
+                    file={l.printPreview}
+                    bust={bust}
                   />
-                </div>
-              ))}
+                ))}
+              </div>
+              {/* Row 2: Mobile + PDF — 4 columns */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
+                {v.langs.map((l) => (
+                  <SnapshotCard
+                    key={`${l.lang}-mobile`}
+                    label={`${l.lang} Mobile`}
+                    tag="390px"
+                    tagClass="tag-mobile"
+                    file={l.mobile}
+                    bust={bust}
+                  />
+                ))}
+                {v.langs.map((l) => (
+                  <SnapshotCard
+                    key={`${l.lang}-pdf`}
+                    label={`${l.lang} PDF`}
+                    tag="A4"
+                    tagClass="tag-pdf"
+                    file={l.pdf}
+                    bust={bust}
+                    isPdf
+                  />
+                ))}
+              </div>
             </div>
           )}
         </section>
@@ -463,7 +497,6 @@ export default function DevRendersPage() {
         .tag-screen { background: #14532d; color: #86efac; }
         .tag-preview { background: #1e3a5f; color: #93c5fd; }
         .tag-pdf { background: #7f1d1d; color: #fca5a5; }
-        .tag-chrome { background: #78350f; color: #fde68a; }
         .tag-mobile { background: #4a1d96; color: #c4b5fd; }
       `}</style>
     </div>

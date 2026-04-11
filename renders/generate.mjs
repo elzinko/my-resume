@@ -42,36 +42,33 @@ async function pdf(url, filename, opts = {}) {
 
 console.log('=== Generating renders ===');
 
-// FR Full
-console.log('\n[FR Full CV]');
-await screenshot(`${BASE}/fr`, 'fr-full-screen.png');
-await screenshot(`${BASE}/fr?print=1`, 'fr-full-print-preview.png');
-await pdf(`${BASE}/fr`, 'fr-full-print.pdf');
-
 // FR Short
 console.log('\n[FR Short CV]');
 await screenshot(`${BASE}/fr/short`, 'fr-short-screen.png');
 await screenshot(`${BASE}/fr/short?print=1`, 'fr-short-print-preview.png');
-await pdf(`${BASE}/fr/short`, 'fr-short-print.pdf');
-await pdf(`${BASE}/fr/short`, 'fr-short-print-chrome.pdf', { chromeMargins: true });
-
-// EN Full
-console.log('\n[EN Full CV]');
-await screenshot(`${BASE}/en`, 'en-full-screen.png');
-await screenshot(`${BASE}/en?print=1`, 'en-full-print-preview.png');
-await pdf(`${BASE}/en`, 'en-full-print.pdf');
+await screenshot(`${BASE}/fr/short`, 'fr-short-mobile.png', { viewport: { width: 390, height: 844 }, dpr: 2 });
+await pdf(`${BASE}/fr/short`, 'fr-short-print.pdf', { chromeMargins: true });
 
 // EN Short
 console.log('\n[EN Short CV]');
 await screenshot(`${BASE}/en/short`, 'en-short-screen.png');
 await screenshot(`${BASE}/en/short?print=1`, 'en-short-print-preview.png');
-await pdf(`${BASE}/en/short`, 'en-short-print.pdf');
-await pdf(`${BASE}/en/short`, 'en-short-print-chrome.pdf', { chromeMargins: true });
+await screenshot(`${BASE}/en/short`, 'en-short-mobile.png', { viewport: { width: 390, height: 844 }, dpr: 2 });
+await pdf(`${BASE}/en/short`, 'en-short-print.pdf', { chromeMargins: true });
 
-// Mobile
-console.log('\n[Mobile]');
+// FR Full
+console.log('\n[FR Full CV]');
+await screenshot(`${BASE}/fr`, 'fr-full-screen.png');
+await screenshot(`${BASE}/fr?print=1`, 'fr-full-print-preview.png');
 await screenshot(`${BASE}/fr`, 'fr-full-mobile.png', { viewport: { width: 390, height: 844 }, dpr: 2 });
+await pdf(`${BASE}/fr`, 'fr-full-print.pdf');
+
+// EN Full
+console.log('\n[EN Full CV]');
+await screenshot(`${BASE}/en`, 'en-full-screen.png');
+await screenshot(`${BASE}/en?print=1`, 'en-full-print-preview.png');
 await screenshot(`${BASE}/en`, 'en-full-mobile.png', { viewport: { width: 390, height: 844 }, dpr: 2 });
+await pdf(`${BASE}/en`, 'en-full-print.pdf');
 
 await b.close();
-console.log('\n✅ All renders generated.');
+console.log('\n=== All renders generated (16 files) ===');
