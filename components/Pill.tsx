@@ -22,6 +22,8 @@ interface PillProps {
   border?: boolean;
   /** Texte secondaire optionnel (ex. "4 ans"), rendu en couleur plus claire. */
   metric?: string;
+  /** Lien optionnel : rend la pastille cliquable (`<a>` au lieu de `<span>`). */
+  href?: string;
 }
 
 export type { PillColor, PillSize };
@@ -33,7 +35,12 @@ export default function Pill({
   compact = false,
   border = true,
   metric,
+  href,
 }: PillProps) {
+  /** Rend `<a>` si href est fourni, sinon `<span>`. */
+  const Tag = href ? 'a' : 'span';
+  const linkProps = href ? { href } : {};
+
   /* ── Match : Adequation poste / badges clients ── */
   if (color === 'match') {
     const pillClass = border ? 'cv-pill-match' : 'cv-pill-match-borderless';
@@ -56,10 +63,10 @@ export default function Pill({
       'text-[10px] font-normal tabular-nums text-orange-200/95 print:text-[9px] print:!text-orange-300 md:text-xs';
 
     return (
-      <span className={classes}>
+      <Tag className={classes} {...linkProps}>
         <span className={truncCls}>{children}</span>
         {metric != null && <span className={metricCls}>{metric}</span>}
-      </span>
+      </Tag>
     );
   }
 
@@ -68,7 +75,7 @@ export default function Pill({
     const classes = compact
       ? 'cv-pill-jobs whitespace-nowrap px-1 py-0.5 text-[9px] print:text-[8px]'
       : 'cv-pill-jobs whitespace-nowrap px-1.5 py-0.5 text-[10px] md:px-2 md:py-1 md:text-xs';
-    return <span className={classes}>{children}</span>;
+    return <Tag className={classes} {...linkProps}>{children}</Tag>;
   }
 
   /* ── Domain (teal) ── */
@@ -76,7 +83,7 @@ export default function Pill({
     const classes = compact
       ? 'cv-pill-domain shrink-0 whitespace-nowrap px-2 py-0.5 text-xs font-medium leading-snug print:px-1.5 print:py-0.5 print:text-[10px] md:px-2.5 md:py-1 md:text-sm'
       : 'cv-pill-domain shrink-0 whitespace-nowrap px-2 py-0.5 text-xs font-medium leading-snug md:px-2.5 md:py-1 md:text-sm print:px-1.5 print:py-0.5 print:text-[10px]';
-    return <span className={classes}>{children}</span>;
+    return <Tag className={classes} {...linkProps}>{children}</Tag>;
   }
 
   /* ── Skill (bleu) ── */
@@ -84,7 +91,7 @@ export default function Pill({
     const classes = compact
       ? 'cv-pill-skill whitespace-nowrap px-1 py-0.5 text-[9px] print:text-[8px]'
       : 'cv-pill-skill whitespace-nowrap px-1.5 py-0.5 text-[10px] md:px-2 md:py-1 md:text-xs';
-    return <span className={classes}>{children}</span>;
+    return <Tag className={classes} {...linkProps}>{children}</Tag>;
   }
 
   /* ── Education (violet) ── */
@@ -92,7 +99,7 @@ export default function Pill({
     const classes = compact
       ? 'cv-pill-education inline-block max-w-full px-1.5 py-0.5 text-xs leading-snug print:px-1.5 print:py-0.5 print:text-[10px]'
       : 'cv-pill-education inline-block max-w-full px-2 py-0.5 text-sm leading-snug md:px-2.5 md:py-1 md:text-base print:text-sm';
-    return <span className={classes}>{children}</span>;
+    return <Tag className={classes} {...linkProps}>{children}</Tag>;
   }
 
   /* ── Legacy solid colors (fuchsia, orange) ── */
@@ -101,5 +108,5 @@ export default function Pill({
     ? `whitespace-nowrap rounded ${bg} px-1 py-0.5 text-[9px] text-white print:text-[8px]`
     : `whitespace-nowrap rounded ${bg} px-1.5 py-0.5 text-[10px] text-white md:px-2 md:py-1 md:text-xs`;
 
-  return <span className={classes}>{children}</span>;
+  return <Tag className={classes} {...linkProps}>{children}</Tag>;
 }

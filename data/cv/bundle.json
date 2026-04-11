@@ -310,6 +310,7 @@
       },
       {
         "client": "JPB Système",
+        "clientUrl": "https://www.jpb-systeme.com",
         "location": "Montereau-sur-le-Jard",
         "startDate": "2024-06-10",
         "endDate": "2025-08-31",
@@ -373,6 +374,7 @@
       },
       {
         "client": "BlaBlaCar",
+        "clientUrl": "https://www.blablacar.fr",
         "location": "Paris",
         "startDate": "2023-10-01",
         "endDate": "2023-12-31",
@@ -417,6 +419,7 @@
       },
       {
         "client": "Smartch",
+        "clientUrl": "https://www.smartch.com",
         "location": "Paris",
         "startDate": "2023-05-01",
         "endDate": "2023-09-04",
@@ -480,6 +483,7 @@
       },
       {
         "client": "SNCF Réseaux - DGEX Solutions",
+        "clientUrl": "https://www.sncf-reseau.com",
         "location": "Saint-Denis",
         "startDate": "2022-05-01",
         "endDate": "2023-02-01",
@@ -592,6 +596,7 @@
       },
       {
         "client": "leboncoin",
+        "clientUrl": "https://www.leboncoin.fr",
         "location": "Paris",
         "startDate": "2021-08-01",
         "endDate": "2022-05-01",
@@ -680,6 +685,7 @@
       },
       {
         "client": "Celsius Energy",
+        "clientUrl": "https://www.celsius-energy.com",
         "location": "Clamart",
         "startDate": "2020-12-01",
         "endDate": "2021-08-01",
@@ -788,6 +794,7 @@
       },
       {
         "client": "RelevanC",
+        "clientUrl": "https://www.relevanc.com",
         "location": "Paris",
         "startDate": "2020-08-01",
         "endDate": "2020-12-02",
@@ -847,6 +854,7 @@
       },
       {
         "client": "Ecocea",
+        "clientUrl": "https://www.ecocea.com",
         "location": "Paris",
         "startDate": "2019-10-01",
         "endDate": "2020-05-01",
@@ -902,6 +910,7 @@
       },
       {
         "client": "Edelia",
+        "clientUrl": "https://www.edelia.fr",
         "location": "Nanterre",
         "startDate": "2016-04-01",
         "endDate": "2019-06-01",
@@ -1165,6 +1174,7 @@
       },
       {
         "client": "JCDecaux",
+        "clientUrl": "https://www.jcdecaux.com",
         "location": "Plaisir",
         "startDate": "2015-01-01",
         "endDate": "2016-03-01",
@@ -1240,6 +1250,7 @@
       },
       {
         "client": "Lotsys Filiale FDJ",
+        "clientUrl": "https://www.groupefdj.com",
         "location": "Suresnes",
         "startDate": "2014-04-01",
         "endDate": "2014-12-01",
@@ -1339,6 +1350,7 @@
       },
       {
         "client": "Mediametrie",
+        "clientUrl": "https://www.mediametrie.fr",
         "location": "Levallois-Perret",
         "startDate": "2013-04-01",
         "endDate": "2014-03-01",
@@ -1472,6 +1484,7 @@
       },
       {
         "client": "Thales communications",
+        "clientUrl": "https://www.thalesgroup.com",
         "location": "Gennevilliers",
         "startDate": "2012-01-01",
         "endDate": "2013-01-01",
@@ -1591,6 +1604,7 @@
       },
       {
         "client": "Médiapost",
+        "clientUrl": "https://www.mediapost.fr",
         "location": "Montrouge",
         "startDate": "2011-04-01",
         "endDate": "2012-01-01",
@@ -2410,6 +2424,7 @@
       },
       {
         "client": "JPB Système",
+        "clientUrl": "https://www.jpb-systeme.com",
         "location": "Montereau-sur-le-Jard",
         "startDate": "2024-06-10",
         "endDate": "2025-08-31",
@@ -2473,6 +2488,7 @@
       },
       {
         "client": "BlaBlaCar",
+        "clientUrl": "https://www.blablacar.fr",
         "location": "Paris",
         "startDate": "2023-10-01",
         "endDate": "2023-12-31",
@@ -2517,6 +2533,7 @@
       },
       {
         "client": "Smartch",
+        "clientUrl": "https://www.smartch.com",
         "location": "Paris",
         "startDate": "2023-05-01",
         "endDate": "2023-09-04",
@@ -2580,6 +2597,7 @@
       },
       {
         "client": "SNCF Réseaux - DGEX Solutions",
+        "clientUrl": "https://www.sncf-reseau.com",
         "location": "Saint-Denis",
         "startDate": "2022-05-01",
         "endDate": "2023-02-01",
@@ -2692,6 +2710,7 @@
       },
       {
         "client": "leboncoin",
+        "clientUrl": "https://www.leboncoin.fr",
         "location": "Paris",
         "startDate": "2021-08-01",
         "endDate": "2022-05-01",
@@ -2780,6 +2799,7 @@
       },
       {
         "client": "Celsius Energy",
+        "clientUrl": "https://www.celsius-energy.com",
         "location": "Clamart",
         "startDate": "2020-12-01",
         "endDate": "2021-08-01",
@@ -2888,6 +2908,7 @@
       },
       {
         "client": "RelevanC",
+        "clientUrl": "https://www.relevanc.com",
         "location": "Paris",
         "startDate": "2020-08-01",
         "endDate": "2020-12-02",
@@ -2947,6 +2968,7 @@
       },
       {
         "client": "Ecocea",
+        "clientUrl": "https://www.ecocea.com",
         "location": "Paris",
         "startDate": "2019-10-01",
         "endDate": "2020-05-01",
@@ -3002,6 +3024,7 @@
       },
       {
         "client": "Edelia",
+        "clientUrl": "https://www.edelia.fr",
         "location": "Nanterre",
         "startDate": "2016-04-01",
         "endDate": "2019-06-01",
@@ -3265,6 +3288,7 @@
       },
       {
         "client": "JCDecaux",
+        "clientUrl": "https://www.jcdecaux.com",
         "location": "Plaisir",
         "startDate": "2015-01-01",
         "endDate": "2016-03-01",
@@ -3340,6 +3364,7 @@
       },
       {
         "client": "Lotsys Filiale FDJ",
+        "clientUrl": "https://www.groupefdj.com",
         "location": "Suresnes",
         "startDate": "2014-04-01",
         "endDate": "2014-12-01",
@@ -3439,6 +3464,7 @@
       },
       {
         "client": "Mediametrie",
+        "clientUrl": "https://www.mediametrie.fr",
         "location": "Levallois-Perret",
         "startDate": "2013-04-01",
         "endDate": "2014-03-01",
@@ -3572,6 +3598,7 @@
       },
       {
         "client": "Thales communications",
+        "clientUrl": "https://www.thalesgroup.com",
         "location": "Gennevilliers",
         "startDate": "2012-01-01",
         "endDate": "2013-01-01",
@@ -3691,6 +3718,7 @@
       },
       {
         "client": "Médiapost",
+        "clientUrl": "https://www.mediapost.fr",
         "location": "Montrouge",
         "startDate": "2011-04-01",
         "endDate": "2012-01-01",

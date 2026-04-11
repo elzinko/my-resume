@@ -8,6 +8,7 @@ import type { MatchDisplayData } from '@/lib/match-display-types';
 import type { Locale } from 'i18n-config';
 import { useMemo } from 'react';
 import Pill from '@/components/Pill';
+import { slugifyClient } from '@/lib/slug';
 
 interface JobFitSectionProps {
   lang: Locale;
@@ -121,7 +122,13 @@ export default function JobFitSection({
               {clients.length > 0 && (
                 <span className="flex flex-wrap items-baseline gap-1 print:gap-0.5">
                   {clients.map((c) => (
-                    <Pill key={c.client} color="match" size="s" border={false}>
+                    <Pill
+                      key={c.client}
+                      color="match"
+                      size="s"
+                      border={false}
+                      href={`#${slugifyClient(c.client)}`}
+                    >
                       {c.client}
                     </Pill>
                   ))}
