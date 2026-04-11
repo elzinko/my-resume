@@ -368,7 +368,7 @@
   }
 
   .cv-pill-match-borderless {
-    @apply rounded bg-orange-300/15 font-normal text-orange-300 transition-colors;
+    @apply rounded bg-orange-300/10 font-normal text-orange-300 transition-colors;
     @apply print:bg-orange-300/10 print:!text-orange-300;
   }
 
