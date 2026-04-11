@@ -310,7 +310,7 @@
       },
       {
         "client": "JPB Système",
-        "clientUrl": "https://www.jpb-systeme.com",
+        "clientUrl": "https://www.jpb-systeme.com/fr/keyprod",
         "location": "Montereau-sur-le-Jard",
         "startDate": "2024-06-10",
         "endDate": "2025-08-31",
@@ -419,7 +419,7 @@
       },
       {
         "client": "Smartch",
-        "clientUrl": "https://www.smartch.com",
+        "clientUrl": "https://www.smartch.fr/",
         "location": "Paris",
         "startDate": "2023-05-01",
         "endDate": "2023-09-04",
@@ -685,7 +685,7 @@
       },
       {
         "client": "Celsius Energy",
-        "clientUrl": "https://www.celsius-energy.com",
+        "clientUrl": "https://celsiusenergy.com/",
         "location": "Clamart",
         "startDate": "2020-12-01",
         "endDate": "2021-08-01",
@@ -854,7 +854,7 @@
       },
       {
         "client": "Ecocea",
-        "clientUrl": "https://www.ecocea.com",
+        "clientUrl": "https://www.ecocealafabrique.com/",
         "location": "Paris",
         "startDate": "2019-10-01",
         "endDate": "2020-05-01",
@@ -1250,7 +1250,7 @@
       },
       {
         "client": "Lotsys Filiale FDJ",
-        "clientUrl": "https://www.groupefdj.com",
+        "clientUrl": "https://www.fdj.fr/",
         "location": "Suresnes",
         "startDate": "2014-04-01",
         "endDate": "2014-12-01",
@@ -1492,7 +1492,8 @@
         "bullets": [
           {
             "id": "82627895",
-            "text": "Projet au sein de l'équipe R&D du laboratoire d'Études Amont CenTAI de THALES"
+            "text": "Projet au sein de l'équipe R&D du laboratoire d'Études Amont CenTAI de THALES",
+            "link": "https://www.institutdesactuaires.com/global/gene/link.php?doc_id=1157&fg=1"
           },
           {
             "id": "82627896",
@@ -2424,7 +2425,7 @@
       },
       {
         "client": "JPB Système",
-        "clientUrl": "https://www.jpb-systeme.com",
+        "clientUrl": "https://www.jpb-systeme.com/fr/keyprod",
         "location": "Montereau-sur-le-Jard",
         "startDate": "2024-06-10",
         "endDate": "2025-08-31",
@@ -2533,7 +2534,7 @@
       },
       {
         "client": "Smartch",
-        "clientUrl": "https://www.smartch.com",
+        "clientUrl": "https://www.smartch.fr/",
         "location": "Paris",
         "startDate": "2023-05-01",
         "endDate": "2023-09-04",
@@ -2799,7 +2800,7 @@
       },
       {
         "client": "Celsius Energy",
-        "clientUrl": "https://www.celsius-energy.com",
+        "clientUrl": "https://celsiusenergy.com/",
         "location": "Clamart",
         "startDate": "2020-12-01",
         "endDate": "2021-08-01",
@@ -2968,7 +2969,7 @@
       },
       {
         "client": "Ecocea",
-        "clientUrl": "https://www.ecocea.com",
+        "clientUrl": "https://www.ecocealafabrique.com/",
         "location": "Paris",
         "startDate": "2019-10-01",
         "endDate": "2020-05-01",
@@ -3364,7 +3365,7 @@
       },
       {
         "client": "Lotsys Filiale FDJ",
-        "clientUrl": "https://www.groupefdj.com",
+        "clientUrl": "https://www.fdj.fr/",
         "location": "Suresnes",
         "startDate": "2014-04-01",
         "endDate": "2014-12-01",
@@ -3606,7 +3607,8 @@
         "bullets": [
           {
             "id": "82627890",
-            "text": "Project within the R&D team of the THALES CenTAI Upstream Studies laboratory"
+            "text": "Project within the R&D team of the THALES CenTAI Upstream Studies laboratory",
+            "link": "https://www.institutdesactuaires.com/global/gene/link.php?doc_id=1157&fg=1"
           },
           {
             "id": "82627891",

@@ -6,7 +6,7 @@ import type { Locale } from 'i18n-config';
 export interface JobExperienceBodyProps {
   descriptionShort?: string | null;
   description: string;
-  bullets?: Array<{ id: string; text: string }>;
+  bullets?: Array<{ id: string; text: string; link?: string }>;
   locale: Locale;
   compact?: boolean;
   /** Mobile : notifie l’ouverture du détail (ex. afficher les pastilles techno). */
@@ -55,7 +55,13 @@ export default function JobExperienceBody({
     showBullets && bullets && bullets.length > 0 ? (
       <ul className={`cv-job-description mx-4 my-2 list-disc ${extraClass}`}>
         {bullets.map((bullet) => (
-          <li key={bullet.id}>{bullet.text}</li>
+          <li key={bullet.id}>
+            {bullet.link ? (
+              <a href={bullet.link} target="_blank" rel="noopener noreferrer">{bullet.text}</a>
+            ) : (
+              bullet.text
+            )}
+          </li>
         ))}
       </ul>
     ) : null;
