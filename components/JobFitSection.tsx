@@ -82,7 +82,7 @@ export default function JobFitSection({
   return (
     <section
       id="job-fit"
-      className="cv-mobile-section-mt print-preview:order-[25] print:order-[25] max-md:!mt-0"
+      className="cv-mobile-section-mt print-preview:order-[25] max-md:!mt-0 print:order-[25]"
       aria-label={sectionTitle}
     >
       <div className="border-b pb-1">
@@ -91,11 +91,11 @@ export default function JobFitSection({
         </h2>
       </div>
 
-      <ul className="mt-3 space-y-2.5 print:mt-2 print:space-y-1.5 md:mt-4 md:space-y-3">
+      <ul className="mt-3 space-y-2.5 md:mt-4 md:space-y-3 print:mt-2 print:space-y-1.5">
         {/* Education level row */}
         <li className="flex flex-wrap items-baseline gap-x-2 gap-y-1 print:gap-x-1.5">
           <Pill color="match">{educationLevel.levelPrimary}</Pill>
-          <span className="text-sm text-cv-body-muted print:text-[10px] md:text-base">
+          <span className="text-sm text-cv-body-muted md:text-base print:text-[10px]">
             {educationLevel.effectiveLevelDetail}
           </span>
         </li>

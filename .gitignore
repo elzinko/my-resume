@@ -36,8 +36,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# vscode
+# IDE
 .vscode
+.idea
 
 #others
 backups

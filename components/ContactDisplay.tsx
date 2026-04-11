@@ -138,7 +138,7 @@ export default function ContactDisplay({
     const valueWrap = 'min-w-0 text-right';
 
     return (
-      <ul className="cv-short-contact-rows cv-section-body-gap space-y-1.5 print:space-y-0.5 md:space-y-1">
+      <ul className="cv-short-contact-rows cv-section-body-gap space-y-1.5 md:space-y-1 print:space-y-0.5">
         <li className={row}>
           <strong className={labelCls}>{contact.emailTitle}</strong>
           <a
@@ -235,11 +235,11 @@ export default function ContactDisplay({
       </li>
       <li className={stackLi}>
         <strong className={stackLabel}>{contact.locationTitle}</strong>
-        <div className="min-w-0 text-right print:text-left md:w-full md:text-left">
+        <div className="min-w-0 text-right md:w-full md:text-left print:text-left">
           <LocationLinkBlock
             location={contact.location}
             locale={locale}
-            className="justify-end print:justify-between md:mt-0.5 md:justify-between"
+            className="justify-end md:mt-0.5 md:justify-between print:justify-between"
           />
         </div>
       </li>

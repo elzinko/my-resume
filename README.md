@@ -46,5 +46,5 @@ Encodage CLI : `npm run encode-offer-spec -- path/to/offer.json`
 | Guide LLM (statique)        | [`.llm/README.md`](.llm/README.md)                                   |
 | Guide LLM (dynamique)       | `GET /api/llm-guide`                                                 |
 | Storybook maison (dev)      | `http://localhost:3000/{lang}/dev/components`                        |
-| Storybook (Chromatic)       | `http://localhost:6006` (`pnpm storybook`)                           |
+| Storybook (Chromatic)       | `http://localhost:6006` (`npm run storybook`)                        |
 | Rendus PDF / screenshots    | [`renders/`](renders/) -- [`renders/index.html`](renders/index.html) |

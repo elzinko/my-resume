@@ -146,7 +146,7 @@ export default function project({
         ) : null}
       </div>
       <span
-        className="cv-project-print hidden text-sm leading-snug text-cv-tag-text print:inline print:text-xs md:text-base"
+        className="cv-project-print hidden text-sm leading-snug text-cv-tag-text md:text-base print:inline print:text-xs"
         aria-hidden="true"
       >
         {printBody}

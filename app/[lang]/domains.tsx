@@ -16,7 +16,7 @@ export default async function domains({
   return (
     <section
       id="domains"
-      className="mt-2 print-preview:order-[20] print:order-[20] max-md:!mt-0"
+      className="mt-2 print-preview:order-[20] max-md:!mt-0 print:order-[20]"
     >
       <div className="cv-domains-grid">
         {data?.allDomainsModels?.map((domain: any) => (

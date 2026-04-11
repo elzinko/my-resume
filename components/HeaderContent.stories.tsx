@@ -21,9 +21,9 @@ type Story = StoryObj<typeof HeaderContent>;
 
 export const Default: Story = {};
 
-export const WithAfterRole: Story = {
+export const WithBelowRole: Story = {
   args: {
-    afterRole: (
+    belowRole: (
       <div className="mt-2 text-right text-sm text-pink-200">
         thomas@example.com · +33 6 12 34 56 78 · Paris
       </div>
