@@ -45,12 +45,12 @@ export default function HeaderDesktopContactStrip({
       aria-label="Contact"
     >
       {email ? (
-        <a href={`mailto:${email}`} className="break-all text-inherit underline decoration-rose-300/50 underline-offset-2">
+        <a href={`mailto:${email}`} className="break-all text-inherit no-underline hover:underline hover:decoration-rose-300/50 hover:underline-offset-2">
           {email}
         </a>
       ) : null}
       {phone ? (
-        <a href={`tel:${phone.replace(/\s/g, '')}`} className="text-inherit underline decoration-rose-300/50 underline-offset-2">
+        <a href={`tel:${phone.replace(/\s/g, '')}`} className="text-inherit no-underline hover:underline hover:decoration-rose-300/50 hover:underline-offset-2">
           {phone}
         </a>
       ) : null}

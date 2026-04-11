@@ -81,7 +81,7 @@ export default function ContactDisplay({
     if (!showLabels) {
       const valueCls =
         'text-sm text-rose-300 print:text-[9px] print:leading-tight';
-      const linkCls = 'underline decoration-rose-300/50 underline-offset-2';
+      const linkCls = 'no-underline hover:underline hover:decoration-rose-300/50 hover:underline-offset-2';
 
       return (
         <ul className="cv-short-contact-rows cv-section-body-gap space-y-1 md:space-y-0.5 print:space-y-0.5">
