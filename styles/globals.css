@@ -637,10 +637,14 @@ html {
     color: inherit !important;
   }
 
-  /* Coordonnées : conserver la couleur rose-300 en impression. */
+  /* Coordonnées : forcer la couleur rose-300 en impression (WYSIWYG). */
+  .cv-header-contact-strip,
+  .cv-short-contact-rows {
+    color: #fda4af !important; /* rose-300 */
+  }
   .cv-header-contact-strip a,
   .cv-short-contact-rows a {
-    color: inherit !important;
+    color: #fda4af !important; /* rose-300 */
     text-decoration: none !important;
   }
 

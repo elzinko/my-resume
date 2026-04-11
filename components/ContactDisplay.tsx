@@ -80,11 +80,11 @@ export default function ContactDisplay({
     // Mode sans labels : valeurs seules, alignées à gauche, couleur rose-300.
     if (!showLabels) {
       const valueCls =
-        'text-sm text-rose-300 print:text-[9px] print:leading-tight';
+        'text-sm text-rose-300';
       const linkCls = 'no-underline hover:underline hover:decoration-rose-300/50 hover:underline-offset-2';
 
       return (
-        <ul className="cv-short-contact-rows cv-section-body-gap space-y-1 md:space-y-0.5 print:space-y-0.5">
+        <ul className="cv-short-contact-rows cv-section-body-gap space-y-1 md:space-y-0.5">
           <li>
             <span className="sr-only">{contact.emailTitle} : </span>
             <a href={`mailto:${contact.email}`} className={`${valueCls} ${linkCls} break-all`}>
