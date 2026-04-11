@@ -84,7 +84,7 @@ export default function ContactDisplay({
       const linkCls = 'no-underline hover:underline hover:decoration-rose-300/50 hover:underline-offset-2';
 
       return (
-        <ul className="cv-short-contact-rows cv-section-body-gap space-y-1 md:space-y-0.5">
+        <ul className="cv-short-contact-rows cv-section-body-gap space-y-1">
           <li>
             <span className="sr-only">{contact.emailTitle} : </span>
             <a href={`mailto:${contact.email}`} className={`${valueCls} ${linkCls} break-all`}>
