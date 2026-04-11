@@ -43,7 +43,7 @@ export default function HeaderContent({
             className={`text-3xl font-extrabold leading-tight text-blue-400 md:text-5xl md:leading-none lg:text-7xl ${
               compactPrint
                 ? 'print:text-3xl print:leading-tight'
-                : 'print:text-5xl print:leading-none'
+                : 'print:text-7xl print:leading-none'
             }`}
           >
             {name}
