@@ -8,7 +8,7 @@ export default async function domains({ locale }: { locale: Locale }) {
   return (
     <section
       id="domains"
-      className="cv-mobile-section-mt max-md:!mt-0 print:order-[20] print-preview:order-[20]"
+      className="mt-2 max-md:!mt-0 print:order-[20] print-preview:order-[20]"
     >
       <div className="cv-domains-grid">
         {data?.allDomainsModels?.map((domain: any) => (

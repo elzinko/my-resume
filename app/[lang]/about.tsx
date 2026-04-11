@@ -15,14 +15,14 @@ export default async function About({
   return (
     <section
       id="about"
-      className="mt-4 max-md:!mt-0 print:order-[10] print-preview:order-[10]"
+      className="mt-4 pb-1 mb-1 max-md:!mt-0 print:order-[10] print-preview:order-[10]"
     >
       <div className="border-b pb-1">
         <h2 className="min-w-0 text-2xl font-semibold text-cv-section">
           {data?.about?.title}
         </h2>
       </div>
-      <p className="cv-about-domain-print-body mt-2 text-sm leading-snug text-cv-body-muted md:mt-4 md:text-base md:leading-normal">
+      <p className="mt-4 text-cv-body-muted">
         {data?.about?.text}
       </p>
     </section>

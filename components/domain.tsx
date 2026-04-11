@@ -34,7 +34,7 @@ function DomainFiveTagsRow({
 }) {
   const rowClass = compact
     ? 'mt-2 flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 py-1 print:mt-1 print:gap-x-1 print:py-0.5'
-    : 'mt-1.5 flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1.5 py-2 print:flex-wrap';
+    : 'mt-2 flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 py-1';
 
   return (
     <div className={rowClass}>
@@ -102,7 +102,7 @@ export default function Domain({
 
   const titleTypo = compact
     ? 'text-2xl font-semibold text-cv-section print:text-sm'
-    : 'text-base font-semibold text-cv-section md:text-justify md:text-2xl';
+    : 'text-2xl font-semibold text-cv-section';
 
   const titleBlock =
     accent === 'verticalBar' ? (
@@ -124,7 +124,7 @@ export default function Domain({
       className={
         compact
           ? 'mt-4 min-w-0 print:mt-1.5'
-          : 'mt-0 min-w-0 md:mt-4'
+          : 'mt-4 min-w-0'
       }
     >
       {titleBlock}
@@ -132,7 +132,7 @@ export default function Domain({
         className={
           compact
             ? 'mt-4 text-cv-body-muted print:mt-1 print:text-[8px] print:leading-tight'
-            : 'cv-about-domain-print-body mt-1.5 text-sm leading-snug text-cv-body-muted print:mt-4 print:min-h-0 md:mt-4 md:min-h-[100px] md:text-base md:leading-normal'
+            : 'mt-4 text-cv-body-muted'
         }
       >
         {domain.description}
@@ -148,7 +148,7 @@ export default function Domain({
               className={
                 compact
                   ? 'mt-2 flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 py-1 print:mt-1 print:gap-x-1 print:py-0.5'
-                  : 'mt-1.5 flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1.5 py-2 print:flex-wrap'
+                  : 'mt-2 flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 py-1'
               }
             >
               {domain.competencies.map((competency) => (

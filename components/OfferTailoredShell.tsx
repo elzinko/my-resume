@@ -68,10 +68,12 @@ export default function OfferTailoredShell({
           />
 
           <div className="cv-full-cv-print-root">
-            {/* @ts-expect-error Server Component */}
-            <About locale={lang} educationLevel={educationLevel} />
-            {/* @ts-expect-error Server Component */}
-            <Domains locale={lang} />
+            <div className="max-md:contents print:order-[10] print-preview:order-[10]">
+              {/* @ts-expect-error Server Component */}
+              <About locale={lang} educationLevel={educationLevel} />
+              {/* @ts-expect-error Server Component */}
+              <Domains locale={lang} />
+            </div>
             {/* Adéquation poste : niveau de formation + compétences techniques */}
             <Suspense fallback={null}>
               <JobFitSection

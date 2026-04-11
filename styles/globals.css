@@ -52,10 +52,11 @@
    * `mt-10` desktop / `mt-20` mobile (clearance de la toolbar fixe).
    */
   .cv-full-cv-print-root {
-    @apply mt-4 flex flex-col gap-3 max-md:mt-20 print:mt-0;
+    @apply flex flex-col gap-3 max-md:mt-20 print:mt-0;
   }
 
-  .cv-full-cv-print-root section {
+  .cv-full-cv-print-root > section,
+  .cv-full-cv-print-root > .cv-print-jobs-group section {
     margin-top: 0 !important;
   }
 
