@@ -41,16 +41,16 @@ export default function HeaderDesktopContactStrip({
 
   return (
     <div
-      className={`cv-header-contact-strip mt-2 flex w-full flex-col ${alignItems} gap-0.5 ${textAlign} text-sm leading-snug text-rose-300 md:mt-0 md:pb-1 md:text-lg md:leading-snug print:mt-0 print:flex ${printAlignItems} print:gap-0.5 print:pb-0.5 ${printTextAlign} print:text-lg print:leading-snug print:text-rose-300`}
+      className={`cv-header-contact-strip mt-2 flex w-full flex-col ${alignItems} gap-0.5 ${textAlign} text-sm leading-snug text-rose-300 md:mt-0 md:pb-1 md:text-sm md:leading-snug print:mt-0 print:flex ${printAlignItems} print:gap-0.5 print:pb-0.5 ${printTextAlign} print:text-sm print:leading-snug print:text-rose-300`}
       aria-label="Contact"
     >
       {email ? (
-        <a href={`mailto:${email}`} className="break-all text-inherit">
+        <a href={`mailto:${email}`} className="break-all text-inherit underline decoration-rose-300/50 underline-offset-2">
           {email}
         </a>
       ) : null}
       {phone ? (
-        <a href={`tel:${phone.replace(/\s/g, '')}`} className="text-inherit">
+        <a href={`tel:${phone.replace(/\s/g, '')}`} className="text-inherit underline decoration-rose-300/50 underline-offset-2">
           {phone}
         </a>
       ) : null}

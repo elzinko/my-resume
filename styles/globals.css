@@ -631,10 +631,27 @@ html {
     page-break-inside: auto;
   }
 
-  /* Links - show as normal text */
+  /* Links - show as normal text (except contact & detail links). */
   a {
     text-decoration: none !important;
     color: inherit !important;
+  }
+
+  /* Coordonnées : conserver la couleur rose-300 et le soulignement en impression. */
+  .cv-header-contact-strip a,
+  .cv-short-contact-rows a {
+    color: inherit !important;
+    text-decoration: underline !important;
+    text-decoration-color: rgb(253 164 175 / 0.5) !important; /* rose-300/50 */
+    text-underline-offset: 2px !important;
+  }
+
+  /* « Voir le CV complet en ligne » : conserver la couleur du lien. */
+  .cv-short-full-cv-hint a {
+    @apply !text-cv-jobs;
+    text-decoration: underline !important;
+    text-decoration-color: rgb(249 168 212 / 0.5) !important; /* pink-300/50 */
+    text-underline-offset: 3px !important;
   }
 
   /**

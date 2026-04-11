@@ -201,7 +201,7 @@ export default function CompactCvLayout({
           {/* Coordonnées (label : valeur) dans la colonne gauche — masqué en mobile (dupliqué hors grille). */}
           <section id="cv-short-contact" className="mb-6 hidden md:block print:block">
             <div className="border-b pb-1">
-              <h2 className="min-w-0 text-2xl font-semibold text-pink-300">
+              <h2 className="min-w-0 text-2xl font-semibold text-rose-300">
                 {data.titles.contact || (lang === 'fr' ? 'Coordonnées' : 'Contact')}
               </h2>
             </div>

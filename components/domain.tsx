@@ -33,8 +33,8 @@ function DomainFiveTagsRow({
   compact: boolean;
 }) {
   const rowClass = compact
-    ? 'mt-2 flex min-w-0 flex-nowrap items-center gap-x-1.5 gap-y-0 overflow-x-auto py-1 [-webkit-overflow-scrolling:touch] print:mt-1 print:gap-x-1 print:py-0.5'
-    : 'mt-1.5 flex min-w-0 flex-nowrap items-center gap-x-2 gap-y-0 overflow-x-auto py-2 print:flex-nowrap [-webkit-overflow-scrolling:touch]';
+    ? 'mt-2 flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 py-1 print:mt-1 print:gap-x-1 print:py-0.5'
+    : 'mt-1.5 flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1.5 py-2 print:flex-wrap';
 
   return (
     <div className={rowClass}>
@@ -147,8 +147,8 @@ export default function Domain({
             <div
               className={
                 compact
-                  ? 'mt-2 flex min-w-0 flex-nowrap items-center gap-x-1.5 gap-y-0 overflow-x-auto py-1 [-webkit-overflow-scrolling:touch] print:mt-1 print:gap-x-1 print:py-0.5'
-                  : 'mt-1.5 flex min-w-0 flex-nowrap items-center gap-x-2 gap-y-0 overflow-x-auto py-2 print:flex-nowrap [-webkit-overflow-scrolling:touch]'
+                  ? 'mt-2 flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 py-1 print:mt-1 print:gap-x-1 print:py-0.5'
+                  : 'mt-1.5 flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1.5 py-2 print:flex-wrap'
               }
             >
               {domain.competencies.map((competency) => (

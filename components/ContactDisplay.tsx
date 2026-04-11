@@ -77,16 +77,17 @@ export default function ContactDisplay({
   locale = 'fr',
 }: ContactDisplayProps) {
   if (cvShortInlineRows) {
-    // Mode sans labels : valeurs seules, alignées à gauche, couleur plus marquée.
+    // Mode sans labels : valeurs seules, alignées à gauche, couleur rose-300.
     if (!showLabels) {
       const valueCls =
-        'text-sm text-rose-300 md:text-sm print:text-[9px] print:leading-tight';
+        'text-sm text-rose-300 print:text-[9px] print:leading-tight';
+      const linkCls = 'underline decoration-rose-300/50 underline-offset-2';
 
       return (
         <ul className="cv-short-contact-rows cv-section-body-gap space-y-1 md:space-y-0.5 print:space-y-0.5">
           <li>
             <span className="sr-only">{contact.emailTitle} : </span>
-            <a href={`mailto:${contact.email}`} className={`${valueCls} break-all`}>
+            <a href={`mailto:${contact.email}`} className={`${valueCls} ${linkCls} break-all`}>
               {contact.email}
             </a>
           </li>
@@ -94,7 +95,7 @@ export default function ContactDisplay({
             <span className="sr-only">{contact.phoneTitle} : </span>
             <a
               href={`tel:${contact.phone.replace(/\s/g, '')}`}
-              className={`${valueCls} tabular-nums`}
+              className={`${valueCls} ${linkCls} tabular-nums`}
             >
               {contact.phone}
             </a>

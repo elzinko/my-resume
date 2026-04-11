@@ -64,7 +64,7 @@ export default function HeaderContent({
 
         {/* Barre verticale décorative */}
         <div
-          className="w-1 shrink-0 self-stretch rounded-full bg-gradient-to-b from-blue-400/40 via-teal-300/30 to-pink-300/20 md:w-1.5 print:w-1"
+          className="w-1 shrink-0 self-stretch rounded-full bg-gradient-to-b from-blue-400/40 to-teal-300/25 md:w-1.5 print:w-1"
           aria-hidden
         />
       </div>
