@@ -94,13 +94,13 @@ export default function ContactDisplay({
 
       return (
         <ul className="cv-short-contact-rows cv-section-simple-list">
-          <li>
+          <li className="cv-row-simple-item">
             <span className="sr-only">{contact.emailTitle} : </span>
             <a href={`mailto:${contact.email}`} className={`${valueCls} ${linkCls} break-all`}>
               {contact.email}
             </a>
           </li>
-          <li>
+          <li className="cv-row-simple-item">
             <span className="sr-only">{contact.phoneTitle} : </span>
             <a
               href={`tel:${contact.phone.replace(/\s/g, '')}`}
@@ -109,7 +109,7 @@ export default function ContactDisplay({
               {contact.phone}
             </a>
           </li>
-          <li>
+          <li className="cv-row-simple-item">
             <span className="sr-only">{contact.locationTitle} : </span>
             <a
               href={mapsHref}

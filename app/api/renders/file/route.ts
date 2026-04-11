@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { getCvData } from '@/lib/cv-data';
+import { generateDocumentTitle } from '@/lib/cv-document-title';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,10 +15,23 @@ const MIME: Record<string, string> = {
 };
 
 /**
+ * Extrait la langue et le mode (full/short) du nom de fichier renders.
+ * Ex : `fr-short-print.pdf` → { lang: 'fr', mode: 'short' }
+ *      `en-full-print.pdf`  → { lang: 'en', mode: 'full' }
+ */
+function parseRenderFilename(name: string): { lang: string; mode: 'full' | 'short' } | null {
+  const m = name.match(/^(fr|en)-(full|short)-/);
+  if (!m) return null;
+  return { lang: m[1], mode: m[2] as 'full' | 'short' };
+}
+
+/**
  * GET /api/renders/file?name=fr-short-screen.png
  *
  * Serves a static file from the `renders/` directory (screenshots + PDFs).
  * Only whitelisted extensions, no path traversal.
+ * PDFs get a Content-Disposition header with a formatted filename matching
+ * the browser print button naming convention.
  */
 export async function GET(request: NextRequest) {
   if (process.env.NODE_ENV !== 'development') {
@@ -40,10 +55,27 @@ export async function GET(request: NextRequest) {
   }
 
   const buf = fs.readFileSync(filePath);
-  return new NextResponse(buf, {
-    headers: {
-      'Content-Type': mime,
-      'Cache-Control': 'no-store',
-    },
-  });
+
+  const headers: Record<string, string> = {
+    'Content-Type': mime,
+    'Cache-Control': 'no-store',
+  };
+
+  // PDFs: add Content-Disposition with a formatted filename
+  if (ext === '.pdf') {
+    const parsed = parseRenderFilename(name);
+    if (parsed) {
+      try {
+        const data: any = await getCvData(parsed.lang as 'fr' | 'en');
+        const candidateName = data?.header?.name || 'CV';
+        const title = generateDocumentTitle(candidateName, parsed.lang, parsed.mode);
+        headers['Content-Disposition'] = `inline; filename="${title}.pdf"`;
+      } catch {
+        // Fallback: use raw filename
+        headers['Content-Disposition'] = `inline; filename="${name}"`;
+      }
+    }
+  }
+
+  return new NextResponse(buf, { headers });
 }

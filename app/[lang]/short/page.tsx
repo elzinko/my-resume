@@ -16,18 +16,7 @@ import ShortAutoprint from '@/components/ShortAutoprint';
 import { getOffer } from '@/data/offers';
 import type { Metadata } from 'next';
 
-function generateDocumentTitle(
-  name: string,
-  lang: string,
-  mode: 'full' | 'short',
-): string {
-  const prefix = lang === 'fr' ? 'cv' : 'resume';
-  const modeLabel =
-    lang === 'fr' ? (mode === 'full' ? 'complet' : 'court') : mode;
-  const date = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-  const safeName = name.toLowerCase().replace(/\s+/g, '_');
-  return `${prefix}_${safeName}_${modeLabel}_${date}`;
-}
+import { generateDocumentTitle } from '@/lib/cv-document-title';
 
 export async function generateMetadata({
   params: { lang },

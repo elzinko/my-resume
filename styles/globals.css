@@ -9,6 +9,10 @@
    * un rythme homogène dans toutes les sections du CV.
    */
   --cv-section-body-gap: 1rem; /* = mt-4 */
+
+  /** Toolbar boutons / icônes — taille unique pour hamburger + icônes sociales + print. */
+  --cv-toolbar-btn: 2.5rem; /* 40px */
+  --cv-toolbar-icon: 1.5rem; /* 24px */
 }
 
 @layer components {
@@ -334,6 +338,11 @@
    */
   .cv-row-study-title-year {
     @apply flex items-baseline justify-between gap-2;
+  }
+
+  /** Item de liste simple (Coordonnées, etc.) — même base flex que cv-row-study-title-year, sans justify-between. */
+  .cv-row-simple-item {
+    @apply flex items-baseline gap-2;
   }
 
   /**

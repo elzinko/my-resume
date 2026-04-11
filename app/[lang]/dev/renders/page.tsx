@@ -192,6 +192,7 @@ function LiveCard({ label, src }: { label: string; src: string }) {
 export default function DevRendersPage() {
   const [genState, setGenState] = useState<GenerateState>('idle');
   const [genOutput, setGenOutput] = useState('');
+  const [showLog, setShowLog] = useState(false);
   const [bust, setBust] = useState(Date.now());
   const [lastGenerated, setLastGenerated] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState<'snapshots' | 'live'>('snapshots');
@@ -322,29 +323,87 @@ export default function DevRendersPage() {
               </>
             )}
           </button>
+          {/* View log button */}
+          {genOutput ? (
+            <button
+              onClick={() => setShowLog(true)}
+              style={{
+                padding: '0.5rem 0.75rem',
+                borderRadius: '6px',
+                border: '1px solid #334155',
+                background: 'transparent',
+                color: genState === 'error' ? '#fca5a5' : '#86efac',
+                cursor: 'pointer',
+                fontSize: '0.8rem',
+                fontWeight: 600,
+              }}
+            >
+              View log
+            </button>
+          ) : null}
         </div>
       </div>
 
       {/* Spinner keyframes */}
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
 
-      {/* Generate output */}
-      {genOutput ? (
-        <pre
+      {/* Log modal */}
+      {showLog && genOutput ? (
+        <div
           style={{
-            background: '#0f172a',
-            padding: '1rem',
-            borderRadius: '6px',
-            fontSize: '0.8rem',
-            color: genState === 'error' ? '#fca5a5' : '#86efac',
-            marginBottom: '1.5rem',
-            maxHeight: '200px',
-            overflow: 'auto',
-            border: `1px solid ${genState === 'error' ? '#7f1d1d' : '#14532d'}`,
+            position: 'fixed',
+            inset: 0,
+            zIndex: 50,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: 'rgba(0,0,0,0.6)',
           }}
+          onClick={() => setShowLog(false)}
         >
-          {genOutput}
-        </pre>
+          <div
+            style={{
+              background: '#0f172a',
+              borderRadius: '8px',
+              padding: '1.5rem',
+              width: '90vw',
+              maxWidth: '800px',
+              maxHeight: '80vh',
+              display: 'flex',
+              flexDirection: 'column',
+              border: `1px solid ${genState === 'error' ? '#7f1d1d' : '#14532d'}`,
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+              <h3 style={{ color: '#94a3b8', margin: 0, fontSize: '0.95rem' }}>Generation Log</h3>
+              <button
+                onClick={() => setShowLog(false)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#94a3b8',
+                  cursor: 'pointer',
+                  fontSize: '1.2rem',
+                  padding: '0.25rem',
+                }}
+              >
+                &times;
+              </button>
+            </div>
+            <pre
+              style={{
+                fontSize: '0.8rem',
+                color: genState === 'error' ? '#fca5a5' : '#86efac',
+                overflow: 'auto',
+                flex: 1,
+                margin: 0,
+              }}
+            >
+              {genOutput}
+            </pre>
+          </div>
+        </div>
       ) : null}
 
       {/* Nav links */}

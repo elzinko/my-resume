@@ -446,7 +446,7 @@ export default function HeaderToolbar({
         <button
           type="button"
           data-testid="cv-mobile-menu-toggle"
-          className="relative inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-slate-400/40 bg-white text-slate-700 shadow-sm transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/60 focus-visible:ring-offset-2"
+          className="relative inline-flex h-[var(--cv-toolbar-btn)] w-[var(--cv-toolbar-btn)] shrink-0 items-center justify-center rounded-md border border-slate-400/40 bg-white text-slate-700 shadow-sm transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/60 focus-visible:ring-offset-2"
           aria-expanded={open}
           aria-controls="cv-mobile-nav"
           aria-haspopup="dialog"
@@ -455,7 +455,7 @@ export default function HeaderToolbar({
         >
           {open ? (
             <svg
-              className="h-6 w-6"
+              className="h-[var(--cv-toolbar-icon)] w-[var(--cv-toolbar-icon)]"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -470,7 +470,7 @@ export default function HeaderToolbar({
             </svg>
           ) : (
             <svg
-              className="h-6 w-6"
+              className="h-[var(--cv-toolbar-icon)] w-[var(--cv-toolbar-icon)]"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"

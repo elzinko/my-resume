@@ -22,7 +22,7 @@ export default function logoGithub({ onNavigate }: LogoGithubProps) {
         xmlnsXlink="http://www.w3.org/1999/xlink"
         aria-hidden="true"
         role="img"
-        className="h-4 w-4 md:h-5 md:w-5"
+        className="h-[var(--cv-toolbar-icon)] w-[var(--cv-toolbar-icon)]"
         preserveAspectRatio="xMidYMid meet"
         viewBox="0 0 24 24"
       >

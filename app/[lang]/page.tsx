@@ -12,14 +12,7 @@ import { recordToURLSearchParams } from '@/lib/search-params-to-url';
 
 export const dynamic = 'force-dynamic';
 
-// Helper to generate document title (developer style: lowercase with underscores)
-function generateDocumentTitle(name: string, lang: string): string {
-  const prefix = lang === 'fr' ? 'cv' : 'resume';
-  const modeLabel = lang === 'fr' ? 'complet' : 'full';
-  const date = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-  const safeName = name.toLowerCase().replace(/\s+/g, '_');
-  return `${prefix}_${safeName}_${modeLabel}_${date}`;
-}
+import { generateDocumentTitle } from '@/lib/cv-document-title';
 
 export async function generateMetadata({
   params: { lang },
@@ -30,7 +23,7 @@ export async function generateMetadata({
   const name = data?.header?.name || 'CV';
 
   return {
-    title: generateDocumentTitle(name, lang),
+    title: generateDocumentTitle(name, lang, 'full'),
   };
 }
 
