@@ -68,6 +68,7 @@ export default async function Page({
       frameworkDisplayPriorityTokens={priorityTokens}
       contactLocation={contactLocation}
       hideMalt={offer?.contract === 'cdi'}
+      contract={offer?.contract}
     />
   );
 }

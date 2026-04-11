@@ -25,19 +25,14 @@ function linkClassName(): string {
 /** Lien vers le CV long sous la section expériences (CV court). */
 export default function ShortCvOnlineDetailLink({
   lang,
-  defaultOfferId,
 }: {
   lang: 'fr' | 'en';
-  defaultOfferId?: string | null;
 }) {
   const sp = useSearchParams();
   const queryKey = sp.toString();
   const href = useMemo(
-    () =>
-      fullHrefFromShortPath(lang, new URLSearchParams(queryKey), {
-        defaultOfferId: defaultOfferId ?? null,
-      }),
-    [lang, queryKey, defaultOfferId],
+    () => fullHrefFromShortPath(lang, new URLSearchParams(queryKey)),
+    [lang, queryKey],
   );
 
   const t = COPY[lang];

@@ -6,7 +6,6 @@ import type { Locale } from 'i18n-config';
 
 interface ShortHeaderJobFitPillsProps {
   lang: Locale;
-  defaultOfferId: string | null;
 }
 
 /**
@@ -15,9 +14,8 @@ interface ShortHeaderJobFitPillsProps {
  */
 export default function ShortHeaderJobFitPills({
   lang,
-  defaultOfferId,
 }: ShortHeaderJobFitPillsProps) {
-  const data = useShortOfferMatchData(lang, defaultOfferId);
+  const data = useShortOfferMatchData(lang);
   const entries = data?.entries ?? [];
   const l = lang as MatchYearsLang;
   if (entries.length === 0) return null;

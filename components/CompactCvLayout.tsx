@@ -72,8 +72,6 @@ export interface CompactCvData {
 interface CompactCvLayoutProps {
   data: CompactCvData;
   lang: 'fr' | 'en';
-  /** `SHORT_CV_OFFER_ID` : lien « CV en ligne » même sans `?offer=` dans l'URL. */
-  defaultOfferId?: string | null;
   /** Emplacement réservé pour extensions — non utilisé par défaut. */
   children?: React.ReactNode;
 }
@@ -81,7 +79,6 @@ interface CompactCvLayoutProps {
 export default function CompactCvLayout({
   data,
   lang,
-  defaultOfferId = null,
   children,
 }: CompactCvLayoutProps) {
   // Fallback labels if bundle.json titles are empty
@@ -160,7 +157,6 @@ export default function CompactCvLayout({
         <Suspense fallback={null}>
           <JobFitSection
             lang={lang}
-            defaultOfferId={defaultOfferId}
             educationLevel={data.educationLevel}
             variant="compact"
           />
@@ -192,7 +188,6 @@ export default function CompactCvLayout({
             <Suspense fallback={null}>
               <JobFitSection
                 lang={lang}
-                defaultOfferId={defaultOfferId}
                 educationLevel={data.educationLevel}
                 variant="compact"
               />
@@ -288,7 +283,6 @@ export default function CompactCvLayout({
             <Suspense fallback={null}>
               <ShortCvOnlineDetailLink
                 lang={lang}
-                defaultOfferId={defaultOfferId}
               />
             </Suspense>
           </section>

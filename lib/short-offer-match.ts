@@ -1,7 +1,5 @@
 import type { MatchDisplayData } from '@/lib/match-display-types';
 import bundleJson from '@/data/cv/bundle.json';
-import { getOffer } from '@/data/offers';
-import { enrichJobOfferRequirements } from '@/lib/match-catalog';
 import {
   buildMatchCatalogFromBundle,
   type CvSliceForMatchCatalog,
@@ -87,21 +85,3 @@ export function computeShortUrlMatchData(
   return { entries: entries.slice(0, SHORT_PROFILE_MATCH_MAX) };
 }
 
-/** Offre catalogue `data/offers` — pour le CV court (`?offer=id`) en export statique / hydratation client. */
-export function computeShortOfferMatchData(
-  locale: Locale,
-  offerId: string,
-): MatchDisplayData | null {
-  const offer = getOffer(offerId);
-  if (!offer) return null;
-
-  const slice = locale === 'fr' ? b.fr : b.en;
-  const jobs: JobForMatching[] = (slice.allJobsModels || []) as JobForMatching[];
-
-  const entries = buildMatchEntries(
-    enrichJobOfferRequirements(offer, matchCatalog()).requirements,
-    jobs,
-  );
-
-  return { entries: entries.slice(0, SHORT_PROFILE_MATCH_MAX) };
-}

@@ -1,8 +1,6 @@
 # CV personnalisé par offre (URLs dynamiques)
 
-La racine `/{lang}` (page CV complète) accepte des **query params** qui activent le bloc **« adéquation avec le poste »**, sans ajouter de fichier dans `data/offers/`. Les anciennes routes `/offer/match` et `/offer/custom` ont été supprimées : tout passe désormais par `/{lang}?...`.
-
-Les offres **prédéfinies** (`data/offers/*.ts`) servent de modèles pour le CV court (`?offer=<id>`, `SHORT_CV_OFFER_ID`) et pour générer des URLs **`/{lang}?…`** équivalentes (`lib/offer-to-match-url.ts`).
+La racine `/{lang}` (page CV complète) accepte des **query params** qui activent le bloc **« adéquation avec le poste »**. Tout passe par `/{lang}?...` — il n'y a pas d'offres statiques.
 
 ---
 

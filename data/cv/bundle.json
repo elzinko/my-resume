@@ -20,7 +20,8 @@
     },
     "about": {
       "title": "Profile",
-      "text": "Je suis un consultant informatique fullstack agile passionné par les technologies open source frontend et backend. J'aime développer des logiciels à l'aide de solutions cloud, le tout dans la lignée du mouvement Devops."
+      "text": "Je suis un consultant informatique fullstack agile passionné par les technologies open source frontend et backend. J'aime développer des logiciels à l'aide de solutions cloud, le tout dans la lignée du mouvement Devops.",
+      "textCdi": "Ingénieur fullstack agile avec 20 ans d'expérience, je conçois des applications robustes en environnement cloud avec une culture DevOps et craftsmanship, sur des stacks open source frontend et backend."
     },
     "skillsTitle": {
       "title": "Compétences"
@@ -115,6 +116,7 @@
         "id": "78726113",
         "name": "Agile",
         "description": "Je sais mettre à profit mes multiples expériences d'agilité au service d'une équipe afin d'aboutir à un produit proche du besoin avec une philosophie software craftsmanship.",
+        "descriptionCdi": "Fort de multiples expériences agiles, j'accompagne les équipes vers un produit au plus proche du besoin, dans une démarche software craftsmanship et d'amélioration continue.",
         "position": 1,
         "competencies": [
           {
@@ -148,6 +150,7 @@
         "id": "78726111",
         "name": "Dev",
         "description": "J'aime développer des composants réutilisables dans un environnement clusterisé en utilisant des concepts tels que microservices, robustesse, observabilité, clean code.",
+        "descriptionCdi": "Je conçois des composants réutilisables dans un environnement clusterisé avec les principes microservices, robustesse, observabilité et clean code.",
         "position": 2,
         "competencies": [
           {
@@ -211,6 +214,7 @@
         "id": "78855347",
         "name": "Ops",
         "description": "Je travaille avec les opérationnels en privilégiant le déploiement continu : livrer vite de la valeur concrète tout en réduisant les frictions entre métiers et production.",
+        "descriptionCdi": "Je pratique le déploiement continu au quotidien pour livrer rapidement de la valeur concrète, en réduisant les frictions entre développement et production.",
         "position": 3,
         "competencies": [
           {
@@ -2116,7 +2120,8 @@
     },
     "about": {
       "title": "Summary",
-      "text": "I am an agile fullstack consultant passionate about open source frontend and backend technologies. I like to develop software using cloud solutions, all in line with the Devops movement."
+      "text": "I am an agile fullstack consultant passionate about open source frontend and backend technologies. I like to develop software using cloud solutions, all in line with the Devops movement.",
+      "textCdi": "Agile fullstack engineer with 20 years of experience, I design robust cloud-native applications with a DevOps culture and craftsmanship mindset, using open source frontend and backend stacks."
     },
     "skillsTitle": {
       "title": "Skills"
@@ -2211,6 +2216,7 @@
         "id": "78726113",
         "name": "Agile",
         "description": "I know how to use my multiple experiences of agility in the service of a team in order to achieve a product close to the need with a software craftsmanship philosophy.",
+        "descriptionCdi": "Drawing on years of agile practice, I guide teams toward delivering the right product through software craftsmanship and continuous improvement.",
         "position": 1,
         "competencies": [
           {
@@ -2244,6 +2250,7 @@
         "id": "78726111",
         "name": "Dev",
         "description": "I like to develop reusable components in a clustered environment using concepts like microservices, robustness, observability, clean code.",
+        "descriptionCdi": "I design reusable components in clustered environments applying microservices, robustness, observability and clean code principles.",
         "position": 2,
         "competencies": [
           {
@@ -2307,6 +2314,7 @@
         "id": "78855347",
         "name": "Ops",
         "description": "I want to collaborate with operational teams by practicing continuous deployment and thus produce value for the company by reducing organizational friction.",
+        "descriptionCdi": "I practice continuous deployment daily to ship value fast, reducing friction between development and production teams.",
         "position": 3,
         "competencies": [
           {

@@ -16,6 +16,7 @@ export function jobOfferToMatchSearchParams(
     const kw = r.keywords.join(',');
     if (label && kw) sp.append('requirement', `${label}:${kw}`);
   }
+  if (offer.contract) sp.set('contract', offer.contract);
   const wa = offer.workAddress?.trim();
   if (wa) sp.set('workAddress', wa);
   const cl = offer.commuteLabel?.trim();

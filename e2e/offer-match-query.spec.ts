@@ -43,10 +43,15 @@ test.describe('Offer match (query params)', () => {
     );
   });
 
-  test('CV court : ?offer=<id> charge sans section #profile-match (adéquation en en-tête uniquement)', async ({
+  test('CV court : company + requirement charge sans section #profile-match (adéquation en en-tête uniquement)', async ({
     page,
   }) => {
-    await page.goto('/fr/short?offer=safran-ia-factory');
+    const q = new URLSearchParams({
+      company: 'TestCo',
+      title: 'Développeur Java',
+      requirement: 'Java:java,spring',
+    });
+    await page.goto(`/fr/short?${q.toString()}`);
     await expect(page.locator('#profile-match')).toHaveCount(0);
     await expect(page.locator('#domains')).toBeVisible();
   });

@@ -106,18 +106,15 @@ function DevMobilePreviewButton({ onNavigate }: { onNavigate?: () => void }) {
 /** Lien « Version complète » depuis `/[lang]/short` : reprend `fullHrefFromShortPath` + query. */
 function FullVersionFromShortLink({
   shortLang,
-  shortDefaultOfferId,
   onNavigate,
 }: {
   shortLang: string;
-  shortDefaultOfferId?: string | null;
   onNavigate?: () => void;
 }) {
   const searchParams = useSearchParams();
   const href = fullHrefFromShortPath(
     shortLang,
     new URLSearchParams(searchParams.toString()),
-    { defaultOfferId: shortDefaultOfferId ?? null },
   );
   return (
     <Link
@@ -191,18 +188,15 @@ function ToolbarIconList({
 
 function ModeControl({
   shortLang,
-  shortDefaultOfferId,
   onNavigate,
 }: {
   shortLang?: string;
-  shortDefaultOfferId?: string | null;
   onNavigate?: () => void;
 }) {
   if (shortLang) {
     return (
       <FullVersionFromShortLink
         shortLang={shortLang}
-        shortDefaultOfferId={shortDefaultOfferId}
         onNavigate={onNavigate}
       />
     );
@@ -297,11 +291,9 @@ function PrintPreviewToggleLink({
  */
 export default function HeaderToolbar({
   shortLang,
-  shortDefaultOfferId,
   hideMalt,
 }: {
   shortLang?: string;
-  shortDefaultOfferId?: string | null;
   hideMalt?: boolean;
 }) {
   const pathname = usePathname();
@@ -363,7 +355,6 @@ export default function HeaderToolbar({
           <Suspense fallback={null}>
             <ModeControl
               shortLang={shortLang}
-              shortDefaultOfferId={shortDefaultOfferId}
             />
           </Suspense>
           {/* Print preview + Mobile preview retirés : WYSIWYG. */}
@@ -428,7 +419,6 @@ export default function HeaderToolbar({
             <Suspense fallback={null}>
               <ModeControl
                 shortLang={shortLang}
-                shortDefaultOfferId={shortDefaultOfferId}
                 onNavigate={close}
               />
             </Suspense>

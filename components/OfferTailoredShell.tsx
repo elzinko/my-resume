@@ -15,6 +15,7 @@ import { buildContactLocationHref } from '@/lib/contact-maps';
 import type { ContactLocationOverlay } from '@/lib/offer-contact-from-params';
 import type { EducationLevelContent } from '@/lib/education-level-content';
 import ContactDisplay from '@/components/ContactDisplay';
+import type { ContractType } from '@/data/offers/types';
 import type { Locale } from 'i18n-config';
 /**
  * Mise en page commune des pages CV « sur mesure » (custom / match).
@@ -29,6 +30,7 @@ export default function OfferTailoredShell({
   frameworkDisplayPriorityTokens = [],
   contactLocation,
   hideMalt,
+  contract,
 }: {
   lang: Locale;
   educationLevel: EducationLevelContent;
@@ -44,14 +46,14 @@ export default function OfferTailoredShell({
   contactLocation?: ContactLocationOverlay;
   /** Masquer le lien Malt (ex. offre CDI). */
   hideMalt?: boolean;
+  /** Type de contrat : adapte les textes Profil et Domaines. */
+  contract?: ContractType;
 }) {
   const resolvedContact: ContactLocationOverlay =
     contactLocation ?? {
       mapsHref: buildContactLocationHref(),
       isDirections: false,
     };
-
-  const defaultOfferId = process.env.SHORT_CV_OFFER_ID?.trim() || null;
 
   return (
     <JobFrameworkDisplayProvider priorityTokens={frameworkDisplayPriorityTokens}>
@@ -70,15 +72,14 @@ export default function OfferTailoredShell({
           <div className="cv-full-cv-print-root">
             <div className="mb-2 max-md:contents print:order-[10] print-preview:order-[10]">
               {/* @ts-expect-error Server Component */}
-              <About locale={lang} educationLevel={educationLevel} />
+              <About locale={lang} educationLevel={educationLevel} contract={contract} />
               {/* @ts-expect-error Server Component */}
-              <Domains locale={lang} />
+              <Domains locale={lang} contract={contract} />
             </div>
             {/* Adéquation poste : niveau de formation + compétences techniques */}
             <Suspense fallback={null}>
               <JobFitSection
                 lang={lang}
-                defaultOfferId={defaultOfferId}
                 educationLevel={educationLevel}
                 variant="full"
               />

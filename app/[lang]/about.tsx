@@ -1,4 +1,6 @@
 import { getCvData } from '@/lib/cv-data';
+import { resolveAboutText } from '@/lib/cv-contract-text';
+import type { ContractType } from '@/data/offers/types';
 import type { EducationLevelContent } from '@/lib/education-level-content';
 import { Locale } from 'i18n-config';
 import React from 'react';
@@ -6,9 +8,11 @@ import React from 'react';
 export default async function About({
   locale,
   educationLevel,
+  contract,
 }: {
   locale: Locale;
   educationLevel: EducationLevelContent;
+  contract?: ContractType;
 }) {
   const data: any = await getCvData(locale);
 
@@ -23,7 +27,7 @@ export default async function About({
         </h2>
       </div>
       <p className="mt-4 text-cv-body-muted">
-        {data?.about?.text}
+        {resolveAboutText(data?.about, contract)}
       </p>
     </section>
   );

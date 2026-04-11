@@ -208,7 +208,7 @@ export default async function DevComponentsPage({
           <Suspense fallback={<p className="text-sm text-slate-400">Chargement Job Fit…</p>}>
             <JobFitSection
               lang={lang}
-              defaultOfferId={null}
+
               educationLevel={educationLevel}
               variant="full"
             />
@@ -225,7 +225,7 @@ export default async function DevComponentsPage({
             <Suspense fallback={<p className="text-sm text-slate-400">Chargement Job Fit…</p>}>
               <JobFitSection
                 lang={lang}
-                defaultOfferId={null}
+  
                 educationLevel={educationLevel}
                 variant="compact"
               />

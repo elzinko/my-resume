@@ -2,41 +2,30 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { fullHrefFromShortPath } from './cv-mode-nav';
 
-test('fullHrefFromShortPath uses defaultOfferId → /{lang}?…', () => {
-  const sp = new URLSearchParams();
-  const href = fullHrefFromShortPath('fr', sp, {
-    defaultOfferId: 'safran-java-fullstack',
-  });
-  assert.ok(href.startsWith('/fr?'));
-  assert.ok(href.includes('company=Safran'));
-});
-
-test('fullHrefFromShortPath explicit offer= beats defaultOfferId', () => {
-  const sp = new URLSearchParams({ offer: 'safran-ia-factory' });
-  const href = fullHrefFromShortPath('fr', sp, {
-    defaultOfferId: 'safran-java-fullstack',
-  });
-  assert.ok(href.startsWith('/fr?'));
-  assert.ok(href.includes('company=Safran'));
-  assert.ok(
-    href.includes('IA+Factory') ||
-      href.includes('IA%20Factory') ||
-      href.includes('D%C3%A9veloppeur'),
-  );
-});
-
-test('fullHrefFromShortPath match query ignores defaultOfferId', () => {
+test('fullHrefFromShortPath preserves company + requirement params', () => {
   const sp = new URLSearchParams({
     company: 'Acme',
     requirement: 'Java:java',
   });
-  const href = fullHrefFromShortPath('en', sp, {
-    defaultOfferId: 'safran-java-fullstack',
-  });
-  assert.ok(href.startsWith('/en?'));
+  const href = fullHrefFromShortPath('fr', sp);
+  assert.ok(href.startsWith('/fr?'));
+  assert.ok(href.includes('company=Acme'));
+  assert.ok(href.includes('requirement='));
 });
 
-test('fullHrefFromShortPath no fallback returns root with query', () => {
+test('fullHrefFromShortPath preserves spec param', () => {
+  const sp = new URLSearchParams({ spec: 'abc123' });
+  const href = fullHrefFromShortPath('en', sp);
+  assert.ok(href.startsWith('/en?'));
+  assert.ok(href.includes('spec=abc123'));
+});
+
+test('fullHrefFromShortPath no params returns root', () => {
+  const sp = new URLSearchParams();
+  assert.equal(fullHrefFromShortPath('fr', sp), '/fr');
+});
+
+test('fullHrefFromShortPath preserves arbitrary query', () => {
   const sp = new URLSearchParams({ foo: '1' });
   assert.equal(fullHrefFromShortPath('fr', sp), '/fr?foo=1');
 });

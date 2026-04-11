@@ -13,7 +13,8 @@ import formatDates from '@/lib/date';
 import ShortPageWrapper from '@/components/ShortPageWrapper';
 import FullCvPrintPreviewEffect from '@/components/FullCvPrintPreviewEffect';
 import ShortAutoprint from '@/components/ShortAutoprint';
-import { getOffer } from '@/data/offers';
+import { resolveAboutText, resolveDomainDescription } from '@/lib/cv-contract-text';
+import type { ContractType } from '@/data/offers/types';
 import type { Metadata } from 'next';
 
 import { generateDocumentTitle } from '@/lib/cv-document-title';
@@ -33,13 +34,16 @@ export async function generateMetadata({
 
 export default async function ShortPage({
   params: { lang },
+  searchParams,
 }: {
   params: { lang: Locale };
+  searchParams?: Record<string, string | string[] | undefined>;
 }) {
   const data: any = await getCvData(lang);
-  const defaultOfferId = process.env.SHORT_CV_OFFER_ID?.trim() || null;
-  const defaultOffer = defaultOfferId ? getOffer(defaultOfferId) : undefined;
-  const hideMalt = defaultOffer?.contract === 'cdi';
+  const contractParam = typeof searchParams?.contract === 'string' ? searchParams.contract : undefined;
+  const contract: ContractType | undefined =
+    contractParam === 'cdi' || contractParam === 'freelance' ? contractParam : undefined;
+  const hideMalt = contract === 'cdi';
 
   const compactData: CompactCvData = {
     header: {
@@ -61,12 +65,12 @@ export default async function ShortPage({
       locationTitle: data?.contact?.locationTitle || '',
       location: data?.contact?.location || '',
     },
-    about: data?.about?.text || '',
+    about: resolveAboutText(data?.about, contract),
     skills: data?.allSkillsModels || [],
     domains: (data?.allDomainsModels || []).map((d: any) => ({
       id: d.id,
       name: d.name,
-      description: d.description || '',
+      description: resolveDomainDescription(d, contract),
       competencies: d.competencies || [],
     })),
     jobs: (data?.allJobsModels || []).map((j: any) => {
@@ -114,7 +118,6 @@ export default async function ShortPage({
         lang={lang}
         headerName={data?.header?.name || ''}
         headerRole={data?.header?.role || ''}
-        defaultOfferId={defaultOfferId}
         hideMalt={hideMalt}
       >
       <Suspense fallback={null}>
@@ -123,7 +126,6 @@ export default async function ShortPage({
       <CompactCvLayout
         data={compactData}
         lang={lang as 'fr' | 'en'}
-        defaultOfferId={defaultOfferId}
       />
     </ShortPageWrapper>
     </>

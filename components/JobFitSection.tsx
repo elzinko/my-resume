@@ -10,7 +10,6 @@ import { useMemo } from 'react';
 
 interface JobFitSectionProps {
   lang: Locale;
-  defaultOfferId: string | null;
   educationLevel: EducationLevelContent;
   /** 'full' = liste verticale avec detail (CV complet), 'compact' = pastilles inline (CV court). */
   variant?: 'full' | 'compact';
@@ -35,11 +34,10 @@ const clientBadgeCls =
  */
 export default function JobFitSection({
   lang,
-  defaultOfferId,
   educationLevel,
   variant = 'full',
 }: JobFitSectionProps) {
-  const offerData = useShortOfferMatchData(lang, defaultOfferId);
+  const offerData = useShortOfferMatchData(lang);
 
   const defaults = useMemo(
     () => computeDefaultMatchData(lang),

@@ -10,8 +10,6 @@ interface ShortPageWrapperProps {
   lang: string;
   headerName: string;
   headerRole: string;
-  /** `SHORT_CV_OFFER_ID` — lien « Version complète » cohérent sans `?offer=`. */
-  defaultOfferId?: string | null;
   /** Masquer le lien Malt (ex. offre CDI). */
   hideMalt?: boolean;
 }
@@ -21,7 +19,6 @@ export default function ShortPageWrapper({
   lang,
   headerName,
   headerRole,
-  defaultOfferId = null,
   hideMalt,
 }: ShortPageWrapperProps) {
   return (
@@ -30,7 +27,6 @@ export default function ShortPageWrapper({
         <div className="print:hidden">
           <HeaderToolbar
             shortLang={lang}
-            shortDefaultOfferId={defaultOfferId}
             hideMalt={hideMalt}
           />
         </div>
