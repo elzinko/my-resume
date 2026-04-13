@@ -6,6 +6,56 @@ Layout unifié en une seule colonne linéaire. Le CV complet (`OfferTailoredShel
 
 **Nettoyage futur** : retirer entièrement `?print` / `FullCvPrintPreviewEffect` / les classes `print-preview:*` devenues quasi-inutiles.
 
+## Design system — CSS variables et tokens
+
+Remplacer les classes Tailwind `print:*` dispersées dans le JSX par des **CSS variables** dans `styles/globals.css`. Un seul jeu de tokens avec override `@media print` :
+
+```css
+:root {
+  --fs-h2: 1.5rem;
+  --fs-body: 0.875rem;
+  --sp-section: 2.5rem;
+}
+@media print {
+  :root {
+    --fs-h2: 1rem;
+    --fs-body: 0.75rem;
+    --sp-section: 1rem;
+  }
+}
+```
+
+Tokens envisagés :
+- **Typo** : `--fs-h1`, `--fs-h2`, `--fs-title`, `--fs-body`, `--fs-meta`, `--fs-pill`
+- **Espacements** : `--sp-section`
+- **Couleurs sémantiques** (Tailwind extend) : `cv.section`, `cv.tag-text`, `cv.tag-border`, `cv.jobs`, `cv.body-muted`
+- **Classes utilitaires** `.cv-*` : `.cv-section`, `.cv-section-title`, `.cv-pill`, `.cv-text-body`, `.cv-row-with-side-meta`, etc.
+
+Convention : plus de `print:text-xs` dans le JSX ; les exceptions screen/print passent par `data-print="off|on"`.
+
+## Data layer découplée
+
+Séparer le `bundle.json` monolithique en 3 fichiers :
+
+| Fichier | Contenu |
+|---|---|
+| `data/cv/cv.json` | Données neutres (dates, slugs, refs tech, structure jobs/studies/projects) |
+| `data/cv/tech-catalog.json` | Dictionnaire techno (nom canonique + lien) |
+| `data/cv/locales/{fr,en}.json` | Textes localisés + libellés UI |
+
+Avantages :
+- i18n propre : aucun texte en dur dans les composants
+- Les données structurelles (dates, tech) ne sont plus dupliquées entre locales
+- Le tech catalog devient une source unique pour le matching offres et l'affichage
+- Support DatoCMS possible via un script d'export GraphQL (`scripts/export-datocms.ts`)
+
+## Primitives React (optionnel)
+
+Composants réutilisables dans `components/primitives/` :
+- `<Section title accent="section|jobs|tag|education">` — titre + spacing
+- `<MetaRow left right />` — ligne titre / dates ou méta
+- `<DateRange start end present />` — affichage formaté des plages de dates
+
 ## Migration Next.js 14 → 15+ (ou 16)
 
 **Contexte** : Next.js 14.2.35 affiche "outdated" dans la console dev ([doc](https://nextjs.org/docs/messages/version-staleness)). La dernière version stable est 16.x.
