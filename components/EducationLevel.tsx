@@ -1,96 +1,82 @@
 'use client';
 
 import React from 'react';
+import Pill from '@/components/Pill';
+import {
+  buildEducationLevelRows,
+  type EducationLevelRow,
+} from '@/lib/education-level-rows';
 import type { EducationLevelContent } from '@/lib/education-level-content';
 
 interface EducationLevelProps {
   content: EducationLevelContent;
-  compact?: boolean;
+  /**
+   * Classes sur la `<section>` (marges selon le parent : CV court vs CV long).
+   * Défaut : marges haut + ordre d’impression comme sur le CV complet.
+   */
+  sectionClassName?: string;
+  /**
+   * Pastilles niveau / diplôme : `true` = taille compacte (CV court, colonne étroite), comme `Skill compact`.
+   */
+  pillsCompact?: boolean;
 }
 
-type PrimaryRole = 'heading' | 'primary';
-
-interface BlockRow {
-  id: string;
-  primaryRole: PrimaryRole;
-  primary: string;
-  secondary?: string;
-}
-
-function buildRows(t: EducationLevelContent): BlockRow[] {
-  return [
-    {
-      id: 'level',
-      primaryRole: 'heading',
-      primary: t.levelPrimary,
-      secondary: t.effectiveLevelDetail,
-    },
-    {
-      id: 'diploma',
-      primaryRole: 'primary',
-      primary: t.diploma,
-      secondary: t.diplomaDetail,
-    },
-    {
-      id: 'additional',
-      primaryRole: 'primary',
-      primary: t.additionalTraining,
-      secondary: t.trainingThemes,
-    },
-  ];
-}
-
-/** Même typo que la page complète : pas de variantes `-compact` sur le corps (mobile / CV court = desktop). */
 function EducationBlockRow({
   primaryRole,
   primary,
   secondary,
-  tightSpacing,
-}: BlockRow & { tightSpacing: boolean }) {
-  const primaryClass =
+  pillLevelLabel,
+  pillsCompact,
+}: EducationLevelRow & { pillsCompact: boolean }) {
+  const nonPillPrimaryClass =
     primaryRole === 'heading'
-      ? 'cv-education-heading'
-      : 'cv-education-primary';
+      ? 'cv-education-heading-compact'
+      : 'cv-education-primary-compact';
 
   return (
-    <div className={tightSpacing ? 'space-y-0.5' : 'space-y-1'}>
-      <p className={primaryClass}>{primary}</p>
+    <div className="space-y-0.5">
+      {pillLevelLabel ? (
+        <p className="m-0 leading-snug">
+          <Pill color="education" compact={pillsCompact}>
+            {primary}
+          </Pill>
+        </p>
+      ) : (
+        <p className={`m-0 ${nonPillPrimaryClass}`}>{primary}</p>
+      )}
       {secondary ? (
-        <p className={`cv-education-muted max-w-full`}>{secondary}</p>
+        <p className="cv-education-muted-narrow m-0 max-w-full">{secondary}</p>
       ) : null}
     </div>
   );
 }
 
+/**
+ * CV long : colonne gauche (écran), blocs empilés en une colonne (écran + PDF / aperçu `?print`).
+ * Pastille « niveau » à côté de Profil masquée en impression pour éviter le doublon.
+ */
+const DEFAULT_SECTION_CLASS =
+  'mt-10 max-md:mt-0 max-md:order-[1] md:order-[1] print:order-[50] print-preview:order-[50]';
+
 export default function EducationLevel({
   content,
-  compact = false,
+  sectionClassName = DEFAULT_SECTION_CLASS,
+  pillsCompact = false,
 }: EducationLevelProps) {
-  const rows = buildRows(content);
-
-  if (compact) {
-    return (
-      <section className="mb-6 mt-6 print:mb-4 print:mt-4">
-        <h2 className="border-b pb-1 text-2xl font-semibold text-purple-300 print:text-sm">
-          {content.title}
-        </h2>
-        <div className="mt-2 space-y-2 font-normal print:mt-1 print:space-y-1.5">
-          {rows.map((row) => (
-            <EducationBlockRow key={row.id} {...row} tightSpacing />
-          ))}
-        </div>
-      </section>
-    );
-  }
+  const rows = buildEducationLevelRows(content);
 
   return (
-    <section id="education-level" className="mt-10">
+    <section id="education-level" className={sectionClassName}>
       <h2 className="border-b pb-1 text-2xl font-semibold text-purple-300">
         {content.title}
       </h2>
-      <div className="mt-4 space-y-3 font-normal">
+      <div className="cv-education-level-blocks mt-4 grid grid-cols-1 gap-y-3 font-normal">
         {rows.map((row) => (
-          <EducationBlockRow key={row.id} {...row} tightSpacing={false} />
+          <EducationBlockRow
+            key={row.id}
+            {...row}
+            pillsCompact={pillsCompact}
+          />
         ))}
       </div>
     </section>

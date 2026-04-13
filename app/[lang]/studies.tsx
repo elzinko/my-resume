@@ -1,4 +1,4 @@
-import Study from '@/components/study';
+import Study from '@/components/Study';
 import { getCvData } from '@/lib/cv-data';
 import {
   byEndThenStart,
@@ -7,21 +7,31 @@ import {
 import { Locale } from 'i18n-config';
 import React from 'react';
 
-export default async function studies({ locale }: { locale: Locale }) {
+export default async function studies({
+  locale,
+  condensed = false,
+}: {
+  locale: Locale;
+  /** `true` : ligne unique titre/lieu/établissement. `false` : rendu classique. */
+  condensed?: boolean;
+}) {
   const data: any = await getCvData(locale);
   const studiesOrdered = sortChronologicalDesc(
     data?.allStudiesModels || [],
     byEndThenStart,
   );
   return (
-    <section id="studies" className="mt-10">
-      <h2 className="border-b pb-1 text-2xl font-semibold text-cv-section">
+    <section
+      id="studies"
+      className="cv-cq-section mt-10 print-preview:order-[95] print:order-[95]"
+    >
+      <h2 className="border-b pb-1 text-2xl font-semibold text-purple-300">
         {data?.studiesTitle?.title}
       </h2>
       <ul className="cv-section-simple-list">
         {studiesOrdered.map((study: any) => (
           <li key={study.id}>
-            <Study study={study} />
+            <Study study={study} condensed={condensed} />
           </li>
         ))}
       </ul>

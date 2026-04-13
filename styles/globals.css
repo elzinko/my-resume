@@ -2,25 +2,246 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /**
+   * Espacement entre la barre de titre (border-b) et le contenu de la section.
+   * Token unique utilisé par cv-section-simple-list, Jobs, etc. pour garantir
+   * un rythme homogène dans toutes les sections du CV.
+   */
+  --cv-section-body-gap: 1rem; /* = mt-4 */
+
+  /** Toolbar boutons / icônes — taille unique pour hamburger + icônes sociales + print. */
+  --cv-toolbar-btn: 2.5rem; /* 40px */
+  --cv-toolbar-icon: 1.5rem; /* 24px */
+}
+
 @layer components {
+  /**
+   * Rythme vertical « section majeure » : 2.5rem (`mt-10` / `gap-10`).
+   * Utiliser pour tout écart entre blocs de même importance (pile mobile, colonne #left, `#jobs`).
+   */
+  .cv-mobile-section-mt {
+    @apply mt-10;
+  }
+
+  /**
+   * Blocs pleine largeur sous le header (mobile) : `mt-20` sous coordonnées → Profil ;
+   * `gap-16` entre Profil et domaines pour garder un ratio proche (test e2e ≤ 1,55).
+   */
+  .cv-flow-mobile-stack {
+    @apply max-md:mt-20 max-md:flex max-md:flex-col max-md:gap-16;
+  }
+
+  /**
+   * Domaines (Agile / Dev / Ops) : 3 colonnes égales en md+ et à l’impression,
+   * même gabarit horizontal que `.cv-page-split` (1/3 + 1/3 + 1/3).
+   */
+  .cv-domains-grid {
+    @apply grid w-full grid-cols-1 grid-rows-none gap-2 md:grid-cols-3 md:items-stretch md:gap-x-10 md:gap-y-0;
+    @apply print:grid print:grid-cols-3 print:items-stretch print:gap-x-4 print:gap-y-0;
+  }
+
+  /**
+   * Colonne gauche (1/3) + missions (2/3) — utilisé par le CV court (CompactCvLayout).
+   * Le CV long utilise désormais un flux linéaire via `.cv-full-cv-print-root`.
+   */
+  .cv-page-split {
+    @apply grid grid-cols-1 grid-rows-none gap-y-10 max-md:mt-10 md:grid-cols-3 md:items-start md:gap-x-10 md:gap-y-0;
+    @apply print:grid print:grid-cols-3 print:items-start print:gap-x-4 print:gap-y-0;
+  }
+
+  /**
+   * CV long — layout unifié : une seule colonne linéaire, identique à l'impression.
+   * Remplace l'ancien layout 2 colonnes (sidebar + missions) sur desktop.
+   * `mt-10` desktop / `mt-20` mobile (clearance de la toolbar fixe).
+   */
+  .cv-full-cv-print-root {
+    @apply flex flex-col gap-6 max-md:mt-20 print:mt-0;
+  }
+
+  .cv-full-cv-print-root > section,
+  .cv-full-cv-print-root > .cv-print-jobs-group section {
+    margin-top: 0 !important;
+  }
+
+  /**
+   * CV long — Apprentissages : toujours en liste verticale avec descriptions,
+   * jamais en ligne avec `/` (override la container query ≥ 36rem).
+   */
+  .cv-full-cv-print-root [data-cv-section='learnings'] .cv-cq-link-list {
+    display: block !important;
+    list-style: none !important;
+    padding-left: 0 !important;
+    margin: 0 !important;
+    margin-top: var(--cv-section-body-gap) !important;
+  }
+
+  .cv-full-cv-print-root [data-cv-section='learnings'] .cv-cq-link-list > li {
+    display: block !important;
+    margin-top: 0.25rem !important;
+  }
+
+  .cv-full-cv-print-root
+    [data-cv-section='learnings']
+    .cv-cq-link-list
+    > li:first-child {
+    margin-top: 0 !important;
+  }
+
+  .cv-full-cv-print-root
+    [data-cv-section='learnings']
+    .cv-cq-link-list
+    > li
+    + li::before {
+    content: none !important;
+  }
+
+  .cv-full-cv-print-root [data-cv-section='learnings'] .cv-learning-desc {
+    display: inline !important;
+  }
+
   /**
    * Liste sous titre de section (Learnings, Hobbies, Projects, Studies, …).
    * Même écart vertical partout (space-y-1 = 0.25rem), mobile comme desktop.
    */
+  /**
+   * Espacement entre un titre `h2 border-b` et le contenu qui suit.
+   * Token CSS `--cv-section-body-gap` réutilisable partout.
+   */
+  .cv-section-body-gap {
+    margin-top: var(--cv-section-body-gap);
+  }
+
   .cv-section-simple-list {
-    @apply mt-4 space-y-1;
+    margin-top: var(--cv-section-body-gap);
+    @apply space-y-1;
   }
 
   /**
-   * Bloc « Niveau de formation » : EducationLevel utilise toujours heading / primary / muted ci-dessous
-   * (CV court inclus). Les classes `*-compact` restent disponibles pour d’autres écrans si besoin.
+   * Sections dont le rendu dépend de la largeur disponible (container queries) :
+   * projets (titre / description / date), études (méta lieu), veille et loisirs (liste vs slashs).
+   */
+  .cv-cq-section {
+    container-type: inline-size;
+  }
+
+  /**
+   * Projet : grille type « Studies » — étroit = titre + date puis description ;
+   * large (≥36rem dans le conteneur) = titre | description grise | date sur une ligne.
+   */
+  .cv-project-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'proj-title proj-date'
+      'proj-desc proj-desc';
+    align-items: baseline;
+    column-gap: 0.75rem;
+    row-gap: 0.25rem;
+    width: 100%;
+  }
+
+  .cv-project-row--no-desc {
+    grid-template-areas: 'proj-title proj-date';
+    row-gap: 0;
+  }
+
+  .cv-project-title-area {
+    grid-area: proj-title;
+    min-width: 0;
+  }
+
+  .cv-project-desc-area {
+    grid-area: proj-desc;
+    margin: 0;
+    min-width: 0;
+  }
+
+  .cv-project-date-area {
+    grid-area: proj-date;
+    justify-self: end;
+    text-align: right;
+  }
+
+  /**
+   * Conteneur large (≥ 36rem) : projets avec description conservent la grille
+   * 2 lignes (`titre + date` / `description`) pour s’aligner visuellement sur
+   * Studies default. Les projets sans description restent sur une seule ligne.
+   */
+  @container (min-width: 36rem) {
+    .cv-cq-section .cv-project-row--no-desc {
+      grid-template-columns: minmax(0, max-content) auto;
+      grid-template-areas: 'proj-title proj-date';
+      grid-template-rows: auto;
+      row-gap: 0;
+    }
+  }
+
+  /**
+   * Colonne étroite (< 36rem) : masquer lieu/établissement sous les études et descriptions
+   * des projets (même seuil que la grille projet « large »).
+   */
+  @container (max-width: 35.9375rem) {
+    .cv-cq-section .cv-study-meta {
+      display: none;
+    }
+
+    .cv-cq-section .cv-project-desc-area {
+      display: none;
+    }
+  }
+
+  /**
+   * Veille / loisirs : conteneur étroit (< 36rem) = liste verticale (`.cv-section-simple-list`) ;
+   * conteneur large (≥ 36rem) = une ligne avec séparateur ` / ` (espaces de part et d’autre).
+   */
+  /**
+   * Veille : conteneur large = ligne inline avec `/`.
+   * Loisirs : toujours en liste verticale (descriptions visibles en grand, masquées en étroit).
+   */
+  @container (min-width: 36rem) {
+    .cv-cq-section[data-cv-section='learnings'] .cv-cq-link-list {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      row-gap: 0.25rem;
+      column-gap: 0;
+    }
+
+    .cv-cq-section[data-cv-section='learnings'] .cv-cq-link-list > li {
+      display: inline;
+      margin-top: 0 !important;
+    }
+
+    .cv-cq-section[data-cv-section='learnings']
+      .cv-cq-link-list
+      > li
+      + li::before {
+      content: '/';
+      display: inline-block;
+      padding-inline: 0.35em;
+      color: rgb(20 184 166 / 0.8);
+    }
+  }
+
+  /* Loisirs / Apprentissages : descriptions visibles en conteneur large, masquées en étroit. */
+  .cv-cq-section[data-cv-section='hobbies'] .cv-hobby-desc,
+  .cv-cq-section[data-cv-section='learnings'] .cv-learning-desc {
+    display: none;
+  }
+
+  @container (min-width: 36rem) {
+    .cv-cq-section[data-cv-section='hobbies'] .cv-hobby-desc,
+    .cv-cq-section[data-cv-section='learnings'] .cv-learning-desc {
+      display: inline;
+    }
+  }
+
+  /**
+   * Bloc « Niveau de formation » : libellés via `Pill` (`cv-pill-education`) ; détails secondaires `cv-education-muted-narrow`.
    */
   .cv-education-muted {
     @apply text-sm leading-snug text-gray-400 print:text-xs;
-  }
-
-  .cv-education-muted-compact {
-    @apply text-xs leading-snug text-gray-400 print:text-[10px];
   }
 
   /** Colonne gauche : lignes « fortes » (Bac+5, diplôme, titre d’étude) — même corps partout. */
@@ -41,11 +262,16 @@
     @apply text-sm font-normal leading-snug text-purple-300 print:text-xs;
   }
 
+  .cv-education-muted-narrow {
+    @apply text-xs font-normal leading-snug text-gray-400;
+    @apply print:text-xs;
+  }
+
   /**
    * Études (StudyDisplay) — titres au même corps que le bloc Niveau de formation (primary).
    */
   .cv-study-title {
-    @apply text-base font-normal leading-snug text-cv-section print:text-sm;
+    @apply text-base font-normal leading-snug print:text-sm;
   }
 
   .cv-study-meta {
@@ -53,22 +279,42 @@
   }
 
   .cv-study-year {
-    @apply text-sm font-normal tabular-nums leading-snug text-cv-section print:text-xs;
+    @apply text-sm font-normal tabular-nums leading-snug print:text-xs;
   }
 
   .cv-study-title-compact {
-    @apply text-sm font-normal leading-snug text-cv-section print:text-xs;
+    @apply text-sm font-normal leading-snug print:text-xs;
   }
 
   .cv-study-year-compact {
-    @apply text-xs font-normal tabular-nums leading-snug text-gray-400 print:text-[10px];
+    @apply text-xs font-normal tabular-nums leading-snug print:text-[10px];
   }
 
   /**
-   * Corps de mission : même taille que .cv-education-muted (ex. « Backed by 20 years… »).
+   * Coordonnées (ContactDisplay showLabels=false) — mêmes corps que Études.
+   */
+  .cv-contact-value {
+    @apply text-base leading-snug print:text-sm;
+  }
+
+  .cv-contact-value-compact {
+    @apply text-sm leading-snug print:text-xs;
+  }
+
+  /**
+   * Résumé (About) + paragraphes des colonnes Agile / Dev / Ops : même taille à l’impression
+   * (évite `print:text-base` sur les domaines alors que le profil reste en `text-sm`).
+   */
+  .cv-about-domain-print-body {
+    @apply print:text-sm print:leading-snug;
+  }
+
+  /**
+   * Corps de mission : text-xs mobile, text-sm md+ ; justifié partout (mobile inclus) pour aligner avec le PDF.
+   * Même token `text-cv-body-muted` que le profil et les domaines (About, Domain — pas de justification).
    */
   .cv-job-description {
-    @apply text-left text-sm leading-snug text-cv-body-muted md:text-justify print:text-justify print:text-xs;
+    @apply text-justify text-xs leading-snug text-cv-body-muted md:text-sm print:text-xs;
   }
 
   /**
@@ -84,6 +330,50 @@
    */
   .cv-row-study-title-year {
     @apply flex items-baseline justify-between gap-2;
+  }
+
+  /** Item de liste simple (Coordonnées, etc.) — même base flex que cv-row-study-title-year, sans justify-between. */
+  .cv-row-simple-item {
+    @apply flex items-baseline gap-2;
+  }
+
+  /**
+   * Vignettes (pastilles) : fond léger + bordure — même langage que les pastilles domaine / match.
+   */
+  /* Fonds en palette Tailwind (opacité / hover) : les tokens `cv-*` + /opacity ne passent pas tous en @apply. */
+  .cv-pill-skill {
+    @apply rounded border border-blue-400/50 bg-blue-300/10 text-cv-tag-text transition-colors;
+    @apply hover:border-blue-300 hover:bg-blue-300/20;
+    @apply print:!text-cv-tag-text;
+  }
+
+  .cv-pill-jobs {
+    @apply rounded border border-pink-300/50 bg-pink-300/10 text-cv-jobs transition-colors;
+    @apply hover:border-pink-300 hover:bg-pink-300/20;
+    @apply print:!text-cv-jobs;
+  }
+
+  .cv-pill-domain {
+    @apply rounded border border-teal-300/50 bg-teal-300/10 text-cv-section transition-colors;
+    @apply hover:border-teal-300 hover:bg-teal-300/20;
+    @apply print:!text-cv-section;
+  }
+
+  /** Pastille « niveau » (Bac+5, Bac+3, équivalent EN) — pas le bloc entier. */
+  .cv-pill-education {
+    @apply rounded border border-purple-300/50 bg-purple-300/10 font-normal text-purple-300 transition-colors;
+    @apply print:!text-purple-300;
+  }
+
+  .cv-pill-match {
+    @apply rounded border border-orange-300/50 bg-orange-300/10 font-medium text-orange-300 transition-colors;
+    @apply hover:border-orange-300/70 hover:bg-orange-300/20;
+    @apply print:border-orange-300/60 print:!text-orange-300;
+  }
+
+  .cv-pill-match-borderless {
+    @apply rounded bg-orange-300/10 font-normal text-orange-300 transition-colors;
+    @apply print:bg-orange-300/10 print:!text-orange-300;
   }
 }
 
@@ -101,10 +391,241 @@ html {
     color-adjust: exact !important;
   }
 
-  /* Page setup */
+  /** Études : réafficher la ligne lieu/établissement (masquée en colonne étroite à l’écran). */
+  .cv-full-cv-print-root .cv-study-meta {
+    display: block !important;
+  }
+
+  /* Page setup — margin 1mm élimine les en-têtes/pieds de page du navigateur.
+     Les marges visuelles sont gérées par le padding du container (print:p-8). */
   @page {
     size: A4;
-    margin: 8mm;
+    margin: 1mm;
+  }
+
+  /* ================================================================
+   * === SHORT CV — ajustements print (A4 portrait ~794px) =========
+   * Une seule zone pour tout le comportement print du CV court.
+   * Modifier ici ET NULLE PART AILLEURS pour le rendu imprimé du short.
+   * ================================================================ */
+  @page short {
+    size: A4;
+    margin: 1mm;
+  }
+
+  .cv-short-page {
+    page: short;
+  }
+
+  .container:has(.cv-short-page) {
+    padding: 0.625rem !important;
+  }
+
+  /* Densification typographique pour tenir sur 1 page A4 */
+  .cv-short-page .cv-short-about p {
+    font-size: 0.5625rem !important;
+    line-height: 1.35 !important;
+  }
+
+  .cv-short-page .cv-job-description {
+    font-size: 0.625rem;
+    line-height: 1.35;
+  }
+
+  /* Grille domaines + colonnes : gaps resserrés */
+  .cv-short-page .cv-domains-grid {
+    column-gap: 0.75rem !important;
+  }
+
+  .cv-short-page #domains .cv-domains-grid > div {
+    margin-top: 0 !important;
+  }
+
+  .cv-short-page .cv-page-split {
+    column-gap: 0.75rem !important;
+  }
+
+  /* Niveau de formation short : compacter le bloc pour tenir en 1 page */
+  .cv-short-page #education-level .cv-education-level-blocks {
+    margin-top: 0.5rem !important;
+    gap: 0.5rem !important;
+  }
+
+  .cv-short-page #education-level h2 {
+    margin-bottom: 0 !important;
+  }
+
+  /* Pied de bloc expériences */
+  .cv-short-page .cv-experience-footer {
+    margin-top: 0.375rem !important;
+    padding-left: 0.5rem !important;
+  }
+
+  .cv-short-page .cv-experience-footer p {
+    font-size: 0.5625rem !important;
+    line-height: 1.35 !important;
+  }
+
+  /* Missions : autoriser la coupure au sein d'une mission si besoin */
+  .cv-short-page #main > section > ul > li {
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+
+  /* Études court : peut se couper entre les lignes */
+  .cv-short-page .cv-short-studies-section,
+  .cv-short-page .cv-short-studies-section ul {
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+
+  .cv-short-page .cv-short-studies-section li {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Profil + domaines : autoriser la fragmentation (sinon page blanche forcée) */
+  .cv-short-page section#cv-short-about,
+  .cv-short-page .cv-short-about h2,
+  .cv-short-page .cv-short-about p {
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+    break-after: auto !important;
+    page-break-after: auto !important;
+  }
+
+  /* Profil : marges internes compactées — WYSIWYG (mêmes valeurs qu'à l'écran) */
+  .cv-short-page .cv-short-about {
+    padding-bottom: 0 !important;
+  }
+
+  .cv-short-page section#domains {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    break-before: auto !important;
+    page-break-before: auto !important;
+    break-after: auto !important;
+    page-break-after: auto !important;
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+  }
+
+  /* Compétences : masquées à l'impression du short (les tags domaines suffisent) */
+  .cv-short-page .cv-short-skills-block {
+    display: none !important;
+  }
+
+  /* Projets court : titres et dates en bleu malgré `a { color: inherit }`. */
+  .cv-short-page [data-cv-section='projects'] a,
+  .cv-short-page [data-cv-section='projects'] .cv-study-title-compact,
+  .cv-short-page [data-cv-section='projects'] .cv-study-year-compact {
+    @apply !text-cv-tag-text;
+  }
+
+  /* ================================================================
+   * === FULL CV — ajustements print ===============================
+   * ================================================================ */
+  /**
+   * CV long / offre : projets comme à l’écran (grille titre / description / dates), liste empilée
+   * sans puces (comme `#studies` / `.cv-section-simple-list`), pas la ligne unique « a / b / c ».
+   */
+  .cv-full-cv-print-root [data-cv-section='projects'] .cv-project-screen {
+    display: grid !important;
+  }
+
+  .cv-full-cv-print-root [data-cv-section='projects'] .cv-project-print {
+    display: none !important;
+  }
+
+  .cv-full-cv-print-root [data-cv-section='projects'] .cv-cq-project-list {
+    display: block !important;
+    list-style: none !important;
+    padding-left: 0 !important;
+    margin: 0 !important;
+    margin-top: var(--cv-section-body-gap) !important;
+  }
+
+  .cv-full-cv-print-root [data-cv-section='projects'] .cv-cq-project-list > li {
+    display: block !important;
+    margin-top: 0.25rem !important;
+  }
+
+  .cv-full-cv-print-root
+    [data-cv-section='projects']
+    .cv-cq-project-list
+    > li:first-child {
+    margin-top: 0 !important;
+  }
+
+  .cv-full-cv-print-root
+    [data-cv-section='projects']
+    .cv-cq-project-list
+    > li
+    + li::before {
+    content: none !important;
+  }
+
+  .cv-full-cv-print-root [data-cv-section='projects'] .cv-project-desc-area {
+    display: block !important;
+  }
+
+  /** CV long / offre : veille et loisirs — empilement vertical sans puces (comme les études). */
+  .cv-full-cv-print-root [data-cv-section='learnings'] .cv-cq-link-list,
+  .cv-full-cv-print-root [data-cv-section='hobbies'] .cv-cq-link-list {
+    display: block !important;
+    list-style: none !important;
+    padding-left: 0 !important;
+    margin: 0 !important;
+    margin-top: var(--cv-section-body-gap) !important;
+  }
+
+  .cv-full-cv-print-root [data-cv-section='learnings'] .cv-cq-link-list > li,
+  .cv-full-cv-print-root [data-cv-section='hobbies'] .cv-cq-link-list > li {
+    display: block !important;
+    margin-top: 0.25rem !important;
+  }
+
+  .cv-full-cv-print-root
+    [data-cv-section='learnings']
+    .cv-cq-link-list
+    > li:first-child,
+  .cv-full-cv-print-root
+    [data-cv-section='hobbies']
+    .cv-cq-link-list
+    > li:first-child {
+    margin-top: 0 !important;
+  }
+
+  .cv-full-cv-print-root
+    [data-cv-section='learnings']
+    .cv-cq-link-list
+    > li
+    + li::before,
+  .cv-full-cv-print-root
+    [data-cv-section='hobbies']
+    .cv-cq-link-list
+    > li
+    + li::before {
+    content: none !important;
+  }
+
+  /** Loisirs / Apprentissages print : descriptions toujours visibles. */
+  .cv-full-cv-print-root [data-cv-section='hobbies'] .cv-hobby-desc,
+  .cv-full-cv-print-root [data-cv-section='learnings'] .cv-learning-desc {
+    display: inline !important;
+  }
+
+  .cv-full-cv-print-root #jobs,
+  .cv-full-cv-print-root #jobs > ul {
+    break-before: auto !important;
+    page-break-before: auto !important;
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+  }
+
+  /* Espacement avant la section Experience pour eviter un titre orphelin en bas de page. */
+  .cv-print-jobs-group {
+    padding-top: 1rem;
   }
 
   /* Hide non-printable elements */
@@ -112,22 +633,322 @@ html {
     display: none !important;
   }
 
-  /* Container adjustments */
+  /* Largeur pleine ; conserver le padding Tailwind du parent (`print:p-8`) pour coller à la vue web. */
   .container {
     max-width: 100% !important;
-    padding: 0 !important;
   }
 
   /* Prevent page breaks inside elements */
-  section,
   li {
     break-inside: avoid;
     page-break-inside: avoid;
   }
 
-  /* Links - show as normal text */
+  /**
+   * Colonne gauche (CV court + CV long) : autoriser la fragmentation entre pages,
+   * sinon le bas (Formation / études compactes) peut être tronqué en PDF.
+   */
+  #left {
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+
+  /**
+   * Domaines + grille missions : éviter un saut de page systématique après `#domains`
+   * (section entière en `break-inside: avoid` + grille suivante).
+   */
+  section#domains,
+  .cv-page-split {
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+
+  /* Links - show as normal text (except contact & detail links). */
   a {
     text-decoration: none !important;
     color: inherit !important;
   }
+
+  /* Coordonnées : forcer la couleur rose-300 en impression (WYSIWYG). */
+  .cv-header-contact-strip,
+  .cv-short-contact-rows {
+    color: #fda4af !important; /* rose-300 */
+  }
+  .cv-header-contact-strip a,
+  .cv-short-contact-rows a {
+    color: #fda4af !important; /* rose-300 */
+    text-decoration: none !important;
+  }
+
+  /* « Voir le CV complet en ligne » : conserver la couleur du lien. */
+  .cv-short-full-cv-hint a {
+    @apply !text-cv-jobs;
+    text-decoration: underline !important;
+    text-decoration-color: rgb(249 168 212 / 0.5) !important; /* pink-300/50 */
+    text-underline-offset: 3px !important;
+  }
+
+  /**
+   * Titres projets : conserver le bleu `text-cv-tag-text` malgré la règle
+   * `a { color: inherit !important }` ci-dessus (sinon noir à l’impression).
+   */
+  .cv-full-cv-print-root .cv-project-title-area a,
+  .cv-full-cv-print-root .cv-project-title-area span,
+  .cv-full-cv-print-root .cv-project-print a,
+  .cv-full-cv-print-root .cv-project-print span {
+    @apply !text-cv-tag-text;
+  }
+}
+
+/**
+ * Aperçu impression (écran) : `?print` sur le CV long.
+ * Le layout linéaire est désormais le défaut ; ces règles ajustent le formatage
+ * des sections (projets, veille, loisirs) pour l’aperçu `?print`.
+ */
+.cv-print-preview
+  .cv-full-cv-print-root
+  [data-cv-section='projects']
+  .cv-project-screen {
+  display: grid !important;
+}
+
+.cv-print-preview
+  .cv-full-cv-print-root
+  [data-cv-section='projects']
+  .cv-project-print {
+  display: none !important;
+}
+
+.cv-print-preview
+  .cv-full-cv-print-root
+  [data-cv-section='projects']
+  .cv-cq-project-list {
+  display: block !important;
+  list-style: none !important;
+  padding-left: 0 !important;
+  margin: 0 !important;
+  margin-top: var(--cv-section-body-gap) !important;
+}
+
+.cv-print-preview
+  .cv-full-cv-print-root
+  [data-cv-section='projects']
+  .cv-cq-project-list
+  > li {
+  display: block !important;
+  margin-top: 0.25rem !important;
+}
+
+.cv-print-preview
+  .cv-full-cv-print-root
+  [data-cv-section='projects']
+  .cv-cq-project-list
+  > li:first-child {
+  margin-top: 0 !important;
+}
+
+.cv-print-preview
+  .cv-full-cv-print-root
+  [data-cv-section='projects']
+  .cv-cq-project-list
+  > li
+  + li::before {
+  content: none !important;
+}
+
+.cv-print-preview
+  .cv-full-cv-print-root
+  [data-cv-section='projects']
+  .cv-project-desc-area {
+  display: block !important;
+}
+
+/** Aperçu `?print` : titres projets en bleu (comme à l'écran). */
+.cv-print-preview .cv-full-cv-print-root .cv-project-title-area a,
+.cv-print-preview .cv-full-cv-print-root .cv-project-title-area span,
+.cv-print-preview .cv-full-cv-print-root .cv-project-print a,
+.cv-print-preview .cv-full-cv-print-root .cv-project-print span {
+  color: rgb(147 197 253) !important; /* blue-300 = cv-tag-text */
+}
+
+/** CV court print-preview : projets en bleu. */
+.cv-print-preview .cv-short-page [data-cv-section='projects'] a,
+.cv-print-preview
+  .cv-short-page
+  [data-cv-section='projects']
+  .cv-study-title-compact,
+.cv-print-preview
+  .cv-short-page
+  [data-cv-section='projects']
+  .cv-study-year-compact {
+  color: rgb(147 197 253) !important; /* blue-300 = cv-tag-text */
+}
+
+.cv-print-preview
+  .cv-full-cv-print-root
+  [data-cv-section='learnings']
+  .cv-cq-link-list,
+.cv-print-preview
+  .cv-full-cv-print-root
+  [data-cv-section='hobbies']
+  .cv-cq-link-list {
+  display: block !important;
+  list-style: none !important;
+  padding-left: 0 !important;
+  margin: 0 !important;
+  margin-top: var(--cv-section-body-gap) !important;
+}
+
+.cv-print-preview
+  .cv-full-cv-print-root
+  [data-cv-section='learnings']
+  .cv-cq-link-list
+  > li,
+.cv-print-preview
+  .cv-full-cv-print-root
+  [data-cv-section='hobbies']
+  .cv-cq-link-list
+  > li {
+  display: block !important;
+  margin-top: 0.25rem !important;
+}
+
+.cv-print-preview
+  .cv-full-cv-print-root
+  [data-cv-section='learnings']
+  .cv-cq-link-list
+  > li:first-child,
+.cv-print-preview
+  .cv-full-cv-print-root
+  [data-cv-section='hobbies']
+  .cv-cq-link-list
+  > li:first-child {
+  margin-top: 0 !important;
+}
+
+.cv-print-preview
+  .cv-full-cv-print-root
+  [data-cv-section='learnings']
+  .cv-cq-link-list
+  > li
+  + li::before,
+.cv-print-preview
+  .cv-full-cv-print-root
+  [data-cv-section='hobbies']
+  .cv-cq-link-list
+  > li
+  + li::before {
+  content: none !important;
+}
+
+/** Loisirs / Apprentissages print-preview : descriptions toujours visibles. */
+.cv-print-preview
+  .cv-full-cv-print-root
+  [data-cv-section='hobbies']
+  .cv-hobby-desc,
+.cv-print-preview
+  .cv-full-cv-print-root
+  [data-cv-section='learnings']
+  .cv-learning-desc {
+  display: inline !important;
+}
+
+/*
+ * Short CV print-preview : header compact (même tailles que compactPrint en @media print).
+ * Nécessaire car les classes Tailwind `print:` ne s'appliquent pas en mode `cv-print-preview`.
+ */
+.cv-print-preview .cv-short-page .header-content {
+  padding-top: 2rem !important;
+  padding-bottom: 0.5rem !important;
+}
+
+.cv-print-preview .cv-short-page .header-content h1 {
+  font-size: 1.875rem !important; /* text-3xl */
+  line-height: 1.25 !important;
+}
+
+.cv-print-preview .cv-short-page .header-content p {
+  margin-top: 0.125rem !important;
+  font-size: 1rem !important; /* text-base */
+  line-height: 1.375 !important;
+}
+
+.cv-print-preview .cv-short-page #education-level .cv-education-level-blocks {
+  margin-top: 0.5rem !important;
+  gap: 0.5rem !important;
+}
+
+/**
+ * Pages offre — aperçu `?print` : veille en une ligne avec `/`.
+ * Loisirs : liste verticale avec descriptions (même rendu que le storybook).
+ */
+.cv-print-preview
+  .cv-offer-tailored-shell
+  .cv-full-cv-print-root
+  [data-cv-section='’learnings’']
+  .cv-cq-link-list {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: baseline !important;
+  row-gap: 0.25rem !important;
+  column-gap: 0 !important;
+  list-style: none !important;
+  padding-left: 0 !important;
+  margin: 0 !important;
+  margin-top: var(--cv-section-body-gap) !important;
+}
+
+.cv-print-preview
+  .cv-offer-tailored-shell
+  .cv-full-cv-print-root
+  [data-cv-section='’learnings’']
+  .cv-cq-link-list
+  > li {
+  display: inline !important;
+  margin-top: 0 !important;
+}
+
+.cv-print-preview
+  .cv-offer-tailored-shell
+  .cv-full-cv-print-root
+  [data-cv-section='’learnings’']
+  .cv-cq-link-list
+  > li:first-child {
+  margin-top: 0 !important;
+}
+
+.cv-print-preview
+  .cv-offer-tailored-shell
+  .cv-full-cv-print-root
+  [data-cv-section='’learnings’']
+  .cv-cq-link-list
+  > li
+  + li::before {
+  content: ‘/’ !important;
+  display: inline-block !important;
+  color: rgb(20 184 166 / 0.8) !important;
+  padding-inline: 0.35em !important;
+}
+
+/** Loisirs / Apprentissages offre print-preview : descriptions toujours visibles. */
+.cv-print-preview
+  .cv-offer-tailored-shell
+  .cv-full-cv-print-root
+  [data-cv-section='’hobbies’']
+  .cv-hobby-desc,
+.cv-print-preview
+  .cv-offer-tailored-shell
+  .cv-full-cv-print-root
+  [data-cv-section='’learnings’']
+  .cv-learning-desc {
+  display: inline !important;
+}
+
+.cv-print-preview .cv-full-cv-print-root #jobs {
+  break-before: auto !important;
+  page-break-before: auto !important;
+}
+
+.cv-print-preview .cv-print-jobs-group {
+  padding-top: 1rem;
 }

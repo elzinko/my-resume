@@ -2,7 +2,9 @@ import { test, expect } from '@playwright/test';
 
 test.use({ viewport: { width: 1100, height: 800 } });
 
-async function assertToolbarHeightsUniform(page: import('@playwright/test').Page) {
+async function assertToolbarHeightsUniform(
+  page: import('@playwright/test').Page,
+) {
   const bar = page.getByTestId('cv-header-toolbar');
   await expect(bar).toBeVisible();
   const controls = bar.locator('a, button');
@@ -19,7 +21,9 @@ async function assertToolbarHeightsUniform(page: import('@playwright/test').Page
   const max = Math.max(...heights);
   expect(
     max - min,
-    `Toolbar control heights should match (got px: ${heights.map((h) => h.toFixed(2)).join(', ')})`,
+    `Toolbar control heights should match (got px: ${heights
+      .map((h) => h.toFixed(2))
+      .join(', ')})`,
   ).toBeLessThanOrEqual(1);
   /* h-8 = 32px + bordure ~2px selon le moteur */
   expect(min).toBeGreaterThanOrEqual(30);

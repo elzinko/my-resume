@@ -3,7 +3,16 @@ import { Locale } from 'i18n-config';
 import React from 'react';
 import ContactDisplay from '@/components/ContactDisplay';
 
-export default async function Contact({ locale }: { locale: Locale }) {
+export default async function Contact({
+  locale,
+  sectionId = 'contact',
+  className = '',
+}: {
+  locale: Locale;
+  /** `false` : pas d’id (doublon mobile / sidebar). */
+  sectionId?: string | false;
+  className?: string;
+}) {
   const data: any = await getCvData(locale);
   const contactData = {
     title: data?.contact?.title,
@@ -15,12 +24,22 @@ export default async function Contact({ locale }: { locale: Locale }) {
     location: data?.contact?.location || '',
   };
 
+  const sectionClass = [
+    className || 'mt-10',
+    'print:order-[40] print-preview:order-[40]',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
   return (
-    <section id="contact" className="mt-10">
+    <section
+      id={sectionId === false ? undefined : sectionId}
+      className={sectionClass}
+    >
       <h2 className="border-b pb-1 text-2xl font-semibold text-cv-jobs">
         {contactData.title || 'Contact'}
       </h2>
-      <ContactDisplay contact={contactData} />
+      <ContactDisplay contact={contactData} locale={locale} />
     </section>
   );
 }
