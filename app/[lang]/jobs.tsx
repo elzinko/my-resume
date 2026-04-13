@@ -11,8 +11,11 @@ import React from 'react';
 export default async function jobs({ locale }: { locale: Locale }) {
   const data: any = await getCvData(locale);
   const jobsList = data?.allJobsModels || [];
+  const visibleJobs = jobsList.filter(
+    (j: { display?: boolean }) => j.display !== false,
+  );
   const closing = getExperienceClosingLabels(locale);
-  const recapLine = formatRemainingClientsRecapForFullCv(jobsList, locale);
+  const recapLine = formatRemainingClientsRecapForFullCv(visibleJobs, locale);
 
   return (
     <div className="cv-print-jobs-group print-preview:order-[90] print:order-[90]">
@@ -24,13 +27,13 @@ export default async function jobs({ locale }: { locale: Locale }) {
           {data?.jobsTitle?.title}
         </h2>
         <ul className="cv-section-body-gap space-y-4 print:space-y-4">
-          {jobsList.map((job: any, index: number) => (
+          {visibleJobs.map((job: any, index: number) => (
             <li key={job.client + index}>
               <Job job={job} locale={locale} />
             </li>
           ))}
         </ul>
-        {jobsList.length > 0 ? (
+        {visibleJobs.length > 0 ? (
           <ExperienceClosingBlock
             moreExperience={closing.moreExperience}
             moreExperienceTail={closing.moreExperienceTail}

@@ -89,22 +89,24 @@ export default async function ShortPage({
       description: resolveDomainDescription(d, contract),
       competencies: d.competencies || [],
     })),
-    jobs: (data?.allJobsModels || []).map((j: any) => {
-      const dates = formatDates(j.startDate, j.endDate);
-      const [start, end] = dates ? dates.split(' - ') : ['', ''];
-      return {
-        client: j.client,
-        clientUrl: j.clientUrl,
-        role: j.role?.name || '',
-        location: j.location,
-        startDate: start || '',
-        endDate: end || undefined,
-        description: j.description,
-        descriptionShort: j.descriptionShort,
-        bullets: j.bullets,
-        frameworks: j.frameworks || [],
-      };
-    }),
+    jobs: (data?.allJobsModels || [])
+      .filter((j: { display?: boolean }) => j.display !== false)
+      .map((j: any) => {
+        const dates = formatDates(j.startDate, j.endDate);
+        const [start, end] = dates ? dates.split(' - ') : ['', ''];
+        return {
+          client: j.client,
+          clientUrl: j.clientUrl,
+          role: j.role?.name || '',
+          location: j.location,
+          startDate: start || '',
+          endDate: end || undefined,
+          description: j.description,
+          descriptionShort: j.descriptionShort,
+          bullets: j.bullets,
+          frameworks: j.frameworks || [],
+        };
+      }),
     studies: sortChronologicalDesc(
       (data?.allStudiesModels || []).map((s: any) => ({
         ...s,
