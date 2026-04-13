@@ -409,6 +409,11 @@
             "id": "82456128",
             "name": "Kubernetes",
             "link": ""
+          },
+          {
+            "id": "90601531",
+            "name": "Java",
+            "link": ""
           }
         ],
         "role": {
@@ -442,6 +447,11 @@
           {
             "id": "82455959",
             "name": "Kotlin",
+            "link": ""
+          },
+          {
+            "id": "90601531",
+            "name": "Java",
             "link": ""
           },
           {
@@ -1679,6 +1689,11 @@
             "id": "82627945",
             "name": "pair programming",
             "link": ""
+          },
+          {
+            "id": "91050008",
+            "name": "JSF",
+            "link": ""
           }
         ],
         "role": {
@@ -2636,6 +2651,11 @@
             "id": "82456128",
             "name": "Kubernetes",
             "link": ""
+          },
+          {
+            "id": "90601531",
+            "name": "Java",
+            "link": ""
           }
         ],
         "role": {
@@ -2669,6 +2689,11 @@
           {
             "id": "82455959",
             "name": "Kotlin",
+            "link": ""
+          },
+          {
+            "id": "90601531",
+            "name": "Java",
             "link": ""
           },
           {
@@ -3905,6 +3930,11 @@
           {
             "id": "82627945",
             "name": "pair programming",
+            "link": ""
+          },
+          {
+            "id": "91050008",
+            "name": "JSF",
             "link": ""
           }
         ],

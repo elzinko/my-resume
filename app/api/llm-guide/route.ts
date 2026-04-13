@@ -69,6 +69,19 @@ Chaque valeur suit le pattern \`Label:keyword1,keyword2\` :
 
 Les mots-cles texte fonctionnent aussi (matching insensible a la ponctuation).
 
+### Calcul automatique des annees d'experience
+
+Pour chaque requirement, le systeme cherche les missions dont les frameworks,
+role, description ou puces contiennent un des keywords (matching insensible
+a la casse et a la ponctuation : "vuejs" matche "Vue.js").
+
+Les annees affichees = somme des durees des missions matchees (deduplication
+par client). Pour maximiser la precision, inclure tous les mots-cles
+pertinents (ex : pour Frontend, inclure react,angular,vuejs,ionic,gwt,jsf,
+javascript,typescript plutot que juste react).
+
+Si le calcul auto ne convient pas, utiliser \`reqY\` pour forcer une valeur.
+
 ### Type de contrat
 
 - \`contract=cdi\` : textes profil et domaines adaptes pour un poste permanent, lien Malt masque.
