@@ -24,10 +24,8 @@ import {
   isLocalDevHostname,
 } from '@/lib/cv-header-toolbar';
 import {
-  isFullCvRootPathname,
   localeFromCvPrintPreviewPathname,
   localeFromPathIfRoot,
-  shortAutoprintPath,
 } from '@/lib/cv-print-routes';
 import { isCvPrintPreviewQuery } from '@/lib/cv-print-preview';
 import {
@@ -301,18 +299,11 @@ export default function HeaderToolbar({
   const toggle = useCallback(() => setOpen((v) => !v), []);
 
   const { printTitle, printAriaLabel } = useMemo(() => {
-    const fullRoot = isFullCvRootPathname(pathname);
     const loc = localeFromPathIfRoot(pathname);
-    if (fullRoot && loc === 'en') {
+    if (loc === 'en') {
       return {
-        printTitle: 'Export short resume (PDF)',
-        printAriaLabel: 'Export short resume as PDF',
-      };
-    }
-    if (fullRoot && loc === 'fr') {
-      return {
-        printTitle: 'Exporter le CV court (PDF)',
-        printAriaLabel: 'Exporter le CV court en PDF',
+        printTitle: 'Print / Export as PDF',
+        printAriaLabel: 'Print or export as PDF',
       };
     }
     return {
@@ -322,13 +313,8 @@ export default function HeaderToolbar({
   }, [pathname]);
 
   const runPrint = useCallback(() => {
-    const lang = localeFromPathIfRoot(pathname);
-    if (lang) {
-      window.open(shortAutoprintPath(lang), '_blank', 'noopener,noreferrer');
-      return;
-    }
     window.print();
-  }, [pathname]);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
