@@ -134,7 +134,9 @@ export default async function DevComponentsPage({
 
   // Variante « short » des missions : même filtre/limite que CompactCvLayout
   // (`SHORT_CV_EXCLUDED_CLIENTS`, `SHORT_CV_MAX_JOBS`) + bloc de clôture.
-  const allJobs: any[] = data?.allJobsModels || [];
+  const allJobs: any[] = (data?.allJobsModels || []).filter(
+    (j: { display?: boolean }) => j.display !== false,
+  );
   const closing = getExperienceClosingLabels(lang);
   const moreClientsLine = formatRemainingClientsForShortCv(allJobs, lang);
   const recentJobs = allJobs
