@@ -324,7 +324,8 @@ export default function HeaderToolbar({
   const runPrint = useCallback(() => {
     const lang = localeFromPathIfRoot(pathname);
     if (lang) {
-      window.open(shortAutoprintPath(lang), '_blank', 'noopener,noreferrer');
+      const w = window.open(shortAutoprintPath(lang), '_blank');
+      if (w) w.focus();
       return;
     }
     window.print();

@@ -13,11 +13,30 @@ export default function ShortAutoprint() {
   useEffect(() => {
     if (searchParams.get('autoprint') !== '1') return;
 
-    const t = window.setTimeout(() => {
-      window.print();
-    }, 400);
+    let cancelled = false;
+    let printed = false;
 
-    return () => window.clearTimeout(t);
+    const doPrint = () => {
+      if (cancelled || printed) return;
+      printed = true;
+      window.print();
+    };
+
+    // Wait for fonts, then wait for a paint cycle
+    document.fonts.ready.then(() => {
+      if (cancelled) return;
+      requestAnimationFrame(() => {
+        requestAnimationFrame(doPrint);
+      });
+    });
+
+    // Safety net in case fonts.ready is slow
+    const fallback = window.setTimeout(doPrint, 2000);
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(fallback);
+    };
   }, [searchParams]);
 
   return null;
