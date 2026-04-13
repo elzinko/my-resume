@@ -29,11 +29,25 @@ jobs:
           node-version: '20'
           cache: npm
 
-      - name: Verify lock file is in sync
+      - name: Sync lock file
+        run: npm install --package-lock-only
+
+      - name: Auto-fix lock file (main only)
+        if: github.ref == 'refs/heads/main'
         run: |
-          npm install --package-lock-only
+          if ! git diff --quiet package-lock.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add package-lock.json
+            git commit -m "chore: auto-sync package-lock.json"
+            git push
+          fi
+
+      - name: Verify lock file is in sync (PRs only)
+        if: github.event_name == 'pull_request'
+        run: |
           git diff --exit-code package-lock.json || \
-            (echo "::error::package-lock.json is out of sync with package.json. Run 'npm install' and commit the lock file." && exit 1)
+            (echo "::error::package-lock.json is out of sync. Run 'npm install' and commit the lock file." && exit 1)
 
       - name: Install dependencies
         run: npm ci
