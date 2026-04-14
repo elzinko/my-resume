@@ -32,7 +32,7 @@
   "dependencies": {
     "@formatjs/intl-localematcher": "0.2.32",
     "@vercel/analytics": "0.1.11",
-    "eslint": "8.28.0",
+    "eslint": "10.2.0",
     "intl-dateformat": "0.1.4",
     "negotiator": "0.6.3",
     "next": "14.2.35",
