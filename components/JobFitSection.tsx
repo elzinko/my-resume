@@ -5,7 +5,10 @@ import {
   type MatchYearsLang,
 } from '@/lib/format-match-years';
 import { useShortOfferMatchData } from '@/lib/use-short-offer-match-data';
-import { computeDefaultMatchData } from '@/lib/short-offer-match';
+import {
+  computeDefaultMatchData,
+  SHORT_PROFILE_MATCH_MAX,
+} from '@/lib/short-offer-match';
 import type { EducationLevelContent } from '@/lib/education-level-content';
 import type { MatchDisplayData } from '@/lib/match-display-types';
 import type { Locale } from 'i18n-config';
@@ -35,7 +38,10 @@ export default function JobFitSection({
   const defaults = useMemo(() => computeDefaultMatchData(lang), [lang]);
 
   const data: MatchDisplayData = offerData ?? defaults;
-  const entries = data.entries;
+  const entries =
+    variant === 'compact'
+      ? data.entries.slice(0, SHORT_PROFILE_MATCH_MAX)
+      : data.entries;
   const l = lang as MatchYearsLang;
 
   const sectionTitle = lang === 'en' ? 'Job fit' : 'Adequation poste';
@@ -55,19 +61,26 @@ export default function JobFitSection({
 
           {/* Tech pills */}
           {entries.map((entry, index) => {
+            const clientCount = entry.matchedClients.length;
             const showYears =
-              entry.matchedClients.length > 0 ||
-              entry.yearsFromOverride === true;
+              clientCount > 0 || entry.yearsFromOverride === true;
             const yearsLabel = showYears
               ? formatMatchYears(entry.totalYears, l)
               : '\u2014';
+            const clientsLabel =
+              clientCount > 0
+                ? `${clientCount} ${clientCount === 1 ? 'client' : 'clients'}`
+                : undefined;
+            const metric = clientsLabel
+              ? `${yearsLabel} · ${clientsLabel}`
+              : yearsLabel;
 
             return (
               <Pill
                 key={`${index}-${entry.label}`}
                 color="match"
                 compact
-                metric={yearsLabel}
+                metric={metric}
               >
                 {entry.label}
               </Pill>

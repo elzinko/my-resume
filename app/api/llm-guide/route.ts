@@ -50,6 +50,9 @@ GET /{lang}?company=<nom>&requirement=<Label:kw1,kw2>[&...]
 | \`title\` | non | Intitule du poste (FR et EN si seul titre fourni) |
 | \`title_fr\` | non | Titre affiche cote francais |
 | \`title_en\` | non | Titre affiche cote anglais |
+| \`subtitle\` | non | Sous-titre / role affiche sous le nom (FR et EN si seul subtitle fourni) |
+| \`subtitle_fr\` | non | Sous-titre affiche cote francais (ex. "Chef de Projet Java Full Stack") |
+| \`subtitle_en\` | non | Sous-titre affiche cote anglais (ex. "Java Full Stack Project Manager") |
 | \`requirement\` | **oui** (1+) | Repetable. Format : \`Label:keyword1,keyword2\` |
 | \`req\` | alias | Alias court pour \`requirement\` |
 | \`reqY\` | non | Annees d'experience affichees pour le i-eme requirement (remplace le calcul auto) |
@@ -87,11 +90,32 @@ Si le calcul auto ne convient pas, utiliser \`reqY\` pour forcer une valeur.
 - \`contract=cdi\` : textes profil et domaines adaptes pour un poste permanent, lien Malt masque.
 - \`contract=freelance\` : textes freelance (comportement par defaut).
 
+### Ordre des requirements
+
+**L'ordre des parametres \`requirement\` dans l'URL determine l'ordre d'affichage
+dans la section "Adequation poste".** Le LLM doit ordonner les requirements
+par pertinence vis-a-vis de l'offre : placer les competences les plus
+importantes ou les plus demandees en premier. En mode short (CV court),
+seules les **${SHORT_PROFILE_MATCH_MAX} premieres** sont affichees.
+
+Conseil : placer en premier les competences coeur de l'offre (ex. Java pour
+un poste Java), puis les competences secondaires (SQL, Docker, etc.).
+
+### Sous-titre du CV
+
+Par defaut, le sous-titre affiche "Developpeur fullstack Senior" (FR) /
+"Senior Fullstack Developer" (EN). Pour l'adapter a l'offre, utiliser
+\`subtitle_fr\` et/ou \`subtitle_en\` (ou \`subtitle\` pour les deux langues).
+
+Exemple : \`subtitle_fr=Chef+de+Projet+Java+Full+Stack&subtitle_en=Java+Full+Stack+Project+Manager\`
+
 ## Vignettes adequation poste
 
 - 1 vignette education (toujours affichee) : "Bac+5" (FR) / "Master's-level" (EN).
 - Max **${SHORT_PROFILE_MATCH_MAX}** vignettes technologiques en mode short.
 - Pas de limite en mode full (CV complet).
+- En mode short, chaque vignette indique le nombre de clients (missions).
+- En mode full, la liste detaillee des clients est affichee sous chaque vignette.
 
 ## Catalogue de technologies disponibles
 
@@ -127,7 +151,7 @@ Exemple :
 ### CV adapte poste CDI Java/Cloud
 
 \`\`\`
-/fr?company=Entreprise&title=Developpeur+Java+Senior&requirement=Java:java,spring&requirement=Cloud:aws,docker&contract=cdi
+/fr?company=Entreprise&title=Developpeur+Java+Senior&subtitle_fr=Developpeur+Java+Senior&requirement=Java:java,spring&requirement=Cloud:aws,docker&contract=cdi
 \`\`\`
 
 ### CV adapte mission freelance React

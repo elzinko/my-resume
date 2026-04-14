@@ -53,6 +53,17 @@ export default async function ShortPage({
       : undefined;
   const hideMalt = contract === 'cdi';
 
+  const sp = new URLSearchParams(
+    Object.entries(searchParams ?? {}).flatMap(([k, v]) =>
+      Array.isArray(v) ? v.map((val) => [k, val]) : v != null ? [[k, v]] : [],
+    ),
+  );
+  const subtitleOverride =
+    (lang === 'fr'
+      ? sp.get('subtitle_fr') || sp.get('subtitle')
+      : sp.get('subtitle_en') || sp.get('subtitle')
+    )?.trim() || undefined;
+
   // Missions mises en avant par le LLM (param `job`, répétable)
   const jobParam = searchParams?.job;
   const highlightedJobSlugs: string[] | undefined = jobParam
@@ -64,7 +75,7 @@ export default async function ShortPage({
   const compactData: CompactCvData = {
     header: {
       name: data?.header?.name || '',
-      role: data?.header?.role || '',
+      role: subtitleOverride || data?.header?.role || '',
     },
     titles: {
       about: data?.about?.title || '',
@@ -136,7 +147,7 @@ export default async function ShortPage({
       <ShortPageWrapper
         lang={lang}
         headerName={data?.header?.name || ''}
-        headerRole={data?.header?.role || ''}
+        headerRole={subtitleOverride || data?.header?.role || ''}
         hideMalt={hideMalt}
       >
         <Suspense fallback={null}>

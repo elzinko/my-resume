@@ -5,6 +5,7 @@ import {
   type MatchYearsLang,
 } from '@/lib/format-match-years';
 import { useShortOfferMatchData } from '@/lib/use-short-offer-match-data';
+import { SHORT_PROFILE_MATCH_MAX } from '@/lib/short-offer-match';
 import Pill from '@/components/Pill';
 import type { Locale } from 'i18n-config';
 
@@ -20,7 +21,7 @@ export default function ShortHeaderJobFitPills({
   lang,
 }: ShortHeaderJobFitPillsProps) {
   const data = useShortOfferMatchData(lang);
-  const entries = data?.entries ?? [];
+  const entries = (data?.entries ?? []).slice(0, SHORT_PROFILE_MATCH_MAX);
   const l = lang as MatchYearsLang;
   if (entries.length === 0) return null;
 

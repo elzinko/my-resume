@@ -82,5 +82,5 @@ export function computeShortUrlMatchData(
 
   const entries = buildMatchEntries(offer.requirements, jobs);
 
-  return { entries: entries.slice(0, SHORT_PROFILE_MATCH_MAX) };
+  return { entries };
 }
