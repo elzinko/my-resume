@@ -8,6 +8,7 @@ export default async function Header({
   locale,
   offerPrintContactStrip,
   hideMalt,
+  subtitleOverride,
 }: {
   locale: Locale;
   /** Pages offre : bandeau coordonnées sous le rôle uniquement en aperçu `?print`. */
@@ -17,6 +18,8 @@ export default async function Header({
     location: string;
   };
   hideMalt?: boolean;
+  /** Surcharge du sous-titre (rôle) via paramètre URL. */
+  subtitleOverride?: string;
 }) {
   const data: any = await getCvData(locale);
 
@@ -26,7 +29,10 @@ export default async function Header({
         <HeaderToolbar hideMalt={hideMalt} />
       </div>
 
-      <HeaderContent name={data?.header?.name} role={data?.header?.role} />
+      <HeaderContent
+        name={data?.header?.name}
+        role={subtitleOverride || data?.header?.role}
+      />
     </header>
   );
 }

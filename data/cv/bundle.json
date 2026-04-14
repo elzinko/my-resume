@@ -109,6 +109,16 @@
         "id": "skill_hexa_tc2026",
         "name": "Architecture hexagonale",
         "link": "https://alistair.cockburn.us/hexagonal-architecture/"
+      },
+      {
+        "id": "skill_nodejs_tc2026",
+        "name": "Node.js",
+        "link": "https://nodejs.org/"
+      },
+      {
+        "id": "skill_nestjs_tc2026",
+        "name": "NestJS",
+        "link": "https://nestjs.com/"
       }
     ],
     "allDomainsModels": [
@@ -300,6 +310,16 @@
             "id": "82518980",
             "name": "Matière Web",
             "link": "https://matiere-web.com/"
+          },
+          {
+            "id": "skill_nodejs_tc2026",
+            "name": "Node.js",
+            "link": "https://nodejs.org/"
+          },
+          {
+            "id": "skill_nestjs_tc2026",
+            "name": "NestJS",
+            "link": "https://nestjs.com/"
           }
         ],
         "role": {
@@ -364,6 +384,16 @@
             "id": "82593991",
             "name": "postgreSQL",
             "link": ""
+          },
+          {
+            "id": "skill_nodejs_tc2026",
+            "name": "Node.js",
+            "link": "https://nodejs.org/"
+          },
+          {
+            "id": "skill_nestjs_tc2026",
+            "name": "NestJS",
+            "link": "https://nestjs.com/"
           }
         ],
         "role": {
@@ -605,7 +635,7 @@
         "descriptionShort": "Gestion de la qualité des livrables et amélioration continue dans le cadre de la méthodologie SAFe."
       },
       {
-        "client": "leboncoin",
+        "client": "Leboncoin",
         "clientUrl": "https://www.leboncoin.fr",
         "location": "Paris",
         "startDate": "2021-08-01",
@@ -2351,6 +2381,16 @@
         "id": "skill_hexa_tc2026",
         "name": "Hexagonal architecture",
         "link": "https://alistair.cockburn.us/hexagonal-architecture/"
+      },
+      {
+        "id": "skill_nodejs_tc2026",
+        "name": "Node.js",
+        "link": "https://nodejs.org/"
+      },
+      {
+        "id": "skill_nestjs_tc2026",
+        "name": "NestJS",
+        "link": "https://nestjs.com/"
       }
     ],
     "allDomainsModels": [
@@ -2542,6 +2582,16 @@
             "id": "82518980",
             "name": "Matière Web",
             "link": "https://matiere-web.com/"
+          },
+          {
+            "id": "skill_nodejs_tc2026",
+            "name": "Node.js",
+            "link": "https://nodejs.org/"
+          },
+          {
+            "id": "skill_nestjs_tc2026",
+            "name": "NestJS",
+            "link": "https://nestjs.com/"
           }
         ],
         "role": {
@@ -2606,6 +2656,16 @@
             "id": "82593991",
             "name": "postgreSQL",
             "link": ""
+          },
+          {
+            "id": "skill_nodejs_tc2026",
+            "name": "Node.js",
+            "link": "https://nodejs.org/"
+          },
+          {
+            "id": "skill_nestjs_tc2026",
+            "name": "NestJS",
+            "link": "https://nestjs.com/"
           }
         ],
         "role": {
@@ -2847,7 +2907,7 @@
         "descriptionShort": "Management of the quality of deliverables and continuous improvement within the framework of the SAFe methodology."
       },
       {
-        "client": "leboncoin",
+        "client": "Leboncoin",
         "clientUrl": "https://www.leboncoin.fr",
         "location": "Paris",
         "startDate": "2021-08-01",

@@ -31,6 +31,7 @@ export default function OfferTailoredShell({
   contactLocation,
   hideMalt,
   contract,
+  subtitleOverride,
 }: {
   lang: Locale;
   educationLevel: EducationLevelContent;
@@ -48,6 +49,8 @@ export default function OfferTailoredShell({
   hideMalt?: boolean;
   /** Type de contrat : adapte les textes Profil et Domaines. */
   contract?: ContractType;
+  /** Surcharge du sous-titre (rôle) dans l'en-tête. */
+  subtitleOverride?: string;
 }) {
   const resolvedContact: ContactLocationOverlay = contactLocation ?? {
     mapsHref: buildContactLocationHref(),
@@ -68,6 +71,7 @@ export default function OfferTailoredShell({
             locale={lang}
             offerPrintContactStrip={headerContactStrip}
             hideMalt={hideMalt}
+            subtitleOverride={subtitleOverride}
           />
 
           <div className="cv-full-cv-print-root">

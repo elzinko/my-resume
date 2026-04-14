@@ -61,6 +61,11 @@ export default async function Page({
     offer,
     sp,
   );
+  const subtitleOverride =
+    (lang === 'fr'
+      ? sp.get('subtitle_fr') || sp.get('subtitle')
+      : sp.get('subtitle_en') || sp.get('subtitle')
+    )?.trim() || undefined;
   const contact = data.contact as
     | { email?: string; phone?: string; location?: string }
     | undefined;
@@ -78,6 +83,7 @@ export default async function Page({
       contactLocation={contactLocation}
       hideMalt={contract === 'cdi'}
       contract={contract}
+      subtitleOverride={subtitleOverride}
     />
   );
 }
