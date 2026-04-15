@@ -31,7 +31,9 @@ export default async function skills({
       </h2>
       <div className="mt-4 flex flex-wrap gap-2">
         {data?.allSkillsModels?.map((skill: any) => (
-          <Pill key={skill.id} color="skill" href={skill.link}>{skill.name}</Pill>
+          <Pill key={skill.id} color="skill" href={skill.link}>
+            {skill.name}
+          </Pill>
         ))}
       </div>
     </section>

@@ -164,7 +164,7 @@ export default function CompactCvLayout({
       {children}
 
       {/* Mobile-only : Adéquation poste + Coordonnées, hors grille, avant Expérience. */}
-      <div className="mt-6 space-y-6 md:hidden print:hidden">
+      <div className="mt-6 space-y-6 print:hidden md:hidden">
         <Suspense fallback={null}>
           <JobFitSection
             lang={lang}
@@ -193,10 +193,10 @@ export default function CompactCvLayout({
       <div className="cv-page-split mt-8">
         <div
           id="left"
-          className="order-last flex w-full min-w-0 flex-col md:order-first md:col-span-1 print:order-first print:col-span-1"
+          className="order-last flex w-full min-w-0 flex-col print:order-first print:col-span-1 md:order-first md:col-span-1"
         >
           {/* Adéquation poste : masqué en mobile (dupliqué hors grille). */}
-          <div className="hidden md:block print:block">
+          <div className="hidden print:block md:block">
             <Suspense fallback={null}>
               <JobFitSection
                 lang={lang}
@@ -209,7 +209,7 @@ export default function CompactCvLayout({
           {/* Coordonnées (label : valeur) dans la colonne gauche — masqué en mobile (dupliqué hors grille). */}
           <section
             id="cv-short-contact"
-            className="mb-6 hidden md:block print:block"
+            className="mb-6 hidden print:block md:block"
           >
             <div className="border-b pb-1">
               <h2 className="min-w-0 text-2xl font-semibold text-rose-300">
@@ -233,7 +233,9 @@ export default function CompactCvLayout({
             </h2>
             <div className="mt-2 flex flex-wrap gap-1.5">
               {data.skills.slice(0, 10).map((skill) => (
-                <Pill key={skill.id} color="skill" compact href={skill.link}>{skill.name}</Pill>
+                <Pill key={skill.id} color="skill" compact href={skill.link}>
+                  {skill.name}
+                </Pill>
               ))}
             </div>
           </section>
@@ -272,7 +274,7 @@ export default function CompactCvLayout({
 
         <div
           id="main"
-          className="w-full min-w-0 md:col-span-2 print:col-span-2"
+          className="w-full min-w-0 print:col-span-2 md:col-span-2"
         >
           {/* Experience - Reusing JobDisplay component */}
           <section>

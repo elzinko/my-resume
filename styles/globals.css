@@ -56,7 +56,7 @@
    * `mt-10` desktop / `mt-20` mobile (clearance de la toolbar fixe).
    */
   .cv-full-cv-print-root {
-    @apply flex flex-col gap-6 max-md:mt-20 print:mt-0;
+    @apply flex flex-col gap-6 print:mt-0 max-md:mt-20;
   }
 
   .cv-full-cv-print-root > section,
@@ -314,7 +314,7 @@
    * Même token `text-cv-body-muted` que le profil et les domaines (About, Domain — pas de justification).
    */
   .cv-job-description {
-    @apply text-justify text-xs leading-snug text-cv-body-muted md:text-sm print:text-xs;
+    @apply text-justify text-xs leading-snug text-cv-body-muted print:text-xs md:text-sm;
   }
 
   /**

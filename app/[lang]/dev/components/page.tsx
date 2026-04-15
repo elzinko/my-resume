@@ -375,7 +375,7 @@ export default async function DevComponentsPage({
             key={s.id}
             id={`story-${s.id}`}
             data-story={s.id}
-            className="rounded-lg border border-white/15 bg-white p-6 text-slate-900 shadow-sm"
+            className="border-white/15 rounded-lg border bg-white p-6 text-slate-900 shadow-sm"
           >
             <h2 className="mb-4 text-xs uppercase tracking-wider text-slate-500">
               {s.title}

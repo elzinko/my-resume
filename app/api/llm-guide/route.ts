@@ -22,7 +22,9 @@ export async function GET() {
   const jobRows = jobCatalog
     .map(
       (j) =>
-        `| ${j.slug} | ${j.client} | ${j.role} | ${j.startDate} → ${j.endDate ?? 'present'} | ${j.frameworks.join(', ')} |`,
+        `| ${j.slug} | ${j.client} | ${j.role} | ${j.startDate} → ${
+          j.endDate ?? 'present'
+        } | ${j.frameworks.join(', ')} |`,
     )
     .join('\n');
 

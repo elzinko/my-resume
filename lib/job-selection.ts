@@ -64,9 +64,7 @@ export function buildJobSections<T extends { client: string }>(
   const highlightedSet = new Set(highlightedSlugs.map(normalizeJobSlug));
 
   // Exclure les clients blacklistés
-  const jobs = allJobs.filter(
-    (j) => !SHORT_CV_EXCLUDED_CLIENTS.has(j.client),
-  );
+  const jobs = allJobs.filter((j) => !SHORT_CV_EXCLUDED_CLIENTS.has(j.client));
 
   const sections: JobSection<T>[] = [];
   let currentStubGroup: T[] = [];
