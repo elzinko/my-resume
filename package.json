@@ -54,7 +54,7 @@
     "encoding": "^0.1.13",
     "eslint-config-next": "14.2.35",
     "ngrok": "^4.3.3",
-    "postcss": "^8.4.20",
+    "postcss": "^8.5.9",
     "prettier": "^2.8.1",
     "prettier-plugin-tailwindcss": "^0.2.1",
     "storybook": "10.3.5",
