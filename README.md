@@ -46,8 +46,7 @@ Encodage CLI : `npm run encode-offer-spec -- path/to/offer.json`
 | Spec OpenAPI (API profile)  | [`data/api/openapi.yaml`](data/api/openapi.yaml) — `GET /api/openapi.yaml`                                                                     |
 | API profile (JSON)          | `GET /api/profile?lang=fr\|en&include=profile,jobs,…` — voir spec OpenAPI ci-dessus                                                            |
 | Types offre (interfaces TS) | [`data/offers/types.ts`](data/offers/types.ts)                                                                                                 |
-| Guide LLM (statique)        | [`.llm/README.md`](.llm/README.md)                                                                                                             |
-| Guide LLM (dynamique)       | `GET /api/llm-guide`                                                                                                                           |
+| Guide LLM                   | `GET /api/llm-guide`                                                                                                                           |
 | Storybook maison (dev)      | `http://localhost:3000/{lang}/dev/components`                                                                                                  |
 | Storybook (Chromatic)       | `http://localhost:6006` (`npm run storybook`)                                                                                                  |
 | Rendus PDF / screenshots    | [`renders/`](renders/) -- [`renders/index.html`](renders/index.html)                                                                           |
