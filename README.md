@@ -2,7 +2,7 @@
 
 ![checkly](https://api.checklyhq.com/v1/badges/checks/b0fd8907-eae6-4c3f-8c79-f52d0da2667a?style=flat&theme=light)
 
-CV personnel en [Next.js](https://nextjs.org/) et [Tailwind CSS](https://tailwindcss.com/docs/). Les contenus multilingues vivent dans un **fichier unique** [`data/cv/bundle.json`](data/cv/bundle.json) (clés `fr` et `en`). Le catalogue pour le matching (ids + tokens texte) est **dérivé du même fichier** au chargement côté serveur (`lib/match-catalog-from-bundle.ts`), sans artefact JSON séparé.
+CV personnel en [Next.js](https://nextjs.org/) et [Tailwind CSS](https://tailwindcss.com/docs/). Les contenus vivent dans 4 fichiers sous [`data/cv/`](data/cv/) : `profile.json` (identité/contact), `tech-catalog.json` (dictionnaire techno), `experience.json` (missions/études/projets par ids) et `locales/{fr,en}.json` (textes localisés). L'app les compose au runtime via [`lib/cv-compose.ts`](lib/cv-compose.ts). Le catalogue de matching (ids + tokens texte) est **dérivé** des mêmes fichiers côté serveur (`lib/match-catalog-from-bundle.ts`), sans artefact JSON séparé.
 
 ## Démarrage
 
@@ -41,7 +41,9 @@ Encodage CLI : `npm run encode-offer-spec -- path/to/offer.json`
 
 | Ressource                   | Chemin / URL                                                         |
 | --------------------------- | -------------------------------------------------------------------- |
-| Données CV (FR + EN)        | [`data/cv/bundle.json`](data/cv/bundle.json)                         |
+| Données CV (structure)      | [`data/cv/profile.json`](data/cv/profile.json), [`tech-catalog.json`](data/cv/tech-catalog.json), [`experience.json`](data/cv/experience.json) |
+| Textes localisés (FR/EN)    | [`data/cv/locales/fr.json`](data/cv/locales/fr.json), [`data/cv/locales/en.json`](data/cv/locales/en.json) |
+| Spec OpenAPI (API profile)  | [`data/api/openapi.yaml`](data/api/openapi.yaml) — `GET /api/openapi.yaml`                                 |
 | Types offre (interfaces TS) | [`data/offers/types.ts`](data/offers/types.ts)                       |
 | Guide LLM (statique)        | [`.llm/README.md`](.llm/README.md)                                   |
 | Guide LLM (dynamique)       | `GET /api/llm-guide`                                                 |

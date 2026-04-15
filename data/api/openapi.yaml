@@ -1,0 +1,386 @@
+openapi: 3.1.0
+info:
+  title: my-resume — Profile API
+  version: 1.0.0
+  description: |
+    API publique en lecture seule qui expose les données du profil
+    (identité, contact, expériences, études, projets, compétences)
+    utilisées pour générer le CV de Thomas Couderc.
+
+    Source : `data/cv/*.json` (découpé en `profile.json`, `experience.json`,
+    `tech-catalog.json`, `locales/{fr,en}.json` — voir `ROADMAP.md`).
+
+    Les données retournées sont les mêmes que celles affichées publiquement
+    sur le CV HTML (`/{lang}` et `/{lang}/short`). Pas d'authentification.
+  contact:
+    name: Thomas Couderc
+    url: https://www.elzinko.fr
+servers:
+  - url: https://www.elzinko.fr
+    description: Production
+  - url: http://localhost:3000
+    description: Développement local
+
+paths:
+  /api/profile:
+    get:
+      summary: Récupère le profil complet (ou un sous-ensemble)
+      description: |
+        Retourne les données localisées du profil. Par défaut, toutes
+        les sections sont renvoyées **sauf** `techCatalog` (opt-in).
+        Utiliser `include` pour restreindre ou activer `techCatalog`.
+      operationId: getProfile
+      parameters:
+        - $ref: '#/components/parameters/Lang'
+        - $ref: '#/components/parameters/Include'
+      responses:
+        '200':
+          description: Profil composé pour la locale demandée.
+          headers:
+            Cache-Control:
+              description: Cache CDN 1h, SWR
+              schema: { type: string }
+              example: 's-maxage=3600, stale-while-revalidate'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+        '400':
+          description: Paramètres invalides (lang non supportée, section inconnue dans `include`).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  parameters:
+    Lang:
+      name: lang
+      in: query
+      required: false
+      description: Locale demandée. Défaut `fr`.
+      schema:
+        $ref: '#/components/schemas/Locale'
+    Include:
+      name: include
+      in: query
+      required: false
+      description: |
+        Liste séparée par virgules des sections à inclure. Si omis,
+        toutes les sections sont retournées sauf `techCatalog`.
+        Exemple : `include=profile,jobs,techCatalog`.
+      schema:
+        type: string
+        example: 'profile,jobs,techCatalog'
+
+  schemas:
+    Locale:
+      type: string
+      enum: [fr, en]
+      default: fr
+
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: string
+          description: Message d'erreur lisible.
+        code:
+          type: string
+          description: Code d'erreur stable (ex. `invalid_lang`, `unknown_section`).
+
+    TechRef:
+      type: object
+      description: Référence à une technologie (framework, langage, outil).
+      required: [id, name]
+      properties:
+        id:
+          type: string
+          description: Identifiant stable (legacy DatoCMS ou `skill_*_tc2026`).
+        name:
+          type: string
+        link:
+          type: string
+          description: URL vers la documentation officielle. Chaîne vide si absent.
+
+    Bullet:
+      type: object
+      required: [id, text]
+      properties:
+        id:
+          type: string
+        text:
+          type: string
+        link:
+          type: string
+          description: URL optionnelle liée à la puce.
+
+    Role:
+      type: object
+      required: [id, name]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          description: Libellé localisé du poste occupé.
+
+    Contact:
+      type: object
+      required: [phone, email, location]
+      properties:
+        phone:
+          type: string
+          example: '+33661412725'
+        email:
+          type: string
+          format: email
+        location:
+          type: string
+          example: 'Thomery (77)'
+
+    Github:
+      type: object
+      required: [url]
+      properties:
+        url:
+          type: string
+          format: uri
+
+    EducationLevel:
+      type: object
+      required:
+        - title
+        - levelPrimary
+        - effectiveLevelDetail
+        - diploma
+        - diplomaDetail
+        - additionalTraining
+        - trainingThemes
+      properties:
+        title: { type: string }
+        levelPrimary: { type: string, example: 'Bac+5' }
+        effectiveLevelDetail: { type: string }
+        diploma: { type: string }
+        diplomaDetail: { type: string }
+        additionalTraining: { type: string }
+        trainingThemes: { type: string }
+
+    Profile:
+      type: object
+      description: Identité et coordonnées.
+      required: [name, role, contact, github, educationLevel]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          example: 'Thomas Couderc'
+        role:
+          type: string
+          description: Sous-titre par défaut (subtitle override côté CV HTML possible via URL).
+          example: 'Développeur fullstack Senior'
+        contact:
+          $ref: '#/components/schemas/Contact'
+        github:
+          $ref: '#/components/schemas/Github'
+        educationLevel:
+          $ref: '#/components/schemas/EducationLevel'
+
+    About:
+      type: object
+      required: [title, text, textCdi]
+      properties:
+        title: { type: string }
+        text:
+          type: string
+          description: Texte profil par défaut (freelance).
+        textCdi:
+          type: string
+          description: Texte profil variante CDI.
+
+    Domain:
+      type: object
+      required: [id, name, description, descriptionCdi, position, competencies]
+      properties:
+        id: { type: string }
+        name: { type: string, example: 'Agile' }
+        description: { type: string, description: 'Texte freelance.' }
+        descriptionCdi: { type: string, description: 'Texte CDI.' }
+        position:
+          type: integer
+          description: Ordre d'affichage (1 = premier).
+        competencies:
+          type: array
+          items: { $ref: '#/components/schemas/TechRef' }
+
+    Job:
+      type: object
+      required: [client, location, startDate, bullets, frameworks, role]
+      properties:
+        client:
+          type: string
+          example: 'BlaBlaCar'
+        clientUrl:
+          type: string
+          format: uri
+          description: Site du client, optionnel.
+        location:
+          type: string
+          example: 'Paris'
+        startDate:
+          type: string
+          format: date
+          example: '2023-10-01'
+        endDate:
+          type: [string, 'null']
+          format: date
+          description: Null ou absent si mission en cours.
+          example: '2023-12-31'
+        description:
+          type: string
+          description: Paragraphe long, souvent vide (bullets prennent le relai).
+        descriptionShort:
+          type: string
+          description: Résumé court utilisé en mode compact.
+        bullets:
+          type: array
+          items: { $ref: '#/components/schemas/Bullet' }
+        frameworks:
+          type: array
+          items: { $ref: '#/components/schemas/TechRef' }
+        role:
+          $ref: '#/components/schemas/Role'
+
+    Study:
+      type: object
+      required: [id, name, startDate, endDate, establishment, location]
+      properties:
+        id: { type: string }
+        name:
+          type: string
+          description: Intitulé du diplôme localisé.
+        startDate: { type: string, format: date }
+        endDate: { type: string, format: date }
+        establishment: { type: string }
+        location: { type: string }
+
+    Tag:
+      type: object
+      required: [id, name]
+      properties:
+        id: { type: string }
+        name: { type: string }
+
+    Project:
+      type: object
+      required: [id, name, title, startDate, frameworks, bullets, tags]
+      properties:
+        id: { type: string }
+        name:
+          type: string
+          description: Slug ou nom technique du projet.
+        title:
+          type: string
+          description: Titre localisé affiché.
+        link:
+          type: string
+          format: uri
+        startDate: { type: string, format: date }
+        endDate:
+          type: [string, 'null']
+          format: date
+        description: { type: string }
+        frameworks:
+          type: array
+          items: { $ref: '#/components/schemas/TechRef' }
+        bullets:
+          type: array
+          items: { $ref: '#/components/schemas/Bullet' }
+        tags:
+          type: array
+          items: { $ref: '#/components/schemas/Tag' }
+
+    Hobby:
+      type: object
+      required: [id, name, description]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        description: { type: string }
+        link:
+          type: string
+          format: uri
+
+    Learning:
+      type: object
+      required: [id, name, description]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        description: { type: string }
+        link:
+          type: string
+          format: uri
+
+    Skill:
+      allOf:
+        - $ref: '#/components/schemas/TechRef'
+      description: Compétence top-level (apparaît dans la section Skills du CV).
+
+    TechCatalog:
+      type: object
+      description: |
+        Catalogue canonique des technologies (source unique de vérité
+        pour l'affichage et le matching d'offres). Renvoyé uniquement
+        si demandé via `include=techCatalog`.
+      required: [skills, domains]
+      properties:
+        skills:
+          type: array
+          items: { $ref: '#/components/schemas/TechRef' }
+        domains:
+          type: array
+          items: { $ref: '#/components/schemas/Domain' }
+
+    ProfileResponse:
+      type: object
+      description: |
+        Réponse composée. Les sections absentes dans `include` ne sont
+        tout simplement pas présentes dans la réponse (clé omise, pas
+        null). `schemaVersion` et `lang` sont toujours présents.
+      required: [schemaVersion, lang]
+      properties:
+        schemaVersion:
+          type: integer
+          const: 1
+        lang:
+          $ref: '#/components/schemas/Locale'
+        profile:
+          $ref: '#/components/schemas/Profile'
+        about:
+          $ref: '#/components/schemas/About'
+        domains:
+          type: array
+          items: { $ref: '#/components/schemas/Domain' }
+        jobs:
+          type: array
+          items: { $ref: '#/components/schemas/Job' }
+        studies:
+          type: array
+          items: { $ref: '#/components/schemas/Study' }
+        projects:
+          type: array
+          items: { $ref: '#/components/schemas/Project' }
+        hobbies:
+          type: array
+          items: { $ref: '#/components/schemas/Hobby' }
+        learnings:
+          type: array
+          items: { $ref: '#/components/schemas/Learning' }
+        skills:
+          type: array
+          items: { $ref: '#/components/schemas/Skill' }
+        techCatalog:
+          $ref: '#/components/schemas/TechCatalog'

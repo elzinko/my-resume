@@ -1,0 +1,475 @@
+{
+  "schemaVersion": 1,
+  "header": {
+    "role": "Senior Fullstack Developer"
+  },
+  "contact": {
+    "title": "Contact",
+    "phoneTitle": "Phone",
+    "emailTitle": "E-mail",
+    "locationTitle": "Location"
+  },
+  "about": {
+    "title": "Summary",
+    "text": "I am an agile fullstack consultant passionate about open source frontend and backend technologies. I like to develop software using cloud solutions, all in line with the Devops movement.",
+    "textCdi": "Agile fullstack engineer with 20 years of experience, I design robust cloud-native applications with a DevOps culture and craftsmanship mindset, using open source frontend and backend stacks."
+  },
+  "ui": {
+    "skillsTitle": "Skills",
+    "studiesTitle": "Studies",
+    "jobsTitle": "Professional Experience",
+    "projectsTitle": "Projects",
+    "hobbiesTitle": "Hobbies",
+    "learningsTitle": "Learnings"
+  },
+  "educationLevel": {
+    "title": "Education Level",
+    "levelPrimary": "Master's-level",
+    "effectiveLevelDetail": "Backed by 20 years of professional experience",
+    "diploma": "Bachelor's degree",
+    "diplomaDetail": "Professional Bachelor in Computer Science and Software Systems",
+    "additionalTraining": "Continuing education",
+    "trainingThemes": "Microelectronics / Signal processing / ML / LLM"
+  },
+  "head": {
+    "url": "https://elzinko.github.io/my-resume/en",
+    "name": "Thomas Couderc's resume",
+    "locale": "en_EN",
+    "seo": {
+      "description": "This is my new professional resume",
+      "title": "Thomas Couderc's resume"
+    }
+  },
+  "domains": {
+    "78726111": {
+      "description": "I like to develop reusable components in a clustered environment using concepts like microservices, robustness, observability, clean code.",
+      "descriptionCdi": "I design reusable components in clustered environments applying microservices, robustness, observability and clean code principles."
+    },
+    "78726113": {
+      "description": "I know how to use my multiple experiences of agility in the service of a team in order to achieve a product close to the need with a software craftsmanship philosophy.",
+      "descriptionCdi": "Drawing on years of agile practice, I guide teams toward delivering the right product through software craftsmanship and continuous improvement."
+    },
+    "78855347": {
+      "description": "I want to collaborate with operational teams by practicing continuous deployment and thus produce value for the company by reducing organizational friction.",
+      "descriptionCdi": "I practice continuous deployment daily to ship value fast, reducing friction between development and production teams."
+    }
+  },
+  "jobs": {
+    "solopreneur": {
+      "location": "@home · home office",
+      "roleName": "Solopreneur · side projects",
+      "description": "",
+      "descriptionShort": "Building and shipping B2B and B2C digital products end to end—from ideation through production launch and operations.",
+      "bullets": [
+        {
+          "id": "job_solopreneur_en_b_multi",
+          "text": "multi.app — control softwares with midi, osc, webhooks by motion"
+        },
+        {
+          "id": "job_solopreneur_en_b_city",
+          "text": "City Guided — connected city guide."
+        },
+        {
+          "id": "job_solopreneur_en_b_next",
+          "text": "Up next: Shopify assistant, Livestreamz, Jober, Cop1, Realizator, Okascore, …"
+        }
+      ]
+    },
+    "jpb-systeme": {
+      "location": "Montereau-sur-le-Jard",
+      "roleName": "IOT Developer",
+      "description": "",
+      "descriptionShort": "Full-stack development on Keyvibe, Keyprod's industrial IoT hardware product",
+      "bullets": [
+        {
+          "id": "QeB_4D_qSWG3eyqORpSlwg",
+          "text": "Keyvibe – Developed key features for industrial IoT solution"
+        },
+        {
+          "id": "S_W7XYfdT_mV465iJcDBNw",
+          "text": "Designed and implemented a multi-threshold production detection system on Raspberry Pi 3 & 4, leveraging Python and Node.js to monitor machine operational states in real time."
+        },
+        {
+          "id": "Tr8-S5GJQ4ONK3Wv4APtGQ",
+          "text": "Fully integrated Ethernet connectivity, configuring DHCPD and enabling MQTT communication to AWS IoT Core & AWS Lambda, ensuring reliable, low-latency, and scalable data transfer."
+        }
+      ]
+    },
+    "blablacar": {
+      "location": "Paris",
+      "roleName": "Full Stack Consultant",
+      "description": "",
+      "descriptionShort": "Add new cash refund application module for operated buses",
+      "bullets": [
+        {
+          "id": "aKlNRDflTuSmZzhnJ8V68A",
+          "text": "Create a new Spring boot Java service"
+        },
+        {
+          "id": "KdtB8WRWSf-Uw912qsZcOw",
+          "text": "Add a new Zendesk refund application tab using React"
+        }
+      ]
+    },
+    "smartch": {
+      "location": "Paris",
+      "roleName": "Backend Consultant",
+      "description": "",
+      "descriptionShort": "Kotlin backend for a SaaS e-learning startup: Ktor, GraphQL, fast-paced remote Scrum.",
+      "bullets": [
+        {
+          "id": "197839470",
+          "text": "GraphQL API, Ktor, Exposed (PostgreSQL)"
+        },
+        {
+          "id": "197839491",
+          "text": "Hexagonal architecture and advanced patterns"
+        },
+        {
+          "id": "197839487",
+          "text": "Fully remote Scrum, CI/CD (Jira / Confluence)"
+        }
+      ]
+    },
+    "sncf-reseaux-dgex-solutions": {
+      "location": "Saint-Denis",
+      "roleName": "System architect",
+      "description": "",
+      "descriptionShort": "Management of the quality of deliverables and continuous improvement within the framework of the SAFe methodology.",
+      "bullets": [
+        {
+          "id": "82089442",
+          "text": "SAFe"
+        },
+        {
+          "id": "82089443",
+          "text": "Opensource"
+        },
+        {
+          "id": "82089444",
+          "text": "Railway"
+        },
+        {
+          "id": "82089448",
+          "text": "Management of the transverse technical backlog"
+        }
+      ]
+    },
+    "leboncoin": {
+      "location": "Paris",
+      "roleName": "Backend Consultant",
+      "description": "",
+      "descriptionShort": "Participation in the full redesign of the payment system and in the design of a wallet project",
+      "bullets": [
+        {
+          "id": "90815146",
+          "text": "hexagonal architecture with monorepo"
+        },
+        {
+          "id": "90815147",
+          "text": "event driven architecture"
+        },
+        {
+          "id": "90815148",
+          "text": "production monitoring"
+        }
+      ]
+    },
+    "celsius-energy": {
+      "location": "Clamart",
+      "roleName": "Full Stack Consultant",
+      "description": "",
+      "descriptionShort": "End-to-end design and development of the information system: a full monitoring application for heat-pump geothermal heating in large buildings.",
+      "bullets": [
+        {
+          "id": "82548176",
+          "text": "contributed in designing scalable architecture for realtime dashboards to monitor IoT devices"
+        },
+        {
+          "id": "82548177",
+          "text": "used Scrum team specific implementation as Agile methodology"
+        },
+        {
+          "id": "82548178",
+          "text": "automated builds and deployments with unit, integration and e2e tests"
+        }
+      ]
+    },
+    "relevanc": {
+      "location": "Paris",
+      "roleName": "Full Stack Consultant",
+      "description": "",
+      "descriptionShort": "Initialization of the redesign of the Coupilo multitenant couponing tool",
+      "bullets": [
+        {
+          "id": "82089402",
+          "text": "Hexagonal architecture"
+        },
+        {
+          "id": "82089403",
+          "text": "scrum"
+        }
+      ]
+    },
+    "ecocea": {
+      "location": "Paris",
+      "roleName": "Devops Consultant",
+      "description": "",
+      "descriptionShort": "Transformation of the software factory for the Manutan ecommerce website.",
+      "bullets": []
+    },
+    "edelia": {
+      "location": "Nanterre",
+      "roleName": "Full Stack Consultant",
+      "description": "",
+      "descriptionShort": "Design and development of systems and applications related to the consumption of electricity, water and gas.",
+      "bullets": [
+        {
+          "id": "82089368",
+          "text": "Design and development of a calculation backend solution for Sowee connected thermostats"
+        },
+        {
+          "id": "82089369",
+          "text": "Participation in the digital transformation project on the Devops part"
+        },
+        {
+          "id": "82089370",
+          "text": "Fullstack design and development of the My Eco Service hybrid mobile application"
+        }
+      ]
+    },
+    "jcdecaux": {
+      "location": "Plaisir",
+      "roleName": "Full Stack Consultant",
+      "description": "",
+      "descriptionShort": "Development of mobile applications for the maintenance of the group's street furniture.",
+      "bullets": [
+        {
+          "id": "82089353",
+          "text": "Scrum Agility"
+        }
+      ]
+    },
+    "lotsys-filiale-fdj": {
+      "location": "Suresnes",
+      "roleName": "Backend Consultant",
+      "description": "",
+      "descriptionShort": "Studies and development activities for FDJ backend",
+      "bullets": [
+        {
+          "id": "82627546",
+          "text": "sessions in a clustered environment"
+        },
+        {
+          "id": "82627547",
+          "text": "gateway REST API developments"
+        }
+      ]
+    },
+    "mediametrie": {
+      "location": "Levallois-Perret",
+      "roleName": "Backend Consultant",
+      "description": "",
+      "descriptionShort": "API design and development for an audience measurement system.",
+      "bullets": [
+        {
+          "id": "82627567",
+          "text": "research and development activities in a Scrum framework"
+        },
+        {
+          "id": "82627568",
+          "text": "POC on an audience tag tagging quality measurement tool"
+        },
+        {
+          "id": "82627569",
+          "text": "development of an Internet nomenclature integrator as part of a global project"
+        }
+      ]
+    },
+    "thales-communications": {
+      "location": "Gennevilliers",
+      "roleName": "Full Stack Consultant",
+      "description": "Development of a scalable Internet proof service",
+      "descriptionShort": "Development activities of an information and intelligence analysis platform on open source type data, centered around social network analysis and opinion analysis processing.",
+      "bullets": [
+        {
+          "id": "82627890",
+          "text": "Project within the R&D team of the THALES CenTAI Upstream Studies laboratory",
+          "link": "https://www.institutdesactuaires.com/global/gene/link.php?doc_id=1157&fg=1"
+        },
+        {
+          "id": "82627891",
+          "text": "Design and development of a scalable digital evidence collection and certification service"
+        }
+      ]
+    },
+    "mediapost": {
+      "location": "Montrouge",
+      "roleName": "Full Stack Consultant",
+      "description": "",
+      "descriptionShort": "Study activities and development of an intranet tool for contractualisation of printed advertising products offered by LA POSTE in its establishments",
+      "bullets": [
+        {
+          "id": "82089289",
+          "text": "POC of a test solution via Selenium Hub"
+        },
+        {
+          "id": "82089290",
+          "text": "Planning sprints, reviews, retrospectives, facilitating daily scrums"
+        },
+        {
+          "id": "82089291",
+          "text": "Realization of functional and technical presentations for the team"
+        }
+      ]
+    },
+    "sfr": {
+      "location": "Nanterre Rive Défense",
+      "roleName": "Backend Consultant",
+      "description": "Development activities within SFR, as part of the management of the optical fiber workflow",
+      "descriptionShort": "Optical fiber workflow management, SOA development",
+      "bullets": []
+    },
+    "dgfip": {
+      "location": "Noisy-le-Grand",
+      "roleName": "Backend Consultant",
+      "description": "Activities of studies, development and maintenance in operational condition of ADP and SVC projects which ensure the implementation of the electronic signature and the archiving of the proof within the framework of the procedures of tele-declaration of the VAT and the taxes on revenues within the General Finance Department",
+      "descriptionShort": "Electronic signature and proof archiving for tax tele-declaration",
+      "bullets": []
+    },
+    "la-compagnie-1818": {
+      "location": "Paris",
+      "roleName": "Full Stack Consultant",
+      "description": "Development and maintenance activities for the entire website for businesses and customers",
+      "descriptionShort": "Business and customer website development and maintenance",
+      "bullets": []
+    },
+    "bnp-paribas": {
+      "location": "Montreuil - Valmy2",
+      "roleName": "Full Stack Consultant",
+      "description": "Study, development and third-party application maintenance activities on Certification, RPS and PKI projects as part of the service center set up by ALTI",
+      "descriptionShort": "Certification, RPS and PKI within the service center",
+      "bullets": []
+    },
+    "renault-sa": {
+      "location": "Guyancourt",
+      "roleName": "Backend Consultant",
+      "description": "Development of a statistical tool for Renault vehicle sales forecasts as part of my license",
+      "descriptionShort": "Statistical tool for vehicle sales forecasts",
+      "bullets": []
+    },
+    "cfa-sup-2000": {
+      "location": "Saint-Maurice",
+      "roleName": "Full Stack Consultant",
+      "description": "Computer overhaul of the CFA management tool as part of my technological university degree",
+      "descriptionShort": "CFA management tool overhaul",
+      "bullets": []
+    }
+  },
+  "studies": {
+    "78731519": {
+      "name": "French HS diploma, Science major",
+      "establishment": "Francois 1st high school"
+    },
+    "78786280": {
+      "name": "Scientific preparatory classes in physics",
+      "establishment": "Lafayette high school"
+    },
+    "82475518": {
+      "name": "Technological University Diploma in Computer Science",
+      "establishment": "IUT"
+    },
+    "82475531": {
+      "name": "Bachelor's degree in Computer Systems and Software",
+      "establishment": "IUT"
+    },
+    "82475538": {
+      "name": "Advanced microcontroller programming",
+      "establishment": "CNAM"
+    },
+    "82479432": {
+      "name": "Machine Learning",
+      "establishment": "Coursera"
+    },
+    "82548346": {
+      "name": "Control of Mobile Robots & Digital Signal Processing",
+      "establishment": "Coursera"
+    },
+    "82551736": {
+      "name": "Signal processors and programmable logic",
+      "establishment": "CNAM"
+    }
+  },
+  "projects": {
+    "82518980": {
+      "description": "Co-founder and director of the web agency \"Matière Web\""
+    },
+    "cvproj-shopify-assistant": {
+      "description": "AI chat to create Shopify products quickly and easily.",
+      "title": "Shopify assistant"
+    },
+    "cvproj-cop1-2026": {
+      "description": "COP1 project."
+    },
+    "cvproj-iamthelaw-2026": {
+      "description": "I Am The Law project."
+    },
+    "cvproj-lifefindsaway-2026": {
+      "description": "LifeFindsAway project."
+    },
+    "cvproj-realizator-2026": {
+      "description": "Web app that builds video demos automatically.",
+      "title": "Realizator"
+    },
+    "cvproj-livestreamz-2026": {
+      "description": "App that turns your phone into a camera for reliable real-time streaming.",
+      "title": "Livestreamz"
+    },
+    "cvproj-muti-2026": {
+      "description": "Turns body movement into a MIDI, OSC, or WebSocket controller.",
+      "title": "Muti"
+    },
+    "cvproj-byhere-2026": {
+      "description": "Guided car tour app: narrated routes with geolocated points of interest.",
+      "title": "ByHere"
+    }
+  },
+  "hobbies": {
+    "81779577": {
+      "name": "Ableton",
+      "description": "Music production with Ableton Live, Max4Live and Python development for MIDI controllers."
+    },
+    "81779962": {
+      "name": "Crossovers",
+      "description": "Basketball, game study and statistics."
+    },
+    "81780862": {
+      "name": "Riding the hills",
+      "description": "Mountain biking in Fontainebleau forest, Portes du Soleil and beyond."
+    },
+    "81781610": {
+      "name": "London system or Caro-Kann",
+      "description": "Online chess: London system, Caro-Kann defense."
+    }
+  },
+  "learnings": {
+    "cnZskAq6SqSbkXAmAB0KIQ": {
+      "description": "Agents, RAG, prompt engineering and integration into SaaS products."
+    },
+    "Taq3bWZ6Stu5rt42dP1_WQ": {
+      "description": "Managed AI agent orchestration and AWS foundation models."
+    },
+    "UsM_i8jNSFK12ePhrc0x0g": {
+      "description": "Tool integration protocol for language models."
+    },
+    "learn-langchain-stack": {
+      "description": "LLM chain orchestration framework and conversational agents."
+    },
+    "learn-openrag": {
+      "description": "Open-source RAG pipeline: indexing, vector search, generation."
+    },
+    "learn-bmad-method": {
+      "description": "AI-assisted multi-agent product scoping methodology."
+    }
+  }
+}
