@@ -36,13 +36,23 @@ function jsonError(
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const sp = request.nextUrl.searchParams;
   const rawLang = sp.get('lang');
-  const lang: Locale = rawLang ? (rawLang as Locale) : i18n.defaultLocale;
-  if (rawLang && !i18n.locales.includes(lang)) {
-    return jsonError(
-      400,
-      'invalid_lang',
-      `Unsupported "lang" value. Expected one of: ${i18n.locales.join(', ')}.`,
-    );
+  let lang: Locale = i18n.defaultLocale;
+  if (rawLang !== null) {
+    // Resolve against the static allowlist so the value assigned to `lang`
+    // comes from `i18n.locales` (not the user-provided string). This breaks
+    // the taint flow into `loadCvSources` → `path.join(...)` (CodeQL
+    // `js/path-injection`).
+    const resolved = i18n.locales.find((l) => l === rawLang);
+    if (!resolved) {
+      return jsonError(
+        400,
+        'invalid_lang',
+        `Unsupported "lang" value. Expected one of: ${i18n.locales.join(
+          ', ',
+        )}.`,
+      );
+    }
+    lang = resolved;
   }
 
   let sections;
