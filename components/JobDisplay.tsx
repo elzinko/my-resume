@@ -43,7 +43,7 @@ function JobMetaMobileRow({
 
   return (
     <div
-      className={`flex w-full max-w-full items-baseline justify-between gap-x-3 md:hidden print:hidden ${typo}`}
+      className={`flex w-full max-w-full items-baseline justify-between gap-x-3 print:hidden md:hidden ${typo}`}
       data-testid="job-meta-mobile"
     >
       <span className="min-w-0 truncate text-left" data-job-meta="role">
@@ -113,7 +113,7 @@ export default function JobDisplay({
               job.client
             )}
           </span>
-          <span className="min-w-max shrink-0 self-end text-cv-meta font-normal tabular-nums leading-snug text-cv-jobs max-md:hidden print:!inline print:text-[8px]">
+          <span className="min-w-max shrink-0 self-end text-cv-meta font-normal tabular-nums leading-snug text-cv-jobs print:!inline print:text-[8px] max-md:hidden">
             {compactDateLine}
           </span>
         </div>
@@ -122,7 +122,7 @@ export default function JobDisplay({
           roleName={roleName}
           datesLine={compactDateLine}
         />
-        <div className="cv-row-with-side-meta max-md:hidden print:flex print:gap-1">
+        <div className="cv-row-with-side-meta print:flex print:gap-1 max-md:hidden">
           <span className="min-w-0 flex-1 text-cv-meta font-normal leading-snug text-cv-jobs print:text-[8px]">
             {roleName ?? ''}
           </span>
@@ -141,7 +141,7 @@ export default function JobDisplay({
         <div
           className={
             !detailsOpen && hidePillsUntilDetailOpen
-              ? 'max-md:hidden print:!block'
+              ? 'print:!block max-md:hidden'
               : ''
           }
         >
@@ -170,12 +170,12 @@ export default function JobDisplay({
             job.client
           )}
         </span>
-        <span className="min-w-max shrink-0 self-end text-cv-meta font-normal tabular-nums leading-snug text-cv-jobs max-md:hidden print:!inline print:text-xs">
+        <span className="min-w-max shrink-0 self-end text-cv-meta font-normal tabular-nums leading-snug text-cv-jobs print:!inline print:text-xs max-md:hidden">
           {dates}
         </span>
       </div>
       <JobMetaMobileRow roleName={roleName} datesLine={datesStr} />
-      <div className="cv-row-with-side-meta pb-2 max-md:hidden print:flex">
+      <div className="cv-row-with-side-meta pb-2 print:flex max-md:hidden">
         <span className="min-w-0 flex-1 text-cv-meta font-normal leading-snug text-cv-jobs print:text-xs">
           {roleName ?? ''}
         </span>
@@ -193,7 +193,7 @@ export default function JobDisplay({
       <div
         className={
           !detailsOpen && hidePillsUntilDetailOpen
-            ? 'max-md:hidden print:!block'
+            ? 'print:!block max-md:hidden'
             : ''
         }
       >

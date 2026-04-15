@@ -1,5 +1,16 @@
 import type { MatchDisplayData } from '@/lib/match-display-types';
-import bundleJson from '@/data/cv/bundle.json';
+import experienceJson from '@/data/cv/experience.json';
+import localeFrJson from '@/data/cv/locales/fr.json';
+import localeEnJson from '@/data/cv/locales/en.json';
+import profileJson from '@/data/cv/profile.json';
+import techCatalogJson from '@/data/cv/tech-catalog.json';
+import { composeCvSnapshot } from '@/lib/cv-compose';
+import type {
+  Experience,
+  LocaleBundle,
+  Profile,
+  TechCatalog,
+} from '@/lib/cv-compose';
 import {
   buildMatchCatalogFromBundle,
   type CvSliceForMatchCatalog,
@@ -8,16 +19,36 @@ import { resolveOfferFromUrlParams } from '@/lib/query-offer-params';
 import { buildMatchEntries, type JobForMatching } from '@/lib/tech-match-core';
 import type { Locale } from '../i18n-config';
 
-const b = bundleJson as {
-  fr: CvSliceForMatchCatalog & { allJobsModels?: JobForMatching[] };
-  en: CvSliceForMatchCatalog & { allJobsModels?: JobForMatching[] };
-};
+type CvSlice = CvSliceForMatchCatalog & { allJobsModels?: JobForMatching[] };
+
+let cachedSlices: { fr: CvSlice; en: CvSlice } | null = null;
+function getSlices(): { fr: CvSlice; en: CvSlice } {
+  if (!cachedSlices) {
+    const base = {
+      profile: profileJson as Profile,
+      techCatalog: techCatalogJson as TechCatalog,
+      experience: experienceJson as Experience,
+    };
+    cachedSlices = {
+      fr: composeCvSnapshot('fr', {
+        ...base,
+        locale: localeFrJson as LocaleBundle,
+      }) as unknown as CvSlice,
+      en: composeCvSnapshot('en', {
+        ...base,
+        locale: localeEnJson as LocaleBundle,
+      }) as unknown as CvSlice,
+    };
+  }
+  return cachedSlices;
+}
 
 let catalogCache: ReturnType<typeof buildMatchCatalogFromBundle> | null = null;
 
 function matchCatalog(): ReturnType<typeof buildMatchCatalogFromBundle> {
   if (!catalogCache) {
-    catalogCache = buildMatchCatalogFromBundle({ fr: b.fr, en: b.en });
+    const { fr, en } = getSlices();
+    catalogCache = buildMatchCatalogFromBundle({ fr, en });
   }
   return catalogCache;
 }
@@ -49,7 +80,8 @@ const DEFAULT_REQUIREMENTS: import('@/data/offers/types').MatchRequirement[] = [
  * Entrées par défaut (Java, JavaScript) calculées depuis les missions du bundle.
  */
 export function computeDefaultMatchData(locale: Locale): MatchDisplayData {
-  const slice = locale === 'fr' ? b.fr : b.en;
+  const { fr, en } = getSlices();
+  const slice = locale === 'fr' ? fr : en;
   const jobs: JobForMatching[] = (slice.allJobsModels ||
     []) as JobForMatching[];
   const entries = buildMatchEntries(DEFAULT_REQUIREMENTS, jobs);
@@ -76,7 +108,8 @@ export function computeShortUrlMatchData(
   const offer = resolveOfferFromUrlParams(sp, matchCatalog());
   if (!offer) return null;
 
-  const slice = locale === 'fr' ? b.fr : b.en;
+  const { fr, en } = getSlices();
+  const slice = locale === 'fr' ? fr : en;
   const jobs: JobForMatching[] = (slice.allJobsModels ||
     []) as JobForMatching[];
 

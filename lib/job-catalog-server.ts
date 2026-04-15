@@ -1,6 +1,16 @@
 import 'server-only';
 
-import bundleJson from '@/data/cv/bundle.json';
+import experienceJson from '@/data/cv/experience.json';
+import localeFrJson from '@/data/cv/locales/fr.json';
+import profileJson from '@/data/cv/profile.json';
+import techCatalogJson from '@/data/cv/tech-catalog.json';
+import { composeCvSnapshot } from '@/lib/cv-compose';
+import type {
+  Experience,
+  LocaleBundle,
+  Profile,
+  TechCatalog,
+} from '@/lib/cv-compose';
 import { slugifyClient } from './slug';
 
 export interface JobCatalogEntry {
@@ -14,13 +24,16 @@ export interface JobCatalogEntry {
 
 let cachedEntries: JobCatalogEntry[] | null = null;
 
-/** Catalogue des missions dérivé de `data/cv/bundle.json` (mémoïsé par process). */
+/** Catalogue des missions dérivé des fichiers `data/cv/*.json` (mémoïsé par process). */
 export function getJobCatalog(): JobCatalogEntry[] {
   if (!cachedEntries) {
-    const b = bundleJson as {
-      fr?: { allJobsModels?: Array<Record<string, unknown>> };
-    };
-    const jobs = b.fr?.allJobsModels ?? [];
+    const fr = composeCvSnapshot('fr', {
+      profile: profileJson as Profile,
+      techCatalog: techCatalogJson as TechCatalog,
+      experience: experienceJson as Experience,
+      locale: localeFrJson as LocaleBundle,
+    }) as { allJobsModels?: Array<Record<string, unknown>> };
+    const jobs = fr.allJobsModels ?? [];
     cachedEntries = jobs.map((j) => {
       const client = (j.client as string) || '';
       const roleObj = j.role as { name?: string } | undefined;

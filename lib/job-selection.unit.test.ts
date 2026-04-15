@@ -7,7 +7,11 @@ const jobs = [
   { client: 'JPB Système', startDate: '2024', endDate: '2025' },
   { client: 'BlaBlaCar', startDate: '2022', endDate: '2023' },
   { client: 'Smartch', startDate: '2021', endDate: '2022' },
-  { client: 'SNCF Réseaux - DGEX Solutions', startDate: '2021', endDate: '2022' },
+  {
+    client: 'SNCF Réseaux - DGEX Solutions',
+    startDate: '2021',
+    endDate: '2022',
+  },
   { client: 'Celsius Energy', startDate: '2020', endDate: '2021' },
   { client: 'RelevanC', startDate: '2020', endDate: '2020' },
   { client: 'Ecocea', startDate: '2019', endDate: '2020' },

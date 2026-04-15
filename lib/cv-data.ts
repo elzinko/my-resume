@@ -3,27 +3,35 @@ import 'server-only';
 import { readFile } from 'fs/promises';
 import path from 'path';
 import type { Locale } from '../i18n-config';
+import {
+  composeCvSnapshot,
+  type CvSources,
+  type Experience,
+  type LocaleBundle,
+  type Profile,
+  type TechCatalog,
+} from './cv-compose';
 
-/**
- * Snapshot JSON par locale (contenu de `bundle.fr` / `bundle.en`).
- * Typage volontairement souple ; les pages ciblent leurs clés.
- */
 export type CvSnapshot = Record<string, unknown>;
 
-const BUNDLE_PATH = path.join(process.cwd(), 'data', 'cv', 'bundle.json');
+const CV_DIR = path.join(process.cwd(), 'data', 'cv');
 
-async function getCvDataFromLocal(locale: Locale): Promise<CvSnapshot> {
-  const raw = await readFile(BUNDLE_PATH, 'utf-8');
-  const bundle = JSON.parse(raw) as Record<string, unknown>;
-  const data = bundle[locale];
-  if (!data || typeof data !== 'object') {
-    throw new Error(
-      `data/cv/bundle.json: clé manquante ou invalide pour la locale "${locale}"`,
-    );
-  }
-  return data as CvSnapshot;
+async function readJson<T>(p: string): Promise<T> {
+  const raw = await readFile(p, 'utf-8');
+  return JSON.parse(raw) as T;
+}
+
+export async function loadCvSources(locale: Locale): Promise<CvSources> {
+  const [profile, techCatalog, experience, localeBundle] = await Promise.all([
+    readJson<Profile>(path.join(CV_DIR, 'profile.json')),
+    readJson<TechCatalog>(path.join(CV_DIR, 'tech-catalog.json')),
+    readJson<Experience>(path.join(CV_DIR, 'experience.json')),
+    readJson<LocaleBundle>(path.join(CV_DIR, 'locales', `${locale}.json`)),
+  ]);
+  return { profile, techCatalog, experience, locale: localeBundle };
 }
 
 export async function getCvData(locale: Locale): Promise<CvSnapshot> {
-  return getCvDataFromLocal(locale);
+  const sources = await loadCvSources(locale);
+  return composeCvSnapshot(locale, sources);
 }

@@ -38,7 +38,7 @@ export default function ShortCvOnlineDetailLink({
   const t = COPY[lang];
 
   return (
-    <div className="cv-short-full-cv-hint mt-4 border-l-4 border-pink-300/45 bg-pink-300/[0.06] py-2.5 pl-3 pr-2 print:mt-2 print:border-pink-300/35 print:py-2 print:pl-2.5">
+    <div className="cv-short-full-cv-hint border-pink-300/45 print:border-pink-300/35 mt-4 border-l-4 bg-pink-300/[0.06] py-2.5 pl-3 pr-2 print:mt-2 print:py-2 print:pl-2.5">
       <p className="m-0 max-w-full text-xs leading-relaxed text-slate-600 print:text-[10px] print:leading-snug">
         {t.before}
         <Link href={href} className={linkClassName()}>

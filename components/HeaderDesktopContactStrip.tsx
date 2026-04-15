@@ -43,7 +43,7 @@ export default function HeaderDesktopContactStrip({
 
   return (
     <div
-      className={`cv-header-contact-strip mt-2 flex w-full flex-col ${alignItems} gap-0.5 ${textAlign} text-sm leading-snug text-rose-300 md:mt-0 md:pb-1 md:text-sm md:leading-snug print:mt-0 print:flex ${printAlignItems} print:gap-0.5 print:pb-0.5 ${printTextAlign} print:text-sm print:leading-snug print:text-rose-300`}
+      className={`cv-header-contact-strip mt-2 flex w-full flex-col ${alignItems} gap-0.5 ${textAlign} text-sm leading-snug text-rose-300 print:mt-0 print:flex md:mt-0 md:pb-1 md:text-sm md:leading-snug ${printAlignItems} print:gap-0.5 print:pb-0.5 ${printTextAlign} print:text-sm print:leading-snug print:text-rose-300`}
       aria-label="Contact"
     >
       {email ? (

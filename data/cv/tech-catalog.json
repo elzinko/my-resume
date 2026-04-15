@@ -1,0 +1,823 @@
+{
+  "schemaVersion": 1,
+  "entries": [
+    {
+      "id": "IeJ_h33KR_-n15lH_ynqpQ",
+      "name": "Typescript",
+      "link": "https://www.typescriptlang.org/"
+    },
+    {
+      "id": "81820957",
+      "name": "Java",
+      "link": "https://docs.oracle.com/en/java/javase/21/"
+    },
+    {
+      "id": "81821031",
+      "name": "Spring Boot",
+      "link": "https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/"
+    },
+    {
+      "id": "81821032",
+      "name": "React",
+      "link": "https://react.dev/learn"
+    },
+    {
+      "id": "81821038",
+      "name": "Kubernetes",
+      "link": "https://kubernetes.io/docs/home/"
+    },
+    {
+      "id": "81821052",
+      "name": "Clouds",
+      "link": "https://aws.amazon.com/"
+    },
+    {
+      "id": "81821048",
+      "name": "12 Factor",
+      "link": "https://12factor.net/"
+    },
+    {
+      "id": "skill_ddd_tc2026",
+      "name": "DDD",
+      "link": "https://martinfowler.com/bliki/DomainDrivenDesign.html"
+    },
+    {
+      "id": "skill_cleancode_tc2026",
+      "name": "Clean code",
+      "link": "https://en.wikipedia.org/wiki/Clean_Code"
+    },
+    {
+      "id": "skill_hexa_tc2026",
+      "name": "Architecture hexagonale",
+      "link": "https://alistair.cockburn.us/hexagonal-architecture/",
+      "nameEn": "Hexagonal architecture"
+    },
+    {
+      "id": "skill_nodejs_tc2026",
+      "name": "Node.js",
+      "link": "https://nodejs.org/"
+    },
+    {
+      "id": "skill_nestjs_tc2026",
+      "name": "NestJS",
+      "link": "https://nestjs.com/"
+    },
+    {
+      "id": "82627943",
+      "name": "Scrum",
+      "link": "https://www.scrum.org/"
+    },
+    {
+      "id": "90601528",
+      "name": "SAFe",
+      "link": "https://scaledagile.com/"
+    },
+    {
+      "id": "90606153",
+      "name": "Scrum master",
+      "link": "https://www.youtube.com/watch?v=KgfAQZU3ETY"
+    },
+    {
+      "id": "90601526",
+      "name": "Kanban",
+      "link": "https://fr.wikipedia.org/wiki/Kanban_(d%C3%A9veloppement)"
+    },
+    {
+      "id": "90601512",
+      "name": "Lean",
+      "link": "https://fr.wikipedia.org/wiki/Lean_(production)"
+    },
+    {
+      "id": "90601531",
+      "name": "Java",
+      "link": "https://www.java.com/fr/"
+    },
+    {
+      "id": "78848797",
+      "name": "Spring Boot"
+    },
+    {
+      "id": "82456008",
+      "name": "Typescript"
+    },
+    {
+      "id": "82522197",
+      "name": "Python",
+      "link": "https://www.python.org/"
+    },
+    {
+      "id": "82456107",
+      "name": "Go",
+      "link": "https://go.dev/"
+    },
+    {
+      "id": "an8YW0VVTf2JuZZZo1W0pw",
+      "name": "Vue.js",
+      "link": "https://vuejs.org/"
+    },
+    {
+      "id": "82456019",
+      "name": "React"
+    },
+    {
+      "id": "82456012",
+      "name": "Angular"
+    },
+    {
+      "id": "90628555",
+      "name": "microservices"
+    },
+    {
+      "id": "90768298",
+      "name": "DDD",
+      "link": "https://en.wikipedia.org/wiki/Domain-driven_design"
+    },
+    {
+      "id": "90628554",
+      "name": "Architecture"
+    },
+    {
+      "id": "82456127",
+      "name": "Docker"
+    },
+    {
+      "id": "82456128",
+      "name": "Kubernetes"
+    },
+    {
+      "id": "82522207",
+      "name": "Terraform"
+    },
+    {
+      "id": "90601547",
+      "name": "Helm",
+      "link": "https://helm.sh/"
+    },
+    {
+      "id": "82627329",
+      "name": "AWS"
+    },
+    {
+      "id": "82609060",
+      "name": "gcp"
+    },
+    {
+      "id": "82522206",
+      "name": "azure"
+    },
+    {
+      "id": "82593991",
+      "name": "postgreSQL"
+    },
+    {
+      "id": "cnZskAq6SqSbkXAmAB0KIQ",
+      "name": "LLM",
+      "link": "https://www.langchain.com/"
+    },
+    {
+      "id": "82518980",
+      "name": "Matière Web",
+      "link": "https://matiere-web.com/"
+    },
+    {
+      "id": "82459500",
+      "name": "AWS lambda"
+    },
+    {
+      "id": "82522582",
+      "name": "iot hub"
+    },
+    {
+      "id": "82455959",
+      "name": "Kotlin"
+    },
+    {
+      "id": "197839492",
+      "name": "Ktor",
+      "link": "https://ktor.io/"
+    },
+    {
+      "id": "197839497",
+      "name": "Exposed",
+      "link": "https://github.com/JetBrains/Exposed"
+    },
+    {
+      "id": "90733900",
+      "name": "Hexagonal architecture",
+      "link": "https://en.wikipedia.org/wiki/Hexagonal_architecture_(software)"
+    },
+    {
+      "id": "82459504",
+      "name": "confluence"
+    },
+    {
+      "id": "82456091",
+      "name": "Jira"
+    },
+    {
+      "id": "82690001",
+      "name": "SAFe"
+    },
+    {
+      "id": "82456109",
+      "name": "Rust",
+      "link": "https://www.rust-lang.org/fr"
+    },
+    {
+      "id": "82459421",
+      "name": "Java 17"
+    },
+    {
+      "id": "82522195",
+      "name": "typescript"
+    },
+    {
+      "id": "82594001",
+      "name": "Node.js",
+      "link": "https://nodejs.org/"
+    },
+    {
+      "id": "81826176",
+      "name": "Github"
+    },
+    {
+      "id": "82456063",
+      "name": "VSCode"
+    },
+    {
+      "id": "82456200",
+      "name": "Debian"
+    },
+    {
+      "id": "82592399",
+      "name": "gohugo"
+    },
+    {
+      "id": "82456040",
+      "name": "Git"
+    },
+    {
+      "id": "82593992",
+      "name": "fastapi"
+    },
+    {
+      "id": "82594135",
+      "name": "docker-compose"
+    },
+    {
+      "id": "82456101",
+      "name": "kafka"
+    },
+    {
+      "id": "82456042",
+      "name": "Gitlab"
+    },
+    {
+      "id": "82459493",
+      "name": "elk"
+    },
+    {
+      "id": "82456211",
+      "name": "Datadog"
+    },
+    {
+      "id": "82456118",
+      "name": "Postman"
+    },
+    {
+      "id": "82456116",
+      "name": "Swagger"
+    },
+    {
+      "id": "82522583",
+      "name": "iot edge"
+    },
+    {
+      "id": "82522585",
+      "name": "stream analytics"
+    },
+    {
+      "id": "82522586",
+      "name": "function app"
+    },
+    {
+      "id": "82522595",
+      "name": "databricks"
+    },
+    {
+      "id": "82539592",
+      "name": "cosmodb"
+    },
+    {
+      "id": "82539593",
+      "name": "signalr"
+    },
+    {
+      "id": "82539595",
+      "name": "azure devops"
+    },
+    {
+      "id": "82539596",
+      "name": "key vault"
+    },
+    {
+      "id": "82539599",
+      "name": "backup vault"
+    },
+    {
+      "id": "82455956",
+      "name": "Java 11"
+    },
+    {
+      "id": "82609058",
+      "name": "jhipster"
+    },
+    {
+      "id": "82455939",
+      "name": "Java 8"
+    },
+    {
+      "id": "82456129",
+      "name": "gitlab flow"
+    },
+    {
+      "id": "82609066",
+      "name": "jenkins"
+    },
+    {
+      "id": "82609074",
+      "name": "websphere commerce"
+    },
+    {
+      "id": "82456133",
+      "name": "Ubuntu"
+    },
+    {
+      "id": "82456048",
+      "name": "Gradle"
+    },
+    {
+      "id": "82459406",
+      "name": "Rancher"
+    },
+    {
+      "id": "82459407",
+      "name": "Openshift"
+    },
+    {
+      "id": "82460432",
+      "name": "cucumber"
+    },
+    {
+      "id": "82456051",
+      "name": "MySQL"
+    },
+    {
+      "id": "82459496",
+      "name": "ECS"
+    },
+    {
+      "id": "82459498",
+      "name": "ECR"
+    },
+    {
+      "id": "82459497",
+      "name": "EKS"
+    },
+    {
+      "id": "82459488",
+      "name": "ec2"
+    },
+    {
+      "id": "82456054",
+      "name": "RDS"
+    },
+    {
+      "id": "82459489",
+      "name": "s3"
+    },
+    {
+      "id": "82456110",
+      "name": "Oauth2"
+    },
+    {
+      "id": "82460428",
+      "name": "Spring Security"
+    },
+    {
+      "id": "82456202",
+      "name": "Lombok"
+    },
+    {
+      "id": "82613282",
+      "name": "devcontainer"
+    },
+    {
+      "id": "82456014",
+      "name": "Ionic"
+    },
+    {
+      "id": "82456203",
+      "name": "Wiremock"
+    },
+    {
+      "id": "82456113",
+      "name": "Liquibase"
+    },
+    {
+      "id": "82456055",
+      "name": "Cassandra"
+    },
+    {
+      "id": "82456059",
+      "name": "Spark"
+    },
+    {
+      "id": "82456057",
+      "name": "MongoDB"
+    },
+    {
+      "id": "78726310",
+      "name": "Apache"
+    },
+    {
+      "id": "82456209",
+      "name": "Sonar"
+    },
+    {
+      "id": "82456043",
+      "name": "JenkinsX"
+    },
+    {
+      "id": "82456210",
+      "name": "Crashlytics"
+    },
+    {
+      "id": "82459405",
+      "name": "Nexus"
+    },
+    {
+      "id": "82459408",
+      "name": "Minishift"
+    },
+    {
+      "id": "82456064",
+      "name": "IntelliJ"
+    },
+    {
+      "id": "82456199",
+      "name": "Gitflow"
+    },
+    {
+      "id": "82459409",
+      "name": "Fastlane"
+    },
+    {
+      "id": "82456131",
+      "name": "OSX"
+    },
+    {
+      "id": "82459411",
+      "name": "iOS"
+    },
+    {
+      "id": "82459412",
+      "name": "Android"
+    },
+    {
+      "id": "82459423",
+      "name": "undertow"
+    },
+    {
+      "id": "82459502",
+      "name": "Java 7"
+    },
+    {
+      "id": "82456022",
+      "name": "spring"
+    },
+    {
+      "id": "82460522",
+      "name": "oracle"
+    },
+    {
+      "id": "82459503",
+      "name": "Mercurial"
+    },
+    {
+      "id": "82459506",
+      "name": "bamboo"
+    },
+    {
+      "id": "82459507",
+      "name": "fisheye"
+    },
+    {
+      "id": "82459508",
+      "name": "stash"
+    },
+    {
+      "id": "82456062",
+      "name": "Hazelcast"
+    },
+    {
+      "id": "82456061",
+      "name": "zookeeper"
+    },
+    {
+      "id": "82459628",
+      "name": "saltstack"
+    },
+    {
+      "id": "82459630",
+      "name": "eclipse"
+    },
+    {
+      "id": "82459633",
+      "name": "sql developer"
+    },
+    {
+      "id": "82459631",
+      "name": "advanced rest client,"
+    },
+    {
+      "id": "82459634",
+      "name": "cygwin"
+    },
+    {
+      "id": "82460480",
+      "name": "gwt 2.5"
+    },
+    {
+      "id": "82460423",
+      "name": "spring framework 3.2.8"
+    },
+    {
+      "id": "82460427",
+      "name": "spring data jpa 1.5.2"
+    },
+    {
+      "id": "82460431",
+      "name": "Selenium"
+    },
+    {
+      "id": "82459640",
+      "name": "nutch 2"
+    },
+    {
+      "id": "82459641",
+      "name": "htmlunit"
+    },
+    {
+      "id": "82459642",
+      "name": "gora"
+    },
+    {
+      "id": "82459645",
+      "name": "hbase"
+    },
+    {
+      "id": "82873833",
+      "name": "hadoop"
+    },
+    {
+      "id": "82459646",
+      "name": "mapreduce"
+    },
+    {
+      "id": "82870012",
+      "name": "tomcat"
+    },
+    {
+      "id": "82870008",
+      "name": "spring data jpa"
+    },
+    {
+      "id": "82460485",
+      "name": "spring social"
+    },
+    {
+      "id": "82456047",
+      "name": "Maven"
+    },
+    {
+      "id": "82460458",
+      "name": "selenium grid"
+    },
+    {
+      "id": "82460442",
+      "name": "jmeter"
+    },
+    {
+      "id": "82460443",
+      "name": "jprofiler"
+    },
+    {
+      "id": "82456096",
+      "name": "Camel"
+    },
+    {
+      "id": "82460487",
+      "name": "maven 3.0.4"
+    },
+    {
+      "id": "82460486",
+      "name": "blogger api v3"
+    },
+    {
+      "id": "82460494",
+      "name": "cloudstack"
+    },
+    {
+      "id": "82460502",
+      "name": "vmware"
+    },
+    {
+      "id": "82460503",
+      "name": "java 5"
+    },
+    {
+      "id": "78726170",
+      "name": "Maven 2"
+    },
+    {
+      "id": "82460504",
+      "name": "tomcat 5"
+    },
+    {
+      "id": "82460505",
+      "name": "sybase"
+    },
+    {
+      "id": "82460506",
+      "name": "jasper report"
+    },
+    {
+      "id": "82627944",
+      "name": "tdd"
+    },
+    {
+      "id": "82627945",
+      "name": "pair programming"
+    },
+    {
+      "id": "91050008",
+      "name": "JSF"
+    },
+    {
+      "id": "91050015",
+      "name": "EJB 2.1"
+    },
+    {
+      "id": "91050016",
+      "name": "MDA"
+    },
+    {
+      "id": "91050013",
+      "name": "JBoss 4"
+    },
+    {
+      "id": "91050017",
+      "name": "Mule ESB"
+    },
+    {
+      "id": "91050018",
+      "name": "JBPM"
+    },
+    {
+      "id": "91050019",
+      "name": "Drools"
+    },
+    {
+      "id": "91050010",
+      "name": "EJB 3"
+    },
+    {
+      "id": "91050011",
+      "name": "JAXB"
+    },
+    {
+      "id": "91050012",
+      "name": "JAX-WS"
+    },
+    {
+      "id": "91050014",
+      "name": "Oracle 9i"
+    },
+    {
+      "id": "91050009",
+      "name": "Machines virtuelles",
+      "nameEn": "Virtual Machines"
+    },
+    {
+      "id": "91050004",
+      "name": "WebSphere"
+    },
+    {
+      "id": "91050005",
+      "name": "Struts"
+    },
+    {
+      "id": "91050006",
+      "name": "JavaScript"
+    },
+    {
+      "id": "91050007",
+      "name": "CSS"
+    },
+    {
+      "id": "91050002",
+      "name": "Excel"
+    },
+    {
+      "id": "91050003",
+      "name": "C++"
+    },
+    {
+      "id": "91050001",
+      "name": "RMI"
+    },
+    {
+      "id": "81826170",
+      "name": "NextJS"
+    },
+    {
+      "id": "90902399",
+      "name": "Wordpress",
+      "link": "https://wordpress.com/"
+    },
+    {
+      "id": "90902400",
+      "name": "Elementor",
+      "link": "https://elementor.com/"
+    },
+    {
+      "id": "81826186",
+      "name": "DatoCMS"
+    },
+    {
+      "id": "90902401",
+      "name": "CTO"
+    }
+  ],
+  "skillsOrder": [
+    "IeJ_h33KR_-n15lH_ynqpQ",
+    "81820957",
+    "81821031",
+    "81821032",
+    "81821038",
+    "81821052",
+    "81821048",
+    "skill_ddd_tc2026",
+    "skill_cleancode_tc2026",
+    "skill_hexa_tc2026",
+    "skill_nodejs_tc2026",
+    "skill_nestjs_tc2026"
+  ],
+  "domains": [
+    {
+      "id": "78726113",
+      "name": "Agile",
+      "position": 1,
+      "competencyIds": [
+        "82627943",
+        "90601528",
+        "90606153",
+        "90601526",
+        "90601512"
+      ]
+    },
+    {
+      "id": "78726111",
+      "name": "Dev",
+      "position": 2,
+      "competencyIds": [
+        "90601531",
+        "78848797",
+        "82456008",
+        "82522197",
+        "82456107",
+        "an8YW0VVTf2JuZZZo1W0pw",
+        "82456019",
+        "82456012",
+        "90628555",
+        "90768298",
+        "90628554"
+      ]
+    },
+    {
+      "id": "78855347",
+      "name": "Ops",
+      "position": 3,
+      "competencyIds": [
+        "82456127",
+        "82456128",
+        "82522207",
+        "90601547",
+        "82627329",
+        "82609060",
+        "82522206"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,697 @@
+{
+  "schemaVersion": 1,
+  "jobs": [
+    {
+      "slug": "solopreneur",
+      "client": "Solopreneur",
+      "startDate": "2023-01-01",
+      "roleId": "81994135",
+      "frameworks": [
+        "82456019",
+        "82456008",
+        "82593991",
+        "cnZskAq6SqSbkXAmAB0KIQ",
+        "82518980",
+        "skill_nodejs_tc2026",
+        "skill_nestjs_tc2026"
+      ]
+    },
+    {
+      "slug": "jpb-systeme",
+      "client": "JPB Système",
+      "startDate": "2024-06-10",
+      "roleId": "FUxO3DDtSpirVhE2ecFudw",
+      "frameworks": [
+        "an8YW0VVTf2JuZZZo1W0pw",
+        "82456008",
+        "82522197",
+        "82627329",
+        "82459500",
+        "82522582",
+        "82593991",
+        "skill_nodejs_tc2026",
+        "skill_nestjs_tc2026"
+      ],
+      "clientUrl": "https://www.jpb-systeme.com/fr/keyprod",
+      "endDate": "2025-08-31"
+    },
+    {
+      "slug": "blablacar",
+      "client": "BlaBlaCar",
+      "startDate": "2023-10-01",
+      "roleId": "81994135",
+      "frameworks": [
+        "82456019",
+        "78848797",
+        "82593991",
+        "82456128",
+        "90601531"
+      ],
+      "clientUrl": "https://www.blablacar.fr",
+      "endDate": "2023-12-31"
+    },
+    {
+      "slug": "smartch",
+      "client": "Smartch",
+      "startDate": "2023-05-01",
+      "roleId": "82089336",
+      "frameworks": [
+        "82455959",
+        "90601531",
+        "197839492",
+        "197839497",
+        "82593991",
+        "90733900",
+        "82459504",
+        "82456091"
+      ],
+      "clientUrl": "https://www.smartch.fr/",
+      "endDate": "2023-09-04"
+    },
+    {
+      "slug": "sncf-reseaux-dgex-solutions",
+      "client": "SNCF Réseaux - DGEX Solutions",
+      "startDate": "2022-05-01",
+      "roleId": "82089432",
+      "frameworks": [
+        "82690001",
+        "82456109",
+        "82459421",
+        "82522195",
+        "82594001",
+        "82522197",
+        "81826176",
+        "82456128",
+        "82456063",
+        "82456200",
+        "82592399",
+        "82456040",
+        "82593991",
+        "82593992",
+        "82456127",
+        "82594135"
+      ],
+      "clientUrl": "https://www.sncf-reseau.com",
+      "endDate": "2023-02-01"
+    },
+    {
+      "slug": "leboncoin",
+      "client": "Leboncoin",
+      "startDate": "2021-08-01",
+      "roleId": "82089336",
+      "frameworks": [
+        "82456107",
+        "82456101",
+        "82593991",
+        "82456042",
+        "82456063",
+        "82456128",
+        "82456127",
+        "82456200",
+        "82459493",
+        "82456211",
+        "82456118",
+        "82456116"
+      ],
+      "clientUrl": "https://www.leboncoin.fr",
+      "endDate": "2022-05-01"
+    },
+    {
+      "slug": "celsius-energy",
+      "client": "Celsius Energy",
+      "startDate": "2020-12-01",
+      "roleId": "81994135",
+      "frameworks": [
+        "82522195",
+        "82522197",
+        "82593991",
+        "82456012",
+        "82522206",
+        "82522207",
+        "82522582",
+        "82522583",
+        "82522585",
+        "82522586",
+        "82522595",
+        "82539592",
+        "82539593",
+        "82539595",
+        "82539596",
+        "82539599"
+      ],
+      "clientUrl": "https://celsiusenergy.com/",
+      "endDate": "2021-08-01"
+    },
+    {
+      "slug": "relevanc",
+      "client": "RelevanC",
+      "startDate": "2020-08-01",
+      "roleId": "81994135",
+      "frameworks": [
+        "82455956",
+        "78848797",
+        "82593991",
+        "82456116",
+        "82456118",
+        "82609058",
+        "82609060"
+      ],
+      "clientUrl": "https://www.relevanc.com",
+      "endDate": "2020-12-02"
+    },
+    {
+      "slug": "ecocea",
+      "client": "Ecocea",
+      "startDate": "2019-10-01",
+      "roleId": "82089385",
+      "frameworks": [
+        "82455939",
+        "82456129",
+        "82609066",
+        "82456042",
+        "82609074",
+        "82456133",
+        "82456019",
+        "82456048"
+      ],
+      "clientUrl": "https://www.ecocealafabrique.com/",
+      "endDate": "2020-05-01"
+    },
+    {
+      "slug": "edelia",
+      "client": "Edelia",
+      "startDate": "2016-04-01",
+      "roleId": "81994135",
+      "frameworks": [
+        "82455939",
+        "82455956",
+        "82456127",
+        "82594135",
+        "82459406",
+        "82459407",
+        "82456128",
+        "82460432",
+        "82456051",
+        "82593991",
+        "82459496",
+        "82459498",
+        "82459497",
+        "82459488",
+        "82456054",
+        "82459489",
+        "82456110",
+        "78848797",
+        "82460428",
+        "82456202",
+        "82613282",
+        "82456014",
+        "82456203",
+        "82456113",
+        "82456055",
+        "82456059",
+        "82456057",
+        "78726310",
+        "82456116",
+        "82456118",
+        "82456209",
+        "82456043",
+        "82456210",
+        "82459405",
+        "82459408",
+        "82456064",
+        "82456063",
+        "82456040",
+        "82456199",
+        "82456042",
+        "82456091",
+        "82459409",
+        "82627329",
+        "82456131",
+        "82456200",
+        "82459411",
+        "82459412"
+      ],
+      "clientUrl": "https://www.edelia.fr",
+      "endDate": "2019-06-01"
+    },
+    {
+      "slug": "jcdecaux",
+      "client": "JCDecaux",
+      "startDate": "2015-01-01",
+      "roleId": "81994135",
+      "frameworks": [
+        "82455939",
+        "78848797",
+        "82456051",
+        "78726310",
+        "82459423",
+        "82456040",
+        "82456042",
+        "82456091",
+        "82456133",
+        "82627329",
+        "82459488"
+      ],
+      "clientUrl": "https://www.jcdecaux.com",
+      "endDate": "2016-03-01"
+    },
+    {
+      "slug": "lotsys-filiale-fdj",
+      "client": "Lotsys Filiale FDJ",
+      "startDate": "2014-04-01",
+      "roleId": "82089336",
+      "frameworks": [
+        "82459502",
+        "82456022",
+        "82460522",
+        "82459503",
+        "82459504",
+        "82459506",
+        "82459507",
+        "82459508",
+        "82456062",
+        "82456061",
+        "82459628",
+        "82459630",
+        "82459633",
+        "82459631",
+        "82459634"
+      ],
+      "clientUrl": "https://www.fdj.fr/",
+      "endDate": "2014-12-01"
+    },
+    {
+      "slug": "mediametrie",
+      "client": "Mediametrie",
+      "startDate": "2013-04-01",
+      "roleId": "82089336",
+      "frameworks": [
+        "82459502",
+        "82460480",
+        "82460423",
+        "82460427",
+        "82460428",
+        "82460432",
+        "82460431",
+        "82459640",
+        "82459641",
+        "82459642",
+        "82459645",
+        "82873833",
+        "82459646",
+        "82593991",
+        "82870012",
+        "82456040",
+        "82456042",
+        "82609066",
+        "82456209",
+        "82627329",
+        "82459488"
+      ],
+      "clientUrl": "https://www.mediametrie.fr",
+      "endDate": "2014-03-01"
+    },
+    {
+      "slug": "thales-communications",
+      "client": "Thales communications",
+      "startDate": "2012-01-01",
+      "roleId": "81994135",
+      "frameworks": [
+        "82459502",
+        "82460480",
+        "82456022",
+        "82870008",
+        "82460485",
+        "82456051",
+        "82870012",
+        "82456040",
+        "82456047",
+        "82456057",
+        "82460458",
+        "82460442",
+        "82460443",
+        "82456096",
+        "82460487",
+        "82460486",
+        "82609066",
+        "82460494",
+        "82460502"
+      ],
+      "clientUrl": "https://www.thalesgroup.com",
+      "endDate": "2013-01-01"
+    },
+    {
+      "slug": "mediapost",
+      "client": "Médiapost",
+      "startDate": "2011-04-01",
+      "roleId": "81994135",
+      "frameworks": [
+        "82460503",
+        "78726170",
+        "82456040",
+        "82460504",
+        "82609066",
+        "82460505",
+        "82460506",
+        "82460431",
+        "82627943",
+        "82627944",
+        "82627945",
+        "91050008"
+      ],
+      "clientUrl": "https://www.mediapost.fr",
+      "endDate": "2012-01-01"
+    },
+    {
+      "slug": "sfr",
+      "client": "SFR",
+      "startDate": "2010-04-01",
+      "roleId": "82089336",
+      "frameworks": [
+        "82460503",
+        "78726170",
+        "91050015",
+        "91050016",
+        "91050013",
+        "91050017",
+        "91050018",
+        "91050019",
+        "82456040"
+      ],
+      "endDate": "2011-03-01",
+      "display": false
+    },
+    {
+      "slug": "dgfip",
+      "client": "DGFIP",
+      "startDate": "2008-10-01",
+      "roleId": "82089336",
+      "frameworks": [
+        "82460503",
+        "78726170",
+        "91050010",
+        "91050011",
+        "91050012",
+        "91050013",
+        "78726310",
+        "91050014"
+      ],
+      "endDate": "2010-04-01",
+      "display": false
+    },
+    {
+      "slug": "la-compagnie-1818",
+      "client": "La Compagnie 1818",
+      "startDate": "2008-02-01",
+      "roleId": "81994135",
+      "frameworks": ["90601531", "91050008", "91050009"],
+      "endDate": "2008-09-01",
+      "display": false
+    },
+    {
+      "slug": "bnp-paribas",
+      "client": "BNP Paribas",
+      "startDate": "2006-10-01",
+      "roleId": "81994135",
+      "frameworks": [
+        "90601531",
+        "91050004",
+        "91050005",
+        "91050006",
+        "91050007"
+      ],
+      "endDate": "2008-01-01",
+      "display": false
+    },
+    {
+      "slug": "renault-sa",
+      "client": "Renault SA",
+      "startDate": "2005-10-01",
+      "roleId": "82089336",
+      "frameworks": ["90601531", "91050002", "91050003"],
+      "endDate": "2006-09-01",
+      "display": false
+    },
+    {
+      "slug": "cfa-sup-2000",
+      "client": "CFA SUP 2000",
+      "startDate": "2004-09-01",
+      "roleId": "81994135",
+      "frameworks": ["90601531", "91050001"],
+      "endDate": "2005-08-01",
+      "display": false
+    }
+  ],
+  "studies": [
+    {
+      "id": "78731519",
+      "startDate": "1999-01-01",
+      "endDate": "1999-01-01",
+      "location": "Fontainebleau"
+    },
+    {
+      "id": "82548346",
+      "startDate": "2011-09-01",
+      "endDate": "2013-07-01",
+      "location": "Stanford"
+    },
+    {
+      "id": "78786280",
+      "startDate": "1999-09-01",
+      "endDate": "2002-07-01",
+      "location": "Champagne-sur-Seine"
+    },
+    {
+      "id": "82479432",
+      "startDate": "2011-09-01",
+      "endDate": "2013-07-01",
+      "location": "Stanford"
+    },
+    {
+      "id": "82551736",
+      "startDate": "2011-09-01",
+      "endDate": "2012-06-01",
+      "location": "Paris"
+    },
+    {
+      "id": "82475538",
+      "startDate": "2011-09-01",
+      "endDate": "2012-06-01",
+      "location": "Paris"
+    },
+    {
+      "id": "82475531",
+      "startDate": "2005-08-01",
+      "endDate": "2006-08-01",
+      "location": "Fontainebleau"
+    },
+    {
+      "id": "82475518",
+      "startDate": "2003-08-01",
+      "endDate": "2005-06-01",
+      "location": "Fontainebleau"
+    }
+  ],
+  "projects": [
+    {
+      "id": "cvproj-shopify-assistant",
+      "name": "shopify-plugin-product-assistant",
+      "startDate": "2025-12-01",
+      "endDate": null,
+      "frameworks": ["81826170", "82456019"],
+      "bullets": [],
+      "tags": [
+        {
+          "id": "cvtag-shopify-dev",
+          "name": "code"
+        }
+      ],
+      "link": "https://github.com/elzinko/shopify-plugin-product-assistant"
+    },
+    {
+      "id": "cvproj-cop1-2026",
+      "name": "cop1",
+      "startDate": "2026-02-15",
+      "endDate": null,
+      "frameworks": ["81826170", "82456019"],
+      "bullets": [],
+      "tags": [
+        {
+          "id": "cvtag-cop1",
+          "name": "code"
+        }
+      ],
+      "link": "https://github.com/elzinko/cop1",
+      "display": false
+    },
+    {
+      "id": "cvproj-iamthelaw-2026",
+      "name": "iamthelaw",
+      "startDate": "2026-02-01",
+      "endDate": null,
+      "frameworks": ["81826170", "82456019"],
+      "bullets": [],
+      "tags": [
+        {
+          "id": "cvtag-iatl",
+          "name": "code"
+        }
+      ],
+      "link": "https://github.com/elzinko/iamthelaw",
+      "display": false
+    },
+    {
+      "id": "cvproj-lifefindsaway-2026",
+      "name": "lifefindsaway",
+      "startDate": "2026-02-01",
+      "endDate": null,
+      "frameworks": ["81826170", "82456019"],
+      "bullets": [],
+      "tags": [
+        {
+          "id": "cvtag-lfa",
+          "name": "code"
+        }
+      ],
+      "link": "https://github.com/elzinko/lifefindsaway",
+      "display": false
+    },
+    {
+      "id": "cvproj-realizator-2026",
+      "name": "realizator",
+      "startDate": "2026-01-15",
+      "endDate": null,
+      "frameworks": ["81826170", "82456019"],
+      "bullets": [],
+      "tags": [
+        {
+          "id": "cvtag-realizator",
+          "name": "code"
+        }
+      ],
+      "link": "https://github.com/elzinko/realizator"
+    },
+    {
+      "id": "cvproj-livestreamz-2026",
+      "name": "livestreamz",
+      "startDate": "2026-01-15",
+      "endDate": null,
+      "frameworks": ["81826170", "82456019"],
+      "bullets": [],
+      "tags": [
+        {
+          "id": "cvtag-livestreamz",
+          "name": "code"
+        }
+      ],
+      "link": "https://github.com/elzinko/livestreamz"
+    },
+    {
+      "id": "cvproj-muti-2026",
+      "name": "MUTI",
+      "startDate": "2026-01-01",
+      "endDate": null,
+      "frameworks": ["81826170", "82456019"],
+      "bullets": [],
+      "tags": [
+        {
+          "id": "cvtag-muti",
+          "name": "product"
+        }
+      ],
+      "link": "https://www.muti.app/"
+    },
+    {
+      "id": "82518980",
+      "name": "Matière Web",
+      "startDate": "2020-06-01",
+      "endDate": null,
+      "frameworks": [
+        "90902399",
+        "90902400",
+        "81826170",
+        "82456019",
+        "82456012",
+        "81826186",
+        "90902401"
+      ],
+      "bullets": [],
+      "tags": [
+        {
+          "id": "82972442",
+          "name": "pro"
+        },
+        {
+          "id": "82972454",
+          "name": "business"
+        }
+      ],
+      "link": "https://matiere-web.com/"
+    },
+    {
+      "id": "cvproj-byhere-2026",
+      "name": "byhere",
+      "startDate": "2026-03-01",
+      "endDate": null,
+      "frameworks": ["81826170", "82456019"],
+      "bullets": [],
+      "tags": [
+        {
+          "id": "cvtag-byhere",
+          "name": "product"
+        }
+      ],
+      "link": "https://byhere.fr"
+    }
+  ],
+  "hobbies": [
+    {
+      "id": "81779577",
+      "link": "https://soundcloud.com/zebra-music-459073993/sets/la-base"
+    },
+    {
+      "id": "81779962",
+      "link": "https://hoopstudy.com/"
+    },
+    {
+      "id": "81780862",
+      "link": "https://www.passportesdusoleil.com/"
+    },
+    {
+      "id": "81781610",
+      "link": "https://www.chess.com/fr"
+    }
+  ],
+  "learnings": [
+    {
+      "id": "cnZskAq6SqSbkXAmAB0KIQ",
+      "name": "LLM",
+      "link": "https://www.langchain.com/"
+    },
+    {
+      "id": "Taq3bWZ6Stu5rt42dP1_WQ",
+      "name": "AWS Bedrock",
+      "link": "https://aws.amazon.com/fr/bedrock/agents/"
+    },
+    {
+      "id": "UsM_i8jNSFK12ePhrc0x0g",
+      "name": "MCP",
+      "link": "https://modelcontextprotocol.io/specification/2025-06-18"
+    },
+    {
+      "id": "learn-langchain-stack",
+      "name": "LangChain",
+      "link": "https://docs.langchain.com/"
+    },
+    {
+      "id": "learn-openrag",
+      "name": "OpenRAG",
+      "link": "https://docs.openr.ag/"
+    },
+    {
+      "id": "learn-bmad-method",
+      "name": "BMAD",
+      "link": "https://docs.bmad-method.org/"
+    }
+  ]
+}

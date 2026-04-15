@@ -70,7 +70,7 @@ export default function JobExperienceBody({
   return (
     <>
       {/* Écran large + impression : contenu complet */}
-      <div className="hidden lg:block print:block">
+      <div className="hidden print:block lg:block">
         {isLegacy ? (
           hookLine ? (
             <p className={pClass}>{hookLine}</p>
@@ -85,7 +85,7 @@ export default function JobExperienceBody({
       </div>
 
       {/* Mobile écran uniquement : replié = pas de texte, seulement le bouton si contenu */}
-      <div className="lg:hidden print:hidden">
+      <div className="print:hidden lg:hidden">
         {showToggle ? (
           <>
             <button

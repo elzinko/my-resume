@@ -1,25 +1,40 @@
 import 'server-only';
 
-import bundleJson from '@/data/cv/bundle.json';
+import experienceJson from '@/data/cv/experience.json';
+import localeFrJson from '@/data/cv/locales/fr.json';
+import localeEnJson from '@/data/cv/locales/en.json';
+import profileJson from '@/data/cv/profile.json';
+import techCatalogJson from '@/data/cv/tech-catalog.json';
+import { composeCvSnapshot } from '@/lib/cv-compose';
+import type {
+  Experience,
+  LocaleBundle,
+  Profile,
+  TechCatalog,
+} from '@/lib/cv-compose';
 import { buildMatchCatalogFromBundle } from '@/lib/match-catalog-from-bundle';
 import type { CvSliceForMatchCatalog } from '@/lib/match-catalog-from-bundle';
 import type { MatchCatalog } from '@/lib/match-catalog-schema';
 
 let cachedCatalog: MatchCatalog | null = null;
 
-/** Catalogue de match dérivé de `data/cv/bundle.json` (mémoïsé par process). */
+/** Catalogue de match dérivé des 4 fichiers `data/cv/*.json`, mémoïsé par process. */
 export function getMatchCatalog(): MatchCatalog {
   if (!cachedCatalog) {
-    const b = bundleJson as {
-      fr?: CvSliceForMatchCatalog;
-      en?: CvSliceForMatchCatalog;
+    const sources = {
+      profile: profileJson as Profile,
+      techCatalog: techCatalogJson as TechCatalog,
+      experience: experienceJson as Experience,
     };
-    if (!b.fr || !b.en) {
-      throw new Error(
-        'data/cv/bundle.json doit contenir les clés "fr" et "en"',
-      );
-    }
-    cachedCatalog = buildMatchCatalogFromBundle({ fr: b.fr, en: b.en });
+    const fr = composeCvSnapshot('fr', {
+      ...sources,
+      locale: localeFrJson as LocaleBundle,
+    }) as unknown as CvSliceForMatchCatalog;
+    const en = composeCvSnapshot('en', {
+      ...sources,
+      locale: localeEnJson as LocaleBundle,
+    }) as unknown as CvSliceForMatchCatalog;
+    cachedCatalog = buildMatchCatalogFromBundle({ fr, en });
   }
   return cachedCatalog;
 }

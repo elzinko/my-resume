@@ -26,6 +26,7 @@ Remplacer les classes Tailwind `print:*` dispersées dans le JSX par des **CSS v
 ```
 
 Tokens envisagés :
+
 - **Typo** : `--fs-h1`, `--fs-h2`, `--fs-title`, `--fs-body`, `--fs-meta`, `--fs-pill`
 - **Espacements** : `--sp-section`
 - **Couleurs sémantiques** (Tailwind extend) : `cv.section`, `cv.tag-text`, `cv.tag-border`, `cv.jobs`, `cv.body-muted`
@@ -37,13 +38,14 @@ Convention : plus de `print:text-xs` dans le JSX ; les exceptions screen/print p
 
 Séparer le `bundle.json` monolithique en 3 fichiers :
 
-| Fichier | Contenu |
-|---|---|
-| `data/cv/cv.json` | Données neutres (dates, slugs, refs tech, structure jobs/studies/projects) |
-| `data/cv/tech-catalog.json` | Dictionnaire techno (nom canonique + lien) |
-| `data/cv/locales/{fr,en}.json` | Textes localisés + libellés UI |
+| Fichier                        | Contenu                                                                    |
+| ------------------------------ | -------------------------------------------------------------------------- |
+| `data/cv/cv.json`              | Données neutres (dates, slugs, refs tech, structure jobs/studies/projects) |
+| `data/cv/tech-catalog.json`    | Dictionnaire techno (nom canonique + lien)                                 |
+| `data/cv/locales/{fr,en}.json` | Textes localisés + libellés UI                                             |
 
 Avantages :
+
 - i18n propre : aucun texte en dur dans les composants
 - Les données structurelles (dates, tech) ne sont plus dupliquées entre locales
 - Le tech catalog devient une source unique pour le matching offres et l'affichage
@@ -52,6 +54,7 @@ Avantages :
 ## Primitives React (optionnel)
 
 Composants réutilisables dans `components/primitives/` :
+
 - `<Section title accent="section|jobs|tag|education">` — titre + spacing
 - `<MetaRow left right />` — ligne titre / dates ou méta
 - `<DateRange start end present />` — affichage formaté des plages de dates
