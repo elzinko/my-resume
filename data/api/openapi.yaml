@@ -219,6 +219,12 @@ components:
       type: object
       required: [client, location, startDate, bullets, frameworks, role]
       properties:
+        display:
+          type: boolean
+          description: |
+            Flag interne d'affichage — certaines missions anciennes sont
+            masquées dans le rendu HTML mais gardées pour le calcul des
+            années d'expérience par techno. Absent = affichée.
         client:
           type: string
           example: 'BlaBlaCar'
@@ -234,9 +240,9 @@ components:
           format: date
           example: '2023-10-01'
         endDate:
-          type: [string, 'null']
+          type: string
           format: date
-          description: Null ou absent si mission en cours.
+          description: Absent si mission en cours.
           example: '2023-12-31'
         description:
           type: string
@@ -275,15 +281,20 @@ components:
 
     Project:
       type: object
-      required: [id, name, title, startDate, frameworks, bullets, tags]
+      required:
+        [id, name, startDate, endDate, description, frameworks, bullets, tags]
       properties:
         id: { type: string }
+        display:
+          type: boolean
+          description: |
+            Flag interne d'affichage (comme `Job.display`). Absent = affiché.
         name:
           type: string
           description: Slug ou nom technique du projet.
         title:
           type: string
-          description: Titre localisé affiché.
+          description: Titre localisé affiché. Optionnel (certains projets n'en ont pas).
         link:
           type: string
           format: uri

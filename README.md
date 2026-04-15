@@ -39,14 +39,15 @@ Encodage CLI : `npm run encode-offer-spec -- path/to/offer.json`
 
 ## Liens utiles
 
-| Ressource                   | Chemin / URL                                                         |
-| --------------------------- | -------------------------------------------------------------------- |
+| Ressource                   | Chemin / URL                                                                                                                                   |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | Données CV (structure)      | [`data/cv/profile.json`](data/cv/profile.json), [`tech-catalog.json`](data/cv/tech-catalog.json), [`experience.json`](data/cv/experience.json) |
-| Textes localisés (FR/EN)    | [`data/cv/locales/fr.json`](data/cv/locales/fr.json), [`data/cv/locales/en.json`](data/cv/locales/en.json) |
-| Spec OpenAPI (API profile)  | [`data/api/openapi.yaml`](data/api/openapi.yaml) — `GET /api/openapi.yaml`                                 |
-| Types offre (interfaces TS) | [`data/offers/types.ts`](data/offers/types.ts)                       |
-| Guide LLM (statique)        | [`.llm/README.md`](.llm/README.md)                                   |
-| Guide LLM (dynamique)       | `GET /api/llm-guide`                                                 |
-| Storybook maison (dev)      | `http://localhost:3000/{lang}/dev/components`                        |
-| Storybook (Chromatic)       | `http://localhost:6006` (`npm run storybook`)                        |
-| Rendus PDF / screenshots    | [`renders/`](renders/) -- [`renders/index.html`](renders/index.html) |
+| Textes localisés (FR/EN)    | [`data/cv/locales/fr.json`](data/cv/locales/fr.json), [`data/cv/locales/en.json`](data/cv/locales/en.json)                                     |
+| Spec OpenAPI (API profile)  | [`data/api/openapi.yaml`](data/api/openapi.yaml) — `GET /api/openapi.yaml`                                                                     |
+| API profile (JSON)          | `GET /api/profile?lang=fr\|en&include=profile,jobs,…` — voir spec OpenAPI ci-dessus                                                            |
+| Types offre (interfaces TS) | [`data/offers/types.ts`](data/offers/types.ts)                                                                                                 |
+| Guide LLM (statique)        | [`.llm/README.md`](.llm/README.md)                                                                                                             |
+| Guide LLM (dynamique)       | `GET /api/llm-guide`                                                                                                                           |
+| Storybook maison (dev)      | `http://localhost:3000/{lang}/dev/components`                                                                                                  |
+| Storybook (Chromatic)       | `http://localhost:6006` (`npm run storybook`)                                                                                                  |
+| Rendus PDF / screenshots    | [`renders/`](renders/) -- [`renders/index.html`](renders/index.html)                                                                           |
