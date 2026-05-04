@@ -60,6 +60,10 @@ GET /{lang}?company=<nom>&requirement=<Label:kw1,kw2>[&...]
 | \`reqY\` | non | Annees d'experience affichees pour le i-eme requirement (remplace le calcul auto) |
 | \`contract\` | non | \`cdi\` ou \`freelance\` -- adapte textes profil/domaines, masque Malt en CDI |
 | \`job\` | non | Repetable. Slug d'une mission a mettre en avant (voir catalogue ci-dessous) |
+| \`workAddress\` | non | Adresse complete du lieu de travail. Active l'itineraire Google Maps gare -> bureau sur le pictogramme localisation. |
+| \`clientAddress\` | alias | Alias court de \`workAddress\`. |
+| \`commuteLabel\` | non | Libelle court affiche pres du lieu (ex. "~45 min"). Ignore sans \`workAddress\`. |
+| \`commuteMinutes\` | non | Minutes de trajet (numerique). Si fourni sans \`commuteLabel\`, genere "~N min". |
 | \`spec\` | non | JSON base64url (remplace les autres params d'offre si present) |
 | \`id\` | non | Identifiant interne optionnel |
 
@@ -187,14 +191,20 @@ Schema JSON decode :
 \`\`\`json
 {
   "company": "string (requis)",
-  "title": "string | { fr: string, en: string }",
+  "title": "string | { fr: string, en: string } (requis)",
   "requirements": [{ "label": "string", "keywords": ["string"], "experienceYearsOverride?": "number" }],
   "contract": "cdi | freelance (optionnel)",
-  "highlightedJobs": ["slug1", "slug2"] ,
+  "workAddress": "string (optionnel) -- itineraire Google Maps gare -> bureau",
+  "commuteLabel": "string (optionnel) -- libelle court affiche pres du lieu",
+  "commuteMinutes": "number (optionnel) -- si pas de commuteLabel, genere '~N min'",
+  "highlightedJobs": ["slug1", "slug2"],
   "id": "string (optionnel)",
   "url": "string (optionnel)"
 }
 \`\`\`
+
+> Aliases snake_case acceptes dans le spec JSON : \`experience_years_override\`,
+> \`highlighted_jobs\`, \`commute_minutes\`.
 
 ## Prompt rapide
 
