@@ -24,6 +24,15 @@ export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
+  if (process.env.VERCEL === '1') {
+    const devPattern = /^\/(?:fr|en)\/dev\//;
+    if (devPattern.test(pathname)) {
+      return NextResponse.rewrite(new URL('/not-found', request.url), {
+        status: 404,
+      });
+    }
+  }
+
   // Case where the user is accessing the root path
   if (pathname === '' || pathname === '/') {
     const locale = getLocale(request);
