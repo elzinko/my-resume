@@ -31,7 +31,7 @@ npm run build
 - **Paramètres lisibles** : `/{lang}?company=…&requirement=Libellé:mots&contract=cdi`
 - **JSON compact base64** : `/{lang}?spec=…`
 - **Type de contrat** : `?contract=cdi` adapte les textes profil/domaines pour un poste permanent ; `freelance` par défaut.
-- **Guide LLM dynamique** : `GET /api/llm-guide` — markdown auto-généré avec le catalogue de technos complet et des exemples d’URLs.
+- **Guide LLM dynamique** : `GET /api/llm-guide` — markdown auto-généré, point d'entrée recommandé pour les agents LLM. Liste tous les endpoints publics (`/api/profile`, `/api/openapi.yaml`, `/{lang}`), le catalogue de technos complet et des exemples d'URLs.
 
 Plafonds (longueurs, nombre d’exigences) : `lib/dynamic-offer-spec.ts`, `lib/query-offer-params.ts`. URLs limitées à ~2k caractères par le navigateur ; au-delà, préférer `spec` base64.
 
@@ -44,7 +44,7 @@ Encodage CLI : `npm run encode-offer-spec -- path/to/offer.json`
 | Données CV (structure)      | [`data/cv/profile.json`](data/cv/profile.json), [`tech-catalog.json`](data/cv/tech-catalog.json), [`experience.json`](data/cv/experience.json) |
 | Textes localisés (FR/EN)    | [`data/cv/locales/fr.json`](data/cv/locales/fr.json), [`data/cv/locales/en.json`](data/cv/locales/en.json)                                     |
 | Spec OpenAPI (API profile)  | [`data/api/openapi.yaml`](data/api/openapi.yaml) — `GET /api/openapi.yaml`                                                                     |
-| API profile (JSON)          | `GET /api/profile?lang=fr\|en&include=profile,jobs,…` — voir spec OpenAPI ci-dessus                                                            |
+| API profile (JSON)          | `GET /api/profile?lang=fr\|en` — snapshot complet du profil + catalogue techno. Voir spec OpenAPI ci-dessus.                                   |
 | Types offre (interfaces TS) | [`data/offers/types.ts`](data/offers/types.ts)                                                                                                 |
 | Guide LLM                   | `GET /api/llm-guide`                                                                                                                           |
 | Storybook maison (dev)      | `http://localhost:3000/{lang}/dev/components`                                                                                                  |

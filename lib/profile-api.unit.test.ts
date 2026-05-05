@@ -8,10 +8,7 @@ import localeFrJson from '../data/cv/locales/fr.json';
 import localeEnJson from '../data/cv/locales/en.json';
 import {
   buildProfileResponse,
-  parseIncludeParam,
   PROFILE_API_SCHEMA_VERSION,
-  PROFILE_API_SECTIONS,
-  UnknownSectionError,
 } from './profile-api';
 
 const sourcesFr = {
@@ -28,34 +25,7 @@ const sourcesEn = {
   locale: localeEnJson,
 } as unknown as CvSources;
 
-test('parseIncludeParam — null/empty returns default (all except techCatalog)', () => {
-  const def = parseIncludeParam(null);
-  assert.equal(def.includes('techCatalog'), false);
-  assert.equal(def.includes('profile'), true);
-  assert.equal(def.length, PROFILE_API_SECTIONS.length - 1);
-  assert.deepEqual(parseIncludeParam(''), def);
-  assert.deepEqual(parseIncludeParam('   '), def);
-});
-
-test('parseIncludeParam — comma-separated list, trims & deduplicates', () => {
-  assert.deepEqual(parseIncludeParam('profile, jobs , profile'), [
-    'profile',
-    'jobs',
-  ]);
-});
-
-test('parseIncludeParam — throws UnknownSectionError for unknown section', () => {
-  assert.throws(
-    () => parseIncludeParam('profile,not_a_section'),
-    (err) => {
-      assert.ok(err instanceof UnknownSectionError);
-      assert.equal((err as UnknownSectionError).section, 'not_a_section');
-      return true;
-    },
-  );
-});
-
-test('buildProfileResponse — defaults: schemaVersion, lang, no techCatalog', () => {
+test('buildProfileResponse — returns schemaVersion, lang, and all sections', () => {
   const r = buildProfileResponse('fr', sourcesFr);
   assert.equal(r.schemaVersion, PROFILE_API_SCHEMA_VERSION);
   assert.equal(r.lang, 'fr');
@@ -63,18 +33,11 @@ test('buildProfileResponse — defaults: schemaVersion, lang, no techCatalog', (
   assert.ok(r.about, 'about present');
   assert.ok(r.skills, 'skills present');
   assert.ok(r.jobs, 'jobs present');
-  assert.equal(r.techCatalog, undefined, 'techCatalog opt-in');
-});
-
-test('buildProfileResponse — include=profile returns only profile + envelope', () => {
-  const r = buildProfileResponse('fr', sourcesFr, ['profile']);
-  const keys = Object.keys(r).sort();
-  assert.deepEqual(keys, ['lang', 'profile', 'schemaVersion']);
-});
-
-test('buildProfileResponse — include=techCatalog activates it', () => {
-  const r = buildProfileResponse('fr', sourcesFr, ['techCatalog']);
   assert.ok(r.techCatalog, 'techCatalog present');
+});
+
+test('buildProfileResponse — techCatalog has skills and domains arrays', () => {
+  const r = buildProfileResponse('fr', sourcesFr);
   const tc = r.techCatalog as { skills: unknown[]; domains: unknown[] };
   assert.ok(Array.isArray(tc.skills));
   assert.ok(Array.isArray(tc.domains));
@@ -82,7 +45,7 @@ test('buildProfileResponse — include=techCatalog activates it', () => {
 });
 
 test('buildProfileResponse — profile section shape (no contact titles)', () => {
-  const r = buildProfileResponse('fr', sourcesFr, ['profile']);
+  const r = buildProfileResponse('fr', sourcesFr);
   const p = r.profile as {
     name: string;
     role: string;
@@ -104,8 +67,8 @@ test('buildProfileResponse — profile section shape (no contact titles)', () =>
 });
 
 test('buildProfileResponse — profile.role is localized (fr vs en)', () => {
-  const fr = buildProfileResponse('fr', sourcesFr, ['profile']);
-  const en = buildProfileResponse('en', sourcesEn, ['profile']);
+  const fr = buildProfileResponse('fr', sourcesFr);
+  const en = buildProfileResponse('en', sourcesEn);
   const roleFr = (fr.profile as { role: string }).role;
   const roleEn = (en.profile as { role: string }).role;
   assert.notEqual(roleFr, roleEn, 'fr and en roles differ');
@@ -129,7 +92,7 @@ test('buildProfileResponse — jobs/projects/etc are arrays of objects', () => {
 });
 
 test('buildProfileResponse — about shape matches spec', () => {
-  const r = buildProfileResponse('fr', sourcesFr, ['about']);
+  const r = buildProfileResponse('fr', sourcesFr);
   const a = r.about as Record<string, unknown>;
   assert.ok(a.title, 'about.title');
   assert.ok(a.text, 'about.text');
@@ -137,7 +100,7 @@ test('buildProfileResponse — about shape matches spec', () => {
 });
 
 test('buildProfileResponse — techCatalog skills have non-empty links where catalog has them', () => {
-  const r = buildProfileResponse('fr', sourcesFr, ['techCatalog']);
+  const r = buildProfileResponse('fr', sourcesFr);
   const tc = r.techCatalog as {
     skills: Array<{ id: string; name: string; link: string }>;
   };

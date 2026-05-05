@@ -1,11 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { i18n, type Locale } from '../../../i18n-config';
 import { loadCvSources } from '@/lib/cv-data';
-import {
-  buildProfileResponse,
-  parseIncludeParam,
-  UnknownSectionError,
-} from '@/lib/profile-api';
+import { buildProfileResponse } from '@/lib/profile-api';
 
 export const dynamic = 'force-dynamic';
 
@@ -28,10 +24,10 @@ function jsonError(
 }
 
 /**
- * GET /api/profile?lang=fr|en&include=profile,jobs,…
+ * GET /api/profile?lang=fr|en
  *
- * Public, read-only JSON endpoint. Spec: `data/api/openapi.yaml`.
- * Data source: the same 4 files used to render the HTML CV.
+ * Public, read-only JSON endpoint. Returns the full composed profile snapshot.
+ * Spec: `data/api/openapi.yaml`. Same data source as the HTML CV.
  */
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const sp = request.nextUrl.searchParams;
@@ -55,22 +51,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     lang = resolved;
   }
 
-  let sections;
-  try {
-    sections = parseIncludeParam(sp.get('include'));
-  } catch (err) {
-    if (err instanceof UnknownSectionError) {
-      return jsonError(
-        400,
-        'unknown_section',
-        `Unknown section "${err.section}". Expected a comma-separated subset of: profile, about, domains, jobs, studies, projects, hobbies, learnings, skills, techCatalog.`,
-      );
-    }
-    throw err;
-  }
-
   const sources = await loadCvSources(lang);
-  const payload = buildProfileResponse(lang, sources, sections);
+  const payload = buildProfileResponse(lang, sources);
   return NextResponse.json(payload, { headers: JSON_HEADERS });
 }
 

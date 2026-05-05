@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { getMatchCatalog } from '@/lib/match-catalog-server';
 import { getJobCatalog } from '@/lib/job-catalog-server';
 import { SHORT_PROFILE_MATCH_MAX } from '@/lib/short-offer-match';
 
@@ -9,38 +8,80 @@ export const dynamic = 'force-dynamic';
  * GET /api/llm-guide
  *
  * Public endpoint serving a self-contained Markdown guide for LLM agents.
- * Includes the dynamically-generated tech catalog from bundle.json,
- * customization instructions, constraints, and URL templates.
+ * Lists all public endpoints, the customization params for the HTML CV, and
+ * compact references (mission slugs) needed to build URLs. Larger reference
+ * data (full tech catalog) is served by `/api/profile` to keep this guide
+ * lean.
  */
 export async function GET() {
-  const catalog = getMatchCatalog();
-  const catalogRows = catalog.entries
-    .map((e) => `| ${e.id} | ${e.name} | ${e.matchTokens.join(', ')} |`)
-    .join('\n');
-
   const jobCatalog = getJobCatalog();
-  const jobRows = jobCatalog
-    .map(
-      (j) =>
-        `| ${j.slug} | ${j.client} | ${j.role} | ${j.startDate} → ${
-          j.endDate ?? 'present'
-        } | ${j.frameworks.join(', ')} |`,
-    )
-    .join('\n');
+  const jobSlugs = jobCatalog.map((j) => `\`${j.slug}\``).join(', ');
 
   const markdown = `# CV Dynamique -- Guide LLM
 
-> Document auto-genere. Contient toutes les informations necessaires pour
-> personnaliser le CV via des parametres URL, sans autre source.
+> Document auto-genere. Point d'entree pour les agents LLM : decrit tous les
+> endpoints publics et les parametres URL pour personnaliser le CV.
 
-## Formats disponibles
+## Points d'entree
+
+| Endpoint | Methode | Description |
+| -------- | ------- | ----------- |
+| \`/api/llm-guide\` | GET | Ce guide (Markdown). Point d'entree recommande pour tout agent LLM. |
+| \`/api/profile\` | GET | Donnees structurees JSON du profil + catalogue techno complet. |
+| \`/api/openapi.yaml\` | GET | Specification OpenAPI 3.1 de l'API \`/api/profile\`. |
+| \`/{lang}\` | GET | CV HTML complet. FR: \`/fr\`, EN: \`/en\`. |
+| \`/{lang}/short\` | GET | CV HTML court (1 page). |
+| \`/\` | GET | Redirige vers \`/{lang}\` selon la locale du navigateur. |
+
+Base URL production : \`https://www.elzinko.fr\`
+
+---
+
+## API Profile (\`/api/profile\`)
+
+Endpoint JSON en lecture seule, sans authentification (CORS ouvert).
+Retourne le snapshot complet du profil : identite, contact, experiences,
+etudes, projets, competences, et le catalogue canonique des technologies
+(\`techCatalog\` avec ids + noms + liens).
+
+\`\`\`
+GET /api/profile?lang=fr|en
+\`\`\`
+
+| Parametre | Requis | Description |
+| --------- | ------ | ----------- |
+| \`lang\` | non | \`fr\` (defaut) ou \`en\`. |
+
+Toutes les sections sont toujours presentes : \`profile\`, \`about\`, \`domains\`,
+\`jobs\`, \`studies\`, \`projects\`, \`hobbies\`, \`learnings\`, \`skills\`,
+\`techCatalog\`.
+
+### Specification OpenAPI
+
+La spec formelle de cette API est disponible a \`/api/openapi.yaml\`
+(OpenAPI 3.1, YAML). Elle decrit le schema complet de la reponse JSON, les
+codes d'erreur et les types de chaque champ.
+
+### Recuperer les ids du catalogue techno
+
+Le parametre \`requirement\` (voir plus bas) accepte \`@id\` pour referencer une
+techno precise. Les ids sont disponibles dans \`techCatalog.skills\` et
+\`techCatalog.domains[].competencies\` de la reponse \`/api/profile\`.
+
+> Le matching texte (mots-cles separes par des virgules) fonctionne aussi
+> sans avoir a charger le catalogue. Le passage par id n'est utile que pour
+> de la desambiguisation (ex. distinguer \`Vue\` de \`Vue.js\`).
+
+---
+
+## CV HTML -- Formats disponibles
 
 | Format | URL | Description |
 | ------ | --- | ----------- |
 | CV complet | \`/{lang}\` | FR: \`/fr\`, EN: \`/en\` -- toutes les sections |
 | CV court | \`/{lang}/short\` | 1 page -- profil, domaines, experience recente |
 
-## Parametres de personnalisation
+## CV HTML -- Parametres de personnalisation
 
 \`\`\`
 GET /{lang}?company=<nom>&requirement=<Label:kw1,kw2>[&...]
@@ -59,7 +100,7 @@ GET /{lang}?company=<nom>&requirement=<Label:kw1,kw2>[&...]
 | \`req\` | alias | Alias court pour \`requirement\` |
 | \`reqY\` | non | Annees d'experience affichees pour le i-eme requirement (remplace le calcul auto) |
 | \`contract\` | non | \`cdi\` ou \`freelance\` -- adapte textes profil/domaines, masque Malt en CDI |
-| \`job\` | non | Repetable. Slug d'une mission a mettre en avant (voir catalogue ci-dessous) |
+| \`job\` | non | Repetable. Slug d'une mission a mettre en avant (voir liste ci-dessous) |
 | \`workAddress\` | non | Adresse complete du lieu de travail. Active l'itineraire Google Maps gare -> bureau sur le pictogramme localisation. |
 | \`clientAddress\` | alias | Alias court de \`workAddress\`. |
 | \`commuteLabel\` | non | Libelle court affiche pres du lieu (ex. "~45 min"). Ignore sans \`workAddress\`. |
@@ -73,10 +114,12 @@ Chaque valeur suit le pattern \`Label:keyword1,keyword2\` :
 
 - **Label** (avant \`:\`) : affiche dans le tableau d'adequation.
 - **Keywords** (apres \`:\`, separes par des virgules) : matches contre le catalogue du CV.
-- **Reference par id** : prefixer par \`@\` un id du catalogue ci-dessous.
+- **Reference par id** : prefixer par \`@\` un id du catalogue techno.
+  Ids disponibles via \`/api/profile\` -> \`techCatalog\`.
   Exemple : \`requirement=Vue.js:@an8YW0VVTf2JuZZZo1W0pw\`
 
-Les mots-cles texte fonctionnent aussi (matching insensible a la ponctuation).
+Les mots-cles texte fonctionnent aussi (matching insensible a la
+ponctuation) et suffisent dans la plupart des cas.
 
 ### Calcul automatique des annees d'experience
 
@@ -123,26 +166,18 @@ Exemple : \`subtitle_fr=Chef+de+Projet+Java+Full+Stack&subtitle_en=Java+Full+Sta
 - En mode short, chaque vignette indique le nombre de clients (missions).
 - En mode full, la liste detaillee des clients est affichee sous chaque vignette.
 
-## Catalogue de technologies disponibles
+## Slugs de missions (parametre \`job\`)
 
-> ${catalog.entries.length} technologies. Genere depuis \`data/cv/bundle.json\`.
+> ${jobCatalog.length} missions disponibles. Utiliser le slug dans le parametre
+> \`job\` (repetable) pour mettre en avant une mission sur le CV court.
 
-| ID | Nom | Tokens de matching |
-| -- | --- | ------------------ |
-${catalogRows}
+${jobSlugs}
 
-## Catalogue des missions
-
-> ${jobCatalog.length} missions. Genere depuis \`data/cv/bundle.json\`.
-> Utiliser le slug dans le parametre \`job\` pour mettre en avant une mission sur le CV court.
-
-| Slug | Client | Role | Periode | Frameworks |
-| ---- | ------ | ---- | ------- | ---------- |
-${jobRows}
+> Details complets de chaque mission (client, role, dates, frameworks) :
+> \`/api/profile?lang=fr\` -> tableau \`jobs\`.
 
 ### Mise en avant de missions (parametre \`job\`)
 
-Le parametre \`job\` est repetable. Il accepte le slug de la mission (colonne "Slug" ci-dessus).
 Sur le CV court, les missions mises en avant sont affichees avec tous les details (description,
 puces, frameworks). Les missions intermediaires non selectionnees sont compressees en une ligne
 (client + dates uniquement), preservant la continuite de la timeline.
@@ -206,13 +241,21 @@ Schema JSON decode :
 > Aliases snake_case acceptes dans le spec JSON : \`experience_years_override\`,
 > \`highlighted_jobs\`, \`commute_minutes\`.
 
-## Prompt rapide
+## Prompt rapide (generation d'URL de CV personnalise)
 
-> Lis le catalogue ci-dessus pour obtenir les ids. Construis une URL GET
-> vers \`/{fr|en}\` avec \`company\`, \`title\` (optionnel), et pour chaque
-> competence un parametre \`requirement=Label:@id\` (repeter \`requirement\`).
-> Sinon utilise des mots-cles texte separes par des virgules apres le \`:\`.
+> Construis une URL GET vers \`/{fr|en}\` avec \`company\`, \`title\` (optionnel),
+> et pour chaque competence un parametre \`requirement=Label:keyword1,keyword2\`
+> (repeter \`requirement\`). Les mots-cles texte suffisent dans la plupart des
+> cas (matching insensible a la ponctuation). Pour la desambiguisation, fetch
+> \`/api/profile\` pour obtenir les ids et utiliser \`requirement=Label:@id\`.
 > Ajoute \`contract=cdi\` pour un poste permanent.
+
+## Recapitulatif pour agents LLM
+
+1. **Decouverte** : commence par \`/api/llm-guide\` (ce document).
+2. **Donnees structurees** : utilise \`/api/profile?lang=fr\` pour lire le profil complet en JSON (incluant le catalogue techno avec ids).
+3. **Spec formelle** : consulte \`/api/openapi.yaml\` pour le schema de la reponse JSON.
+4. **Personnalisation du CV** : construis une URL \`/{lang}?company=...&requirement=...\` en suivant les sections ci-dessus.
 `;
 
   return new NextResponse(markdown, {
