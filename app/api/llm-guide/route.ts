@@ -33,14 +33,62 @@ export async function GET() {
 > Document auto-genere. Contient toutes les informations necessaires pour
 > personnaliser le CV via des parametres URL, sans autre source.
 
-## Formats disponibles
+## Points d'entree
+
+| Endpoint | Methode | Description |
+| -------- | ------- | ----------- |
+| \`/api/llm-guide\` | GET | Ce guide (Markdown). Point d'entree recommande pour tout agent LLM. |
+| \`/api/profile\` | GET | Donnees structurees JSON du profil (identite, experiences, competences, etc.). |
+| \`/api/openapi.yaml\` | GET | Specification OpenAPI 3.1 de l'API \`/api/profile\`. |
+| \`/{lang}\` | GET | CV HTML complet. FR: \`/fr\`, EN: \`/en\`. |
+| \`/{lang}/short\` | GET | CV HTML court (1 page). |
+| \`/\` | GET | Redirige vers \`/{lang}\` selon la locale du navigateur. |
+
+Base URL production : \`https://www.elzinko.fr\`
+
+---
+
+## API Profile (\`/api/profile\`)
+
+Endpoint JSON en lecture seule, sans authentification (CORS ouvert).
+
+\`\`\`
+GET /api/profile?lang=fr|en&include=section1,section2
+\`\`\`
+
+| Parametre | Requis | Description |
+| --------- | ------ | ----------- |
+| \`lang\` | non | \`fr\` (defaut) ou \`en\`. |
+| \`include\` | non | Sous-ensemble de sections a retourner (virgules). Par defaut : toutes sauf \`techCatalog\`. |
+
+### Sections disponibles
+
+\`profile\`, \`about\`, \`domains\`, \`jobs\`, \`studies\`, \`projects\`, \`hobbies\`, \`learnings\`, \`skills\`, \`techCatalog\`.
+
+- \`techCatalog\` est opt-in : il faut le demander explicitement via \`include\`.
+- Si \`include\` est omis, toutes les sections sauf \`techCatalog\` sont retournees.
+
+### Exemples
+
+- Profil complet en francais : \`/api/profile\`
+- Experiences uniquement en anglais : \`/api/profile?lang=en&include=jobs\`
+- Profil + catalogue techno : \`/api/profile?lang=fr&include=profile,techCatalog\`
+
+### Specification OpenAPI
+
+La spec formelle de cette API est disponible a \`/api/openapi.yaml\` (OpenAPI 3.1, YAML).
+Elle decrit le schema complet de la reponse JSON, les codes d'erreur et les types de chaque champ.
+
+---
+
+## CV HTML -- Formats disponibles
 
 | Format | URL | Description |
 | ------ | --- | ----------- |
 | CV complet | \`/{lang}\` | FR: \`/fr\`, EN: \`/en\` -- toutes les sections |
 | CV court | \`/{lang}/short\` | 1 page -- profil, domaines, experience recente |
 
-## Parametres de personnalisation
+## CV HTML -- Parametres de personnalisation
 
 \`\`\`
 GET /{lang}?company=<nom>&requirement=<Label:kw1,kw2>[&...]
@@ -206,13 +254,20 @@ Schema JSON decode :
 > Aliases snake_case acceptes dans le spec JSON : \`experience_years_override\`,
 > \`highlighted_jobs\`, \`commute_minutes\`.
 
-## Prompt rapide
+## Prompt rapide (generation d'URL de CV personnalise)
 
 > Lis le catalogue ci-dessus pour obtenir les ids. Construis une URL GET
 > vers \`/{fr|en}\` avec \`company\`, \`title\` (optionnel), et pour chaque
 > competence un parametre \`requirement=Label:@id\` (repeter \`requirement\`).
 > Sinon utilise des mots-cles texte separes par des virgules apres le \`:\`.
 > Ajoute \`contract=cdi\` pour un poste permanent.
+
+## Recapitulatif pour agents LLM
+
+1. **Decouverte** : commence par \`/api/llm-guide\` (ce document).
+2. **Donnees structurees** : utilise \`/api/profile?lang=fr&include=...\` pour lire le profil en JSON.
+3. **Spec formelle** : consulte \`/api/openapi.yaml\` pour le schema de la reponse JSON.
+4. **Personnalisation du CV** : construis une URL \`/{lang}?company=...&requirement=...\` en suivant les sections ci-dessus.
 `;
 
   return new NextResponse(markdown, {
