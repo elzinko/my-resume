@@ -24,15 +24,14 @@ servers:
 paths:
   /api/profile:
     get:
-      summary: Récupère le profil complet (ou un sous-ensemble)
+      summary: Récupère le profil complet
       description: |
-        Retourne les données localisées du profil. Par défaut, toutes
-        les sections sont renvoyées **sauf** `techCatalog` (opt-in).
-        Utiliser `include` pour restreindre ou activer `techCatalog`.
+        Retourne le snapshot complet du profil dans la locale demandée :
+        identité, contact, expériences, études, projets, compétences,
+        ainsi que le catalogue canonique des technologies (`techCatalog`).
       operationId: getProfile
       parameters:
         - $ref: '#/components/parameters/Lang'
-        - $ref: '#/components/parameters/Include'
       responses:
         '200':
           description: Profil composé pour la locale demandée.
@@ -46,7 +45,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProfileResponse'
         '400':
-          description: Paramètres invalides (lang non supportée, section inconnue dans `include`).
+          description: Paramètre `lang` invalide (locale non supportée).
           content:
             application/json:
               schema:
@@ -61,17 +60,6 @@ components:
       description: Locale demandée. Défaut `fr`.
       schema:
         $ref: '#/components/schemas/Locale'
-    Include:
-      name: include
-      in: query
-      required: false
-      description: |
-        Liste séparée par virgules des sections à inclure. Si omis,
-        toutes les sections sont retournées sauf `techCatalog`.
-        Exemple : `include=profile,jobs,techCatalog`.
-      schema:
-        type: string
-        example: 'profile,jobs,techCatalog'
 
   schemas:
     Locale:
@@ -88,7 +76,7 @@ components:
           description: Message d'erreur lisible.
         code:
           type: string
-          description: Code d'erreur stable (ex. `invalid_lang`, `unknown_section`).
+          description: Code d'erreur stable (ex. `invalid_lang`).
 
     TechRef:
       type: object
@@ -358,10 +346,20 @@ components:
     ProfileResponse:
       type: object
       description: |
-        Réponse composée. Les sections absentes dans `include` ne sont
-        tout simplement pas présentes dans la réponse (clé omise, pas
-        null). `schemaVersion` et `lang` sont toujours présents.
-      required: [schemaVersion, lang]
+        Réponse composée — toutes les sections sont toujours présentes.
+      required:
+        - schemaVersion
+        - lang
+        - profile
+        - about
+        - domains
+        - jobs
+        - studies
+        - projects
+        - hobbies
+        - learnings
+        - skills
+        - techCatalog
       properties:
         schemaVersion:
           type: integer

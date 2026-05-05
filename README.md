@@ -44,7 +44,7 @@ Encodage CLI : `npm run encode-offer-spec -- path/to/offer.json`
 | Données CV (structure)      | [`data/cv/profile.json`](data/cv/profile.json), [`tech-catalog.json`](data/cv/tech-catalog.json), [`experience.json`](data/cv/experience.json) |
 | Textes localisés (FR/EN)    | [`data/cv/locales/fr.json`](data/cv/locales/fr.json), [`data/cv/locales/en.json`](data/cv/locales/en.json)                                     |
 | Spec OpenAPI (API profile)  | [`data/api/openapi.yaml`](data/api/openapi.yaml) — `GET /api/openapi.yaml`                                                                     |
-| API profile (JSON)          | `GET /api/profile?lang=fr\|en&include=profile,jobs,…` — voir spec OpenAPI ci-dessus                                                            |
+| API profile (JSON)          | `GET /api/profile?lang=fr\|en` — snapshot complet du profil + catalogue techno. Voir spec OpenAPI ci-dessus.                                   |
 | Types offre (interfaces TS) | [`data/offers/types.ts`](data/offers/types.ts)                                                                                                 |
 | Guide LLM                   | `GET /api/llm-guide`                                                                                                                           |
 | Storybook maison (dev)      | `http://localhost:3000/{lang}/dev/components`                                                                                                  |
