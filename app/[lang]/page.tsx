@@ -66,6 +66,9 @@ export default async function Page({
       ? sp.get('subtitle_fr') || sp.get('subtitle')
       : sp.get('subtitle_en') || sp.get('subtitle')
     )?.trim() || undefined;
+  const eduRaw = sp.get('edu')?.trim();
+  const showEducationLevel =
+    offer?.showEducation === true || eduRaw === '1' || eduRaw === 'true';
   const contact = data.contact as
     | { email?: string; phone?: string; location?: string }
     | undefined;
@@ -84,6 +87,7 @@ export default async function Page({
       hideMalt={contract === 'cdi'}
       contract={contract}
       subtitleOverride={subtitleOverride}
+      showEducationLevel={showEducationLevel}
     />
   );
 }
