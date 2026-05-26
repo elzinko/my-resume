@@ -35,6 +35,8 @@ export interface ExperienceJob {
   startDate: string;
   endDate?: string;
   display?: boolean;
+  /** Restrict visibility to a specific CV mode (e.g. `teaching`). Absent ⇒ visible in all modes. */
+  displayMode?: string;
   roleId: string;
   frameworks: string[];
 }
@@ -56,6 +58,8 @@ export interface ExperienceProject {
   bullets: Array<{ id: string; text: string; link?: string }>;
   tags: Array<{ id: string; name: string }>;
   display?: boolean;
+  /** Restrict visibility to a specific CV mode (e.g. `teaching`). Absent ⇒ visible in all modes. */
+  displayMode?: string;
 }
 
 export interface ExperienceHobby {
@@ -87,7 +91,12 @@ export interface LocaleBundle {
     emailTitle: string;
     locationTitle: string;
   };
-  about: { title: string; text: string; textCdi: string };
+  about: {
+    title: string;
+    text: string;
+    textCdi: string;
+    textTeaching?: string;
+  };
   ui: {
     skillsTitle: string;
     studiesTitle: string;
@@ -103,7 +112,14 @@ export interface LocaleBundle {
     locale: string;
     seo: { description: string; title: string };
   };
-  domains: Record<string, { description: string; descriptionCdi: string }>;
+  domains: Record<
+    string,
+    {
+      description: string;
+      descriptionCdi: string;
+      descriptionTeaching?: string;
+    }
+  >;
   jobs: Record<
     string,
     {
@@ -159,6 +175,7 @@ export function composeCvSnapshot(
     name: d.name,
     description: locale.domains[d.id].description,
     descriptionCdi: locale.domains[d.id].descriptionCdi,
+    descriptionTeaching: locale.domains[d.id].descriptionTeaching,
     position: d.position,
     competencies: d.competencyIds.map(resolveTechNoLink),
   }));
@@ -170,6 +187,7 @@ export function composeCvSnapshot(
     const fwIds = lj.frameworks ?? ej.frameworks;
     const out: Record<string, unknown> = {};
     if (ej.display !== undefined) out.display = ej.display;
+    if (ej.displayMode !== undefined) out.displayMode = ej.displayMode;
     out.client = ej.client;
     if (ej.clientUrl !== undefined) out.clientUrl = ej.clientUrl;
     out.location = lj.location;
@@ -202,6 +220,7 @@ export function composeCvSnapshot(
     const out: Record<string, unknown> = {};
     out.id = ep.id;
     if (ep.display !== undefined) out.display = ep.display;
+    if (ep.displayMode !== undefined) out.displayMode = ep.displayMode;
     out.name = ep.name;
     if (lp.title !== undefined) out.title = lp.title;
     if (ep.link !== undefined) out.link = ep.link;

@@ -108,7 +108,11 @@ export default async function ShortPage({
       competencies: d.competencies || [],
     })),
     jobs: (data?.allJobsModels || [])
-      .filter((j: { display?: boolean }) => j.display !== false)
+      .filter((j: { display?: boolean; displayMode?: string }) => {
+        if (j.display === false) return false;
+        if (j.displayMode) return false;
+        return true;
+      })
       .map((j: any) => {
         const dates = formatDates(j.startDate, j.endDate);
         const [start, end] = dates ? dates.split(' - ') : ['', ''];
@@ -140,7 +144,11 @@ export default async function ShortPage({
     projectsTitle: data?.projectsTitle?.title ?? 'Projects',
     projects: sortChronologicalDesc(
       (data?.allProjectsModels || []).filter(
-        (p: { display?: boolean }) => p.display !== false,
+        (p: { display?: boolean; displayMode?: string }) => {
+          if (p.display === false) return false;
+          if (p.displayMode) return false;
+          return true;
+        },
       ),
       byEndThenStart,
     ),

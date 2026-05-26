@@ -55,3 +55,6 @@ storybook-static
 
 # claude code
 .claude/
+
+# Lettres de motivation — local-only
+letters/
