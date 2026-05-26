@@ -12,7 +12,8 @@
   "about": {
     "title": "Profile",
     "text": "Je suis un consultant informatique fullstack agile passionné par les technologies open source frontend et backend. J'aime développer des logiciels à l'aide de solutions cloud, le tout dans la lignée du mouvement Devops.",
-    "textCdi": "Ingénieur fullstack agile avec 20 ans d'expérience, je conçois des applications robustes en environnement cloud avec une culture DevOps et craftsmanship, sur des stacks open source frontend et backend."
+    "textCdi": "Ingénieur fullstack agile avec 20 ans d'expérience, je conçois des applications robustes en environnement cloud avec une culture DevOps et craftsmanship, sur des stacks open source frontend et backend.",
+    "textTeaching": "Ingénieur informatique formé à l'IUT (DUT Informatique puis Licence Professionnelle), j'ai construit 20 ans d'expérience industrielle — du grand groupe (BlaBlaCar, SNCF, Thales, leboncoin) à la startup et au solopreneuriat, sur tout le cycle produit (idée, MVP, mise en production, run). Je souhaite aujourd'hui me consacrer à l'enseignement et m'ancrer durablement près de chez moi (Thomery, 77) : transmettre, accompagner les étudiants vers l'autonomie, et ramener dans la salle de cours la réalité du métier de développeur et de créateur de produits numériques."
   },
   "ui": {
     "skillsTitle": "Compétences",
@@ -43,18 +44,65 @@
   "domains": {
     "78726111": {
       "description": "J'aime développer des composants réutilisables dans un environnement clusterisé en utilisant des concepts tels que microservices, robustesse, observabilité, clean code.",
-      "descriptionCdi": "Je conçois des composants réutilisables dans un environnement clusterisé avec les principes microservices, robustesse, observabilité et clean code."
+      "descriptionCdi": "Je conçois des composants réutilisables dans un environnement clusterisé avec les principes microservices, robustesse, observabilité et clean code.",
+      "descriptionTeaching": "Je transmets les fondamentaux du génie logiciel — architecture, robustesse, lisibilité, tests, observabilité — à partir de cas industriels concrets, pour que les étudiants comprennent pourquoi ces principes existent avant d'apprendre comment les appliquer."
     },
     "78726113": {
       "description": "Je sais mettre à profit mes multiples expériences d'agilité au service d'une équipe afin d'aboutir à un produit proche du besoin avec une philosophie software craftsmanship.",
-      "descriptionCdi": "Fort de multiples expériences agiles, j'accompagne les équipes vers un produit au plus proche du besoin, dans une démarche software craftsmanship et d'amélioration continue."
+      "descriptionCdi": "Fort de multiples expériences agiles, j'accompagne les équipes vers un produit au plus proche du besoin, dans une démarche software craftsmanship et d'amélioration continue.",
+      "descriptionTeaching": "J'enseigne l'agilité et le software craftsmanship par la pratique : un projet d'équipe mené sur la durée, sprints, revues de code, rétrospectives — pour donner aux étudiants l'expérience d'un cycle produit réel, pas seulement la théorie."
     },
     "78855347": {
       "description": "Je travaille avec les opérationnels en privilégiant le déploiement continu : livrer vite de la valeur concrète tout en réduisant les frictions entre métiers et production.",
-      "descriptionCdi": "Je pratique le déploiement continu au quotidien pour livrer rapidement de la valeur concrète, en réduisant les frictions entre développement et production."
+      "descriptionCdi": "Je pratique le déploiement continu au quotidien pour livrer rapidement de la valeur concrète, en réduisant les frictions entre développement et production.",
+      "descriptionTeaching": "J'initie aux pipelines CI/CD, à l'industrialisation et au déploiement continu avec les outils du marché (Git, GitLab CI, Docker, cloud), pour que les étudiants quittent l'IUT avec le réflexe « livré, c'est mieux que parfait »."
     }
   },
   "jobs": {
+    "iut-vacations": {
+      "location": "Lieusaint (77) — site de Sénart",
+      "roleName": "Enseignant vacataire — 1ère année",
+      "description": "",
+      "descriptionShort": "Deux années consécutives de vacations en première année (2015-2016 puis 2016-2017) sur le module web, au site de Sénart de l'IUT Sénart-Fontainebleau (UPEC).",
+      "bullets": [
+        {
+          "id": "job_iut_vacations_fr_b_modules",
+          "text": "Modules enseignés : HTML / CSS, JavaScript, manipulation du DOM, fondamentaux du développement web."
+        },
+        {
+          "id": "job_iut_vacations_fr_b_outils",
+          "text": "Outillage du dev : éditeur, terminal, Git / GitLab, revues de code par les pairs, conventions d'équipe."
+        },
+        {
+          "id": "job_iut_vacations_fr_b_cicd",
+          "text": "Intégration et déploiement continus : pipelines GitLab CI, qualité (lint, tests), mise en ligne automatisée."
+        },
+        {
+          "id": "job_iut_vacations_fr_b_pedagogie",
+          "text": "Approche pratique : projets fil rouge, encadrement individualisé, évaluation par livrables."
+        }
+      ]
+    },
+    "cours-particuliers-2002-2006": {
+      "location": "Fontainebleau (77) — domicile",
+      "roleName": "Tuteur — cours particuliers",
+      "description": "",
+      "descriptionShort": "Cours particuliers de mathématiques et physique à des élèves de collège et lycée, en parallèle de mes études (prépa PTSI/PSI, DUT Informatique, Licence Pro).",
+      "bullets": [
+        {
+          "id": "job_cours_part_fr_b_niveaux",
+          "text": "Niveaux : 6ᵉ à terminale S, suivi régulier sur l'année scolaire."
+        },
+        {
+          "id": "job_cours_part_fr_b_matieres",
+          "text": "Matières : mathématiques (algèbre, géométrie, analyse) et physique (mécanique, électricité)."
+        },
+        {
+          "id": "job_cours_part_fr_b_approche",
+          "text": "Approche : diagnostic des lacunes, reformulation, exercices progressifs, préparation aux contrôles et au bac."
+        }
+      ]
+    },
     "solopreneur": {
       "location": "@home · maison",
       "roleName": "Solopreneur · projets personnels",
@@ -401,6 +449,10 @@
     }
   },
   "projects": {
+    "module-product-builder": {
+      "title": "Module Product Builder — proposition IUT",
+      "description": "Module de 1ère ou 2ᵉ année qui fait vivre aux étudiants un cycle produit complet : idéation, cadrage, design d'interface, développement d'un MVP, mise en production et run. Le module intègre les outils IA modernes (prompt engineering, agents LLM, RAG, MCP) comme accélérateurs réalistes du métier de développeur. Objectif : former des étudiants capables de livrer un produit numérique de bout en bout, en autonomie ou en équipe, avec les réflexes de qualité et d'industrialisation attendus en entreprise."
+    },
     "82518980": {
       "description": "Co-fondateur et directeur de l'agence web Matière Web"
     },
