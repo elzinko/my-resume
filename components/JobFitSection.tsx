@@ -21,6 +21,8 @@ interface JobFitSectionProps {
   educationLevel: EducationLevelContent;
   /** 'full' = liste verticale avec detail (CV complet), 'compact' = pastilles inline (CV court). */
   variant?: 'full' | 'compact';
+  /** Affiche la pastille niveau de formation (« Bac+5 / Master's-level »). Opt-in via `?edu=1`. */
+  showEducationLevel?: boolean;
 }
 
 /**
@@ -32,6 +34,7 @@ export default function JobFitSection({
   lang,
   educationLevel,
   variant = 'full',
+  showEducationLevel = false,
 }: JobFitSectionProps) {
   const offerData = useShortOfferMatchData(lang);
 
@@ -54,10 +57,11 @@ export default function JobFitSection({
           {sectionTitle}
         </h2>
         <div className="cv-section-body-gap flex flex-wrap items-center gap-1.5 print:gap-1">
-          {/* Education level pill */}
-          <Pill color="match" compact>
-            {educationLevel.levelPrimary}
-          </Pill>
+          {showEducationLevel && (
+            <Pill color="match" compact>
+              {educationLevel.levelPrimary}
+            </Pill>
+          )}
 
           {/* Tech pills */}
           {entries.map((entry, index) => {
@@ -105,13 +109,14 @@ export default function JobFitSection({
       </div>
 
       <ul className="mt-3 space-y-2.5 print:mt-2 print:space-y-1.5 md:mt-4 md:space-y-3">
-        {/* Education level row */}
-        <li className="flex flex-wrap items-baseline gap-x-2 gap-y-1 print:gap-x-1.5">
-          <Pill color="match">{educationLevel.levelPrimary}</Pill>
-          <span className="text-sm text-cv-body-muted print:text-[10px] md:text-base">
-            {educationLevel.effectiveLevelDetail}
-          </span>
-        </li>
+        {showEducationLevel && (
+          <li className="flex flex-wrap items-baseline gap-x-2 gap-y-1 print:gap-x-1.5">
+            <Pill color="match">{educationLevel.levelPrimary}</Pill>
+            <span className="text-sm text-cv-body-muted print:text-[10px] md:text-base">
+              {educationLevel.effectiveLevelDetail}
+            </span>
+          </li>
+        )}
 
         {/* Tech entry rows */}
         {entries.map((entry, index) => {

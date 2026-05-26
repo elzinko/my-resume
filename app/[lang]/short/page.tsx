@@ -17,6 +17,8 @@ import {
   resolveAboutText,
   resolveDomainDescription,
 } from '@/lib/cv-contract-text';
+import { resolveOfferFromUrlParams } from '@/lib/query-offer-params';
+import { getMatchCatalog } from '@/lib/match-catalog-server';
 import type { ContractType } from '@/data/offers/types';
 import type { Metadata } from 'next';
 
@@ -63,6 +65,11 @@ export default async function ShortPage({
       ? sp.get('subtitle_fr') || sp.get('subtitle')
       : sp.get('subtitle_en') || sp.get('subtitle')
     )?.trim() || undefined;
+
+  const offer = resolveOfferFromUrlParams(sp, getMatchCatalog());
+  const eduRaw = sp.get('edu')?.trim();
+  const showEducationLevel =
+    offer?.showEducation === true || eduRaw === '1' || eduRaw === 'true';
 
   // Missions mises en avant par le LLM (param `job`, répétable)
   const jobParam = searchParams?.job;
@@ -157,6 +164,7 @@ export default async function ShortPage({
           data={compactData}
           lang={lang as 'fr' | 'en'}
           highlightedJobSlugs={highlightedJobSlugs}
+          showEducationLevel={showEducationLevel}
         />
       </ShortPageWrapper>
     </>

@@ -32,6 +32,7 @@ export default function OfferTailoredShell({
   hideMalt,
   contract,
   subtitleOverride,
+  showEducationLevel = false,
 }: {
   lang: Locale;
   educationLevel: EducationLevelContent;
@@ -51,6 +52,8 @@ export default function OfferTailoredShell({
   contract?: ContractType;
   /** Surcharge du sous-titre (rôle) dans l'en-tête. */
   subtitleOverride?: string;
+  /** Affiche la pastille « Bac+5 / Master's-level » dans la section adéquation. */
+  showEducationLevel?: boolean;
 }) {
   const resolvedContact: ContactLocationOverlay = contactLocation ?? {
     mapsHref: buildContactLocationHref(),
@@ -91,6 +94,7 @@ export default function OfferTailoredShell({
                 lang={lang}
                 educationLevel={educationLevel}
                 variant="full"
+                showEducationLevel={showEducationLevel}
               />
             </Suspense>
             {/* Coordonnées : après Adéquation poste, même placement que le CV court. */}

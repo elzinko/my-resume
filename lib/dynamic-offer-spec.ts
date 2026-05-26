@@ -129,6 +129,8 @@ export function parseJobOfferFromUnknown(
         .slice(0, 24)
     : undefined;
 
+  const showEducation = (o.showEducation ?? o.show_education) === true;
+
   return enrichJobOfferRequirements(
     {
       id,
@@ -140,6 +142,7 @@ export function parseJobOfferFromUnknown(
       ...(workAddress ? { workAddress } : {}),
       ...(commuteLabel ? { commuteLabel } : {}),
       ...(highlightedJobs?.length ? { highlightedJobs } : {}),
+      ...(showEducation ? { showEducation: true } : {}),
     },
     catalog,
   );
