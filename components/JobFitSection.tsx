@@ -11,6 +11,7 @@ import {
 } from '@/lib/short-offer-match';
 import type { EducationLevelContent } from '@/lib/education-level-content';
 import type { MatchDisplayData } from '@/lib/match-display-types';
+import { truncateClientsForDisplay } from '@/lib/match-clients-display';
 import type { Locale } from 'i18n-config';
 import { useMemo } from 'react';
 import Pill from '@/components/Pill';
@@ -125,7 +126,18 @@ export default function JobFitSection({
           const yearsLabel = showYears
             ? formatMatchYears(entry.totalYears, l)
             : '\u2014';
-          const clients = entry.matchedClients;
+          // Ann\u00e9es calcul\u00e9es sur la liste compl\u00e8te ; seul l'affichage est born\u00e9.
+          const { visible, hidden, hiddenCount } = truncateClientsForDisplay(
+            entry.matchedClients,
+          );
+          const overflowWord =
+            lang === 'en' ? 'more' : hiddenCount === 1 ? 'autre' : 'autres';
+          const overflowTitle =
+            hiddenCount > 0
+              ? `${hiddenCount} ${overflowWord} : ${hidden
+                  .map((c) => c.client)
+                  .join(', ')}`
+              : undefined;
 
           return (
             <li
@@ -135,9 +147,9 @@ export default function JobFitSection({
               <Pill color="match" metric={yearsLabel}>
                 {entry.label}
               </Pill>
-              {clients.length > 0 && (
+              {visible.length > 0 && (
                 <span className="flex flex-wrap items-baseline gap-1 print:gap-0.5">
-                  {clients.map((c) => (
+                  {visible.map((c) => (
                     <Pill
                       key={c.client}
                       color="match"
@@ -148,6 +160,17 @@ export default function JobFitSection({
                       {c.client}
                     </Pill>
                   ))}
+                  {hiddenCount > 0 && (
+                    <span
+                      title={overflowTitle}
+                      aria-label={overflowTitle}
+                      className="inline-flex shrink-0 items-baseline"
+                    >
+                      <Pill color="match" size="s" border={false}>
+                        {'\u2026'}
+                      </Pill>
+                    </span>
+                  )}
                 </span>
               )}
             </li>
