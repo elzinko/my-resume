@@ -100,7 +100,7 @@ GET /{lang}?company=<nom>&requirement=<Label:kw1,kw2>[&...]
 | \`req\` | alias | Alias court pour \`requirement\` |
 | \`reqY\` | non | Annees d'experience affichees pour le i-eme requirement (remplace le calcul auto) |
 | \`contract\` | non | \`cdi\` ou \`freelance\` -- adapte textes profil/domaines, masque Malt en CDI |
-| \`job\` | non | Repetable. Slug d'une mission a mettre en avant (voir liste ci-dessous) |
+| \`job\` | non | Repetable. Slug d'une mission a mettre en avant sur le CV court. **L'ordre des \`job\` = ordre d'affichage** du bloc "mises en avant" (voir liste ci-dessous) |
 | \`workAddress\` | non | Adresse complete du lieu de travail. Active l'itineraire Google Maps gare -> bureau sur le pictogramme localisation. |
 | \`clientAddress\` | alias | Alias court de \`workAddress\`. |
 | \`commuteLabel\` | non | Libelle court affiche pres du lieu (ex. "~45 min"). Ignore sans \`workAddress\`. |
@@ -178,13 +178,43 @@ ${jobSlugs}
 
 ### Mise en avant de missions (parametre \`job\`)
 
-Sur le CV court, les missions mises en avant sont affichees avec tous les details (description,
-puces, frameworks). Les missions intermediaires non selectionnees sont compressees en une ligne
-(client + dates uniquement), preservant la continuite de la timeline.
+Sur le **CV court** (\`/{lang}/short\`), les missions listees via \`job\` sont affichees en detail
+(description, puces, frameworks) **dans l'ordre fourni** -- pas forcement chronologique. Toutes les
+autres missions visibles sont regroupees sous une rubrique **"Autres experiences"** compressee
+(client, role, periode).
 
-Exemple :
+#### Adapter la mise en avant a l'offre (instruction agent)
+
+Comme pour l'ordre des \`requirement\`, **c'est a l'agent de choisir QUELLES missions mettre en avant
+et DANS QUEL ORDRE, en fonction de l'offre a laquelle il repond.** Le CV ne reordonne rien tout seul :
+il respecte strictement l'ordre des \`job\` recus.
+
+1. Lire l'offre : intitule, missions, competences cles, secteur, seniorite.
+2. Selectionner les 2 a 4 missions les plus probantes pour CETTE offre (slugs dans
+   \`jobs[].slug\` de \`/api/profile\`, ou liste ci-dessus).
+3. Les passer en parametres \`job\` **par pertinence decroissante** : la mission la plus convaincante
+   en premier. **Cet ordre = ordre d'affichage** du bloc "mises en avant".
+4. Ne rien faire pour le reste : les missions non listees basculent automatiquement sous
+   "Autres experiences".
+
+Exemples d'ordre selon le poste vise (memes slugs, ordre different) :
+
+| Offre visee | Ordre \`job\` suggere |
+| ----------- | ------------------- |
+| Engineering Manager / management | \`job=matiere-web\` (direction d'agence, encadrement) en tete |
+| Backend / Java | une mission backend en tete (\`job=jpb-systeme\`, \`job=sncf-reseaux-dgex-solutions\`...) |
+| Freelance React / frontend | une mission front en tete (\`job=blablacar\`, \`job=smartch\`...) |
+
+Regles complementaires :
+
+- Identifiant accepte : le \`slug\` (\`jobs[].slug\`), le slug prefixe \`mission-...\`, ou le nom brut du client.
+- \`highlightedJobs\` dans le \`spec\` suit la meme semantique d'ordre ; les \`job\` de l'URL priment.
+- Sans aucun \`job\` (ni \`highlightedJobs\`), le CV court garde son comportement par defaut
+  (missions recentes en chronologique).
+
+Exemple (poste de management -> Matiere Web en tete, ordre non chronologique) :
 \`\`\`
-/fr/short?company=Thales&requirement=Java:java&job=jpb-systeme&job=celsius-energy&job=thales-communications
+/fr/short?company=Acme&title=Engineering+Manager&requirement=Management:management,leadership&job=matiere-web&job=jpb-systeme&job=blablacar
 \`\`\`
 
 ## Exemples d'URLs
@@ -237,6 +267,11 @@ Schema JSON decode :
   "url": "string (optionnel)"
 }
 \`\`\`
+
+> \`highlightedJobs\` suit la **meme semantique d'ordre** que le parametre \`job\` repete :
+> l'ordre du tableau = ordre d'affichage des missions mises en avant sur le CV court, le
+> reste etant regroupe sous "Autres experiences". Si des parametres \`job\` sont aussi
+> presents dans l'URL, ils ont la priorite sur \`highlightedJobs\` du \`spec\`.
 
 > Aliases snake_case acceptes dans le spec JSON : \`experience_years_override\`,
 > \`highlighted_jobs\`, \`commute_minutes\`.

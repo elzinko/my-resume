@@ -17,7 +17,12 @@ import {
   SHORT_CV_EXCLUDED_CLIENTS,
   SHORT_CV_MAX_JOBS,
 } from '@/lib/cv-experience-footer';
-import { buildJobSections, type JobSection } from '@/lib/job-selection';
+import {
+  buildJobSections,
+  type FeaturedSection,
+  type JobSection,
+  type StubSection,
+} from '@/lib/job-selection';
 
 export interface CompactCvData {
   header: {
@@ -48,6 +53,7 @@ export interface CompactCvData {
     competencies?: Array<{ id: string; name: string }>;
   }>;
   jobs: Array<{
+    slug?: string;
     client: string;
     clientUrl?: string;
     role: string;
@@ -95,6 +101,7 @@ export default function CompactCvLayout({
       expertise: 'Domaines',
       about: 'Profil',
       present: 'Présent',
+      otherExperience: 'Autres expériences',
     },
     en: {
       skills: 'Skills',
@@ -103,6 +110,7 @@ export default function CompactCvLayout({
       expertise: 'Domains',
       about: 'Profile',
       present: 'Now',
+      otherExperience: 'Other experience',
     },
   };
 
@@ -116,17 +124,30 @@ export default function CompactCvLayout({
     experience: data.titles.experience || fallback.experience,
     expertise: fallback.expertise,
     present: fallback.present,
+    otherExperience: fallback.otherExperience,
   };
 
   const closing = getExperienceClosingLabels(lang);
   const moreClientsLine = formatRemainingClientsForShortCv(data.jobs, lang);
 
-  // Missions : mode mis-en-avant (featured/stub) ou chronologique (défaut).
+  // Missions : mode mis-en-avant (featured + reste compressé) ou chronologique (défaut).
   type Job = (typeof data.jobs)[number];
   const jobSections: JobSection<Job>[] | null = buildJobSections(
     data.jobs,
     highlightedJobSlugs,
   );
+  // Missions détaillées (dans l'ordre fourni) + unique bloc « Autres expériences ».
+  const featuredSections = jobSections
+    ? (jobSections.filter(
+        (s) => s.type === 'featured',
+      ) as FeaturedSection<Job>[])
+    : null;
+  const otherJobs =
+    (
+      jobSections?.find((s) => s.type === 'stub') as
+        | StubSection<Job>
+        | undefined
+    )?.jobs ?? [];
 
   // Fallback : première tranche chronologique (comportement historique).
   const recentJobs = jobSections
@@ -164,7 +185,7 @@ export default function CompactCvLayout({
       {children}
 
       {/* Mobile-only : Adéquation poste + Coordonnées, hors grille, avant Expérience. */}
-      <div className="mt-6 space-y-6 print:hidden md:hidden">
+      <div className="mt-6 space-y-6 md:hidden print:hidden">
         <Suspense fallback={null}>
           <JobFitSection
             lang={lang}
@@ -193,10 +214,10 @@ export default function CompactCvLayout({
       <div className="cv-page-split mt-8">
         <div
           id="left"
-          className="order-last flex w-full min-w-0 flex-col print:order-first print:col-span-1 md:order-first md:col-span-1"
+          className="order-last flex w-full min-w-0 flex-col md:order-first md:col-span-1 print:order-first print:col-span-1"
         >
           {/* Adéquation poste : masqué en mobile (dupliqué hors grille). */}
-          <div className="hidden print:block md:block">
+          <div className="hidden md:block print:block">
             <Suspense fallback={null}>
               <JobFitSection
                 lang={lang}
@@ -209,7 +230,7 @@ export default function CompactCvLayout({
           {/* Coordonnées (label : valeur) dans la colonne gauche — masqué en mobile (dupliqué hors grille). */}
           <section
             id="cv-short-contact"
-            className="mb-6 hidden print:block md:block"
+            className="mb-6 hidden md:block print:block"
           >
             <div className="border-b pb-1">
               <h2 className="min-w-0 text-2xl font-semibold text-rose-300">
@@ -274,7 +295,7 @@ export default function CompactCvLayout({
 
         <div
           id="main"
-          className="w-full min-w-0 print:col-span-2 md:col-span-2"
+          className="w-full min-w-0 md:col-span-2 print:col-span-2"
         >
           {/* Experience - Reusing JobDisplay component */}
           <section>
@@ -283,10 +304,10 @@ export default function CompactCvLayout({
             </h2>
 
             {jobSections ? (
-              /* ── Mode mis-en-avant : featured + stubs ── */
-              <ul className="cv-section-body-gap space-y-4">
-                {jobSections.map((section, idx) =>
-                  section.type === 'featured' ? (
+              /* ── Mode mis-en-avant : missions détaillées dans l'ordre fourni ── */
+              <>
+                <ul className="cv-section-body-gap space-y-4">
+                  {featuredSections!.map((section, idx) => (
                     <li key={`f-${idx}`}>
                       <JobDisplay
                         job={section.job}
@@ -295,16 +316,20 @@ export default function CompactCvLayout({
                         locale={lang}
                       />
                     </li>
-                  ) : (
-                    <li
-                      key={`s-${idx}`}
-                      className="border-l-2 border-slate-600/40 py-1 pl-3 text-xs leading-relaxed text-cv-body-muted/70 print:text-[9px]"
-                    >
-                      {section.jobs.map((j, i) => (
-                        <span key={i}>
-                          {i > 0 && (
-                            <span className="mx-1 text-slate-500">·</span>
-                          )}
+                  ))}
+                </ul>
+                {otherJobs.length > 0 ? (
+                  /* ── « Autres expériences » : reste compressé (client · rôle · période) ── */
+                  <div className="mt-6">
+                    <h3 className="border-b pb-1 text-base font-semibold text-cv-jobs print:text-[10px]">
+                      {t.otherExperience}
+                    </h3>
+                    <ul className="mt-2 space-y-1">
+                      {otherJobs.map((j, i) => (
+                        <li
+                          key={`o-${i}`}
+                          className="border-l-2 border-slate-600/40 py-0.5 pl-3 text-xs leading-relaxed text-cv-body-muted/70 print:text-[9px]"
+                        >
                           <span className="font-medium text-cv-body-muted">
                             {j.clientUrl ? (
                               <a
@@ -318,18 +343,21 @@ export default function CompactCvLayout({
                               j.client
                             )}
                           </span>
-                          {j.startDate && (
+                          {j.role ? (
+                            <span className="text-slate-400"> · {j.role}</span>
+                          ) : null}
+                          {j.startDate ? (
                             <span className="ml-1 text-slate-500">
                               ({j.startDate}
                               {j.endDate ? ` – ${j.endDate}` : ''})
                             </span>
-                          )}
-                        </span>
+                          ) : null}
+                        </li>
                       ))}
-                    </li>
-                  ),
-                )}
-              </ul>
+                    </ul>
+                  </div>
+                ) : null}
+              </>
             ) : (
               /* ── Mode chronologique par défaut ── */
               <ul className="cv-section-body-gap space-y-4">

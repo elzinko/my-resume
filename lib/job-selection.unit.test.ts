@@ -1,6 +1,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import { buildJobSections } from './job-selection';
+import { slugifyClient } from './slug';
 
 const jobs = [
   { client: 'Solopreneur', startDate: '2024', endDate: undefined },
@@ -18,6 +19,11 @@ const jobs = [
   { client: 'Thales communications', startDate: '2016', endDate: '2017' },
 ];
 
+const featuredClients = (sections: ReturnType<typeof buildJobSections>) =>
+  sections!
+    .filter((s) => s.type === 'featured')
+    .map((s) => (s as any).job.client);
+
 describe('buildJobSections', () => {
   it('returns null when highlightedSlugs is undefined', () => {
     assert.equal(buildJobSections(jobs, undefined), null);
@@ -27,85 +33,91 @@ describe('buildJobSections', () => {
     assert.equal(buildJobSections(jobs, []), null);
   });
 
-  it('highlights a single job and stubs the rest', () => {
+  it('returns null when no slug matches a known job', () => {
+    assert.equal(buildJobSections(jobs, ['unknown-mission']), null);
+  });
+
+  it('highlights a single job and compresses the rest into one trailing stub', () => {
     const sections = buildJobSections(jobs, ['jpb-systeme']);
     assert.notEqual(sections, null);
 
-    // First section should be stub (Solopreneur is before JPB)
-    assert.equal(sections![0]!.type, 'stub');
-    assert.equal((sections![0] as any).jobs.length, 1);
-    assert.equal((sections![0] as any).jobs[0].client, 'Solopreneur');
+    // First section: featured JPB.
+    assert.equal(sections![0]!.type, 'featured');
+    assert.equal((sections![0] as any).job.client, 'JPB Système');
 
-    // Second section: featured JPB
-    assert.equal(sections![1]!.type, 'featured');
-    assert.equal((sections![1] as any).job.client, 'JPB Système');
+    // Exactly one trailing stub with everyone else.
+    assert.equal(sections!.length, 2);
+    assert.equal(sections![1]!.type, 'stub');
 
-    // Third section: stub for everything after JPB
-    assert.equal(sections![2]!.type, 'stub');
+    const stubClients = (sections![1] as any).jobs.map((j: any) => j.client);
+    assert.equal(stubClients.includes('JPB Système'), false);
+    // Data order preserved inside the compressed block.
+    assert.equal(stubClients[0], 'Solopreneur');
   });
 
-  it('highlights multiple jobs with stubs in between', () => {
+  it('respects the ORDER of highlightedSlugs (not chronological)', () => {
     const sections = buildJobSections(jobs, [
+      'thales-communications',
       'jpb-systeme',
       'celsius-energy',
-      'thales-communications',
     ]);
     assert.notEqual(sections, null);
 
-    // Expected sequence: stub(Solo) → featured(JPB) → stub(Blabla,Smartch,SNCF) → featured(Celsius) → stub(Ecocea) → featured(Thales)
-    const types = sections!.map((s) => s.type);
-    assert.deepEqual(types, [
-      'stub',
-      'featured',
-      'stub',
-      'featured',
-      'stub',
-      'featured',
+    // Featured order follows the param order, not the timeline.
+    assert.deepEqual(featuredClients(sections), [
+      'Thales communications',
+      'JPB Système',
+      'Celsius Energy',
     ]);
 
-    // Verify featured jobs are correct
-    const featured = sections!.filter((s) => s.type === 'featured');
-    assert.equal((featured[0] as any).job.client, 'JPB Système');
-    assert.equal((featured[1] as any).job.client, 'Celsius Energy');
-    assert.equal((featured[2] as any).job.client, 'Thales communications');
+    // A single compressed block, always last.
+    const stubs = sections!.filter((s) => s.type === 'stub');
+    assert.equal(stubs.length, 1);
+    assert.equal(sections![sections!.length - 1]!.type, 'stub');
   });
 
-  it('excludes RelevanC from stubs', () => {
-    const sections = buildJobSections(jobs, ['thales-communications']);
-    assert.notEqual(sections, null);
+  it('dedupes repeated slugs, keeping the first position', () => {
+    const sections = buildJobSections(jobs, [
+      'jpb-systeme',
+      'jpb-systeme',
+      'smartch',
+    ]);
+    assert.deepEqual(featuredClients(sections), ['JPB Système', 'Smartch']);
+  });
 
-    // RelevanC should not appear in any stub
+  it('excludes RelevanC from the compressed rest', () => {
+    const sections = buildJobSections(jobs, ['thales-communications']);
     const allStubClients = sections!
       .filter((s) => s.type === 'stub')
       .flatMap((s) => (s as any).jobs.map((j: any) => j.client));
     assert.equal(allStubClients.includes('RelevanC'), false);
   });
 
-  it('accepts slugs with mission- prefix', () => {
+  it('accepts slugs with the mission- prefix', () => {
     const sections = buildJobSections(jobs, ['mission-jpb-systeme']);
-    assert.notEqual(sections, null);
-    const featured = sections!.find((s) => s.type === 'featured');
-    assert.equal((featured as any).job.client, 'JPB Système');
+    assert.deepEqual(featuredClients(sections), ['JPB Système']);
   });
 
-  it('first job as featured has no leading stub', () => {
-    const sections = buildJobSections(jobs, ['solopreneur']);
+  it('matches on an explicit slug field when present', () => {
+    const withSlug = [
+      {
+        slug: 'matiere-web',
+        client: 'Matière Web',
+        startDate: '2020',
+        endDate: undefined,
+      },
+      ...jobs,
+    ];
+    const sections = buildJobSections(withSlug, ['matiere-web']);
     assert.notEqual(sections, null);
     assert.equal(sections![0]!.type, 'featured');
-    assert.equal((sections![0] as any).job.client, 'Solopreneur');
+    assert.equal((sections![0] as any).job.client, 'Matière Web');
   });
 
-  it('all jobs highlighted produces no stubs', () => {
+  it('all jobs highlighted produces no stub', () => {
     const allSlugs = jobs
       .filter((j) => j.client !== 'RelevanC')
-      .map((j) =>
-        j.client
-          .toLowerCase()
-          .normalize('NFD')
-          .replace(/[\u0300-\u036f]/g, '')
-          .replace(/[^a-z0-9]+/g, '-')
-          .replace(/(^-|-$)/g, ''),
-      );
+      .map((j) => slugifyClient(j.client));
     const sections = buildJobSections(jobs, allSlugs);
     assert.notEqual(sections, null);
     const stubs = sections!.filter((s) => s.type === 'stub');

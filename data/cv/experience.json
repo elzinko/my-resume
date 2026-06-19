@@ -160,6 +160,22 @@
       "endDate": "2020-12-02"
     },
     {
+      "slug": "matiere-web",
+      "client": "Matière Web",
+      "startDate": "2020-06-01",
+      "roleId": "role-matiere-web",
+      "frameworks": [
+        "90902399",
+        "90902400",
+        "81826170",
+        "82456019",
+        "82456012",
+        "81826186"
+      ],
+      "clientUrl": "https://matiere-web.com/",
+      "endDate": "2025-09-30"
+    },
+    {
       "slug": "ecocea",
       "client": "Ecocea",
       "startDate": "2019-10-01",
@@ -600,33 +616,6 @@
         }
       ],
       "link": "https://www.muti.app/"
-    },
-    {
-      "id": "82518980",
-      "name": "Matière Web",
-      "startDate": "2020-06-01",
-      "endDate": null,
-      "frameworks": [
-        "90902399",
-        "90902400",
-        "81826170",
-        "82456019",
-        "82456012",
-        "81826186",
-        "90902401"
-      ],
-      "bullets": [],
-      "tags": [
-        {
-          "id": "82972442",
-          "name": "pro"
-        },
-        {
-          "id": "82972454",
-          "name": "business"
-        }
-      ],
-      "link": "https://matiere-web.com/"
     },
     {
       "id": "cvproj-byhere-2026",

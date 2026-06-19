@@ -17,6 +17,8 @@ import {
   resolveAboutText,
   resolveDomainDescription,
 } from '@/lib/cv-contract-text';
+import { resolveOfferFromUrlParams } from '@/lib/query-offer-params';
+import { getMatchCatalog } from '@/lib/match-catalog-server';
 import type { ContractType } from '@/data/offers/types';
 import type { Metadata } from 'next';
 
@@ -64,13 +66,23 @@ export default async function ShortPage({
       : sp.get('subtitle_en') || sp.get('subtitle')
     )?.trim() || undefined;
 
-  // Missions mises en avant par le LLM (param `job`, répétable)
+  // Missions mises en avant : l'ORDRE des `job=` (répétable) détermine l'ordre
+  // d'affichage. À défaut, on retombe sur `highlightedJobs` du `spec` (même
+  // sémantique d'ordre). Sans aucun des deux → comportement chrono par défaut.
   const jobParam = searchParams?.job;
-  const highlightedJobSlugs: string[] | undefined = jobParam
+  const jobParamSlugs = jobParam
     ? (Array.isArray(jobParam) ? jobParam : [jobParam])
         .map((s) => s.trim())
         .filter(Boolean)
-    : undefined;
+    : [];
+  const specHighlightedJobs =
+    resolveOfferFromUrlParams(sp, getMatchCatalog())?.highlightedJobs ?? [];
+  const highlightedJobSlugs: string[] | undefined =
+    jobParamSlugs.length > 0
+      ? jobParamSlugs
+      : specHighlightedJobs.length > 0
+      ? specHighlightedJobs
+      : undefined;
 
   const compactData: CompactCvData = {
     header: {
@@ -106,6 +118,7 @@ export default async function ShortPage({
         const dates = formatDates(j.startDate, j.endDate);
         const [start, end] = dates ? dates.split(' - ') : ['', ''];
         return {
+          slug: j.slug,
           client: j.client,
           clientUrl: j.clientUrl,
           role: j.role?.name || '',

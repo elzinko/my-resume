@@ -45,48 +45,63 @@ function normalizeJobSlug(input: string): string {
 /*  Fonction principale                                                */
 /* ------------------------------------------------------------------ */
 
+/** Slug normalisé d'une mission : slug explicite prioritaire, sinon dérivé du client. */
+function jobSlug<T extends { client: string; slug?: string }>(job: T): string {
+  return job.slug ? normalizeJobSlug(job.slug) : slugifyClient(job.client);
+}
+
 /**
  * Réorganise la liste des missions pour le CV court avec mise en avant.
  *
- * - Les missions dont le slug est dans `highlightedSlugs` sont rendues en détail (« featured »).
- * - Les missions intermédiaires sont regroupées en blocs « stub » (client + dates uniquement).
- * - L'ordre chronologique original est préservé.
+ * - Les missions listées dans `highlightedSlugs` sont rendues en détail
+ *   (« featured »), **dans l'ordre fourni** (pas forcément chronologique).
+ * - Toutes les autres missions visibles forment un unique bloc « Autres
+ *   expériences » compressé (`stub`), dans l'ordre d'origine (chronologique).
+ * - Le matching se fait sur le slug explicite de la mission (ex. `matiere-web`),
+ *   avec repli sur le slug dérivé du client.
  *
- * Si `highlightedSlugs` est vide ou undefined, retourne `null` pour signaler
- * au composant d'utiliser le comportement par défaut (slice chrono).
+ * Retourne `null` (→ comportement chrono par défaut) si `highlightedSlugs` est
+ * vide/undefined ou si aucun slug ne correspond à une mission connue.
  */
-export function buildJobSections<T extends { client: string }>(
+export function buildJobSections<T extends { client: string; slug?: string }>(
   allJobs: T[],
   highlightedSlugs: string[] | undefined,
 ): JobSection<T>[] | null {
   if (!highlightedSlugs || highlightedSlugs.length === 0) return null;
 
-  const highlightedSet = new Set(highlightedSlugs.map(normalizeJobSlug));
-
-  // Exclure les clients blacklistés
+  // Exclure les clients blacklistés du CV court.
   const jobs = allJobs.filter((j) => !SHORT_CV_EXCLUDED_CLIENTS.has(j.client));
 
-  const sections: JobSection<T>[] = [];
-  let currentStubGroup: T[] = [];
-
+  // Index slug normalisé → mission (première occurrence gagnante).
+  const bySlug = new Map<string, T>();
   for (const job of jobs) {
-    const slug = slugifyClient(job.client);
+    const slug = jobSlug(job);
+    if (!bySlug.has(slug)) bySlug.set(slug, job);
+  }
 
-    if (highlightedSet.has(slug)) {
-      // Flush le groupe stub accumulé
-      if (currentStubGroup.length > 0) {
-        sections.push({ type: 'stub', jobs: [...currentStubGroup] });
-        currentStubGroup = [];
-      }
-      sections.push({ type: 'featured', job });
-    } else {
-      currentStubGroup.push(job);
+  // Missions mises en avant, DANS L'ORDRE des slugs fournis (dédupliquées).
+  const featuredJobs: T[] = [];
+  const featuredSet = new Set<T>();
+  for (const raw of highlightedSlugs) {
+    const job = bySlug.get(normalizeJobSlug(raw));
+    if (job && !featuredSet.has(job)) {
+      featuredSet.add(job);
+      featuredJobs.push(job);
     }
   }
 
-  // Stub trailing (missions après le dernier featured)
-  if (currentStubGroup.length > 0) {
-    sections.push({ type: 'stub', jobs: currentStubGroup });
+  // Aucun slug valide → on laisse le composant retomber sur le défaut chrono.
+  if (featuredJobs.length === 0) return null;
+
+  const sections: JobSection<T>[] = featuredJobs.map((job) => ({
+    type: 'featured',
+    job,
+  }));
+
+  // Le reste, compressé en un seul bloc trailing (« Autres expériences »).
+  const rest = jobs.filter((j) => !featuredSet.has(j));
+  if (rest.length > 0) {
+    sections.push({ type: 'stub', jobs: rest });
   }
 
   return sections;

@@ -205,8 +205,16 @@ components:
 
     Job:
       type: object
-      required: [client, location, startDate, bullets, frameworks, role]
+      required: [slug, client, location, startDate, bullets, frameworks, role]
       properties:
+        slug:
+          type: string
+          description: |
+            Identifiant stable de la mission. C'est la valeur à passer au
+            paramètre `job` du CV HTML (ou dans `highlightedJobs` du `spec`)
+            pour mettre la mission en avant. L'ordre des `job` fournis
+            détermine l'ordre d'affichage du bloc « mises en avant » (CV court).
+          example: 'matiere-web'
         display:
           type: boolean
           description: |

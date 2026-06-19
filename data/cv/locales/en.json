@@ -55,6 +55,30 @@
     }
   },
   "jobs": {
+    "matiere-web": {
+      "location": "Melun, France",
+      "roleName": "Co-founder & Director",
+      "description": "",
+      "descriptionShort": "Co-founder and director of the Matière Web agency: built the agency, led the team and drove client projects through to delivery.",
+      "bullets": [
+        {
+          "id": "job_matiere_web_en_b_found",
+          "text": "Founded and ran the web agency: vision, positioning and business development."
+        },
+        {
+          "id": "job_matiere_web_en_b_team",
+          "text": "Recruited and led the team: 2 partners and 2 consultants (design & development)."
+        },
+        {
+          "id": "job_matiere_web_en_b_delivery",
+          "text": "Owned client projects end to end: scoping, planning, client relationship and delivery."
+        },
+        {
+          "id": "job_matiere_web_en_b_quality",
+          "text": "Designed and shipped WordPress, Next.js/React and e-commerce websites."
+        }
+      ]
+    },
     "solopreneur": {
       "location": "@home · home office",
       "roleName": "Solopreneur · side projects",
@@ -401,9 +425,6 @@
     }
   },
   "projects": {
-    "82518980": {
-      "description": "Co-founder and director of the web agency \"Matière Web\""
-    },
     "cvproj-shopify-assistant": {
       "description": "AI chat to create Shopify products quickly and easily.",
       "title": "Shopify assistant"

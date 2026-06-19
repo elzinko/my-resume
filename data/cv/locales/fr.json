@@ -55,6 +55,30 @@
     }
   },
   "jobs": {
+    "matiere-web": {
+      "location": "Melun (77)",
+      "roleName": "Cofondateur & Directeur",
+      "description": "",
+      "descriptionShort": "Cofondateur et directeur de l'agence web Matière Web : création de l'agence, encadrement de l'équipe et pilotage des projets clients jusqu'à la livraison.",
+      "bullets": [
+        {
+          "id": "job_matiere_web_fr_b_found",
+          "text": "Création et direction de l'agence web : vision, positionnement et développement commercial."
+        },
+        {
+          "id": "job_matiere_web_fr_b_team",
+          "text": "Recrutement et encadrement de l'équipe : 2 associés et 2 consultants (design & développement)."
+        },
+        {
+          "id": "job_matiere_web_fr_b_delivery",
+          "text": "Pilotage des projets clients de bout en bout : cadrage, planning, relation client et livraison."
+        },
+        {
+          "id": "job_matiere_web_fr_b_quality",
+          "text": "Conception et mise en production de sites WordPress, Next.js/React et e-commerce."
+        }
+      ]
+    },
     "solopreneur": {
       "location": "@home · maison",
       "roleName": "Solopreneur · projets personnels",
@@ -401,9 +425,6 @@
     }
   },
   "projects": {
-    "82518980": {
-      "description": "Co-fondateur et directeur de l'agence web Matière Web"
-    },
     "cvproj-shopify-assistant": {
       "description": "Chat IA pour créer des produits Shopify facilement et rapidement.",
       "title": "Assistant Shopify"

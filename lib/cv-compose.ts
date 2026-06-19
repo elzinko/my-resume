@@ -169,6 +169,7 @@ export function composeCvSnapshot(
       throw new Error(`cv-compose: locale missing job "${ej.slug}" (${lang})`);
     const fwIds = lj.frameworks ?? ej.frameworks;
     const out: Record<string, unknown> = {};
+    out.slug = ej.slug;
     if (ej.display !== undefined) out.display = ej.display;
     out.client = ej.client;
     if (ej.clientUrl !== undefined) out.clientUrl = ej.clientUrl;
