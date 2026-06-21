@@ -15,6 +15,7 @@ import { buildContactLocationHref } from '@/lib/contact-maps';
 import type { ContactLocationOverlay } from '@/lib/offer-contact-from-params';
 import type { EducationLevelContent } from '@/lib/education-level-content';
 import ContactDisplay from '@/components/ContactDisplay';
+import SectionHeadingAts from '@/components/SectionHeadingAts';
 import type { ContractType } from '@/data/offers/types';
 import type { Locale } from 'i18n-config';
 /**
@@ -75,7 +76,7 @@ export default function OfferTailoredShell({
           />
 
           <div className="cv-full-cv-print-root">
-            <div className="mb-2 print-preview:order-[10] print:order-[10] max-md:contents">
+            <div className="mb-2 print-preview:order-[10] max-md:contents print:order-[10]">
               {/* @ts-expect-error Server Component */}
               <About
                 locale={lang}
@@ -97,9 +98,12 @@ export default function OfferTailoredShell({
             {headerContactStrip.email && (
               <section className="cv-mobile-section-mt print-preview:order-[30] print:order-[30]">
                 <div className="border-b pb-1">
-                  <h2 className="min-w-0 text-2xl font-semibold text-rose-300">
-                    {lang === 'fr' ? 'Coordonnées' : 'Contact'}
-                  </h2>
+                  <SectionHeadingAts
+                    section="contact"
+                    locale={lang}
+                    title={lang === 'fr' ? 'Coordonnées' : 'Contact'}
+                    className="min-w-0 text-2xl font-semibold text-rose-300"
+                  />
                 </div>
                 <ContactDisplay
                   contact={{

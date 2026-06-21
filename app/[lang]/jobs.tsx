@@ -1,5 +1,6 @@
 import Job from '@/components/Job';
 import ExperienceClosingBlock from '@/components/ExperienceClosingBlock';
+import SectionHeadingAts from '@/components/SectionHeadingAts';
 import { getCvData } from '@/lib/cv-data';
 import {
   formatRemainingClientsRecapForFullCv,
@@ -21,15 +22,22 @@ export default async function jobs({ locale }: { locale: Locale }) {
     <div className="cv-print-jobs-group print-preview:order-[90] print:order-[90]">
       <section
         id="jobs"
-        className="mt-10 break-before-page print:break-before-auto max-md:mt-0"
+        className="mt-10 break-before-page max-md:mt-0 print:break-before-auto"
       >
-        <h2 className="border-b pb-1 text-2xl font-semibold text-cv-jobs print:break-after-avoid">
-          {data?.jobsTitle?.title}
-        </h2>
+        <SectionHeadingAts
+          section="jobs"
+          locale={locale}
+          title={data?.jobsTitle?.title}
+          className="border-b pb-1 text-2xl font-semibold text-cv-jobs print:break-after-avoid"
+        />
         <ul className="cv-section-body-gap space-y-4 print:space-y-4">
           {visibleJobs.map((job: any, index: number) => (
             <li key={job.client + index}>
-              <Job job={job} locale={locale} />
+              <Job
+                job={job}
+                locale={locale}
+                presentLabel={locale === 'en' ? 'Present' : 'Présent'}
+              />
             </li>
           ))}
         </ul>

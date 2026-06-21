@@ -15,6 +15,23 @@ function formatDates(date1: string, date2?: string): string | null {
   return dates;
 }
 
+/**
+ * CV long : « MM/YYYY - MM/YYYY » ou « MM/YYYY - {ongoingLabel} » pour une
+ * mission en cours (sans date de fin). Expose un repère de fin parseable par
+ * les ATS (ex. « Present »/« Présent ») là où `formatDates` laissait la date
+ * de début seule, illisible comme période pour un parseur.
+ */
+export function formatJobDatesFull(
+  start: string,
+  end: string | undefined,
+  ongoingLabel: string,
+): string {
+  const startStr = start ? formatDate(new Date(start), 'MM/YYYY') : '';
+  const endStr = end ? formatDate(new Date(end), 'MM/YYYY') : ongoingLabel;
+  if (!startStr) return endStr;
+  return `${startStr} - ${endStr}`;
+}
+
 /** Année–année ou « YYYY - Présent » : CV court / impression (évite 2023-01-01 brut). */
 export function formatJobDatesCompactYears(
   start: string,

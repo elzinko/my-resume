@@ -1,4 +1,5 @@
 import { getCvData } from '@/lib/cv-data';
+import SectionHeadingAts from '@/components/SectionHeadingAts';
 import { resolveAboutText } from '@/lib/cv-contract-text';
 import type { ContractType } from '@/data/offers/types';
 import type { EducationLevelContent } from '@/lib/education-level-content';
@@ -19,12 +20,15 @@ export default async function About({
   return (
     <section
       id="about"
-      className="mb-1 mt-4 pb-1 print-preview:order-[10] print:order-[10] max-md:!mt-0"
+      className="mb-1 mt-4 pb-1 print-preview:order-[10] max-md:!mt-0 print:order-[10]"
     >
       <div className="border-b pb-1">
-        <h2 className="min-w-0 text-2xl font-semibold text-cv-section">
-          {data?.about?.title}
-        </h2>
+        <SectionHeadingAts
+          section="about"
+          locale={locale}
+          title={data?.about?.title}
+          className="min-w-0 text-2xl font-semibold text-cv-section"
+        />
       </div>
       <p className="mt-4 text-cv-body-muted">
         {resolveAboutText(data?.about, contract)}

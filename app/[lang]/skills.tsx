@@ -1,4 +1,5 @@
 import Pill from '@/components/Pill';
+import SectionHeadingAts from '@/components/SectionHeadingAts';
 import { getCvData } from '@/lib/cv-data';
 import { Locale } from 'i18n-config';
 import React from 'react';
@@ -26,9 +27,12 @@ export default async function skills({
       id={sectionId === false ? undefined : sectionId}
       className={sectionClass}
     >
-      <h2 className="border-b pb-1 text-2xl font-semibold text-cv-tag-text">
-        {data?.skillsTitle?.title}
-      </h2>
+      <SectionHeadingAts
+        section="skills"
+        locale={locale}
+        title={data?.skillsTitle?.title}
+        className="border-b pb-1 text-2xl font-semibold text-cv-tag-text"
+      />
       <div className="mt-4 flex flex-wrap gap-2">
         {data?.allSkillsModels?.map((skill: any) => (
           <Pill key={skill.id} color="skill" href={skill.link}>

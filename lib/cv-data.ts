@@ -33,5 +33,12 @@ export async function loadCvSources(locale: Locale): Promise<CvSources> {
 
 export async function getCvData(locale: Locale): Promise<CvSnapshot> {
   const sources = await loadCvSources(locale);
-  return composeCvSnapshot(locale, sources);
+  // Intitulés de poste anglais (role.nameEn) pour le complément ATS discret du
+  // rendu HTML `/fr` uniquement. Volontairement hors de `loadCvSources` pour ne
+  // PAS exposer `nameEn` dans la réponse publique `/api/profile` (contrat figé).
+  const localeEn =
+    locale === 'fr'
+      ? await readJson<LocaleBundle>(path.join(CV_DIR, 'locales', 'en.json'))
+      : undefined;
+  return composeCvSnapshot(locale, { ...sources, localeEn });
 }

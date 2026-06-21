@@ -1,4 +1,5 @@
 import Project from '@/components/Project';
+import SectionHeadingAts from '@/components/SectionHeadingAts';
 import { getCvData } from '@/lib/cv-data';
 import {
   byEndThenStart,
@@ -37,9 +38,12 @@ export default async function projects({
         data-cv-section="projects"
         className={`cv-cq-section ${sectionClass}`}
       >
-        <h2 className="border-b pb-1 text-2xl font-semibold text-cv-tag-text">
-          {data?.projectsTitle?.title ?? 'Projects'}
-        </h2>
+        <SectionHeadingAts
+          section="projects"
+          locale={locale}
+          title={data?.projectsTitle?.title ?? 'Projects'}
+          className="border-b pb-1 text-2xl font-semibold text-cv-tag-text"
+        />
         <ul className="cv-section-simple-list cv-cq-project-list max-md:mt-6">
           {projectsOrdered.map((project: any) => (
             <li key={project.id}>

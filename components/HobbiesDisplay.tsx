@@ -2,6 +2,8 @@
 
 import React from 'react';
 import CustomLink from '@/components/CustomLink';
+import SectionHeadingAts from '@/components/SectionHeadingAts';
+import type { Locale } from 'i18n-config';
 
 export interface HobbyItem {
   id: string;
@@ -13,14 +15,22 @@ export interface HobbyItem {
 interface HobbiesDisplayProps {
   title: string;
   items: HobbyItem[];
+  locale?: Locale;
 }
 
-export default function HobbiesDisplay({ title, items }: HobbiesDisplayProps) {
+export default function HobbiesDisplay({
+  title,
+  items,
+  locale = 'fr',
+}: HobbiesDisplayProps) {
   return (
     <>
-      <h2 className="border-b pb-1 text-2xl font-semibold text-orange-300">
-        {title}
-      </h2>
+      <SectionHeadingAts
+        section="hobbies"
+        locale={locale}
+        title={title}
+        className="border-b pb-1 text-2xl font-semibold text-orange-300"
+      />
       <ul className="cv-section-simple-list cv-cq-link-list max-md:mt-6">
         {items.map((hobby) => (
           <li className="text-orange-300" key={hobby.id}>

@@ -1,4 +1,5 @@
 import Study from '@/components/Study';
+import SectionHeadingAts from '@/components/SectionHeadingAts';
 import { getCvData } from '@/lib/cv-data';
 import {
   byEndThenStart,
@@ -25,9 +26,12 @@ export default async function studies({
       id="studies"
       className="cv-cq-section mt-10 print-preview:order-[95] print:order-[95]"
     >
-      <h2 className="border-b pb-1 text-2xl font-semibold text-purple-300">
-        {data?.studiesTitle?.title}
-      </h2>
+      <SectionHeadingAts
+        section="studies"
+        locale={locale}
+        title={data?.studiesTitle?.title}
+        className="border-b pb-1 text-2xl font-semibold text-purple-300"
+      />
       <ul className="cv-section-simple-list">
         {studiesOrdered.map((study: any) => (
           <li key={study.id}>

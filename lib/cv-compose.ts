@@ -126,6 +126,12 @@ export interface CvSources {
   techCatalog: TechCatalog;
   experience: Experience;
   locale: LocaleBundle;
+  /**
+   * Locale anglaise optionnelle, fournie sur le rendu `/fr` uniquement, pour
+   * exposer l'intitulé de poste anglais (`role.nameEn`) en complément ATS
+   * discret. Absente sur `/en` (l'intitulé `role.name` y est déjà anglais).
+   */
+  localeEn?: LocaleBundle;
 }
 
 /**
@@ -136,7 +142,7 @@ export interface CvSources {
  */
 export function composeCvSnapshot(
   lang: Locale,
-  { profile, techCatalog, experience, locale }: CvSources,
+  { profile, techCatalog, experience, locale, localeEn }: CvSources,
 ): Record<string, unknown> {
   const entryById = new Map<string, TechCatalogEntry>(
     techCatalog.entries.map((e) => [e.id, e]),
@@ -179,7 +185,10 @@ export function composeCvSnapshot(
     out.description = lj.description;
     out.bullets = lj.bullets;
     out.frameworks = fwIds.map(resolveTechNoLink);
-    out.role = { id: ej.roleId, name: lj.roleName };
+    const roleNameEn = localeEn?.jobs[ej.slug]?.roleName;
+    out.role = roleNameEn
+      ? { id: ej.roleId, name: lj.roleName, nameEn: roleNameEn }
+      : { id: ej.roleId, name: lj.roleName };
     out.descriptionShort = lj.descriptionShort;
     return out;
   });
