@@ -27,4 +27,6 @@ export interface JobOffer {
   commuteLabel?: string;
   /** Slugs de missions à mettre en avant (CV court). Valeurs = slug client sans préfixe "mission-". */
   highlightedJobs?: string[];
+  /** Affiche la pastille « Bac+5 » / « Master's-level » en tête de la section adéquation. */
+  showEducation?: boolean;
 }

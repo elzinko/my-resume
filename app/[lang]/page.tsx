@@ -10,6 +10,7 @@ import { offerPriorityTokensAndContact } from '@/lib/offer-page-data';
 import { resolveOfferFromUrlParams } from '@/lib/query-offer-params';
 import { recordToURLSearchParams } from '@/lib/search-params-to-url';
 import type { ContractType } from '@/data/offers/types';
+import type { CvMode } from '@/lib/cv-contract-text';
 
 export const dynamic = 'force-dynamic';
 
@@ -57,6 +58,10 @@ export default async function Page({
     contractParam === 'cdi' || contractParam === 'freelance'
       ? contractParam
       : undefined;
+  const modeParam =
+    typeof searchParams?.mode === 'string' ? searchParams.mode : undefined;
+  const mode: CvMode | undefined =
+    modeParam === 'teaching' ? 'teaching' : undefined;
   const { priorityTokens, contactLocation } = offerPriorityTokensAndContact(
     offer,
     sp,
@@ -66,6 +71,9 @@ export default async function Page({
       ? sp.get('subtitle_fr') || sp.get('subtitle')
       : sp.get('subtitle_en') || sp.get('subtitle')
     )?.trim() || undefined;
+  const eduRaw = sp.get('edu')?.trim();
+  const showEducationLevel =
+    offer?.showEducation === true || eduRaw === '1' || eduRaw === 'true';
   const contact = data.contact as
     | { email?: string; phone?: string; location?: string }
     | undefined;
@@ -81,9 +89,11 @@ export default async function Page({
       }}
       frameworkDisplayPriorityTokens={priorityTokens}
       contactLocation={contactLocation}
-      hideMalt={contract === 'cdi'}
+      hideMalt={contract === 'cdi' || mode === 'teaching'}
       contract={contract}
+      mode={mode}
       subtitleOverride={subtitleOverride}
+      showEducationLevel={showEducationLevel}
     />
   );
 }

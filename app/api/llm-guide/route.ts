@@ -99,6 +99,7 @@ GET /{lang}?company=<nom>&requirement=<Label:kw1,kw2>[&...]
 | \`requirement\` | **oui** (1+) | Repetable. Format : \`Label:keyword1,keyword2\` |
 | \`req\` | alias | Alias court pour \`requirement\` |
 | \`reqY\` | non | Annees d'experience affichees pour le i-eme requirement (remplace le calcul auto) |
+| \`edu\` | non | \`1\` ou \`true\` → affiche la pastille de niveau de formation (« Bac+5 » FR / « Master's-level » EN). Masquee par defaut. |
 | \`contract\` | non | \`cdi\` ou \`freelance\` -- adapte textes profil/domaines, masque Malt en CDI |
 | \`job\` | non | Repetable. Slug d'une mission a mettre en avant sur le CV court. **L'ordre des \`job\` = ordre d'affichage** du bloc "mises en avant" (voir liste ci-dessous) |
 | \`workAddress\` | non | Adresse complete du lieu de travail. Active l'itineraire Google Maps gare -> bureau sur le pictogramme localisation. |
@@ -160,7 +161,7 @@ Exemple : \`subtitle_fr=Chef+de+Projet+Java+Full+Stack&subtitle_en=Java+Full+Sta
 
 ## Vignettes adequation poste
 
-- 1 vignette education (toujours affichee) : "Bac+5" (FR) / "Master's-level" (EN).
+- 1 vignette education **optionnelle** (opt-in via \`edu=1\` ou \`showEducation: true\` dans le spec JSON) : "Bac+5" (FR) / "Master's-level" (EN).
 - Max **${SHORT_PROFILE_MATCH_MAX}** vignettes technologiques en mode short.
 - Pas de limite en mode full (CV complet).
 - En mode short, chaque vignette indique le nombre de clients (missions).
@@ -263,6 +264,7 @@ Schema JSON decode :
   "commuteLabel": "string (optionnel) -- libelle court affiche pres du lieu",
   "commuteMinutes": "number (optionnel) -- si pas de commuteLabel, genere '~N min'",
   "highlightedJobs": ["slug1", "slug2"],
+  "showEducation": "boolean (optionnel) -- affiche la pastille « Bac+5 / Master's-level »",
   "id": "string (optionnel)",
   "url": "string (optionnel)"
 }
@@ -274,7 +276,7 @@ Schema JSON decode :
 > presents dans l'URL, ils ont la priorite sur \`highlightedJobs\` du \`spec\`.
 
 > Aliases snake_case acceptes dans le spec JSON : \`experience_years_override\`,
-> \`highlighted_jobs\`, \`commute_minutes\`.
+> \`highlighted_jobs\`, \`commute_minutes\`, \`show_education\`.
 
 ## Prompt rapide (generation d'URL de CV personnalise)
 

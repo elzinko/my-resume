@@ -1,7 +1,7 @@
 import Domain from '@/components/Domain';
 import SectionHeadingAts from '@/components/SectionHeadingAts';
 import { getCvData } from '@/lib/cv-data';
-import { resolveDomainDescription } from '@/lib/cv-contract-text';
+import { resolveDomainDescription, type CvMode } from '@/lib/cv-contract-text';
 import type { ContractType } from '@/data/offers/types';
 import { Locale } from 'i18n-config';
 import React from 'react';
@@ -9,9 +9,11 @@ import React from 'react';
 export default async function domains({
   locale,
   contract,
+  mode,
 }: {
   locale: Locale;
   contract?: ContractType;
+  mode?: CvMode;
 }) {
   const data: any = await getCvData(locale);
   return (
@@ -37,7 +39,7 @@ export default async function domains({
             key={domain.id}
             domain={{
               ...domain,
-              description: resolveDomainDescription(domain, contract),
+              description: resolveDomainDescription(domain, contract, mode),
             }}
           />
         ))}

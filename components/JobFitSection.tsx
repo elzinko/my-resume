@@ -11,8 +11,9 @@ import {
 } from '@/lib/short-offer-match';
 import type { EducationLevelContent } from '@/lib/education-level-content';
 import type { MatchDisplayData } from '@/lib/match-display-types';
+import { truncateClientsForDisplay } from '@/lib/match-clients-display';
 import type { Locale } from 'i18n-config';
-import { Fragment, useMemo } from 'react';
+import { useMemo } from 'react';
 import Pill from '@/components/Pill';
 import { slugifyClient } from '@/lib/slug';
 
@@ -21,6 +22,8 @@ interface JobFitSectionProps {
   educationLevel: EducationLevelContent;
   /** 'full' = liste verticale avec detail (CV complet), 'compact' = pastilles inline (CV court). */
   variant?: 'full' | 'compact';
+  /** Affiche la pastille niveau de formation (« Bac+5 / Master's-level »). Opt-in via `?edu=1`. */
+  showEducationLevel?: boolean;
 }
 
 /**
@@ -32,6 +35,7 @@ export default function JobFitSection({
   lang,
   educationLevel,
   variant = 'full',
+  showEducationLevel = false,
 }: JobFitSectionProps) {
   const offerData = useShortOfferMatchData(lang);
 
@@ -54,10 +58,11 @@ export default function JobFitSection({
           {sectionTitle}
         </h2>
         <div className="cv-section-body-gap flex flex-wrap items-center gap-1.5 print:gap-1">
-          {/* Education level pill */}
-          <Pill color="match" compact>
-            {educationLevel.levelPrimary}
-          </Pill>
+          {showEducationLevel && (
+            <Pill color="match" compact>
+              {educationLevel.levelPrimary}
+            </Pill>
+          )}
 
           {/* Tech pills */}
           {entries.map((entry, index) => {
@@ -95,7 +100,7 @@ export default function JobFitSection({
   return (
     <section
       id="job-fit"
-      className="cv-mobile-section-mt print-preview:order-[25] max-md:!mt-0 print:order-[25]"
+      className="cv-mobile-section-mt print-preview:order-[25] print:order-[25] max-md:!mt-0"
       aria-label={sectionTitle}
     >
       <div className="border-b pb-1">
@@ -104,14 +109,15 @@ export default function JobFitSection({
         </h2>
       </div>
 
-      <ul className="mt-3 space-y-2.5 md:mt-4 md:space-y-3 print:mt-2 print:space-y-1.5">
-        {/* Education level row */}
-        <li className="flex flex-wrap items-baseline gap-x-2 gap-y-1 print:gap-x-1.5">
-          <Pill color="match">{educationLevel.levelPrimary}</Pill>
-          <span className="text-sm text-cv-body-muted md:text-base print:text-[10px]">
-            {educationLevel.effectiveLevelDetail}
-          </span>
-        </li>
+      <ul className="mt-3 space-y-2.5 print:mt-2 print:space-y-1.5 md:mt-4 md:space-y-3">
+        {showEducationLevel && (
+          <li className="flex flex-wrap items-baseline gap-x-2 gap-y-1 print:gap-x-1.5">
+            <Pill color="match">{educationLevel.levelPrimary}</Pill>
+            <span className="text-sm text-cv-body-muted print:text-[10px] md:text-base">
+              {educationLevel.effectiveLevelDetail}
+            </span>
+          </li>
+        )}
 
         {/* Tech entry rows */}
         {entries.map((entry, index) => {
@@ -120,32 +126,51 @@ export default function JobFitSection({
           const yearsLabel = showYears
             ? formatMatchYears(entry.totalYears, l)
             : '\u2014';
-          const clients = entry.matchedClients;
+          // Ann\u00e9es calcul\u00e9es sur la liste compl\u00e8te ; seul l'affichage est born\u00e9.
+          const { visible, hidden, hiddenCount } = truncateClientsForDisplay(
+            entry.matchedClients,
+          );
+          const overflowWord =
+            lang === 'en' ? 'more' : hiddenCount === 1 ? 'autre' : 'autres';
+          const overflowTitle =
+            hiddenCount > 0
+              ? `${hiddenCount} ${overflowWord} : ${hidden
+                  .map((c) => c.client)
+                  .join(', ')}`
+              : undefined;
 
           return (
             <li
               key={`${index}-${entry.label}`}
-              className="flex min-w-0 items-baseline gap-x-2 print:gap-x-1.5"
+              className="flex flex-wrap items-baseline gap-x-2 gap-y-1 print:gap-x-1.5"
             >
               <Pill color="match" metric={yearsLabel}>
                 {entry.label}
               </Pill>
-              {clients.length > 0 && (
-                /* Liste clients sur UNE seule ligne, juste après la pastille :
-                   tronquée avec « … » si trop longue (au lieu de passer à la
-                   ligne). Les ancres vers chaque mission restent cliquables. */
-                <span className="min-w-0 flex-1 truncate text-[10px] text-orange-200/90 md:text-xs print:text-[8px] print:text-orange-300">
-                  {clients.map((c, i) => (
-                    <Fragment key={c.client}>
-                      {i > 0 ? ', ' : ''}
-                      <a
-                        href={`#${slugifyClient(c.client)}`}
-                        className="hover:underline"
-                      >
-                        {c.client}
-                      </a>
-                    </Fragment>
+              {visible.length > 0 && (
+                <span className="flex flex-wrap items-baseline gap-1 print:gap-0.5">
+                  {visible.map((c) => (
+                    <Pill
+                      key={c.client}
+                      color="match"
+                      size="s"
+                      border={false}
+                      href={`#${slugifyClient(c.client)}`}
+                    >
+                      {c.client}
+                    </Pill>
                   ))}
+                  {hiddenCount > 0 && (
+                    <span
+                      title={overflowTitle}
+                      aria-label={overflowTitle}
+                      className="inline-flex shrink-0 items-baseline"
+                    >
+                      <Pill color="match" size="s" border={false}>
+                        {'\u2026'}
+                      </Pill>
+                    </span>
+                  )}
                 </span>
               )}
             </li>

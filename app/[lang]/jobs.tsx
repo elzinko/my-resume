@@ -2,6 +2,7 @@ import Job from '@/components/Job';
 import ExperienceClosingBlock from '@/components/ExperienceClosingBlock';
 import SectionHeadingAts from '@/components/SectionHeadingAts';
 import { getCvData } from '@/lib/cv-data';
+import type { CvMode } from '@/lib/cv-contract-text';
 import {
   formatRemainingClientsRecapForFullCv,
   getExperienceClosingLabels,
@@ -9,11 +10,21 @@ import {
 import { Locale } from 'i18n-config';
 import React from 'react';
 
-export default async function jobs({ locale }: { locale: Locale }) {
+export default async function jobs({
+  locale,
+  mode,
+}: {
+  locale: Locale;
+  mode?: CvMode;
+}) {
   const data: any = await getCvData(locale);
   const jobsList = data?.allJobsModels || [];
   const visibleJobs = jobsList.filter(
-    (j: { display?: boolean }) => j.display !== false,
+    (j: { display?: boolean; displayMode?: string }) => {
+      if (j.display === false) return false;
+      if (j.displayMode && j.displayMode !== mode) return false;
+      return true;
+    },
   );
   const closing = getExperienceClosingLabels(locale);
   const recapLine = formatRemainingClientsRecapForFullCv(visibleJobs, locale);

@@ -242,6 +242,7 @@ export default async function DevComponentsPage({
               lang={lang}
               educationLevel={educationLevel}
               variant="full"
+              showEducationLevel
             />
           </Suspense>
         </div>
@@ -262,6 +263,7 @@ export default async function DevComponentsPage({
                 lang={lang}
                 educationLevel={educationLevel}
                 variant="compact"
+                showEducationLevel
               />
             </Suspense>
           </Narrow>

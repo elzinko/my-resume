@@ -17,6 +17,7 @@ import type { EducationLevelContent } from '@/lib/education-level-content';
 import ContactDisplay from '@/components/ContactDisplay';
 import SectionHeadingAts from '@/components/SectionHeadingAts';
 import type { ContractType } from '@/data/offers/types';
+import type { CvMode } from '@/lib/cv-contract-text';
 import type { Locale } from 'i18n-config';
 /**
  * Mise en page commune des pages CV « sur mesure » (custom / match).
@@ -32,7 +33,9 @@ export default function OfferTailoredShell({
   contactLocation,
   hideMalt,
   contract,
+  mode,
   subtitleOverride,
+  showEducationLevel = false,
 }: {
   lang: Locale;
   educationLevel: EducationLevelContent;
@@ -50,8 +53,12 @@ export default function OfferTailoredShell({
   hideMalt?: boolean;
   /** Type de contrat : adapte les textes Profil et Domaines. */
   contract?: ContractType;
+  /** Mode CV (`teaching` pour la variante enseignement). Affiche les missions/projets `displayMode=mode` et utilise les textes `*Teaching`. */
+  mode?: CvMode;
   /** Surcharge du sous-titre (rôle) dans l'en-tête. */
   subtitleOverride?: string;
+  /** Affiche la pastille « Bac+5 / Master's-level » dans la section adéquation. */
+  showEducationLevel?: boolean;
 }) {
   const resolvedContact: ContactLocationOverlay = contactLocation ?? {
     mapsHref: buildContactLocationHref(),
@@ -82,9 +89,10 @@ export default function OfferTailoredShell({
                 locale={lang}
                 educationLevel={educationLevel}
                 contract={contract}
+                mode={mode}
               />
               {/* @ts-expect-error Server Component */}
-              <Domains locale={lang} contract={contract} />
+              <Domains locale={lang} contract={contract} mode={mode} />
             </div>
             {/* Adéquation poste : niveau de formation + compétences techniques */}
             <Suspense fallback={null}>
@@ -92,6 +100,7 @@ export default function OfferTailoredShell({
                 lang={lang}
                 educationLevel={educationLevel}
                 variant="full"
+                showEducationLevel={showEducationLevel}
               />
             </Suspense>
             {/* Coordonnées : après Adéquation poste, même placement que le CV court. */}
@@ -121,11 +130,11 @@ export default function OfferTailoredShell({
               </section>
             )}
             {/* @ts-expect-error Server Component */}
-            <Jobs locale={lang} />
+            <Jobs locale={lang} mode={mode} />
             {/* @ts-expect-error Server Component */}
             <Studies locale={lang} />
             {/* @ts-expect-error Server Component */}
-            <Projects locale={lang} />
+            <Projects locale={lang} mode={mode} />
             {/* @ts-expect-error Server Component */}
             <Learnings locale={lang} />
             {/* @ts-expect-error Server Component */}

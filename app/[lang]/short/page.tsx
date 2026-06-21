@@ -66,23 +66,18 @@ export default async function ShortPage({
       : sp.get('subtitle_en') || sp.get('subtitle')
     )?.trim() || undefined;
 
-  // Missions mises en avant : l'ORDRE des `job=` (répétable) détermine l'ordre
-  // d'affichage. À défaut, on retombe sur `highlightedJobs` du `spec` (même
-  // sémantique d'ordre). Sans aucun des deux → comportement chrono par défaut.
+  const offer = resolveOfferFromUrlParams(sp, getMatchCatalog());
+  const eduRaw = sp.get('edu')?.trim();
+  const showEducationLevel =
+    offer?.showEducation === true || eduRaw === '1' || eduRaw === 'true';
+
+  // Missions mises en avant par le LLM (param `job`, répétable)
   const jobParam = searchParams?.job;
-  const jobParamSlugs = jobParam
+  const highlightedJobSlugs: string[] | undefined = jobParam
     ? (Array.isArray(jobParam) ? jobParam : [jobParam])
         .map((s) => s.trim())
         .filter(Boolean)
-    : [];
-  const specHighlightedJobs =
-    resolveOfferFromUrlParams(sp, getMatchCatalog())?.highlightedJobs ?? [];
-  const highlightedJobSlugs: string[] | undefined =
-    jobParamSlugs.length > 0
-      ? jobParamSlugs
-      : specHighlightedJobs.length > 0
-      ? specHighlightedJobs
-      : undefined;
+    : undefined;
 
   const compactData: CompactCvData = {
     header: {
@@ -113,12 +108,15 @@ export default async function ShortPage({
       competencies: d.competencies || [],
     })),
     jobs: (data?.allJobsModels || [])
-      .filter((j: { display?: boolean }) => j.display !== false)
+      .filter((j: { display?: boolean; displayMode?: string }) => {
+        if (j.display === false) return false;
+        if (j.displayMode) return false;
+        return true;
+      })
       .map((j: any) => {
         const dates = formatDates(j.startDate, j.endDate);
         const [start, end] = dates ? dates.split(' - ') : ['', ''];
         return {
-          slug: j.slug,
           client: j.client,
           clientUrl: j.clientUrl,
           role: j.role?.name || '',
@@ -146,7 +144,11 @@ export default async function ShortPage({
     projectsTitle: data?.projectsTitle?.title ?? 'Projects',
     projects: sortChronologicalDesc(
       (data?.allProjectsModels || []).filter(
-        (p: { display?: boolean }) => p.display !== false,
+        (p: { display?: boolean; displayMode?: string }) => {
+          if (p.display === false) return false;
+          if (p.displayMode) return false;
+          return true;
+        },
       ),
       byEndThenStart,
     ),
@@ -170,6 +172,7 @@ export default async function ShortPage({
           data={compactData}
           lang={lang as 'fr' | 'en'}
           highlightedJobSlugs={highlightedJobSlugs}
+          showEducationLevel={showEducationLevel}
         />
       </ShortPageWrapper>
     </>

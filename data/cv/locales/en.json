@@ -55,27 +55,47 @@
     }
   },
   "jobs": {
-    "matiere-web": {
-      "location": "Melun, France",
-      "roleName": "Co-founder & Director",
+    "iut-vacations": {
+      "location": "Lieusaint (77) — Sénart campus",
+      "roleName": "Adjunct lecturer — 1st year",
       "description": "",
-      "descriptionShort": "Co-founder and director of the Matière Web agency: built the agency, led the team and drove client projects through to delivery.",
+      "descriptionShort": "Two consecutive years (2015-2016 and 2016-2017) teaching first-year IUT students on the web module, at the Sénart campus of IUT Sénart-Fontainebleau (UPEC).",
       "bullets": [
         {
-          "id": "job_matiere_web_en_b_found",
-          "text": "Founded and ran the web agency: vision, positioning and business development."
+          "id": "job_iut_vacations_en_b_modules",
+          "text": "Topics taught: HTML / CSS, JavaScript, DOM manipulation, web development fundamentals."
         },
         {
-          "id": "job_matiere_web_en_b_team",
-          "text": "Recruited and led the team: 2 partners and 2 consultants (design & development)."
+          "id": "job_iut_vacations_en_b_outils",
+          "text": "Developer tooling: editor, terminal, Git / GitLab, peer code reviews, team conventions."
         },
         {
-          "id": "job_matiere_web_en_b_delivery",
-          "text": "Owned client projects end to end: scoping, planning, client relationship and delivery."
+          "id": "job_iut_vacations_en_b_cicd",
+          "text": "Continuous integration & delivery: GitLab CI pipelines, quality (lint, tests), automated deployment."
         },
         {
-          "id": "job_matiere_web_en_b_quality",
-          "text": "Designed and shipped WordPress, Next.js/React and e-commerce websites."
+          "id": "job_iut_vacations_en_b_pedagogie",
+          "text": "Hands-on approach: red-thread projects, individual mentoring, deliverable-based grading."
+        }
+      ]
+    },
+    "cours-particuliers-2002-2006": {
+      "location": "Fontainebleau (77) — home",
+      "roleName": "Private tutor",
+      "description": "",
+      "descriptionShort": "Private tutoring in mathematics and physics for middle-school and high-school students, alongside my own studies.",
+      "bullets": [
+        {
+          "id": "job_cours_part_en_b_niveaux",
+          "text": "Levels: 6th grade through senior year, year-long follow-up."
+        },
+        {
+          "id": "job_cours_part_en_b_matieres",
+          "text": "Subjects: mathematics (algebra, geometry, calculus) and physics (mechanics, electricity)."
+        },
+        {
+          "id": "job_cours_part_en_b_approche",
+          "text": "Approach: gap diagnosis, reformulation, progressive exercises, exam preparation."
         }
       ]
     },
@@ -425,6 +445,13 @@
     }
   },
   "projects": {
+    "module-product-builder": {
+      "title": "Product Builder module — IUT proposal",
+      "description": "A first- or second-year module taking students through a full product cycle: ideation, framing, UI design, MVP development, production deployment and operations. The module embeds modern AI tools (prompt engineering, LLM agents, RAG, MCP) as realistic accelerators of the developer craft. Goal: graduates capable of shipping a digital product end to end, solo or in a team, with the quality and industrialization reflexes expected in industry."
+    },
+    "82518980": {
+      "description": "Co-founder and director of the web agency \"Matière Web\""
+    },
     "cvproj-shopify-assistant": {
       "description": "AI chat to create Shopify products quickly and easily.",
       "title": "Shopify assistant"

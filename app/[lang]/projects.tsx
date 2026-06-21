@@ -1,6 +1,7 @@
 import Project from '@/components/Project';
 import SectionHeadingAts from '@/components/SectionHeadingAts';
 import { getCvData } from '@/lib/cv-data';
+import type { CvMode } from '@/lib/cv-contract-text';
 import {
   byEndThenStart,
   sortChronologicalDesc,
@@ -12,14 +13,20 @@ export default async function projects({
   locale,
   sectionId = 'projects',
   className = '',
+  mode,
 }: {
   locale: Locale;
   sectionId?: string | false;
   className?: string;
+  mode?: CvMode;
 }) {
   const data: any = await getCvData(locale);
   const visibleProjects = (data?.allProjectsModels || []).filter(
-    (p: { display?: boolean }) => p.display !== false,
+    (p: { display?: boolean; displayMode?: string }) => {
+      if (p.display === false) return false;
+      if (p.displayMode && p.displayMode !== mode) return false;
+      return true;
+    },
   );
   const projectsOrdered = sortChronologicalDesc(
     visibleProjects,

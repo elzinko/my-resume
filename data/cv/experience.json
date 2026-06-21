@@ -2,15 +2,45 @@
   "schemaVersion": 1,
   "jobs": [
     {
+      "slug": "iut-vacations",
+      "client": "IUT Sénart-Fontainebleau",
+      "startDate": "2015-09-01",
+      "endDate": "2017-06-30",
+      "roleId": "role-teaching-vacataire",
+      "clientUrl": "https://iutsf.u-pec.fr/",
+      "frameworks": [
+        "91050006",
+        "91050007",
+        "82456019",
+        "82456040",
+        "82456042",
+        "82609066",
+        "82627943"
+      ],
+      "displayMode": "teaching"
+    },
+    {
+      "slug": "cours-particuliers-2002-2006",
+      "client": "Cours particuliers — Maths & Physique",
+      "startDate": "2002-09-01",
+      "endDate": "2006-06-30",
+      "roleId": "role-teaching-tuteur",
+      "frameworks": [],
+      "displayMode": "teaching"
+    },
+    {
       "slug": "solopreneur",
       "client": "Solopreneur",
       "startDate": "2023-01-01",
       "roleId": "81994135",
       "frameworks": [
+        "82455959",
+        "82456048",
         "82456019",
         "82456008",
         "82593991",
         "cnZskAq6SqSbkXAmAB0KIQ",
+        "82518980",
         "skill_nodejs_tc2026",
         "skill_nestjs_tc2026"
       ]
@@ -73,6 +103,8 @@
       "startDate": "2022-05-01",
       "roleId": "82089432",
       "frameworks": [
+        "82455959",
+        "82456048",
         "82690001",
         "82456109",
         "82459421",
@@ -147,6 +179,8 @@
       "startDate": "2020-08-01",
       "roleId": "81994135",
       "frameworks": [
+        "82455959",
+        "82456048",
         "82455956",
         "78848797",
         "82593991",
@@ -157,22 +191,6 @@
       ],
       "clientUrl": "https://www.relevanc.com",
       "endDate": "2020-12-02"
-    },
-    {
-      "slug": "matiere-web",
-      "client": "Matière Web",
-      "startDate": "2020-06-01",
-      "roleId": "role-matiere-web",
-      "frameworks": [
-        "90902399",
-        "90902400",
-        "81826170",
-        "82456019",
-        "82456012",
-        "81826186"
-      ],
-      "clientUrl": "https://matiere-web.com/",
-      "endDate": "2025-09-30"
     },
     {
       "slug": "ecocea",
@@ -198,6 +216,8 @@
       "startDate": "2016-04-01",
       "roleId": "81994135",
       "frameworks": [
+        "82455959",
+        "82456048",
         "82455939",
         "82455956",
         "82456127",
@@ -509,6 +529,26 @@
   ],
   "projects": [
     {
+      "id": "module-product-builder",
+      "name": "Module Product Builder (proposition IUT)",
+      "startDate": "2026-09-01",
+      "endDate": null,
+      "frameworks": [
+        "81826170",
+        "82456019",
+        "82456008",
+        "cnZskAq6SqSbkXAmAB0KIQ"
+      ],
+      "bullets": [],
+      "tags": [
+        {
+          "id": "tag-module-product-builder",
+          "name": "proposition"
+        }
+      ],
+      "displayMode": "teaching"
+    },
+    {
       "id": "cvproj-shopify-assistant",
       "name": "shopify-plugin-product-assistant",
       "startDate": "2025-12-01",
@@ -615,6 +655,33 @@
         }
       ],
       "link": "https://www.muti.app/"
+    },
+    {
+      "id": "82518980",
+      "name": "Matière Web",
+      "startDate": "2020-06-01",
+      "endDate": null,
+      "frameworks": [
+        "90902399",
+        "90902400",
+        "81826170",
+        "82456019",
+        "82456012",
+        "81826186",
+        "90902401"
+      ],
+      "bullets": [],
+      "tags": [
+        {
+          "id": "82972442",
+          "name": "pro"
+        },
+        {
+          "id": "82972454",
+          "name": "business"
+        }
+      ],
+      "link": "https://matiere-web.com/"
     },
     {
       "id": "cvproj-byhere-2026",

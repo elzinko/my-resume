@@ -83,6 +83,8 @@ interface CompactCvLayoutProps {
   lang: 'fr' | 'en';
   /** Slugs de missions à mettre en avant (ex. "jpb-systeme"). Vide = comportement chrono par défaut. */
   highlightedJobSlugs?: string[];
+  /** Affiche la pastille « Bac+5 / Master's-level » dans la section adéquation. Opt-in via `?edu=1`. */
+  showEducationLevel?: boolean;
   /** Emplacement réservé pour extensions — non utilisé par défaut. */
   children?: React.ReactNode;
 }
@@ -91,6 +93,7 @@ export default function CompactCvLayout({
   data,
   lang,
   highlightedJobSlugs,
+  showEducationLevel = false,
   children,
 }: CompactCvLayoutProps) {
   // Fallback labels if bundle.json titles are empty
@@ -205,6 +208,7 @@ export default function CompactCvLayout({
             lang={lang}
             educationLevel={data.educationLevel}
             variant="compact"
+            showEducationLevel={showEducationLevel}
           />
         </Suspense>
         <section>
@@ -242,6 +246,7 @@ export default function CompactCvLayout({
                 lang={lang}
                 educationLevel={data.educationLevel}
                 variant="compact"
+                showEducationLevel={showEducationLevel}
               />
             </Suspense>
           </div>
