@@ -1,4 +1,5 @@
 import Domain from '@/components/Domain';
+import SectionHeadingAts from '@/components/SectionHeadingAts';
 import { getCvData } from '@/lib/cv-data';
 import { resolveDomainDescription } from '@/lib/cv-contract-text';
 import type { ContractType } from '@/data/offers/types';
@@ -18,6 +19,18 @@ export default async function domains({
       id="domains"
       className="mt-2 print-preview:order-[20] print:order-[20] max-md:!mt-0"
     >
+      {/* Ancre de section « Compétences / Skills » réservée à l'impression :
+          à l'écran ce titre est porté par la sidebar `skills.tsx` (donc pas de
+          doublon) ; en PDF la sidebar est masquée, et ce titre donne aux ATS
+          l'anchor « Skills » juste au-dessus des compétences (tags Agile/Dev/Ops). */}
+      <div className="mb-2 hidden border-b pb-1 print:block print-preview:block">
+        <SectionHeadingAts
+          section="skills"
+          locale={locale}
+          title={data?.skillsTitle?.title}
+          className="min-w-0 text-2xl font-semibold text-cv-tag-text"
+        />
+      </div>
       <div className="cv-domains-grid">
         {data?.allDomainsModels?.map((domain: any) => (
           <Domain
