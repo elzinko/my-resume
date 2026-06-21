@@ -12,7 +12,7 @@ import {
 import type { EducationLevelContent } from '@/lib/education-level-content';
 import type { MatchDisplayData } from '@/lib/match-display-types';
 import type { Locale } from 'i18n-config';
-import { useMemo } from 'react';
+import { Fragment, useMemo } from 'react';
 import Pill from '@/components/Pill';
 import { slugifyClient } from '@/lib/slug';
 
@@ -95,7 +95,7 @@ export default function JobFitSection({
   return (
     <section
       id="job-fit"
-      className="cv-mobile-section-mt print-preview:order-[25] print:order-[25] max-md:!mt-0"
+      className="cv-mobile-section-mt print-preview:order-[25] max-md:!mt-0 print:order-[25]"
       aria-label={sectionTitle}
     >
       <div className="border-b pb-1">
@@ -104,11 +104,11 @@ export default function JobFitSection({
         </h2>
       </div>
 
-      <ul className="mt-3 space-y-2.5 print:mt-2 print:space-y-1.5 md:mt-4 md:space-y-3">
+      <ul className="mt-3 space-y-2.5 md:mt-4 md:space-y-3 print:mt-2 print:space-y-1.5">
         {/* Education level row */}
         <li className="flex flex-wrap items-baseline gap-x-2 gap-y-1 print:gap-x-1.5">
           <Pill color="match">{educationLevel.levelPrimary}</Pill>
-          <span className="text-sm text-cv-body-muted print:text-[10px] md:text-base">
+          <span className="text-sm text-cv-body-muted md:text-base print:text-[10px]">
             {educationLevel.effectiveLevelDetail}
           </span>
         </li>
@@ -125,23 +125,26 @@ export default function JobFitSection({
           return (
             <li
               key={`${index}-${entry.label}`}
-              className="flex flex-wrap items-baseline gap-x-2 gap-y-1 print:gap-x-1.5"
+              className="flex min-w-0 items-baseline gap-x-2 print:gap-x-1.5"
             >
               <Pill color="match" metric={yearsLabel}>
                 {entry.label}
               </Pill>
               {clients.length > 0 && (
-                <span className="flex flex-wrap items-baseline gap-1 print:gap-0.5">
-                  {clients.map((c) => (
-                    <Pill
-                      key={c.client}
-                      color="match"
-                      size="s"
-                      border={false}
-                      href={`#${slugifyClient(c.client)}`}
-                    >
-                      {c.client}
-                    </Pill>
+                /* Liste clients sur UNE seule ligne, juste après la pastille :
+                   tronquée avec « … » si trop longue (au lieu de passer à la
+                   ligne). Les ancres vers chaque mission restent cliquables. */
+                <span className="min-w-0 flex-1 truncate text-[10px] text-orange-200/90 md:text-xs print:text-[8px] print:text-orange-300">
+                  {clients.map((c, i) => (
+                    <Fragment key={c.client}>
+                      {i > 0 ? ', ' : ''}
+                      <a
+                        href={`#${slugifyClient(c.client)}`}
+                        className="hover:underline"
+                      >
+                        {c.client}
+                      </a>
+                    </Fragment>
                   ))}
                 </span>
               )}
