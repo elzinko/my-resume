@@ -412,6 +412,30 @@
       "description": "Refonte informatique de l'outil de gestion du CFA dans le cadre de mon DUT",
       "descriptionShort": "Refonte de l'outil de gestion du CFA",
       "bullets": []
+    },
+    "matiere-web": {
+      "location": "Melun (77)",
+      "roleName": "Cofondateur & Directeur",
+      "description": "",
+      "descriptionShort": "Cofondateur et directeur de l'agence web Matière Web : création de l'agence, encadrement de l'équipe et pilotage des projets clients jusqu'à la livraison.",
+      "bullets": [
+        {
+          "id": "job_matiere_web_fr_b_found",
+          "text": "Création et direction de l'agence web : vision, positionnement et développement commercial."
+        },
+        {
+          "id": "job_matiere_web_fr_b_team",
+          "text": "Recrutement et encadrement de l'équipe : 2 associés et 2 consultants (design & développement)."
+        },
+        {
+          "id": "job_matiere_web_fr_b_delivery",
+          "text": "Pilotage des projets clients de bout en bout : cadrage, planning, relation client et livraison."
+        },
+        {
+          "id": "job_matiere_web_fr_b_quality",
+          "text": "Conception et mise en production de sites WordPress, Next.js/React et e-commerce."
+        }
+      ]
     }
   },
   "studies": {
@@ -452,9 +476,6 @@
     "module-product-builder": {
       "title": "Module Product Builder — proposition IUT",
       "description": "Module de 1ère ou 2ᵉ année qui fait vivre aux étudiants un cycle produit complet : idéation, cadrage, design d'interface, développement d'un MVP, mise en production et run. Le module intègre les outils IA modernes (prompt engineering, agents LLM, RAG, MCP) comme accélérateurs réalistes du métier de développeur. Objectif : former des étudiants capables de livrer un produit numérique de bout en bout, en autonomie ou en équipe, avec les réflexes de qualité et d'industrialisation attendus en entreprise."
-    },
-    "82518980": {
-      "description": "Co-fondateur et directeur de l'agence web Matière Web"
     },
     "cvproj-shopify-assistant": {
       "description": "Chat IA pour créer des produits Shopify facilement et rapidement.",

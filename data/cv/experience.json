@@ -40,7 +40,6 @@
         "82456008",
         "82593991",
         "cnZskAq6SqSbkXAmAB0KIQ",
-        "82518980",
         "skill_nodejs_tc2026",
         "skill_nestjs_tc2026"
       ]
@@ -63,6 +62,22 @@
       ],
       "clientUrl": "https://www.jpb-systeme.com/fr/keyprod",
       "endDate": "2025-08-31"
+    },
+    {
+      "slug": "matiere-web",
+      "client": "Matière Web",
+      "startDate": "2020-06-01",
+      "roleId": "role-matiere-web",
+      "frameworks": [
+        "90902399",
+        "90902400",
+        "81826170",
+        "82456019",
+        "82456012",
+        "81826186"
+      ],
+      "clientUrl": "https://matiere-web.com/",
+      "endDate": "2025-09-30"
     },
     {
       "slug": "blablacar",
@@ -655,33 +670,6 @@
         }
       ],
       "link": "https://www.muti.app/"
-    },
-    {
-      "id": "82518980",
-      "name": "Matière Web",
-      "startDate": "2020-06-01",
-      "endDate": null,
-      "frameworks": [
-        "90902399",
-        "90902400",
-        "81826170",
-        "82456019",
-        "82456012",
-        "81826186",
-        "90902401"
-      ],
-      "bullets": [],
-      "tags": [
-        {
-          "id": "82972442",
-          "name": "pro"
-        },
-        {
-          "id": "82972454",
-          "name": "business"
-        }
-      ],
-      "link": "https://matiere-web.com/"
     },
     {
       "id": "cvproj-byhere-2026",

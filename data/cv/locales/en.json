@@ -408,6 +408,30 @@
       "description": "Computer overhaul of the CFA management tool as part of my technological university degree",
       "descriptionShort": "CFA management tool overhaul",
       "bullets": []
+    },
+    "matiere-web": {
+      "location": "Melun, France",
+      "roleName": "Co-founder & Director",
+      "description": "",
+      "descriptionShort": "Co-founder and director of the Matière Web agency: built the agency, led the team and drove client projects through to delivery.",
+      "bullets": [
+        {
+          "id": "job_matiere_web_en_b_found",
+          "text": "Founded and ran the web agency: vision, positioning and business development."
+        },
+        {
+          "id": "job_matiere_web_en_b_team",
+          "text": "Recruited and led the team: 2 partners and 2 consultants (design & development)."
+        },
+        {
+          "id": "job_matiere_web_en_b_delivery",
+          "text": "Owned client projects end to end: scoping, planning, client relationship and delivery."
+        },
+        {
+          "id": "job_matiere_web_en_b_quality",
+          "text": "Designed and shipped WordPress, Next.js/React and e-commerce websites."
+        }
+      ]
     }
   },
   "studies": {
@@ -448,9 +472,6 @@
     "module-product-builder": {
       "title": "Product Builder module — IUT proposal",
       "description": "A first- or second-year module taking students through a full product cycle: ideation, framing, UI design, MVP development, production deployment and operations. The module embeds modern AI tools (prompt engineering, LLM agents, RAG, MCP) as realistic accelerators of the developer craft. Goal: graduates capable of shipping a digital product end to end, solo or in a team, with the quality and industrialization reflexes expected in industry."
-    },
-    "82518980": {
-      "description": "Co-founder and director of the web agency \"Matière Web\""
     },
     "cvproj-shopify-assistant": {
       "description": "AI chat to create Shopify products quickly and easily.",
