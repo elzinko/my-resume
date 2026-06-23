@@ -1,21 +1,24 @@
 import Job from '@/components/Job';
 import ExperienceClosingBlock from '@/components/ExperienceClosingBlock';
-import SectionHeadingAts from '@/components/SectionHeadingAts';
+import ExperienceSection from '@/components/ExperienceSection';
 import { getCvData } from '@/lib/cv-data';
 import type { CvMode } from '@/lib/cv-contract-text';
 import {
   formatRemainingClientsRecapForFullCv,
   getExperienceClosingLabels,
 } from '@/lib/cv-experience-footer';
+import { DEFAULT_DETAIL_LEVEL, type DetailLevel } from '@/lib/cv-detail-level';
 import { Locale } from 'i18n-config';
 import React from 'react';
 
 export default async function jobs({
   locale,
   mode,
+  detailLevel = DEFAULT_DETAIL_LEVEL,
 }: {
   locale: Locale;
   mode?: CvMode;
+  detailLevel?: DetailLevel;
 }) {
   const data: any = await getCvData(locale);
   const jobsList = data?.allJobsModels || [];
@@ -33,25 +36,25 @@ export default async function jobs({
     <div className="cv-print-jobs-group print-preview:order-[90] print:order-[90]">
       <section
         id="jobs"
-        className="mt-10 break-before-page max-md:mt-0 print:break-before-auto"
+        className="mt-10 break-before-page print:break-before-auto max-md:mt-0"
       >
-        <SectionHeadingAts
+        <ExperienceSection
           section="jobs"
-          locale={locale}
           title={data?.jobsTitle?.title}
-          className="border-b pb-1 text-2xl font-semibold text-cv-jobs print:break-after-avoid"
-        />
-        <ul className="cv-section-body-gap space-y-4 print:space-y-4">
+          locale={locale}
+          canToggleDetails={detailLevel === 'full'}
+        >
           {visibleJobs.map((job: any, index: number) => (
             <li key={job.client + index}>
               <Job
                 job={job}
                 locale={locale}
+                detailLevel={detailLevel}
                 presentLabel={locale === 'en' ? 'Present' : 'Présent'}
               />
             </li>
           ))}
-        </ul>
+        </ExperienceSection>
         {visibleJobs.length > 0 ? (
           <ExperienceClosingBlock
             moreExperience={closing.moreExperience}

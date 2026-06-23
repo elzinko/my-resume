@@ -74,7 +74,9 @@ export const config = {
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
+     * - any path containing a "." (static assets sous public/ : profile.jpg,
+     *   site.webmanifest, *.svg, *.png… ne doivent pas recevoir de préfixe de langue)
      */
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)',
   ],
 };

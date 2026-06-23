@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { formatJobDatesCompactYears } from './date';
+import { computeAge, formatJobDatesCompactYears } from './date';
 
 // --- formatJobDatesCompactYears ---
 
@@ -51,4 +51,27 @@ test('formatJobDatesCompactYears with valid start and invalid end', () => {
     formatJobDatesCompactYears('2020-01-01', 'not-a-date', 'Present'),
     '2020 - not-a-date',
   );
+});
+
+// --- computeAge ---
+
+test('computeAge after the birthday in the year', () => {
+  assert.equal(computeAge('1980-01-24', new Date('2026-06-23')), 46);
+});
+
+test('computeAge the day before the birthday', () => {
+  assert.equal(computeAge('1980-01-24', new Date('2026-01-23')), 45);
+});
+
+test('computeAge exactly on the birthday', () => {
+  assert.equal(computeAge('1980-01-24', new Date('2026-01-24')), 46);
+});
+
+test('computeAge end of year', () => {
+  assert.equal(computeAge('1980-01-24', new Date('2026-12-31')), 46);
+});
+
+test('computeAge returns null for an invalid date', () => {
+  assert.equal(computeAge('not-a-date'), null);
+  assert.equal(computeAge('1980-13-01', new Date('2026-06-23')), null);
 });

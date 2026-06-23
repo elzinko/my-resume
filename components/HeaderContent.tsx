@@ -9,6 +9,10 @@ interface HeaderContentProps {
   compactPrint?: boolean;
   /** Coordonnées compactes sous le sous-titre. */
   belowRole?: ReactNode;
+  /** Chemin de la photo de profil (sous `public/`). Si absent : pas d'avatar. */
+  photoUrl?: string;
+  /** Texte d'âge déjà localisé (ex. « 46 ans »). Si absent : non affiché. */
+  ageText?: string;
 }
 
 /**
@@ -29,6 +33,8 @@ export default function HeaderContent({
   role,
   compactPrint = false,
   belowRole,
+  photoUrl,
+  ageText,
 }: HeaderContentProps) {
   return (
     <div
@@ -37,12 +43,30 @@ export default function HeaderContent({
       }`}
     >
       <div className="flex w-full items-stretch justify-end gap-4 print:gap-4 md:gap-6">
-        {/* Bloc texte : nom + rôle + coordonnées, alignés à droite */}
+        {/* Photo de profil (optionnelle, à gauche du nom) */}
+        {photoUrl ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={photoUrl}
+            alt={name}
+            className={`shrink-0 self-center rounded-full border-2 border-blue-400/40 object-cover ${
+              compactPrint
+                ? 'h-16 w-16 print:h-16 print:w-16'
+                : 'h-20 w-20 print:h-28 print:w-28 md:h-28 md:w-28 lg:h-36 lg:w-36'
+            }`}
+          />
+        ) : null}
+
+        {/* Bloc texte : nom + rôle + âge + coordonnées, alignés à droite */}
         <div className="flex flex-col items-end text-right">
           <h1
             className={`text-3xl font-extrabold leading-tight text-blue-400 md:text-5xl md:leading-none lg:text-7xl ${
               compactPrint
                 ? 'print:text-3xl print:leading-tight'
+                : photoUrl
+                ? // Avec la photo, le nom doit tenir sur UNE ligne à l'impression :
+                  // un cran plus petit (text-6xl) + nowrap pour garantir l'absence de retour.
+                  'print:whitespace-nowrap print:text-6xl print:leading-none'
                 : 'print:text-7xl print:leading-none'
             }`}
           >
@@ -57,6 +81,17 @@ export default function HeaderContent({
           >
             {role}
           </p>
+          {ageText ? (
+            <p
+              className={`mt-1 text-base leading-snug text-gray-400 md:mt-2 md:text-xl ${
+                compactPrint
+                  ? 'print:mt-0 print:text-xs'
+                  : 'print:mt-1 print:text-lg'
+              }`}
+            >
+              {ageText}
+            </p>
+          ) : null}
           {belowRole ? (
             <div className="mt-1 hidden w-full print:mt-2 print:block md:mt-2 md:block">
               {belowRole}

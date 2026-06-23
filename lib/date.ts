@@ -58,4 +58,33 @@ function yearFromIso(s: string): string | null {
   return String(d.getFullYear());
 }
 
+/**
+ * Âge en années révolues à partir d'une date de naissance ISO (`YYYY-MM-DD`).
+ * Parse les composantes à la main (pas de `new Date`) pour éviter les décalages
+ * de fuseau horaire autour de minuit. Retourne `null` si la date est invalide.
+ *
+ * @param birthDateIso date de naissance, ex. `"1980-01-24"`.
+ * @param ref date de référence (défaut : maintenant). Injectable pour les tests.
+ */
+export function computeAge(
+  birthDateIso: string,
+  ref: Date = new Date(),
+): number | null {
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(birthDateIso);
+  if (!m) return null;
+  const birthYear = Number(m[1]);
+  const birthMonth = Number(m[2]); // 1-12
+  const birthDay = Number(m[3]);
+  if (birthMonth < 1 || birthMonth > 12 || birthDay < 1 || birthDay > 31) {
+    return null;
+  }
+  const refMonth = ref.getMonth() + 1; // 1-12
+  const refDay = ref.getDate();
+  let age = ref.getFullYear() - birthYear;
+  if (refMonth < birthMonth || (refMonth === birthMonth && refDay < birthDay)) {
+    age -= 1;
+  }
+  return age >= 0 ? age : null;
+}
+
 export default formatDates;

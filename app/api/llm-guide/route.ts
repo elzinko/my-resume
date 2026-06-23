@@ -101,6 +101,9 @@ GET /{lang}?company=<nom>&requirement=<Label:kw1,kw2>[&...]
 | \`reqY\` | non | Annees d'experience affichees pour le i-eme requirement (remplace le calcul auto) |
 | \`edu\` | non | \`1\` ou \`true\` → affiche la pastille de niveau de formation (« Bac+5 » FR / « Master's-level » EN). Masquee par defaut. |
 | \`contract\` | non | \`cdi\` ou \`freelance\` -- adapte textes profil/domaines, masque Malt en CDI |
+| \`detail\` | non | Niveau de detail des experiences : \`full\` (defaut), \`summary\` (accroche seule, sans les details), \`minimal\` (aucune description). Pilote l'ecran ET le PDF. |
+| \`photo\` | non | Affiche la photo de profil (avatar a gauche du nom). \`1\` pour afficher (masquee par defaut). |
+| \`age\` | non | Affiche l'age sous le role (calcule depuis la date de naissance). \`0\` pour masquer (affiche par defaut). |
 | \`job\` | non | Repetable. Slug d'une mission a mettre en avant sur le CV court. **L'ordre des \`job\` = ordre d'affichage** du bloc "mises en avant" (voir liste ci-dessous) |
 | \`workAddress\` | non | Adresse complete du lieu de travail. Active l'itineraire Google Maps gare -> bureau sur le pictogramme localisation. |
 | \`clientAddress\` | alias | Alias court de \`workAddress\`. |
@@ -139,6 +142,19 @@ Si le calcul auto ne convient pas, utiliser \`reqY\` pour forcer une valeur.
 
 - \`contract=cdi\` : textes profil et domaines adaptes pour un poste permanent, lien Malt masque.
 - \`contract=freelance\` : textes freelance (comportement par defaut).
+
+### Presentation du CV (photo, age, niveau de detail)
+
+Ces parametres controlent la mise en forme, independamment de l'offre. Ils
+s'appliquent a l'ecran **et** au PDF imprime (le rendu PDF suit le choix).
+
+- \`detail\` : densite des experiences.
+  - \`full\` (defaut) : accroche + description detaillee + puces.
+  - \`summary\` : accroche seule -- utile pour un CV synthetique tenant sur moins de pages.
+  - \`minimal\` : titre / poste / dates / technos uniquement, sans aucune description.
+- \`photo=1\` : affiche la photo de profil (masquee par defaut). A eviter pour les
+  candidatures passant par un ATS (parsing), a privilegier pour un envoi direct.
+- \`age=0\` : masque l'age (affiche par defaut sous le role).
 
 ### Ordre des requirements
 
@@ -230,6 +246,12 @@ Exemple (poste de management -> Matiere Web en tete, ordre non chronologique) :
 
 \`\`\`
 /fr?company=Client&title=Dev+Frontend&requirement=React:react,nextjs&requirement=TypeScript:typescript&contract=freelance
+\`\`\`
+
+### CV synthetique avec photo (envoi direct)
+
+\`\`\`
+/fr?company=Entreprise&requirement=Java:java,spring&detail=summary&photo=1
 \`\`\`
 
 ### CV court avec parametres
