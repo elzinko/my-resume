@@ -7,6 +7,7 @@ import JobExperienceBody from './JobExperienceBody';
 import JobFrameworkPills from './JobFrameworkPills';
 import { useJobFrameworkPriorityTokens } from './JobFrameworkDisplayProvider';
 import { slugifyClient } from '@/lib/slug';
+import type { DetailLevel } from '@/lib/cv-detail-level';
 import type { Locale } from 'i18n-config';
 
 export interface JobData {
@@ -43,7 +44,7 @@ function JobMetaMobileRow({
 
   return (
     <div
-      className={`flex w-full max-w-full items-baseline justify-between gap-x-3 print:hidden md:hidden ${typo}`}
+      className={`flex w-full max-w-full items-baseline justify-between gap-x-3 md:hidden print:hidden ${typo}`}
       data-testid="job-meta-mobile"
     >
       <span className="min-w-0 truncate text-left" data-job-meta="role">
@@ -64,6 +65,8 @@ interface JobDisplayProps {
   compact?: boolean;
   presentLabel?: string;
   locale?: Locale;
+  /** Niveau de détail (param `?detail=`). Ignoré en mode compact (CV court). */
+  detailLevel?: DetailLevel;
 }
 
 export default function JobDisplay({
@@ -71,6 +74,7 @@ export default function JobDisplay({
   compact = false,
   presentLabel = 'Présent',
   locale = 'fr',
+  detailLevel = 'full',
 }: JobDisplayProps) {
   const [detailsOpen, setDetailsOpen] = useState(false);
   const priorityTokens = useJobFrameworkPriorityTokens();
@@ -83,9 +87,14 @@ export default function JobDisplay({
   const shortDesc = (job.descriptionShort ?? '').trim();
   const longDesc = (job.description ?? '').trim();
   const hasBullets = Boolean(job.bullets?.length);
-  /** S’il n’y a que des pastilles techno, on les garde visibles sans ouvrir le détail texte. */
+  /**
+   * S’il n’y a que des pastilles techno, on les garde visibles sans ouvrir le détail texte.
+   * En modes `summary`/`minimal` il n’y a pas de bouton « détails » mobile : on affiche
+   * donc directement les pastilles (sinon elles resteraient masquées sur mobile).
+   */
   const hidePillsUntilDetailOpen =
-    Boolean(shortDesc) || Boolean(longDesc) || hasBullets;
+    detailLevel === 'full' &&
+    (Boolean(shortDesc) || Boolean(longDesc) || hasBullets);
   const expandTechAria =
     locale === 'en'
       ? 'Show all technologies'
@@ -113,7 +122,7 @@ export default function JobDisplay({
               job.client
             )}
           </span>
-          <span className="min-w-max shrink-0 self-end text-cv-meta font-normal tabular-nums leading-snug text-cv-jobs print:!inline print:text-[8px] max-md:hidden">
+          <span className="min-w-max shrink-0 self-end text-cv-meta font-normal tabular-nums leading-snug text-cv-jobs max-md:hidden print:!inline print:text-[8px]">
             {compactDateLine}
           </span>
         </div>
@@ -122,7 +131,7 @@ export default function JobDisplay({
           roleName={roleName}
           datesLine={compactDateLine}
         />
-        <div className="cv-row-with-side-meta print:flex print:gap-1 max-md:hidden">
+        <div className="cv-row-with-side-meta max-md:hidden print:flex print:gap-1">
           <span className="min-w-0 flex-1 text-cv-meta font-normal leading-snug text-cv-jobs print:text-[8px]">
             {roleName ?? ''}
           </span>
@@ -141,7 +150,7 @@ export default function JobDisplay({
         <div
           className={
             !detailsOpen && hidePillsUntilDetailOpen
-              ? 'print:!block max-md:hidden'
+              ? 'max-md:hidden print:!block'
               : ''
           }
         >
@@ -170,12 +179,12 @@ export default function JobDisplay({
             job.client
           )}
         </span>
-        <span className="min-w-max shrink-0 self-end text-cv-meta font-normal tabular-nums leading-snug text-cv-jobs print:!inline print:text-xs max-md:hidden">
+        <span className="min-w-max shrink-0 self-end text-cv-meta font-normal tabular-nums leading-snug text-cv-jobs max-md:hidden print:!inline print:text-xs">
           {dates}
         </span>
       </div>
       <JobMetaMobileRow roleName={roleName} datesLine={datesStr} />
-      <div className="cv-row-with-side-meta pb-2 print:flex max-md:hidden">
+      <div className="cv-row-with-side-meta pb-2 max-md:hidden print:flex">
         <span className="min-w-0 flex-1 text-cv-meta font-normal leading-snug text-cv-jobs print:text-xs">
           {roleName ?? ''}
         </span>
@@ -188,12 +197,13 @@ export default function JobDisplay({
         description={job.description}
         bullets={job.bullets}
         locale={locale}
+        detailLevel={detailLevel}
         onExpandedChange={setDetailsOpen}
       />
       <div
         className={
           !detailsOpen && hidePillsUntilDetailOpen
-            ? 'print:!block max-md:hidden'
+            ? 'max-md:hidden print:!block'
             : ''
         }
       >

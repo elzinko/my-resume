@@ -31,6 +31,7 @@ npm run build
 - **Paramètres lisibles** : `/{lang}?company=…&requirement=Libellé:mots&contract=cdi`
 - **JSON compact base64** : `/{lang}?spec=…`
 - **Type de contrat** : `?contract=cdi` adapte les textes profil/domaines pour un poste permanent ; `freelance` par défaut.
+- **Présentation** (écran **et** PDF) : `?detail=full|summary|minimal` (densité des expériences — `full` par défaut), `?photo=1` (affiche la photo, masquée par défaut), `?age=0` (masque l'âge, affiché par défaut sous le rôle).
 - **Guide LLM dynamique** : `GET /api/llm-guide` — markdown auto-généré, point d'entrée recommandé pour les agents LLM. Liste tous les endpoints publics (`/api/profile`, `/api/openapi.yaml`, `/{lang}`), le catalogue de technos complet et des exemples d'URLs.
 
 Plafonds (longueurs, nombre d’exigences) : `lib/dynamic-offer-spec.ts`, `lib/query-offer-params.ts`. URLs limitées à ~2k caractères par le navigateur ; au-delà, préférer `spec` base64.

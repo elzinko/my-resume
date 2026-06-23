@@ -24,7 +24,14 @@ export interface TechCatalog {
 export interface Profile {
   schemaVersion: number;
   github: { url: string };
-  header: { id: string; name: string };
+  header: {
+    id: string;
+    name: string;
+    /** Date de naissance ISO (`YYYY-MM-DD`) — sert à calculer l'âge affiché. */
+    birthDate?: string;
+    /** Chemin (sous `public/`) de la photo de profil, ex. `/profile.jpg`. */
+    photo?: string;
+  };
   contact: { phone: string; email: string; location: string };
 }
 
@@ -245,6 +252,12 @@ export function composeCvSnapshot(
       id: profile.header.id,
       name: profile.header.name,
       role: locale.header.role,
+      // birthDate / photo : facultatifs, consommés par l'en-tête du CV.
+      // Volontairement absents de `/api/profile` (cf. lib/profile-api.ts).
+      ...(profile.header.birthDate
+        ? { birthDate: profile.header.birthDate }
+        : {}),
+      ...(profile.header.photo ? { photo: profile.header.photo } : {}),
     },
     contact: {
       title: locale.contact.title,

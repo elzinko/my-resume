@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useId, useState } from 'react';
+import type { DetailLevel } from '@/lib/cv-detail-level';
 import type { Locale } from 'i18n-config';
 
 export interface JobExperienceBodyProps {
@@ -9,6 +10,14 @@ export interface JobExperienceBodyProps {
   bullets?: Array<{ id: string; text: string; link?: string }>;
   locale: Locale;
   compact?: boolean;
+  /**
+   * Niveau de détail (param `?detail=`) :
+   *  - `full`    : accroche + détails (description longue) + puces ;
+   *  - `summary` : accroche seule, sans les détails ni les puces ;
+   *  - `minimal` : aucune description.
+   * Pilote l'écran ET l'impression (le PDF suit ce choix).
+   */
+  detailLevel?: DetailLevel;
   /** Mobile : notifie l’ouverture du détail (ex. afficher les pastilles techno). */
   onExpandedChange?: (open: boolean) => void;
 }
@@ -23,6 +32,7 @@ export default function JobExperienceBody({
   bullets,
   locale,
   compact = false,
+  detailLevel = 'full',
   onExpandedChange,
 }: JobExperienceBodyProps) {
   const detailId = useId();
@@ -34,7 +44,13 @@ export default function JobExperienceBody({
   const hookLine = isLegacy ? longText : shortText;
   /** CV court (compact) : pas de puces, écran comme impression. */
   const showBullets = !compact && Boolean(bullets?.length);
-  const showToggle = Boolean(shortText) || Boolean(longText) || showBullets;
+  /** Accroche (« les textes ») : visible sauf en mode `minimal`. */
+  const showAccroche = detailLevel !== 'minimal' && Boolean(hookLine);
+  /** Détails (description longue + puces) : uniquement en mode `full`. */
+  const showDetails = detailLevel === 'full';
+  const showToggle =
+    detailLevel === 'full' &&
+    (Boolean(shortText) || Boolean(longText) || showBullets);
 
   useEffect(() => {
     onExpandedChange?.(expanded);
@@ -69,24 +85,29 @@ export default function JobExperienceBody({
 
   return (
     <>
-      {/* Écran large + impression : contenu complet */}
-      <div className="hidden print:block lg:block">
-        {isLegacy ? (
-          hookLine ? (
-            <p className={pClass}>{hookLine}</p>
-          ) : null
-        ) : (
-          <>
-            {hookLine ? <p className={pClass}>{hookLine}</p> : null}
-            {longText ? <p className={pClassTight}>{longText}</p> : null}
-          </>
-        )}
-        {bulletList('')}
+      {/* Écran large + impression : contenu selon le niveau de détail.
+          La description longue + les puces sont dans `.cv-job-detail` :
+          cible du bouton écran « Masquer les détails » (ignoré à l'impression). */}
+      <div className="hidden lg:block print:block">
+        {showAccroche ? <p className={pClass}>{hookLine}</p> : null}
+        {showDetails ? (
+          <div className="cv-job-detail">
+            {!isLegacy && longText ? (
+              <p className={pClassTight}>{longText}</p>
+            ) : null}
+            {bulletList('')}
+          </div>
+        ) : null}
       </div>
 
-      {/* Mobile écran uniquement : replié = pas de texte, seulement le bouton si contenu */}
-      <div className="print:hidden lg:hidden">
-        {showToggle ? (
+      {/* Mobile écran uniquement */}
+      <div className="lg:hidden print:hidden">
+        {detailLevel === 'minimal' ? null : detailLevel === 'summary' ? (
+          showAccroche ? (
+            <p className={`${pClass} mt-1`}>{hookLine}</p>
+          ) : null
+        ) : showToggle ? (
+          /* Mode `full` : replié = seulement le bouton ; déplié = accroche + détails. */
           <>
             <button
               type="button"
