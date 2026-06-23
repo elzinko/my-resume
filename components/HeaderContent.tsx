@@ -49,7 +49,10 @@ export default function HeaderContent({
           <img
             src={photoUrl}
             alt={name}
-            className={`shrink-0 self-center rounded-full border-2 border-blue-400/40 object-cover ${
+            // `mr-auto` : épingle la photo à la marge gauche (alignée sur le corps
+            // du CV) ; la marge auto pousse nom/rôle/âge à droite (mise en page
+            // « letterhead »). Sans photo, rien ne change (texte aligné à droite).
+            className={`mr-auto shrink-0 self-center rounded-full border-2 border-blue-400/40 object-cover ${
               compactPrint
                 ? 'h-16 w-16 print:h-16 print:w-16'
                 : 'h-20 w-20 print:h-28 print:w-28 md:h-28 md:w-28 lg:h-36 lg:w-36'
