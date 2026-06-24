@@ -27,7 +27,7 @@ interface JobFitSectionProps {
 }
 
 /**
- * Section « Adequation poste » :
+ * Section « Adéquation poste » :
  * - full : une ligne par entree (badge + detail clients ou texte)
  * - compact : pastilles inline (CV court)
  */
@@ -53,7 +53,7 @@ export default function JobFitSection({
       : data.entries;
   const l = lang as MatchYearsLang;
 
-  const sectionTitle = lang === 'en' ? 'Job fit' : 'Adequation poste';
+  const sectionTitle = lang === 'en' ? 'Job fit' : 'Adéquation poste';
 
   /* ── Compact : pastilles inline uniquement (CV court) ── */
   if (variant === 'compact') {

@@ -25,12 +25,12 @@ export default async function domains({
           à l'écran ce titre est porté par la sidebar `skills.tsx` (donc pas de
           doublon) ; en PDF la sidebar est masquée, et ce titre donne aux ATS
           l'anchor « Skills » juste au-dessus des compétences (tags Agile/Dev/Ops). */}
-      <div className="mb-2 hidden border-b pb-1 print:block print-preview:block">
+      <div className="mb-2 hidden border-b pb-1 print-preview:block print:block">
         <SectionHeadingAts
           section="skills"
           locale={locale}
           title={data?.skillsTitle?.title}
-          className="min-w-0 text-2xl font-semibold text-cv-tag-text"
+          className="min-w-0 text-2xl font-semibold text-cv-section"
         />
       </div>
       <div className="cv-domains-grid">
