@@ -57,6 +57,8 @@
    */
   .cv-full-cv-print-root {
     @apply flex flex-col gap-6 max-md:mt-20 print:mt-0;
+    /* Impression plus dense (proche de la vue web) : gaps inter-sections réduits. */
+    @apply print:gap-3;
   }
 
   .cv-full-cv-print-root > section,

@@ -107,7 +107,7 @@ export default function OfferTailoredShell({
             </Suspense>
             {/* Coordonnées : après Adéquation poste, même placement que le CV court. */}
             {headerContactStrip.email && (
-              <section className="cv-mobile-section-mt print-preview:order-[30] print:order-[30]">
+              <section className="cv-mobile-section-mt print-preview:order-[30] print:order-[30] print:break-inside-avoid">
                 <div className="border-b pb-1">
                   <h2 className="min-w-0 text-2xl font-semibold text-rose-300">
                     {lang === 'fr' ? 'Coordonnées' : 'Contact'}
