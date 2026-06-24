@@ -45,10 +45,11 @@ export default function HeaderContent({
       }`}
     >
       <div className="flex w-full items-stretch gap-4 print:gap-4 md:gap-6">
-        {/* Bloc gauche : photo, MÊME largeur que le bloc droit (flex-1).
-            L'avatar est collé à gauche (aligné sur le corps du CV). */}
+        {/* Bloc gauche : photo. Dès `md:`, MÊME largeur que le bloc droit
+            (`md:flex-1`). Sur mobile, largeur intrinsèque (la photo) pour laisser
+            toute la place restante au texte. Avatar collé à gauche. */}
         {photoUrl ? (
-          <div className="flex flex-1 items-center">
+          <div className="flex items-center md:flex-1">
             {/*
               MASQUE CIRCULAIRE AJUSTABLE.
               Pour recadrer la photo DANS le cercle sans retoucher le fichier,
@@ -82,9 +83,10 @@ export default function HeaderContent({
               compactPrint
                 ? 'text-3xl print:text-3xl print:leading-tight md:text-5xl md:leading-none lg:text-7xl'
                 : photoUrl
-                ? // Avec la photo, le bloc droit ne fait que la moitié de la largeur :
-                  // tailles réduites d'un cran + nowrap pour garder le nom sur UNE ligne.
-                  'whitespace-nowrap text-3xl print:text-5xl print:leading-none md:text-4xl md:leading-none lg:text-6xl'
+                ? // Avec la photo, dès md: le bloc droit ne fait que la moitié de la
+                  // largeur : tailles réduites + nowrap (md+) pour 1 ligne. Sur mobile,
+                  // le texte peut wrapper (sinon il déborde de l'écran).
+                  'text-3xl print:text-5xl print:leading-none md:whitespace-nowrap md:text-4xl md:leading-none lg:text-6xl'
                 : 'text-3xl print:text-7xl print:leading-none md:text-5xl md:leading-none lg:text-7xl'
             }`}
           >
