@@ -42,10 +42,14 @@ export default function JobFitSection({
   const defaults = useMemo(() => computeDefaultMatchData(lang), [lang]);
 
   const data: MatchDisplayData = offerData ?? defaults;
+  // Borne le nombre de groupes « Adéquation poste » : au-delà de ~4, la section
+  // s'allonge et nuit à la lisibilité (et déborde la page 1 à l'impression).
+  // Les entrées sont déjà triées par pertinence ; on garde les premières.
+  const FULL_PROFILE_MATCH_MAX = 4;
   const entries =
     variant === 'compact'
       ? data.entries.slice(0, SHORT_PROFILE_MATCH_MAX)
-      : data.entries;
+      : data.entries.slice(0, FULL_PROFILE_MATCH_MAX);
   const l = lang as MatchYearsLang;
 
   const sectionTitle = lang === 'en' ? 'Job fit' : 'Adequation poste';

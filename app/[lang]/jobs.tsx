@@ -33,7 +33,7 @@ export default async function jobs({
   const recapLine = formatRemainingClientsRecapForFullCv(visibleJobs, locale);
 
   return (
-    <div className="cv-print-jobs-group print-preview:order-[90] print:order-[90] print:break-before-page">
+    <div className="cv-print-jobs-group print-preview:order-[90] print:order-[90]">
       <section
         id="jobs"
         className="mt-10 break-before-page print:break-before-auto max-md:mt-0"
@@ -45,7 +45,7 @@ export default async function jobs({
           canToggleDetails={detailLevel === 'full'}
         >
           {visibleJobs.map((job: any, index: number) => (
-            <li key={job.client + index}>
+            <li key={job.client + index} className="print:break-inside-avoid">
               <Job
                 job={job}
                 locale={locale}
