@@ -45,7 +45,7 @@ export default async function jobs({
           canToggleDetails={detailLevel === 'full'}
         >
           {visibleJobs.map((job: any, index: number) => (
-            <li key={job.client + index}>
+            <li key={job.client + index} className="print:break-inside-avoid">
               <Job
                 job={job}
                 locale={locale}
