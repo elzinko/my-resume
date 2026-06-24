@@ -34,7 +34,7 @@ module.exports = {
     extend: {
       colors: {
         cv: {
-          section: colors.teal[300],
+          section: colors.teal[500],
           'tag-text': colors.blue[300],
           'tag-border': colors.blue[400],
           'tag-text-hover': colors.blue[200],
