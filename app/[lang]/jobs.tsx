@@ -33,7 +33,7 @@ export default async function jobs({
   const recapLine = formatRemainingClientsRecapForFullCv(visibleJobs, locale);
 
   return (
-    <div className="cv-print-jobs-group print-preview:order-[90] print:order-[90]">
+    <div className="cv-print-jobs-group print-preview:order-[90] print:order-[90] print:break-before-page">
       <section
         id="jobs"
         className="mt-10 break-before-page print:break-before-auto max-md:mt-0"
