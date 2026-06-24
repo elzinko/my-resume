@@ -110,7 +110,7 @@ export default function HeaderContent({
           </p>
           {ageText ? (
             <p
-              className={`mt-1 text-base leading-snug text-gray-400 md:mt-2 md:text-xl ${
+              className={`mt-1 text-base leading-snug text-rose-300 md:mt-2 md:text-xl ${
                 compactPrint
                   ? 'print:mt-0 print:text-xs'
                   : 'print:mt-1 print:text-lg'

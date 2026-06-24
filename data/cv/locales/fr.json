@@ -107,19 +107,16 @@
       "location": "@home · maison",
       "roleName": "Solopreneur · projets personnels",
       "description": "",
-      "descriptionShort": "Conception et livraison de produits numériques B2B et B2C, de l’idéation à la mise en production et au run.",
+      "descriptionShort": "Entre deux missions, je conçois et livre mes propres produits numériques, de l’idéation au run — une R&D produit où je porte le tech et le pilotage.",
       "bullets": [
         {
-          "id": "job_solopreneur_fr_b_multi",
-          "text": "multi.app — Pilotage midi, osc, webhooks par le mouvement."
+          "id": "job_solopreneur_fr_b_muti",
+          "text": "Muti — transforme les mouvements du corps en contrôleur MIDI / OSC / WebSocket.",
+          "link": "https://muti.app"
         },
         {
-          "id": "job_solopreneur_fr_b_city",
-          "text": "City Guided — guide urbain connecté (github.com/elzinko/city-guided)."
-        },
-        {
-          "id": "job_solopreneur_fr_b_next",
-          "text": "À venir : assistant Shopify, Livestreamz, Jober, Cop1, Realizator, Okascore, …"
+          "id": "job_solopreneur_fr_b_livestreamz",
+          "text": "Livestreamz — transforme le téléphone en caméra pour du streaming temps réel fiable."
         }
       ]
     },
