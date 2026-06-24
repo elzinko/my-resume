@@ -103,19 +103,16 @@
       "location": "@home · home office",
       "roleName": "Solopreneur · side projects",
       "description": "",
-      "descriptionShort": "Building and shipping B2B and B2C digital products end to end—from ideation through production launch and operations.",
+      "descriptionShort": "Between assignments, I design and ship my own digital products end to end—a product R&D where I own both the engineering and the delivery.",
       "bullets": [
         {
-          "id": "job_solopreneur_en_b_multi",
-          "text": "multi.app — control softwares with midi, osc, webhooks by motion"
+          "id": "job_solopreneur_en_b_muti",
+          "text": "Muti — turns body motion into a MIDI / OSC / WebSocket controller.",
+          "link": "https://muti.app"
         },
         {
-          "id": "job_solopreneur_en_b_city",
-          "text": "City Guided — connected city guide."
-        },
-        {
-          "id": "job_solopreneur_en_b_next",
-          "text": "Up next: Shopify assistant, Livestreamz, Jober, Cop1, Realizator, Okascore, …"
+          "id": "job_solopreneur_en_b_livestreamz",
+          "text": "Livestreamz — turns a phone into a camera for reliable real-time streaming."
         }
       ]
     },
