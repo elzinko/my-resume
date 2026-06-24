@@ -31,7 +31,7 @@ export default async function skills({
         section="skills"
         locale={locale}
         title={data?.skillsTitle?.title}
-        className="border-b pb-1 text-2xl font-semibold text-cv-section"
+        className="border-b border-cv-section/50 pb-1 text-2xl font-semibold text-cv-section"
       />
       <div className="mt-4 flex flex-wrap gap-2">
         {data?.allSkillsModels?.map((skill: any) => (

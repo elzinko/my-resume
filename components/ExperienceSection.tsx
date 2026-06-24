@@ -41,7 +41,7 @@ export default function ExperienceSection({
 
   return (
     <>
-      <div className="flex items-end justify-between gap-2 border-b pb-1 print:break-after-avoid">
+      <div className="flex items-end justify-between gap-2 border-b border-cv-jobs/50 pb-1 print:break-after-avoid">
         <SectionHeadingAts
           section={section}
           locale={locale}

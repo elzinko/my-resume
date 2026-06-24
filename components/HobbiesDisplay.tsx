@@ -29,7 +29,7 @@ export default function HobbiesDisplay({
         section="hobbies"
         locale={locale}
         title={title}
-        className="border-b pb-1 text-2xl font-semibold text-orange-300"
+        className="border-b border-orange-300/50 pb-1 text-2xl font-semibold text-orange-300"
       />
       <ul className="cv-section-simple-list cv-cq-link-list max-md:mt-6">
         {items.map((hobby) => (

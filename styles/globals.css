@@ -420,6 +420,14 @@ html {
     margin: 10mm 1mm;
   }
 
+  /* Anti-titre-orphelin : un titre ne reste jamais seul en bas de page. */
+  .cv-full-cv-print-root h2 {
+    break-after: avoid;
+  }
+  .cv-full-cv-print-root .border-b:has(> h2) {
+    break-after: avoid;
+  }
+
   /* ================================================================
    * === SHORT CV — ajustements print (A4 portrait ~794px) =========
    * Une seule zone pour tout le comportement print du CV court.

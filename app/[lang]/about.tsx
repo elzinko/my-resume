@@ -24,7 +24,7 @@ export default async function About({
       id="about"
       className="mb-1 mt-4 pb-1 print-preview:order-[10] print:order-[10] max-md:!mt-0"
     >
-      <div className="border-b pb-1">
+      <div className="border-b border-cv-tag-text/50 pb-1">
         <SectionHeadingAts
           section="about"
           locale={locale}

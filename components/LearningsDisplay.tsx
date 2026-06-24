@@ -30,7 +30,7 @@ export default function LearningsDisplay({
         section="learnings"
         locale={locale}
         title={title}
-        className="border-b pb-1 text-2xl font-semibold text-teal-300"
+        className="border-b border-teal-300/50 pb-1 text-2xl font-semibold text-teal-300"
       />
       <ul className="cv-section-simple-list cv-cq-link-list max-md:mt-6">
         {items.map((learning) => (
