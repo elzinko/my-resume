@@ -29,7 +29,9 @@ export default async function jobs({
     <div className="cv-print-jobs-group print-preview:order-[90] print:order-[90]">
       <section
         id="jobs"
-        className="mt-10 break-before-page max-md:mt-0 print:break-before-auto"
+        // À l'impression : Expérience démarre TOUJOURS en page 2 (les coordonnées
+        // ferment la page 1). `print:mt-0` → top uniforme via la marge @page.
+        className="mt-10 break-before-page max-md:mt-0 print:mt-0 print:break-before-page"
       >
         <ExperienceSection
           title={data?.jobsTitle?.title}
