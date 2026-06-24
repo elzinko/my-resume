@@ -38,13 +38,14 @@ export default function JobFitSection({
   const defaults = useMemo(() => computeDefaultMatchData(lang), [lang]);
 
   const data: MatchDisplayData = offerData ?? defaults;
-  // Borne le nombre de groupes « Adéquation poste » (≤4) : lisibilité + tient
-  // page 1 à l'impression. Entrées déjà triées par pertinence.
+  // « Adéquation poste » : à l'écran on affiche TOUTES les entrées (web
+  // exhaustif) ; à l'impression on borne à 4 via print:hidden (page 1 nette).
+  // Entrées déjà triées par pertinence → on garde les 4 premières en print.
   const FULL_PROFILE_MATCH_MAX = 4;
   const entries =
     variant === 'compact'
       ? data.entries.slice(0, SHORT_PROFILE_MATCH_MAX)
-      : data.entries.slice(0, FULL_PROFILE_MATCH_MAX);
+      : data.entries;
   const l = lang as MatchYearsLang;
 
   const sectionTitle = lang === 'en' ? 'Job fit' : 'Adequation poste';
@@ -128,7 +129,9 @@ export default function JobFitSection({
           return (
             <li
               key={`${index}-${entry.label}`}
-              className="flex flex-wrap items-baseline gap-x-2 gap-y-1 print:gap-x-1.5"
+              className={`flex flex-wrap items-baseline gap-x-2 gap-y-1 print:gap-x-1.5${
+                index >= FULL_PROFILE_MATCH_MAX ? ' print:hidden' : ''
+              }`}
             >
               <Pill color="match" metric={yearsLabel}>
                 {entry.label}
