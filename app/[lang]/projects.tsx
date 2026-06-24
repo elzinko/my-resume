@@ -49,7 +49,7 @@ export default async function projects({
           section="projects"
           locale={locale}
           title={data?.projectsTitle?.title ?? 'Projects'}
-          className="border-b pb-1 text-2xl font-semibold text-cv-tag-text"
+          className="border-b border-cv-tag-text/50 pb-1 text-2xl font-semibold text-cv-tag-text"
         />
         <ul className="cv-section-simple-list cv-cq-project-list max-md:mt-6">
           {projectsOrdered.map((project: any) => (
