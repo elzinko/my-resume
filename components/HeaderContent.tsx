@@ -46,10 +46,12 @@ export default function HeaderContent({
     >
       <div className="flex w-full items-stretch gap-4 print:gap-4 md:gap-6">
         {/* Bloc gauche : photo. Dès `md:`, MÊME largeur que le bloc droit
-            (`md:flex-1`). Sur mobile, largeur intrinsèque (la photo) pour laisser
-            toute la place restante au texte. Avatar collé à gauche. */}
+            (`md:flex-1`) et avatar centré verticalement (`md:items-center`).
+            Sur mobile, largeur intrinsèque + avatar aligné en HAUT (`items-start`)
+            sur le haut du nom, car le bloc texte y est plus haut (lignes wrappées).
+            Avatar collé à gauche. */}
         {photoUrl ? (
-          <div className="flex items-center md:flex-1">
+          <div className="flex items-start md:flex-1 md:items-center">
             {/*
               MASQUE CIRCULAIRE AJUSTABLE.
               Pour recadrer la photo DANS le cercle sans retoucher le fichier,
