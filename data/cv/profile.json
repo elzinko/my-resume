@@ -5,7 +5,9 @@
   },
   "header": {
     "id": "78726119",
-    "name": "Thomas Couderc"
+    "name": "Thomas Couderc",
+    "birthDate": "1980-01-24",
+    "photo": "/profile.jpg"
   },
   "contact": {
     "phone": "+33661412725",

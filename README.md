@@ -32,6 +32,7 @@ npm run build
 - **JSON compact base64** : `/{lang}?spec=…`
 - **Type de contrat** : `?contract=cdi` adapte les textes profil/domaines pour un poste permanent ; `freelance` par défaut.
 - **Mode enseignement** : `?mode=teaching` bascule sur la variante CV enseignement (profil/domaines reformulés, missions d'enseignement et proposition de module Product Builder visibles, lien Malt masqué). Voir [`letters/`](letters/) pour les lettres associées.
+- **Présentation** (écran **et** PDF) : `?detail=full|summary|minimal` (densité des expériences — `full` par défaut), `?photo=1` (affiche la photo, masquée par défaut), `?age=0` (masque l'âge, affiché par défaut sous le rôle).
 - **Guide LLM dynamique** : `GET /api/llm-guide` — markdown auto-généré, point d'entrée recommandé pour les agents LLM. Liste tous les endpoints publics (`/api/profile`, `/api/openapi.yaml`, `/{lang}`), le catalogue de technos complet et des exemples d'URLs.
 
 Plafonds (longueurs, nombre d’exigences) : `lib/dynamic-offer-spec.ts`, `lib/query-offer-params.ts`. URLs limitées à ~2k caractères par le navigateur ; au-delà, préférer `spec` base64.

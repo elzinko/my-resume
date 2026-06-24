@@ -9,6 +9,7 @@ import { getEducationLevelContent } from '@/lib/education-level-content';
 import { offerPriorityTokensAndContact } from '@/lib/offer-page-data';
 import { resolveOfferFromUrlParams } from '@/lib/query-offer-params';
 import { recordToURLSearchParams } from '@/lib/search-params-to-url';
+import { parseDetailLevel } from '@/lib/cv-detail-level';
 import type { ContractType } from '@/data/offers/types';
 import type { CvMode } from '@/lib/cv-contract-text';
 
@@ -78,6 +79,13 @@ export default async function Page({
     | { email?: string; phone?: string; location?: string }
     | undefined;
 
+  // Photo : masquée par défaut, opt-in via `?photo=1`.
+  const showPhoto = sp.get('photo') === '1';
+  // Âge : affiché par défaut (sous le rôle), `?age=0` pour le masquer.
+  const showAge = sp.get('age') !== '0';
+  // Niveau de détail des expériences : `?detail=full|summary|minimal`.
+  const detailLevel = parseDetailLevel(sp.get('detail'));
+
   return (
     <OfferTailoredShell
       lang={lang}
@@ -94,6 +102,9 @@ export default async function Page({
       mode={mode}
       subtitleOverride={subtitleOverride}
       showEducationLevel={showEducationLevel}
+      showPhoto={showPhoto}
+      showAge={showAge}
+      detailLevel={detailLevel}
     />
   );
 }

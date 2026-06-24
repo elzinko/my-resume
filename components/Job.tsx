@@ -2,6 +2,7 @@
 
 import React from 'react';
 import JobDisplay from './JobDisplay';
+import type { DetailLevel } from '@/lib/cv-detail-level';
 import type { Locale } from 'i18n-config';
 
 interface JobProps {
@@ -9,6 +10,8 @@ interface JobProps {
   compact?: boolean;
   presentLabel?: string;
   locale?: Locale;
+  /** Niveau de détail des expériences (param `?detail=`). */
+  detailLevel?: DetailLevel;
 }
 
 export default function Job({
@@ -16,6 +19,7 @@ export default function Job({
   compact = false,
   presentLabel,
   locale,
+  detailLevel,
 }: JobProps) {
   return (
     <JobDisplay
@@ -23,6 +27,7 @@ export default function Job({
       compact={compact}
       presentLabel={presentLabel}
       locale={locale}
+      detailLevel={detailLevel}
     />
   );
 }

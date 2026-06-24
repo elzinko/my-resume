@@ -318,6 +318,15 @@
   }
 
   /**
+   * Bouton « Masquer les détails » du bloc Expériences (écran uniquement).
+   * Masque la description longue + les puces (`.cv-job-detail`). L'impression
+   * suit le paramètre `?detail=` et ré-affiche ces détails (cf. @media print).
+   */
+  .cv-hide-job-details .cv-job-detail {
+    display: none;
+  }
+
+  /**
    * Ligne titre (gauche) + date ou méta (droite) : alignement bas du flex.
    * Les spans de droite portent en plus `self-end` (JobDisplay, project) pour le rendu mobile / WebKit.
    */
@@ -396,11 +405,17 @@ html {
     display: block !important;
   }
 
-  /* Page setup — margin 1mm élimine les en-têtes/pieds de page du navigateur.
-     Les marges visuelles sont gérées par le padding du container (print:p-8). */
+  /**
+   * Page setup — marge `@page` UNIFORME sur toutes les pages.
+   * C'est la seule façon d'avoir une marge haute/basse identique page après page :
+   * le padding vertical du container (`print:py-0`) ne rembourrerait que le haut de
+   * la 1re page et le bas de la dernière, d'où des marges incohérentes aux sauts de
+   * page (le bug des nouvelles expériences collées en haut de page).
+   * Le horizontal reste géré par `print:px-8` (≈ 8,5 mm) + 1 mm ici.
+   */
   @page {
     size: A4;
-    margin: 1mm;
+    margin: 10mm 1mm;
   }
 
   /* ================================================================
@@ -626,6 +641,15 @@ html {
   /* Espacement avant la section Experience pour eviter un titre orphelin en bas de page. */
   .cv-print-jobs-group {
     padding-top: 1rem;
+  }
+
+  /**
+   * Le bouton écran « Masquer les détails » ne doit JAMAIS affecter le PDF :
+   * à l'impression, les détails suivent le paramètre `?detail=` (donc visibles
+   * si le mode est `full`, quel que soit l'état du bouton à l'écran).
+   */
+  .cv-hide-job-details .cv-job-detail {
+    display: block !important;
   }
 
   /* Hide non-printable elements */

@@ -18,6 +18,7 @@ import ContactDisplay from '@/components/ContactDisplay';
 import SectionHeadingAts from '@/components/SectionHeadingAts';
 import type { ContractType } from '@/data/offers/types';
 import type { CvMode } from '@/lib/cv-contract-text';
+import type { DetailLevel } from '@/lib/cv-detail-level';
 import type { Locale } from 'i18n-config';
 /**
  * Mise en page commune des pages CV « sur mesure » (custom / match).
@@ -36,6 +37,9 @@ export default function OfferTailoredShell({
   mode,
   subtitleOverride,
   showEducationLevel = false,
+  showPhoto = false,
+  showAge = false,
+  detailLevel = 'full',
 }: {
   lang: Locale;
   educationLevel: EducationLevelContent;
@@ -59,6 +63,12 @@ export default function OfferTailoredShell({
   subtitleOverride?: string;
   /** Affiche la pastille « Bac+5 / Master's-level » dans la section adéquation. */
   showEducationLevel?: boolean;
+  /** Afficher la photo de profil (param `?photo=1`). */
+  showPhoto?: boolean;
+  /** Afficher l'âge sous le rôle (param `?age=0` pour masquer). */
+  showAge?: boolean;
+  /** Niveau de détail des expériences (param `?detail=`). */
+  detailLevel?: DetailLevel;
 }) {
   const resolvedContact: ContactLocationOverlay = contactLocation ?? {
     mapsHref: buildContactLocationHref(),
@@ -80,10 +90,12 @@ export default function OfferTailoredShell({
             offerPrintContactStrip={headerContactStrip}
             hideMalt={hideMalt}
             subtitleOverride={subtitleOverride}
+            showPhoto={showPhoto}
+            showAge={showAge}
           />
 
           <div className="cv-full-cv-print-root">
-            <div className="mb-2 print-preview:order-[10] max-md:contents print:order-[10]">
+            <div className="mb-2 print-preview:order-[10] print:order-[10] max-md:contents">
               {/* @ts-expect-error Server Component */}
               <About
                 locale={lang}
@@ -130,7 +142,7 @@ export default function OfferTailoredShell({
               </section>
             )}
             {/* @ts-expect-error Server Component */}
-            <Jobs locale={lang} mode={mode} />
+            <Jobs locale={lang} mode={mode} detailLevel={detailLevel} />
             {/* @ts-expect-error Server Component */}
             <Studies locale={lang} />
             {/* @ts-expect-error Server Component */}
