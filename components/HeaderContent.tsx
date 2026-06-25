@@ -79,8 +79,9 @@ export default function HeaderContent({
 
         {/* Bloc droit : nom + rôle + âge + coordonnées, alignés à droite.
             `flex-1` → même largeur que le bloc photo (ou toute la largeur sans photo). */}
-        <div className="flex flex-1 flex-col items-end text-right">
+        <div className="flex flex-1 flex-col items-start text-left md:items-end md:text-right">
           <h1
+            data-cv-id="fullname"
             className={`font-extrabold leading-tight text-blue-400 ${
               compactPrint
                 ? 'text-3xl print:text-3xl print:leading-tight md:text-5xl md:leading-none lg:text-7xl'
@@ -95,6 +96,7 @@ export default function HeaderContent({
             {name}
           </h1>
           <p
+            data-cv-id="title"
             className={`mt-1 text-lg leading-snug text-orange-300 md:mt-3 md:leading-normal ${
               photoUrl ? 'md:text-2xl' : 'md:text-3xl'
             } ${
@@ -110,6 +112,7 @@ export default function HeaderContent({
           </p>
           {ageText ? (
             <p
+              data-cv-id="age"
               className={`mt-1 text-base leading-snug text-emerald-500 md:mt-2 md:text-xl ${
                 compactPrint
                   ? 'print:mt-0 print:text-xs'
@@ -126,9 +129,10 @@ export default function HeaderContent({
           ) : null}
         </div>
 
-        {/* Barre verticale décorative */}
+        {/* Barre verticale décorative — à GAUCHE en mobile (order-first), à droite
+            en desktop/print (md:order-none = ordre DOM, donc après le texte). */}
         <div
-          className="w-1 shrink-0 self-stretch rounded-full bg-gradient-to-b from-blue-400/40 to-teal-300/25 print:w-1 md:w-1.5"
+          className="order-first w-1 shrink-0 self-stretch rounded-full bg-gradient-to-b from-blue-400/40 to-teal-300/25 print:w-1 md:order-none md:w-1.5"
           aria-hidden
         />
       </div>
