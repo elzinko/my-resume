@@ -391,14 +391,14 @@
   }
 
   .cv-pill-match {
-    @apply rounded border border-amber-400/50 bg-amber-300/10 font-medium text-amber-500 transition-colors;
-    @apply hover:border-amber-400/70 hover:bg-amber-300/20;
-    @apply print:border-amber-400/60 print:!text-amber-500;
+    @apply rounded border border-orange-300/50 bg-orange-300/10 font-medium text-orange-300 transition-colors;
+    @apply hover:border-orange-300/70 hover:bg-orange-300/20;
+    @apply print:border-orange-300/60 print:!text-orange-300;
   }
 
   .cv-pill-match-borderless {
-    @apply rounded bg-amber-300/10 font-normal text-amber-500 transition-colors;
-    @apply print:bg-amber-300/10 print:!text-amber-500;
+    @apply rounded bg-orange-300/10 font-normal text-orange-300 transition-colors;
+    @apply print:bg-orange-300/10 print:!text-orange-300;
   }
 }
 
