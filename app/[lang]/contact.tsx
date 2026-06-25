@@ -41,7 +41,7 @@ export default async function Contact({
         section="contact"
         locale={locale}
         title={contactData.title || 'Contact'}
-        className="border-b pb-1 text-2xl font-semibold text-cv-jobs"
+        accent="pink"
       />
       <ContactDisplay contact={contactData} locale={locale} />
     </section>

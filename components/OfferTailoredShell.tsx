@@ -118,14 +118,13 @@ export default function OfferTailoredShell({
             {/* Coordonnées : après Adéquation poste, même placement que le CV court. */}
             {headerContactStrip.email && (
               <section className="cv-mobile-section-mt print-preview:order-[30] print:order-[30] print:break-inside-avoid">
-                <div className="border-b border-emerald-400/50 pb-1">
-                  <SectionHeadingAts
-                    section="contact"
-                    locale={lang}
-                    title={lang === 'fr' ? 'Coordonnées' : 'Contact'}
-                    className="min-w-0 text-2xl font-semibold text-emerald-400"
-                  />
-                </div>
+                <SectionHeadingAts
+                  section="contact"
+                  locale={lang}
+                  title={lang === 'fr' ? 'Coordonnées' : 'Contact'}
+                  accent="emerald"
+                  className="min-w-0"
+                />
                 <ContactDisplay
                   contact={{
                     emailTitle: 'Email',
