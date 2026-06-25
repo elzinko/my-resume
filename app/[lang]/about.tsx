@@ -24,12 +24,12 @@ export default async function About({
       id="about"
       className="mb-1 mt-4 pb-1 print-preview:order-[10] print:order-[10] max-md:!mt-0"
     >
-      <div className="border-b border-cv-tag-text/50 pb-1">
+      <div className="border-b border-blue-400/50 pb-1">
         <SectionHeadingAts
           section="about"
           locale={locale}
           title={data?.about?.title}
-          className="min-w-0 text-2xl font-semibold text-cv-tag-text"
+          className="min-w-0 text-2xl font-semibold text-blue-400"
         />
       </div>
       <p className="mt-4 text-cv-body-muted">

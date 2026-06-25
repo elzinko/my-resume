@@ -365,9 +365,9 @@
   }
 
   .cv-pill-domain {
-    @apply rounded border border-teal-300/50 bg-teal-300/10 text-cv-section transition-colors;
-    @apply hover:border-teal-300 hover:bg-teal-300/20;
-    @apply print:!text-cv-section;
+    @apply rounded border border-blue-400/50 bg-blue-400/10 text-blue-400 transition-colors;
+    @apply hover:border-blue-300 hover:bg-blue-400/20;
+    @apply print:!text-blue-400;
   }
 
   /** Pastille « niveau » (Bac+5, Bac+3, équivalent EN) — pas le bloc entier. */
@@ -377,14 +377,14 @@
   }
 
   .cv-pill-match {
-    @apply rounded border border-orange-300/50 bg-orange-300/10 font-medium text-orange-300 transition-colors;
-    @apply hover:border-orange-300/70 hover:bg-orange-300/20;
-    @apply print:border-orange-300/60 print:!text-orange-300;
+    @apply rounded border border-amber-400/50 bg-amber-300/10 font-medium text-amber-500 transition-colors;
+    @apply hover:border-amber-400/70 hover:bg-amber-300/20;
+    @apply print:border-amber-400/60 print:!text-amber-500;
   }
 
   .cv-pill-match-borderless {
-    @apply rounded bg-orange-300/10 font-normal text-orange-300 transition-colors;
-    @apply print:bg-orange-300/10 print:!text-orange-300;
+    @apply rounded bg-amber-300/10 font-normal text-amber-500 transition-colors;
+    @apply print:bg-amber-300/10 print:!text-amber-500;
   }
 }
 
@@ -706,11 +706,14 @@ html {
   /* Coordonnées : forcer la couleur rose-300 en impression (WYSIWYG). */
   .cv-header-contact-strip,
   .cv-short-contact-rows {
-    color: #fda4af !important; /* rose-300 */
+    color: #10b981 !important; /* emerald-500 — section Coordonnées = vert */
   }
-  .cv-header-contact-strip a,
-  .cv-short-contact-rows a {
+  .cv-header-contact-strip a {
     color: #fda4af !important; /* rose-300 */
+    text-decoration: none !important;
+  }
+  .cv-short-contact-rows a {
+    color: #10b981 !important; /* emerald-500 */
     text-decoration: none !important;
   }
 

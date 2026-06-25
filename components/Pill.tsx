@@ -66,7 +66,7 @@ export default function Pill({
     const truncCls = compact ? 'min-w-0 truncate' : 'min-w-0';
 
     const metricCls =
-      'text-[10px] font-normal tabular-nums text-orange-200/95 print:text-[9px] print:!text-orange-300 md:text-xs';
+      'text-[10px] font-normal tabular-nums text-amber-300/95 print:text-[9px] print:!text-amber-500 md:text-xs';
 
     return (
       <Tag className={classes} {...linkProps}>

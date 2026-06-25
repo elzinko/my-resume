@@ -88,7 +88,7 @@ export default function ContactDisplay({
       const sizeToken = compact
         ? 'cv-contact-value-compact'
         : 'cv-contact-value';
-      const valueCls = `${sizeToken} text-rose-300`;
+      const valueCls = `${sizeToken} text-emerald-500`;
       const linkCls =
         'no-underline hover:underline hover:decoration-rose-300/50 hover:underline-offset-2';
       const mapsHref = ctx?.mapsHref ?? buildContactLocationHref();
