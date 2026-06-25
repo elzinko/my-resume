@@ -164,12 +164,12 @@ export default function CompactCvLayout({
     <div className="cv-layout-short">
       {/* About - Full width section (same style as full CV) */}
       <section id="cv-short-about" className="cv-short-about mb-1 mt-4 pb-1">
-        <div className="border-b pb-1">
+        <div className="border-b border-blue-400/50 pb-1">
           <SectionHeadingAts
             section="about"
             locale={lang}
             title={t.about}
-            className="min-w-0 text-2xl font-semibold text-cv-section"
+            className="min-w-0 text-2xl font-semibold text-blue-400"
           />
         </div>
         <p className="mt-4 text-cv-body-muted">{data.about}</p>

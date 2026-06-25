@@ -82,7 +82,7 @@ export default function HeaderContent({
         <div className="flex flex-1 flex-col items-start text-left md:items-end md:text-right">
           <h1
             data-cv-id="fullname"
-            className={`font-extrabold leading-tight text-blue-400 ${
+            className={`font-extrabold leading-tight text-[#4e94f8] ${
               compactPrint
                 ? 'text-3xl print:text-3xl print:leading-tight md:text-5xl md:leading-none lg:text-7xl'
                 : photoUrl
@@ -97,7 +97,7 @@ export default function HeaderContent({
           </h1>
           <p
             data-cv-id="title"
-            className={`mt-1 text-lg leading-snug text-orange-300 md:mt-3 md:leading-normal ${
+            className={`mt-1 text-lg leading-snug text-[#fca658] md:mt-3 md:leading-normal ${
               photoUrl ? 'md:text-2xl' : 'md:text-3xl'
             } ${
               compactPrint
@@ -113,7 +113,7 @@ export default function HeaderContent({
           {ageText ? (
             <p
               data-cv-id="age"
-              className={`mt-1 text-base leading-snug text-emerald-400 md:mt-2 md:text-xl ${
+              className={`mt-1 text-base leading-snug text-[#22c68d] md:mt-2 md:text-xl ${
                 compactPrint
                   ? 'print:mt-0 print:text-xs'
                   : 'print:mt-1 print:text-lg'
