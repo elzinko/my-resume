@@ -14,6 +14,8 @@ interface ShortPageWrapperProps {
   hideMalt?: boolean;
   /** Alignement du bloc titre (défaut `left`). `?headerAlign=right` pour aligner à droite. */
   align?: 'left' | 'right';
+  /** Photo de profil (placée à l'opposé du titre). Absente = pas d'avatar. */
+  photoUrl?: string;
 }
 
 export default function ShortPageWrapper({
@@ -23,6 +25,7 @@ export default function ShortPageWrapper({
   headerRole,
   hideMalt,
   align,
+  photoUrl,
 }: ShortPageWrapperProps) {
   return (
     <>
@@ -35,6 +38,7 @@ export default function ShortPageWrapper({
           role={headerRole}
           compactPrint
           align={align}
+          photoUrl={photoUrl}
         />
       </header>
       {children}

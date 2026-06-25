@@ -79,8 +79,8 @@ export default async function Page({
     | { email?: string; phone?: string; location?: string }
     | undefined;
 
-  // Photo : masquée par défaut, opt-in via `?photo=1`.
-  const showPhoto = sp.get('photo') === '1';
+  // Photo : affichée par défaut, `?photo=0` pour la masquer.
+  const showPhoto = sp.get('photo') !== '0';
   // Âge : affiché par défaut (sous le rôle), `?age=0` pour le masquer.
   const showAge = sp.get('age') !== '0';
   // Position du titre : à gauche par défaut, `?headerAlign=right` pour l'aligner à droite.

@@ -52,13 +52,15 @@ export default function HeaderContent({
       }`}
     >
       <div className="flex w-full items-stretch gap-4 print:gap-4 md:gap-6">
-        {/* Bloc gauche : photo. Dès `md:`, MÊME largeur que le bloc droit
-            (`md:flex-1`) et avatar centré verticalement (`md:items-center`).
-            Sur mobile, largeur intrinsèque + avatar aligné en HAUT (`items-start`)
-            sur le haut du nom, car le bloc texte y est plus haut (lignes wrappées).
-            Avatar collé à gauche. */}
+        {/* Bloc photo — placé à l'OPPOSÉ du titre : titre à gauche → photo à droite,
+            titre à droite (`?headerAlign=right`) → photo à gauche (`order-first`).
+            Dès `md:`, même largeur que le bloc texte (`md:flex-1`), avatar centré. */}
         {photoUrl ? (
-          <div className="flex items-start md:flex-1 md:items-center">
+          <div
+            className={`flex items-start md:items-center ${
+              align === 'right' ? 'order-first' : ''
+            }`}
+          >
             {/*
               MASQUE CIRCULAIRE AJUSTABLE.
               Pour recadrer la photo DANS le cercle sans retoucher le fichier,
@@ -88,8 +90,8 @@ export default function HeaderContent({
             `flex-1` → même largeur que le bloc photo (ou toute la largeur sans photo). */}
         <div
           className={`flex flex-1 flex-col items-start text-left ${
-            align === 'right' ? 'md:items-end md:text-right' : ''
-          }`}
+            align === 'left' ? 'order-first' : ''
+          } ${align === 'right' ? 'md:items-end md:text-right' : ''}`}
         >
           <h1
             data-cv-id="fullname"
@@ -143,7 +145,7 @@ export default function HeaderContent({
         {/* Barre verticale décorative — TOUJOURS à droite (dernier enfant DOM,
             toutes vues), masquée à l'impression pour un CV plus net. */}
         <div
-          className="w-1 shrink-0 self-stretch rounded-full bg-gradient-to-b from-blue-400/40 to-teal-300/25 print-preview:hidden print:hidden md:w-1.5"
+          className="order-last w-1 shrink-0 self-stretch rounded-full bg-gradient-to-b from-blue-400/40 to-teal-300/25 print-preview:hidden print:hidden md:w-1.5"
           aria-hidden
         />
       </div>
