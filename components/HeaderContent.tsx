@@ -13,6 +13,12 @@ interface HeaderContentProps {
   photoUrl?: string;
   /** Texte d'âge déjà localisé (ex. « 46 ans »). Si absent : non affiché. */
   ageText?: string;
+  /**
+   * Alignement du bloc titre (nom / rôle / âge). Défaut `left` sur TOUTES les vues
+   * (court / complet / impression) ; `right` = aligné à droite en desktop/print
+   * (param `?headerAlign=right`). La barre décorative reste toujours à droite.
+   */
+  align?: 'left' | 'right';
 }
 
 /**
@@ -37,6 +43,7 @@ export default function HeaderContent({
   belowRole,
   photoUrl,
   ageText,
+  align = 'left',
 }: HeaderContentProps) {
   return (
     <div
@@ -79,7 +86,11 @@ export default function HeaderContent({
 
         {/* Bloc droit : nom + rôle + âge + coordonnées, alignés à droite.
             `flex-1` → même largeur que le bloc photo (ou toute la largeur sans photo). */}
-        <div className="flex flex-1 flex-col items-start text-left md:items-end md:text-right">
+        <div
+          className={`flex flex-1 flex-col items-start text-left ${
+            align === 'right' ? 'md:items-end md:text-right' : ''
+          }`}
+        >
           <h1
             data-cv-id="fullname"
             className={`font-extrabold leading-tight text-[#4e94f8] ${
@@ -129,10 +140,10 @@ export default function HeaderContent({
           ) : null}
         </div>
 
-        {/* Barre verticale décorative — à GAUCHE en mobile (order-first), à droite
-            en desktop/print (md:order-none = ordre DOM, donc après le texte). */}
+        {/* Barre verticale décorative — TOUJOURS à droite (dernier enfant DOM,
+            toutes vues), masquée à l'impression pour un CV plus net. */}
         <div
-          className="order-first w-1 shrink-0 self-stretch rounded-full bg-gradient-to-b from-blue-400/40 to-teal-300/25 print:w-1 md:order-none md:w-1.5"
+          className="w-1 shrink-0 self-stretch rounded-full bg-gradient-to-b from-blue-400/40 to-teal-300/25 print-preview:hidden print:hidden md:w-1.5"
           aria-hidden
         />
       </div>

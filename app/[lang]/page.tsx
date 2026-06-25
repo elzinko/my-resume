@@ -83,6 +83,9 @@ export default async function Page({
   const showPhoto = sp.get('photo') === '1';
   // Âge : affiché par défaut (sous le rôle), `?age=0` pour le masquer.
   const showAge = sp.get('age') !== '0';
+  // Position du titre : à gauche par défaut, `?headerAlign=right` pour l'aligner à droite.
+  const headerAlign: 'left' | 'right' =
+    sp.get('headerAlign') === 'right' ? 'right' : 'left';
   // Niveau de détail des expériences : `?detail=full|summary|minimal`.
   const detailLevel = parseDetailLevel(sp.get('detail'));
 
@@ -104,6 +107,7 @@ export default async function Page({
       showEducationLevel={showEducationLevel}
       showPhoto={showPhoto}
       showAge={showAge}
+      headerAlign={headerAlign}
       detailLevel={detailLevel}
     />
   );

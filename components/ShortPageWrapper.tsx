@@ -12,6 +12,8 @@ interface ShortPageWrapperProps {
   headerRole: string;
   /** Masquer le lien Malt (ex. offre CDI). */
   hideMalt?: boolean;
+  /** Alignement du bloc titre (défaut `left`). `?headerAlign=right` pour aligner à droite. */
+  align?: 'left' | 'right';
 }
 
 export default function ShortPageWrapper({
@@ -20,6 +22,7 @@ export default function ShortPageWrapper({
   headerName,
   headerRole,
   hideMalt,
+  align,
 }: ShortPageWrapperProps) {
   return (
     <>
@@ -27,7 +30,12 @@ export default function ShortPageWrapper({
         <div className="print:hidden">
           <HeaderToolbar shortLang={lang} hideMalt={hideMalt} />
         </div>
-        <HeaderContent name={headerName} role={headerRole} compactPrint />
+        <HeaderContent
+          name={headerName}
+          role={headerRole}
+          compactPrint
+          align={align}
+        />
       </header>
       {children}
     </>

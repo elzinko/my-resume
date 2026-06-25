@@ -39,6 +39,7 @@ export default function OfferTailoredShell({
   showEducationLevel = false,
   showPhoto = false,
   showAge = false,
+  headerAlign = 'left',
   detailLevel = 'full',
 }: {
   lang: Locale;
@@ -67,6 +68,8 @@ export default function OfferTailoredShell({
   showPhoto?: boolean;
   /** Afficher l'âge sous le rôle (param `?age=0` pour masquer). */
   showAge?: boolean;
+  /** Alignement du bloc titre (défaut `left` ; `?headerAlign=right`). */
+  headerAlign?: 'left' | 'right';
   /** Niveau de détail des expériences (param `?detail=`). */
   detailLevel?: DetailLevel;
 }) {
@@ -92,6 +95,7 @@ export default function OfferTailoredShell({
             subtitleOverride={subtitleOverride}
             showPhoto={showPhoto}
             showAge={showAge}
+            align={headerAlign}
           />
 
           <div className="cv-full-cv-print-root">

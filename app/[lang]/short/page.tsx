@@ -65,6 +65,9 @@ export default async function ShortPage({
       ? sp.get('subtitle_fr') || sp.get('subtitle')
       : sp.get('subtitle_en') || sp.get('subtitle')
     )?.trim() || undefined;
+  // Position du titre : à gauche par défaut, `?headerAlign=right` pour l'aligner à droite.
+  const headerAlign: 'left' | 'right' =
+    sp.get('headerAlign') === 'right' ? 'right' : 'left';
 
   const offer = resolveOfferFromUrlParams(sp, getMatchCatalog());
   const eduRaw = sp.get('edu')?.trim();
@@ -164,6 +167,7 @@ export default async function ShortPage({
         headerName={data?.header?.name || ''}
         headerRole={subtitleOverride || data?.header?.role || ''}
         hideMalt={hideMalt}
+        align={headerAlign}
       >
         <Suspense fallback={null}>
           <ShortAutoprint />
