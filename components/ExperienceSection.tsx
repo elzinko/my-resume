@@ -41,12 +41,14 @@ export default function ExperienceSection({
 
   return (
     <>
-      <div className="flex items-end justify-between gap-2 border-b border-cv-jobs/50 pb-1 print:break-after-avoid">
+      <div className="flex items-end justify-between gap-2 border-b border-cv-jobs/25 pb-1 print:break-after-avoid">
         <SectionHeadingAts
           section={section}
           locale={locale}
           title={title}
-          className="min-w-0 text-2xl font-semibold text-cv-jobs"
+          accent="pink"
+          withBorder={false}
+          className="min-w-0"
         />
         {canToggleDetails ? (
           <button

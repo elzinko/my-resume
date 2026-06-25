@@ -164,14 +164,13 @@ export default function CompactCvLayout({
     <div className="cv-layout-short">
       {/* About - Full width section (same style as full CV) */}
       <section id="cv-short-about" className="cv-short-about mb-1 mt-4 pb-1">
-        <div className="border-b border-blue-400/50 pb-1">
-          <SectionHeadingAts
-            section="about"
-            locale={lang}
-            title={t.about}
-            className="min-w-0 text-2xl font-semibold text-blue-400"
-          />
-        </div>
+        <SectionHeadingAts
+          section="about"
+          locale={lang}
+          title={t.about}
+          accent="blue"
+          className="min-w-0"
+        />
         <p className="mt-4 text-cv-body-muted">{data.about}</p>
       </section>
 
@@ -179,12 +178,13 @@ export default function CompactCvLayout({
       <section id="domains" className="mt-2">
         {/* Ancre « Compétences / Skills » réservée à l'impression (anchor ATS au
             dessus des compétences) ; masquée à l'écran. */}
-        <div className="mb-2 hidden border-b pb-1 print-preview:block print:block">
+        <div className="mb-2 hidden">
           <SectionHeadingAts
             section="skills"
             locale={lang}
             title={t.skills}
-            className="min-w-0 text-2xl font-semibold text-cv-tag-text"
+            accent="tag"
+            className="min-w-0"
           />
         </div>
         <div className="cv-domains-grid">
@@ -212,17 +212,15 @@ export default function CompactCvLayout({
           />
         </Suspense>
         <section>
-          <div className="border-b border-emerald-400/50 pb-1">
-            <SectionHeadingAts
-              section="contact"
-              locale={lang}
-              title={
-                data.titles.contact ||
-                (lang === 'fr' ? 'Coordonnées' : 'Contact')
-              }
-              className="min-w-0 text-2xl font-semibold text-emerald-400"
-            />
-          </div>
+          <SectionHeadingAts
+            section="contact"
+            locale={lang}
+            title={
+              data.titles.contact || (lang === 'fr' ? 'Coordonnées' : 'Contact')
+            }
+            accent="emerald"
+            className="min-w-0"
+          />
           <ContactDisplay
             contact={data.contact}
             cvShortInlineRows
@@ -256,17 +254,16 @@ export default function CompactCvLayout({
             id="cv-short-contact"
             className="mb-6 hidden print:block md:block"
           >
-            <div className="border-b border-emerald-400/50 pb-1">
-              <SectionHeadingAts
-                section="contact"
-                locale={lang}
-                title={
-                  data.titles.contact ||
-                  (lang === 'fr' ? 'Coordonnées' : 'Contact')
-                }
-                className="min-w-0 text-2xl font-semibold text-emerald-400"
-              />
-            </div>
+            <SectionHeadingAts
+              section="contact"
+              locale={lang}
+              title={
+                data.titles.contact ||
+                (lang === 'fr' ? 'Coordonnées' : 'Contact')
+              }
+              accent="emerald"
+              className="min-w-0"
+            />
             <ContactDisplay
               contact={data.contact}
               cvShortInlineRows
@@ -296,7 +293,7 @@ export default function CompactCvLayout({
               section="studies"
               locale={lang}
               title={t.education}
-              className="border-b pb-1 text-2xl font-semibold text-purple-300"
+              accent="purple"
             />
             <ul className="cv-section-simple-list">
               {data.studies.map((study) => (
@@ -316,7 +313,7 @@ export default function CompactCvLayout({
               section="projects"
               locale={lang}
               title={data.projectsTitle}
-              className="border-b pb-1 text-2xl font-semibold text-cv-tag-text"
+              accent="tag"
             />
             <ul className="cv-section-simple-list">
               {data.projects.map((project: any) => (
@@ -338,7 +335,7 @@ export default function CompactCvLayout({
               section="jobs"
               locale={lang}
               title={t.experience}
-              className="border-b pb-1 text-2xl font-semibold text-cv-jobs"
+              accent="pink"
             />
 
             {jobSections ? (
@@ -359,7 +356,7 @@ export default function CompactCvLayout({
                 {otherJobs.length > 0 ? (
                   /* ── « Autres expériences » : reste compressé (client · rôle · période) ── */
                   <div className="mt-6">
-                    <h3 className="border-b pb-1 text-base font-semibold text-cv-jobs print:text-[10px]">
+                    <h3 className="border-b border-cv-jobs/25 pb-1 text-base font-semibold text-cv-jobs print:text-[10px]">
                       {t.otherExperience}
                     </h3>
                     <ul className="mt-2 space-y-1">

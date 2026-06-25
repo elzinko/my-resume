@@ -15,6 +15,7 @@ import { truncateClientsForDisplay } from '@/lib/match-clients-display';
 import type { Locale } from 'i18n-config';
 import { useMemo } from 'react';
 import Pill from '@/components/Pill';
+import SectionHeadingAts from '@/components/SectionHeadingAts';
 import { slugifyClient } from '@/lib/slug';
 
 interface JobFitSectionProps {
@@ -59,9 +60,7 @@ export default function JobFitSection({
   if (variant === 'compact') {
     return (
       <section id="job-fit" className="mb-6" aria-label={sectionTitle}>
-        <h2 className="border-b border-orange-300/50 pb-1 text-2xl font-semibold text-orange-300">
-          {sectionTitle}
-        </h2>
+        <SectionHeadingAts accent="orange" locale={lang} title={sectionTitle} />
         <div className="cv-section-body-gap flex flex-wrap items-center gap-1.5 print:gap-1">
           {showEducationLevel && (
             <Pill color="match" compact>
@@ -108,11 +107,12 @@ export default function JobFitSection({
       className="cv-mobile-section-mt print-preview:order-[25] print:order-[25] max-md:!mt-0"
       aria-label={sectionTitle}
     >
-      <div className="border-b border-orange-300/50 pb-1">
-        <h2 className="min-w-0 text-2xl font-semibold text-orange-300">
-          {sectionTitle}
-        </h2>
-      </div>
+      <SectionHeadingAts
+        accent="orange"
+        locale={lang}
+        title={sectionTitle}
+        className="min-w-0"
+      />
 
       <ul className="mt-3 space-y-2.5 print:mt-2 print:space-y-1.5 md:mt-4 md:space-y-3">
         {showEducationLevel && (

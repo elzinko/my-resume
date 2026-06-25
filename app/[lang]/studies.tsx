@@ -45,7 +45,7 @@ export default async function studies({
         section="studies"
         locale={locale}
         title={data?.studiesTitle?.title}
-        className="border-b border-purple-300/50 pb-1 text-2xl font-semibold text-purple-300"
+        accent="purple"
       />
       {/* Une ligne par diplôme : intitulé — lieu / établissement, année (inline
           desktop, masqué mobile). Même pattern que Learnings/Projets. */}

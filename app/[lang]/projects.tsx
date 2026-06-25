@@ -48,7 +48,7 @@ export default async function projects({
         section="projects"
         locale={locale}
         title={data?.projectsTitle?.title ?? 'Projects'}
-        className="border-b border-cv-tag-text/50 pb-1 text-2xl font-semibold text-cv-tag-text"
+        accent="tag"
       />
       {/* Une ligne par projet : titre (lien coloré) — description inline (desktop),
           masquée en colonne étroite (mobile). Même pattern que Learnings/Hobbies. */}
