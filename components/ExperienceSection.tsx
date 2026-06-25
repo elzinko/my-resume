@@ -48,7 +48,7 @@ export default function ExperienceSection({
           title={title}
           accent="pink"
           withBorder={false}
-          className="min-w-0"
+          className="min-w-0 flex-1"
         />
         {canToggleDetails ? (
           <button

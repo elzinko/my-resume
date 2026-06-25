@@ -76,9 +76,10 @@ export default function SectionHeadingAts({
   }pb-1 text-2xl font-semibold ${text}`;
   const ats = section ? atsSectionLabel(section, locale, title) : null;
 
-  if (!ats) {
-    return <h2 className={`${base} ${className ?? ''}`}>{title}</h2>;
-  }
+  // TOUJOURS un `<h2 flex>` (même sans libellé ATS) : sinon un titre simple
+  // (block) et un titre avec label (flex) n'ont pas la même hauteur de boîte →
+  // leurs filets se désalignent d'une colonne à l'autre (ex. Adéquation vs
+  // Expérience). Le span ATS reste conditionnel et masqué hors impression.
   return (
     <h2
       className={`${base} ${
@@ -86,9 +87,11 @@ export default function SectionHeadingAts({
       } flex items-baseline justify-between gap-3`}
     >
       <span className="min-w-0">{title}</span>
-      <span className="hidden shrink-0 whitespace-nowrap text-[0.5em] font-normal opacity-60 print-preview:inline print:inline">
-        {ats}
-      </span>
+      {ats ? (
+        <span className="hidden shrink-0 whitespace-nowrap text-[0.5em] font-normal leading-none opacity-60 print-preview:inline print:inline">
+          {ats}
+        </span>
+      ) : null}
     </h2>
   );
 }

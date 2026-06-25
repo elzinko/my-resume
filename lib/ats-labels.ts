@@ -19,7 +19,8 @@ export type AtsSectionKey =
   | 'skills'
   | 'projects'
   | 'hobbies'
-  | 'learnings';
+  | 'learnings'
+  | 'jobfit';
 
 export const ATS_SECTION_LABELS: Record<AtsSectionKey, string> = {
   about: 'Summary',
@@ -30,6 +31,10 @@ export const ATS_SECTION_LABELS: Record<AtsSectionKey, string> = {
   projects: 'Projects',
   hobbies: 'Interests',
   learnings: 'Continuous Learning',
+  // « Adéquation poste » : pas une section ATS standard, mais on affiche son
+  // équivalent EN (titre de la section sur /en) pour la COHÉRENCE visuelle —
+  // toutes les sections portent le même petit libellé discret à l'impression.
+  jobfit: 'Job fit',
 };
 
 /**
