@@ -28,11 +28,13 @@
    mode aperçu `.cv-print-preview` (qui n'écoute pas @media print). */
 @media print {
   :root {
-    --cv-section-gap: 0.85rem;
+    --cv-section-gap: 1.3rem; /* + d'air ENTRE sections (au-dessus du titre) */
+    --cv-section-body-gap: 0.5rem; /* titre collé à SON contenu (en dessous) */
   }
 }
 .cv-print-preview {
-  --cv-section-gap: 0.85rem;
+  --cv-section-gap: 1.3rem;
+  --cv-section-body-gap: 0.5rem;
 }
 
 @layer components {
@@ -76,9 +78,9 @@
    * `mt-10` desktop / `mt-20` mobile (clearance de la toolbar fixe).
    */
   .cv-full-cv-print-root {
-    @apply flex flex-col gap-6 print:mt-0 max-md:mt-20;
-    /* Impression plus dense (proche de la vue web) : gaps inter-sections réduits. */
-    @apply print:gap-3;
+    /* Même token que le CV court → rythme inter-sections identique écran ET
+       impression (web 1.5rem, print 1.3rem), au lieu d'un print:gap-3 codé en dur. */
+    @apply flex flex-col gap-[var(--cv-section-gap)] print:mt-0 max-md:mt-20;
   }
 
   .cv-full-cv-print-root > section,
