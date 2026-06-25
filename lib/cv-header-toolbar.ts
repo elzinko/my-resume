@@ -24,11 +24,16 @@ const iconShell = `inline-flex h-[var(--cv-toolbar-btn)] w-[var(--cv-toolbar-btn
 const iconHoverNeutral =
   'hover:border-slate-500/55 hover:bg-slate-50 hover:text-neutral-900';
 
+// Mobile : pas de survol → on applique la couleur « active » (de marque) PAR DÉFAUT
+// via `max-md:` (les icônes ne restent pas grises faute de hover).
+const iconMobileNeutral =
+  'max-md:border-slate-500/55 max-md:bg-slate-50 max-md:text-neutral-900';
+
 export const cvHeaderIconBtn = {
-  linkedin: `${iconShell} hover:border-[#0A66C2]/45 hover:bg-[#0A66C2]/8 hover:text-[#0A66C2]`,
-  github: `${iconShell} ${iconHoverNeutral}`,
-  malt: `${iconShell} group hover:border-slate-500/55 hover:bg-slate-50`,
-  print: `${iconShell} ${iconHoverNeutral}`,
+  linkedin: `${iconShell} hover:border-[#0A66C2]/45 hover:bg-[#0A66C2]/8 hover:text-[#0A66C2] max-md:border-[#0A66C2]/45 max-md:bg-[#0A66C2]/8 max-md:text-[#0A66C2]`,
+  github: `${iconShell} ${iconHoverNeutral} ${iconMobileNeutral}`,
+  malt: `${iconShell} group hover:border-slate-500/55 hover:bg-slate-50 max-md:border-slate-500/55 max-md:bg-slate-50`,
+  print: `${iconShell} ${iconHoverNeutral} ${iconMobileNeutral}`,
 } as const;
 
 /** Bascule version CV — même hauteur que les icônes. */

@@ -413,6 +413,8 @@ export default function HeaderToolbar({
 
         <button
           type="button"
+          id="cv-menu-toggle"
+          data-cv-id="menu"
           data-testid="cv-mobile-menu-toggle"
           className="relative inline-flex h-[var(--cv-toolbar-btn)] w-[var(--cv-toolbar-btn)] shrink-0 items-center justify-center rounded-md border border-slate-400/40 bg-white text-slate-700 shadow-sm transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/60 focus-visible:ring-offset-2"
           aria-expanded={open}
