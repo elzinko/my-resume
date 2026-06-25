@@ -120,6 +120,20 @@
   }
 
   /**
+   * Description inline générique (Projets, Education) — même comportement que
+   * Learnings/Hobbies : masquée en colonne étroite (mobile), inline en large
+   * (desktop ≥ 36rem). Garantit « une ligne » au desktop + espacement homogène.
+   */
+  .cv-cq-section .cv-row-inline-desc {
+    display: none;
+  }
+  @container (min-width: 36rem) {
+    .cv-cq-section .cv-row-inline-desc {
+      display: inline;
+    }
+  }
+
+  /**
    * Sections dont le rendu dépend de la largeur disponible (container queries) :
    * projets (titre / description / date), études (méta lieu), veille et loisirs (liste vs slashs).
    */
