@@ -105,13 +105,13 @@ export default function Domain({
   const accent = titleAccent ?? DOMAIN_TITLE_ACCENT_DEFAULT;
 
   const titleTypo = compact
-    ? 'text-2xl font-semibold text-cv-section print:text-sm'
-    : 'text-2xl font-semibold text-cv-section';
+    ? 'text-2xl font-semibold text-blue-400 print:text-sm'
+    : 'text-2xl font-semibold text-blue-400';
 
   const titleBlock =
     accent === 'verticalBar' ? (
       <div
-        className={`flex items-stretch gap-1.5 text-cv-section ${
+        className={`flex items-stretch gap-1.5 text-blue-400 ${
           compact ? 'print:gap-1' : ''
         }`}
       >

@@ -95,7 +95,7 @@ export default function HeaderContent({
             {name}
           </h1>
           <p
-            className={`mt-1 text-lg leading-snug text-cv-section md:mt-3 md:leading-normal ${
+            className={`mt-1 text-lg leading-snug text-amber-500 md:mt-3 md:leading-normal ${
               photoUrl ? 'md:text-2xl' : 'md:text-3xl'
             } ${
               compactPrint
@@ -110,7 +110,7 @@ export default function HeaderContent({
           </p>
           {ageText ? (
             <p
-              className={`mt-1 text-base leading-snug text-rose-300 md:mt-2 md:text-xl ${
+              className={`mt-1 text-base leading-snug text-emerald-500 md:mt-2 md:text-xl ${
                 compactPrint
                   ? 'print:mt-0 print:text-xs'
                   : 'print:mt-1 print:text-lg'
