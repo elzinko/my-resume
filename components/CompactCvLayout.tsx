@@ -161,9 +161,12 @@ export default function CompactCvLayout({
         .slice(0, SHORT_CV_MAX_JOBS);
 
   return (
-    <div className="cv-layout-short">
+    <div className="cv-layout-short flex flex-col gap-[var(--cv-section-gap)]">
       {/* About - Full width section (same style as full CV) */}
-      <section id="cv-short-about" className="cv-short-about mb-1 mt-4 pb-1">
+      <section
+        id="cv-short-about"
+        className="cv-short-about mt-[var(--cv-section-gap)] pb-1"
+      >
         <SectionHeadingAts
           section="about"
           locale={lang}
@@ -175,7 +178,7 @@ export default function CompactCvLayout({
       </section>
 
       {/* Domains - Full width (même grille 1/3 que le CV complet) */}
-      <section id="domains" className="mt-2">
+      <section id="domains">
         {/* Ancre « Compétences / Skills » réservée à l'impression (anchor ATS au
             dessus des compétences) ; masquée à l'écran. */}
         <div className="mb-2 hidden">
@@ -202,7 +205,7 @@ export default function CompactCvLayout({
       {children}
 
       {/* Mobile-only : Adéquation poste + Coordonnées, hors grille, avant Expérience. */}
-      <div className="mt-6 space-y-6 print:hidden md:hidden">
+      <div className="space-y-[var(--cv-section-gap)] print:hidden md:hidden">
         <Suspense fallback={null}>
           <JobFitSection
             lang={lang}
@@ -232,10 +235,10 @@ export default function CompactCvLayout({
       </div>
 
       {/* Colonne gauche 1/3 + expériences 2/3 (grille alignée sur les domaines) */}
-      <div className="cv-page-split mt-8">
+      <div className="cv-page-split">
         <div
           id="left"
-          className="order-last flex w-full min-w-0 flex-col print:order-first print:col-span-1 md:order-first md:col-span-1"
+          className="order-last flex w-full min-w-0 flex-col gap-[var(--cv-section-gap)] print:order-first print:col-span-1 md:order-first md:col-span-1"
         >
           {/* Adéquation poste : masqué en mobile (dupliqué hors grille). */}
           <div className="hidden print:block md:block">
@@ -252,7 +255,7 @@ export default function CompactCvLayout({
           {/* Coordonnées (label : valeur) dans la colonne gauche — masqué en mobile (dupliqué hors grille). */}
           <section
             id="cv-short-contact"
-            className="mb-6 hidden print:block md:block"
+            className="hidden print:block md:block"
           >
             <SectionHeadingAts
               section="contact"
@@ -274,7 +277,7 @@ export default function CompactCvLayout({
           </section>
 
           {/* Skills — masqué pour le moment (écran + impression). */}
-          <section className="cv-short-skills-block mb-6 hidden">
+          <section className="cv-short-skills-block hidden">
             <h2 className="border-b pb-1 text-2xl font-semibold text-cv-tag-text">
               {t.skills}
             </h2>
@@ -288,7 +291,7 @@ export default function CompactCvLayout({
           </section>
 
           {/* Études sans détail (établissement masqué) — même titre que le CV long (#studies). */}
-          <section id="studies" className="cv-short-studies-section mb-6">
+          <section id="studies" className="cv-short-studies-section">
             <SectionHeadingAts
               section="studies"
               locale={lang}
@@ -308,7 +311,7 @@ export default function CompactCvLayout({
           </section>
 
           {/* Projets : même structure flex que les études (compact). */}
-          <section id="projects" data-cv-section="projects" className="mb-6">
+          <section id="projects" data-cv-section="projects">
             <SectionHeadingAts
               section="projects"
               locale={lang}
