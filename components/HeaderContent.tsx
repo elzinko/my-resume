@@ -113,7 +113,7 @@ export default function HeaderContent({
           {ageText ? (
             <p
               data-cv-id="age"
-              className={`mt-1 text-base leading-snug text-emerald-500 md:mt-2 md:text-xl ${
+              className={`mt-1 text-base leading-snug text-emerald-400 md:mt-2 md:text-xl ${
                 compactPrint
                   ? 'print:mt-0 print:text-xs'
                   : 'print:mt-1 print:text-lg'

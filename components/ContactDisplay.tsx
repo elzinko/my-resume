@@ -81,16 +81,16 @@ export default function ContactDisplay({
   const ctx = useContactLocation();
 
   if (cvShortInlineRows) {
-    // Mode sans labels : valeurs seules, alignées à gauche, couleur rose-300.
+    // Mode sans labels : valeurs seules, alignées à gauche, couleur verte (emerald-400).
     // Structure identique aux autres listes simples (Études, Projets) :
     // <ul cv-section-simple-list> → <li> → <a> (pas de wrapper div).
     if (!showLabels) {
       const sizeToken = compact
         ? 'cv-contact-value-compact'
         : 'cv-contact-value';
-      const valueCls = `${sizeToken} text-emerald-500`;
+      const valueCls = `${sizeToken} text-emerald-400`;
       const linkCls =
-        'no-underline hover:underline hover:decoration-rose-300/50 hover:underline-offset-2';
+        'no-underline hover:underline hover:decoration-emerald-300/50 hover:underline-offset-2';
       const mapsHref = ctx?.mapsHref ?? buildContactLocationHref();
       const isDirections = ctx?.isDirections ?? false;
       const loc = ctx?.locale ?? locale;
