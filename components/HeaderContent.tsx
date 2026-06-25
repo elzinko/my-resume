@@ -95,7 +95,7 @@ export default function HeaderContent({
             {name}
           </h1>
           <p
-            className={`mt-1 text-lg leading-snug text-amber-500 md:mt-3 md:leading-normal ${
+            className={`mt-1 text-lg leading-snug text-orange-300 md:mt-3 md:leading-normal ${
               photoUrl ? 'md:text-2xl' : 'md:text-3xl'
             } ${
               compactPrint

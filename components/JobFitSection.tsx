@@ -59,7 +59,7 @@ export default function JobFitSection({
   if (variant === 'compact') {
     return (
       <section id="job-fit" className="mb-6" aria-label={sectionTitle}>
-        <h2 className="border-b border-amber-500/50 pb-1 text-2xl font-semibold text-amber-500">
+        <h2 className="border-b border-orange-300/50 pb-1 text-2xl font-semibold text-orange-300">
           {sectionTitle}
         </h2>
         <div className="cv-section-body-gap flex flex-wrap items-center gap-1.5 print:gap-1">
@@ -108,8 +108,8 @@ export default function JobFitSection({
       className="cv-mobile-section-mt print-preview:order-[25] print:order-[25] max-md:!mt-0"
       aria-label={sectionTitle}
     >
-      <div className="border-b border-amber-500/50 pb-1">
-        <h2 className="min-w-0 text-2xl font-semibold text-amber-500">
+      <div className="border-b border-orange-300/50 pb-1">
+        <h2 className="min-w-0 text-2xl font-semibold text-orange-300">
           {sectionTitle}
         </h2>
       </div>
