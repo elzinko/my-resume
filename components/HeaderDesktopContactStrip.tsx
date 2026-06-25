@@ -43,13 +43,13 @@ export default function HeaderDesktopContactStrip({
 
   return (
     <div
-      className={`cv-header-contact-strip mt-2 flex w-full flex-col ${alignItems} gap-0.5 ${textAlign} text-sm leading-snug text-rose-300 print:mt-0 print:flex md:mt-0 md:pb-1 md:text-sm md:leading-snug ${printAlignItems} print:gap-0.5 print:pb-0.5 ${printTextAlign} print:text-sm print:leading-snug print:text-rose-300`}
+      className={`cv-header-contact-strip mt-2 flex w-full flex-col ${alignItems} gap-0.5 ${textAlign} text-sm leading-snug text-emerald-400 print:mt-0 print:flex md:mt-0 md:pb-1 md:text-sm md:leading-snug ${printAlignItems} print:gap-0.5 print:pb-0.5 ${printTextAlign} print:text-sm print:leading-snug print:text-emerald-400`}
       aria-label="Contact"
     >
       {email ? (
         <a
           href={`mailto:${email}`}
-          className="break-all text-inherit no-underline hover:underline hover:decoration-rose-300/50 hover:underline-offset-2"
+          className="break-all text-inherit no-underline hover:underline hover:decoration-emerald-300/50 hover:underline-offset-2"
         >
           {email}
         </a>
@@ -57,7 +57,7 @@ export default function HeaderDesktopContactStrip({
       {phone ? (
         <a
           href={`tel:${phone.replace(/\s/g, '')}`}
-          className="text-inherit no-underline hover:underline hover:decoration-rose-300/50 hover:underline-offset-2"
+          className="text-inherit no-underline hover:underline hover:decoration-emerald-300/50 hover:underline-offset-2"
         >
           {phone}
         </a>

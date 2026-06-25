@@ -717,17 +717,17 @@ html {
     color: inherit !important;
   }
 
-  /* Coordonnées : forcer la couleur rose-300 en impression (WYSIWYG). */
+  /* Coordonnées : forcer le vert pastel en impression (WYSIWYG). */
   .cv-header-contact-strip,
   .cv-short-contact-rows {
-    color: #10b981 !important; /* emerald-500 — section Coordonnées = vert */
+    color: #34d399 !important; /* emerald-400 — section Coordonnées = vert pastel */
   }
   .cv-header-contact-strip a {
-    color: #fda4af !important; /* rose-300 */
+    color: #34d399 !important; /* emerald-400 */
     text-decoration: none !important;
   }
   .cv-short-contact-rows a {
-    color: #10b981 !important; /* emerald-500 */
+    color: #34d399 !important; /* emerald-400 */
     text-decoration: none !important;
   }
 
