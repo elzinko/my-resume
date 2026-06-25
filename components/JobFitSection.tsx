@@ -59,7 +59,7 @@ export default function JobFitSection({
   /* ── Compact : pastilles inline uniquement (CV court) ── */
   if (variant === 'compact') {
     return (
-      <section id="job-fit" className="mb-6" aria-label={sectionTitle}>
+      <section id="job-fit" aria-label={sectionTitle}>
         <SectionHeadingAts accent="orange" locale={lang} title={sectionTitle} />
         <div className="cv-section-body-gap flex flex-wrap items-center gap-1.5 print:gap-1">
           {showEducationLevel && (
