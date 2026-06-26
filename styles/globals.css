@@ -490,12 +490,9 @@ html {
     padding: 0.625rem !important;
   }
 
-  /* Densification typographique pour tenir sur 1 page A4 */
-  .cv-short-page .cv-short-about p {
-    font-size: 0.5625rem !important;
-    line-height: 1.35 !important;
-  }
-
+  /* Densification typographique pour tenir sur 1 page A4 : tout le corps de
+     texte (Profil, domaines, Expérience) partage `.cv-job-description` → même
+     taille partout, densifiée ici à l'impression. */
   .cv-short-page .cv-job-description {
     font-size: 0.625rem;
     line-height: 1.35;

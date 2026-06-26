@@ -174,7 +174,7 @@ export default function CompactCvLayout({
           accent="blue"
           className="min-w-0"
         />
-        <p className="cv-section-body-gap text-[0.5625rem] leading-[1.35] text-cv-body-muted">
+        <p className="cv-section-body-gap cv-job-description text-left">
           {data.about}
         </p>
       </section>

@@ -136,9 +136,10 @@ export default function Domain({
       <p
         className={
           compact
-            ? // A4 : taille/écart fixes = PDF (8px, mt-1), identiques web/print.
-              'mt-1 flex-1 text-[8px] leading-tight text-cv-body-muted'
-            : 'mt-4 flex-1 text-cv-body-muted'
+            ? // Corps = même taille que les descriptions d'Expérience
+              // (réutilise .cv-job-description, sans justifier ni densifier à part).
+              'cv-job-description mt-1 flex-1 text-left'
+            : 'cv-job-description mt-4 flex-1 text-left'
         }
       >
         {domain.description}
