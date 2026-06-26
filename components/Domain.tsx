@@ -104,9 +104,9 @@ export default function Domain({
 }: DomainProps) {
   const accent = titleAccent ?? DOMAIN_TITLE_ACCENT_DEFAULT;
 
-  const titleTypo = compact
-    ? 'text-2xl font-semibold text-blue-400 print:text-sm'
-    : 'text-2xl font-semibold text-blue-400';
+  // Même taille que les autres titres de section (24px) en écran ET impression —
+  // l'ancien `print:text-sm` (14px) en CV court détonnait + cassait l'aperçu↔PDF.
+  const titleTypo = 'text-2xl font-semibold text-blue-400';
 
   const titleBlock =
     accent === 'verticalBar' ? (
