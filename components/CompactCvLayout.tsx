@@ -179,8 +179,9 @@ export default function CompactCvLayout({
         </p>
       </section>
 
-      {/* Domains - Full width (même grille 1/3 que le CV complet) */}
-      <section id="domains">
+      {/* Domains - Full width. Sous-partie du Profil → rapprochés de l'intro
+          (on annule une partie du flex-gap de section). */}
+      <section id="domains" className="-mt-4 print:-mt-2">
         {/* Ancre « Compétences / Skills » réservée à l'impression (anchor ATS au
             dessus des compétences) ; masquée à l'écran. */}
         <div className="mb-2 hidden">

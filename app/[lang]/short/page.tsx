@@ -9,7 +9,7 @@ import {
 } from '@/lib/sort-chronological';
 import CompactCvLayout, { CompactCvData } from '@/components/CompactCvLayout';
 import { getEducationLevelContent } from '@/lib/education-level-content';
-import formatDates from '@/lib/date';
+import formatDates, { computeAge } from '@/lib/date';
 import ShortPageWrapper from '@/components/ShortPageWrapper';
 import FullCvPrintPreviewEffect from '@/components/FullCvPrintPreviewEffect';
 import ShortAutoprint from '@/components/ShortAutoprint';
@@ -72,6 +72,13 @@ export default async function ShortPage({
   const photoUrl =
     sp.get('photo') !== '0' && typeof data?.header?.photo === 'string'
       ? (data.header.photo as string)
+      : undefined;
+  // Âge : affiché par DÉFAUT (`?age=0` pour masquer) — indépendant des autres params, comme le CV complet.
+  const ageText =
+    sp.get('age') !== '0' && typeof data?.header?.birthDate === 'string'
+      ? lang === 'en'
+        ? `${computeAge(data.header.birthDate)} years old`
+        : `${computeAge(data.header.birthDate)} ans`
       : undefined;
 
   const offer = resolveOfferFromUrlParams(sp, getMatchCatalog());
@@ -174,6 +181,7 @@ export default async function ShortPage({
         hideMalt={hideMalt}
         align={headerAlign}
         photoUrl={photoUrl}
+        ageText={ageText}
       >
         <Suspense fallback={null}>
           <ShortAutoprint />

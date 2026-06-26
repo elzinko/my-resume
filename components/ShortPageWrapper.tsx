@@ -16,6 +16,8 @@ interface ShortPageWrapperProps {
   align?: 'left' | 'right';
   /** Photo de profil (placée à l'opposé du titre). Absente = pas d'avatar. */
   photoUrl?: string;
+  /** Texte d'âge déjà localisé (ex. « 46 ans »). Affiché par défaut. */
+  ageText?: string;
 }
 
 export default function ShortPageWrapper({
@@ -26,6 +28,7 @@ export default function ShortPageWrapper({
   hideMalt,
   align,
   photoUrl,
+  ageText,
 }: ShortPageWrapperProps) {
   return (
     <>
@@ -39,6 +42,7 @@ export default function ShortPageWrapper({
           compactPrint
           align={align}
           photoUrl={photoUrl}
+          ageText={ageText}
         />
       </header>
       {children}
