@@ -143,13 +143,6 @@ export default function HeaderContent({
             </div>
           ) : null}
         </div>
-
-        {/* Barre verticale décorative — TOUJOURS à droite (dernier enfant DOM,
-            toutes vues), masquée à l'impression pour un CV plus net. */}
-        <div
-          className="order-last w-1 shrink-0 self-stretch rounded-full bg-gradient-to-b from-blue-400/40 to-teal-300/25 print-preview:hidden print:hidden md:w-1.5"
-          aria-hidden
-        />
       </div>
     </div>
   );
