@@ -88,7 +88,7 @@
   .cv-full-cv-print-root {
     /* Même token que le CV court → rythme inter-sections identique écran ET
        impression (web 1.5rem, print 1.3rem), au lieu d'un print:gap-3 codé en dur. */
-    @apply flex flex-col gap-[var(--cv-section-gap)] print:mt-0 max-md:mt-20;
+    @apply flex flex-col gap-[var(--cv-section-gap)] print:!mt-0 max-md:mt-20;
   }
 
   .cv-full-cv-print-root > section,

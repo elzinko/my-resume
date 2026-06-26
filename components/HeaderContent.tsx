@@ -125,8 +125,8 @@ export default function HeaderContent({
                 ? // Avec la photo, dès md: le bloc droit ne fait que la moitié de la
                   // largeur : tailles réduites + nowrap (md+) pour 1 ligne. Sur mobile,
                   // le texte peut wrapper (sinon il déborde de l'écran).
-                  'text-3xl print:text-5xl print:leading-none md:whitespace-nowrap md:text-4xl md:leading-none lg:text-6xl'
-                : 'text-3xl print:text-7xl print:leading-none md:text-5xl md:leading-none lg:text-7xl'
+                  'text-3xl print:text-4xl print:leading-none md:whitespace-nowrap md:text-4xl md:leading-none lg:text-6xl'
+                : 'text-3xl print:text-5xl print:leading-none md:text-5xl md:leading-none lg:text-7xl'
             }`}
           >
             {name}
@@ -142,8 +142,8 @@ export default function HeaderContent({
                   } ${
                     photoUrl
                       ? // Bloc droit à 50 % : rôle nowrap + un cran plus petit pour tenir sur 1 ligne en PDF.
-                        'print:whitespace-nowrap print:text-2xl print:leading-normal'
-                      : 'print:text-3xl print:leading-normal'
+                        'print:whitespace-nowrap print:text-xl print:leading-normal'
+                      : 'print:text-2xl print:leading-normal'
                   }`
             }
           >
@@ -156,7 +156,7 @@ export default function HeaderContent({
                 compactPrint
                   ? // A4 : taille fixe = PDF (text-xs, 12px), pas de bump md:.
                     `${lineGap} text-xs leading-none text-[#22c68d]`
-                  : `${lineGap} text-base leading-snug text-[#22c68d] print:text-lg md:text-xl`
+                  : `${lineGap} text-base leading-snug text-[#22c68d] print:text-base md:text-xl`
               }
             >
               {ageText}

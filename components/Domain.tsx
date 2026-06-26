@@ -33,8 +33,8 @@ function DomainFiveTagsRow({
   compact: boolean;
 }) {
   const rowClass = compact
-    ? 'mt-auto flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 py-1 print:mt-1 print:gap-x-1 print:py-0.5'
-    : 'mt-auto flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 py-1';
+    ? 'mt-1 flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 py-1 print:gap-x-1 print:py-0.5'
+    : 'mt-2 flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 py-1';
 
   return (
     <div className={rowClass}>
@@ -137,9 +137,11 @@ export default function Domain({
         className={
           compact
             ? // Corps = même taille que les descriptions d'Expérience
-              // (réutilise .cv-job-description, sans justifier ni densifier à part).
-              'cv-job-description mt-1 flex-1 text-left'
-            : 'cv-job-description mt-4 flex-1 text-left'
+              // (réutilise .cv-job-description, sans justifier). Pas de flex-1 :
+              // les pills collent à la description (pas d'alignement-bas qui
+              // creuse un trou dans les colonnes plus courtes).
+              'cv-job-description mt-1 text-left'
+            : 'cv-job-description mt-4 text-left'
         }
       >
         {domain.description}
@@ -154,8 +156,8 @@ export default function Domain({
             <div
               className={
                 compact
-                  ? 'mt-auto flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 py-1 print:mt-1 print:gap-x-1 print:py-0.5'
-                  : 'mt-auto flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 py-1'
+                  ? 'mt-1 flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 py-1 print:gap-x-1 print:py-0.5'
+                  : 'mt-2 flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 py-1'
               }
             >
               {domain.competencies.map((competency) => (
