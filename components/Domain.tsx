@@ -104,9 +104,12 @@ export default function Domain({
 }: DomainProps) {
   const accent = titleAccent ?? DOMAIN_TITLE_ACCENT_DEFAULT;
 
-  // Même taille que les autres titres de section (24px) en écran ET impression —
-  // l'ancien `print:text-sm` (14px) en CV court détonnait + cassait l'aperçu↔PDF.
-  const titleTypo = 'text-2xl font-semibold text-blue-400';
+  // CV court : domaines en SOUS-titres (text-lg) → ils se lisent comme une
+  // partie du Profil, pas comme des sections (text-2xl). Taille unique écran
+  // ET impression. CV complet : niveau section (text-2xl).
+  const titleTypo = compact
+    ? 'text-lg font-semibold text-blue-400'
+    : 'text-2xl font-semibold text-blue-400';
 
   const titleBlock =
     accent === 'verticalBar' ? (
