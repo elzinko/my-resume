@@ -51,14 +51,15 @@ export default function HeaderContent({
   // (qui grossit le web mais saute à l'impression, où Chrome évalue les
   // media-queries sous 768px) → le web rend EXACTEMENT les tailles du PDF.
   // CV complet : conserve son rythme web responsive (mt-1 md:mt-2).
-  const lineGap = compactPrint ? 'mt-1' : 'mt-1 md:mt-2';
+  const lineGap = compactPrint ? 'mt-2' : 'mt-1 md:mt-2';
   return (
     <div
       className={`header-content ${
         compactPrint
-          ? // A4 : padding fixe identique web/print (pas de bump md:py-12 qui
-            // gonfle le web). pt-0 + pb-8 = position et hauteur du PDF.
-            'pb-8 pt-0'
+          ? // A4 : tailles internes = PDF, mais à l'ÉCRAN on garde de l'air au-
+            // dessus (entre la barre d'outils et le nom). À l'impression, pas de
+            // barre d'outils → pt-0 (la marge @page suffit). pb fixe = PDF.
+            'pb-8 pt-8 print:pt-0'
           : 'pb-0 pt-2 print:!py-2 max-md:pt-0 md:py-12'
       }`}
     >
@@ -68,8 +69,8 @@ export default function HeaderContent({
             Dès `md:`, même largeur que le bloc texte (`md:flex-1`), avatar centré. */}
         {photoUrl ? (
           <div
-            className={`flex items-start ${
-              compactPrint ? '' : 'md:items-center'
+            className={`flex ${
+              compactPrint ? 'items-center' : 'items-start md:items-center'
             } ${align === 'right' ? 'order-first' : ''}`}
           >
             {/*
@@ -83,7 +84,14 @@ export default function HeaderContent({
             <div
               className={`overflow-hidden rounded-full border-2 border-blue-400/40 [--avatar-x:50%] [--avatar-y:50%] [--avatar-zoom:1] ${
                 compactPrint
-                  ? 'h-16 w-16 print:h-16 print:w-16'
+                  ? // A4 : si l'âge est présent, la photo est sensiblement plus
+                    // haute (≈ hauteur du bloc nom+rôle+âge) pour « prendre en
+                    // compte » l'âge ; sinon elle ne couvre que 2 lignes. Taille
+                    // FIXE (pas de stretch → pas de dépendance circulaire avec la
+                    // largeur du texte). Centrée verticalement (items-center).
+                    ageText
+                    ? 'h-[72px] w-[72px]'
+                    : 'h-16 w-16'
                   : 'h-20 w-20 print:h-28 print:w-28 md:h-28 md:w-28 lg:h-36 lg:w-36'
               }`}
             >
@@ -109,8 +117,10 @@ export default function HeaderContent({
             className={`font-extrabold leading-tight text-[#4e94f8] ${
               compactPrint
                 ? // A4 : taille fixe = PDF (text-3xl, 30px). Aucun bump md: qui
-                  // grossirait le web sans toucher l'impression.
-                  'text-3xl'
+                  // grossirait le web. leading-none → écart visuel = la marge
+                  // (rythme identique entre les 3 lignes). `!` pour battre le
+                  // leading-tight de base partagé avec le CV complet.
+                  'text-3xl !leading-none'
                 : photoUrl
                 ? // Avec la photo, dès md: le bloc droit ne fait que la moitié de la
                   // largeur : tailles réduites + nowrap (md+) pour 1 ligne. Sur mobile,
@@ -126,7 +136,7 @@ export default function HeaderContent({
             className={
               compactPrint
                 ? // A4 : taille fixe = PDF (text-base, 16px), pas de bump md:.
-                  `${lineGap} text-base leading-snug text-[#fca658]`
+                  `${lineGap} text-base leading-none text-[#fca658]`
                 : `${lineGap} text-lg leading-snug text-[#fca658] md:leading-normal ${
                     photoUrl ? 'md:text-2xl' : 'md:text-3xl'
                   } ${
@@ -145,7 +155,7 @@ export default function HeaderContent({
               className={
                 compactPrint
                   ? // A4 : taille fixe = PDF (text-xs, 12px), pas de bump md:.
-                    `${lineGap} text-xs leading-snug text-[#22c68d]`
+                    `${lineGap} text-xs leading-none text-[#22c68d]`
                   : `${lineGap} text-base leading-snug text-[#22c68d] print:text-lg md:text-xl`
               }
             >
