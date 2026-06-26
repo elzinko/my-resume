@@ -45,6 +45,12 @@ export default function HeaderContent({
   ageText,
   align = 'left',
 }: HeaderContentProps) {
+  // Rythme vertical UNIFORME entre les 3 lignes (nom → rôle → âge) : la MÊME
+  // classe de marge pilote rôle ET âge, donc nom→rôle == rôle→âge partout
+  // (mobile, desktop, impression). Règle générale = une seule source.
+  // NB : à la largeur A4, `md:` l'emporte sur `print:` → le PDF suit `md:mt-2`
+  // (inutile d'ajouter un `print:mt-*` ici, il serait mort).
+  const lineGap = 'mt-1 md:mt-2';
   return (
     <div
       className={`header-content pb-0 pt-2 max-md:pt-0 md:py-12 ${
@@ -112,15 +118,15 @@ export default function HeaderContent({
           </h1>
           <p
             data-cv-id="title"
-            className={`mt-1 text-lg leading-snug text-[#fca658] md:mt-3 md:leading-normal ${
+            className={`${lineGap} text-lg leading-snug text-[#fca658] md:leading-normal ${
               photoUrl ? 'md:text-2xl' : 'md:text-3xl'
             } ${
               compactPrint
-                ? 'print:mt-0.5 print:text-base print:leading-snug'
+                ? 'print:text-base print:leading-snug'
                 : photoUrl
                 ? // Bloc droit à 50 % : rôle nowrap + un cran plus petit pour tenir sur 1 ligne en PDF.
-                  'print:mt-2 print:whitespace-nowrap print:text-2xl print:leading-normal'
-                : 'print:mt-3 print:text-3xl print:leading-normal'
+                  'print:whitespace-nowrap print:text-2xl print:leading-normal'
+                : 'print:text-3xl print:leading-normal'
             }`}
           >
             {role}
@@ -128,10 +134,8 @@ export default function HeaderContent({
           {ageText ? (
             <p
               data-cv-id="age"
-              className={`mt-1 text-base leading-snug text-[#22c68d] md:mt-2 md:text-xl ${
-                compactPrint
-                  ? 'print:mt-0 print:text-xs'
-                  : 'print:mt-1 print:text-lg'
+              className={`${lineGap} text-base leading-snug text-[#22c68d] md:text-xl ${
+                compactPrint ? 'print:text-xs' : 'print:text-lg'
               }`}
             >
               {ageText}

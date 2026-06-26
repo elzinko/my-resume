@@ -165,7 +165,7 @@ export default function CompactCvLayout({
       {/* About - Full width section (same style as full CV) */}
       <section
         id="cv-short-about"
-        className="cv-short-about mt-[var(--cv-section-gap)] pb-1"
+        className="cv-short-about mt-[var(--cv-section-gap)]"
       >
         <SectionHeadingAts
           section="about"
@@ -174,14 +174,15 @@ export default function CompactCvLayout({
           accent="blue"
           className="min-w-0"
         />
-        <p className="mt-4 text-xs text-cv-body-muted md:text-sm">
+        <p className="cv-section-body-gap text-xs text-cv-body-muted md:text-sm">
           {data.about}
         </p>
       </section>
 
-      {/* Domains - Full width. Sous-partie du Profil → rapprochés de l'intro
-          (on annule une partie du flex-gap de section). */}
-      <section id="domains" className="-mt-4 print:-mt-2">
+      {/* Domains — sous-partie du Profil : on ANNULE le flex-gap inter-section
+          (--cv-section-gap) pour que l'écart intro→domaines soit porté par le
+          SEUL body-gap du wrapper Domain (= filet→intro). Rythme uniforme. */}
+      <section id="domains" className="mt-[calc(var(--cv-section-gap)*-1)]">
         {/* Ancre « Compétences / Skills » réservée à l'impression (anchor ATS au
             dessus des compétences) ; masquée à l'écran. */}
         <div className="mb-2 hidden">

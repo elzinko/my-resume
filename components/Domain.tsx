@@ -131,13 +131,7 @@ export default function Domain({
     );
 
   return (
-    <div
-      className={
-        compact
-          ? 'mt-4 flex min-w-0 flex-col print:mt-1.5'
-          : 'mt-4 flex min-w-0 flex-col'
-      }
-    >
+    <div className="cv-section-body-gap flex min-w-0 flex-col">
       {titleBlock}
       <p
         className={

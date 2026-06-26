@@ -493,13 +493,11 @@ html {
     line-height: 1.35;
   }
 
-  /* Grille domaines + colonnes : gaps resserrés */
+  /* Grille domaines + colonnes : gaps resserrés.
+     (On NE zéro-te plus le margin-top des domaines : il porte le body-gap
+     `--cv-section-body-gap` pour que intro→domaines == filet→intro à l'impression.) */
   .cv-short-page .cv-domains-grid {
     column-gap: 0.75rem !important;
-  }
-
-  .cv-short-page #domains .cv-domains-grid > div {
-    margin-top: 0 !important;
   }
 
   .cv-short-page .cv-page-split {
