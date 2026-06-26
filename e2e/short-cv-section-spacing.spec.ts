@@ -41,8 +41,8 @@ test.describe('CV court — rythme vertical régulier', () => {
     const filetToIntro = intro.top - filet.bottom;
     const introToDomains = firstDomain.top - intro.bottom;
 
-    expect(filetToIntro, 'filet Profil → intro').toBeGreaterThanOrEqual(8);
-    expect(introToDomains, 'intro → 1er domaine').toBeGreaterThanOrEqual(8);
+    expect(filetToIntro, 'filet Profil → intro').toBeGreaterThanOrEqual(6);
+    expect(introToDomains, 'intro → 1er domaine').toBeGreaterThanOrEqual(6);
     expect(
       ratio(filetToIntro, introToDomains),
       `body-gap homogène (${Math.round(filetToIntro)}px vs ${Math.round(
@@ -63,8 +63,8 @@ test.describe('CV court — rythme vertical régulier', () => {
     const nameToRole = role.top - name.bottom;
     const roleToAge = age.top - role.bottom;
 
-    expect(nameToRole, 'nom → rôle').toBeGreaterThanOrEqual(4);
-    expect(roleToAge, 'rôle → âge').toBeGreaterThanOrEqual(4);
+    expect(nameToRole, 'nom → rôle').toBeGreaterThanOrEqual(3);
+    expect(roleToAge, 'rôle → âge').toBeGreaterThanOrEqual(3);
     expect(
       ratio(nameToRole, roleToAge),
       `gaps en-tête homogènes (${Math.round(nameToRole)}px vs ${Math.round(

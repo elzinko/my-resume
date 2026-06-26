@@ -37,6 +37,14 @@
   --cv-section-body-gap: 0.5rem;
 }
 
+/* CV court = document A4 : à l'ÉCRAN aussi, le rythme suit les valeurs
+   d'impression. Le short web doit être un aperçu fidèle du PDF (mêmes écarts,
+   pas seulement même largeur) → on ne gonfle pas les gaps hors impression. */
+.cv-short-page {
+  --cv-section-gap: 1.3rem;
+  --cv-section-body-gap: 0.5rem;
+}
+
 @layer components {
   /**
    * Rythme vertical « section majeure » : 2.5rem (`mt-10` / `gap-10`).

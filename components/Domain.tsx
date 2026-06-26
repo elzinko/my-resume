@@ -136,7 +136,8 @@ export default function Domain({
       <p
         className={
           compact
-            ? 'mt-4 flex-1 text-xs text-cv-body-muted print:mt-1 print:!text-[8px] print:leading-tight md:text-sm'
+            ? // A4 : taille/écart fixes = PDF (8px, mt-1), identiques web/print.
+              'mt-1 flex-1 text-[8px] leading-tight text-cv-body-muted'
             : 'mt-4 flex-1 text-cv-body-muted'
         }
       >

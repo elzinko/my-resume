@@ -46,15 +46,20 @@ export default function HeaderContent({
   align = 'left',
 }: HeaderContentProps) {
   // Rythme vertical UNIFORME entre les 3 lignes (nom → rôle → âge) : la MÊME
-  // classe de marge pilote rôle ET âge, donc nom→rôle == rôle→âge partout
-  // (mobile, desktop, impression). Règle générale = une seule source.
-  // NB : à la largeur A4, `md:` l'emporte sur `print:` → le PDF suit `md:mt-2`
-  // (inutile d'ajouter un `print:mt-*` ici, il serait mort).
-  const lineGap = 'mt-1 md:mt-2';
+  // classe pilote rôle ET âge, donc nom→rôle == rôle→âge partout.
+  // CV court (compactPrint) = document A4 : on N'utilise PAS de bump `md:`
+  // (qui grossit le web mais saute à l'impression, où Chrome évalue les
+  // media-queries sous 768px) → le web rend EXACTEMENT les tailles du PDF.
+  // CV complet : conserve son rythme web responsive (mt-1 md:mt-2).
+  const lineGap = compactPrint ? 'mt-1' : 'mt-1 md:mt-2';
   return (
     <div
-      className={`header-content pb-0 pt-2 max-md:pt-0 md:py-12 ${
-        compactPrint ? 'print:py-8' : 'print:!py-2'
+      className={`header-content ${
+        compactPrint
+          ? // A4 : padding fixe identique web/print (pas de bump md:py-12 qui
+            // gonfle le web). pt-0 + pb-8 = position et hauteur du PDF.
+            'pb-8 pt-0'
+          : 'pb-0 pt-2 print:!py-2 max-md:pt-0 md:py-12'
       }`}
     >
       <div className="flex w-full items-stretch gap-4 print:gap-4 md:gap-6">
@@ -63,9 +68,9 @@ export default function HeaderContent({
             Dès `md:`, même largeur que le bloc texte (`md:flex-1`), avatar centré. */}
         {photoUrl ? (
           <div
-            className={`flex items-start md:items-center ${
-              align === 'right' ? 'order-first' : ''
-            }`}
+            className={`flex items-start ${
+              compactPrint ? '' : 'md:items-center'
+            } ${align === 'right' ? 'order-first' : ''}`}
           >
             {/*
               MASQUE CIRCULAIRE AJUSTABLE.
@@ -103,9 +108,9 @@ export default function HeaderContent({
             data-cv-id="fullname"
             className={`font-extrabold leading-tight text-[#4e94f8] ${
               compactPrint
-                ? // CV court : proportions proches du PDF (titre modéré, équilibré
-                  // avec la petite photo) plutôt qu'un text-7xl géant sur l'écran.
-                  'text-3xl print:text-3xl md:text-4xl'
+                ? // A4 : taille fixe = PDF (text-3xl, 30px). Aucun bump md: qui
+                  // grossirait le web sans toucher l'impression.
+                  'text-3xl'
                 : photoUrl
                 ? // Avec la photo, dès md: le bloc droit ne fait que la moitié de la
                   // largeur : tailles réduites + nowrap (md+) pour 1 ligne. Sur mobile,
@@ -118,25 +123,31 @@ export default function HeaderContent({
           </h1>
           <p
             data-cv-id="title"
-            className={`${lineGap} text-lg leading-snug text-[#fca658] md:leading-normal ${
-              photoUrl ? 'md:text-2xl' : 'md:text-3xl'
-            } ${
+            className={
               compactPrint
-                ? 'print:text-base print:leading-snug'
-                : photoUrl
-                ? // Bloc droit à 50 % : rôle nowrap + un cran plus petit pour tenir sur 1 ligne en PDF.
-                  'print:whitespace-nowrap print:text-2xl print:leading-normal'
-                : 'print:text-3xl print:leading-normal'
-            }`}
+                ? // A4 : taille fixe = PDF (text-base, 16px), pas de bump md:.
+                  `${lineGap} text-base leading-snug text-[#fca658]`
+                : `${lineGap} text-lg leading-snug text-[#fca658] md:leading-normal ${
+                    photoUrl ? 'md:text-2xl' : 'md:text-3xl'
+                  } ${
+                    photoUrl
+                      ? // Bloc droit à 50 % : rôle nowrap + un cran plus petit pour tenir sur 1 ligne en PDF.
+                        'print:whitespace-nowrap print:text-2xl print:leading-normal'
+                      : 'print:text-3xl print:leading-normal'
+                  }`
+            }
           >
             {role}
           </p>
           {ageText ? (
             <p
               data-cv-id="age"
-              className={`${lineGap} text-base leading-snug text-[#22c68d] md:text-xl ${
-                compactPrint ? 'print:text-xs' : 'print:text-lg'
-              }`}
+              className={
+                compactPrint
+                  ? // A4 : taille fixe = PDF (text-xs, 12px), pas de bump md:.
+                    `${lineGap} text-xs leading-snug text-[#22c68d]`
+                  : `${lineGap} text-base leading-snug text-[#22c68d] print:text-lg md:text-xl`
+              }
             >
               {ageText}
             </p>
