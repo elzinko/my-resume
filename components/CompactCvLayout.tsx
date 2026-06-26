@@ -174,7 +174,9 @@ export default function CompactCvLayout({
           accent="blue"
           className="min-w-0"
         />
-        <p className="mt-4 text-cv-body-muted">{data.about}</p>
+        <p className="mt-4 text-xs text-cv-body-muted md:text-sm">
+          {data.about}
+        </p>
       </section>
 
       {/* Domains - Full width (même grille 1/3 que le CV complet) */}
