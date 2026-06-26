@@ -97,7 +97,9 @@ export default function HeaderContent({
             data-cv-id="fullname"
             className={`font-extrabold leading-tight text-[#4e94f8] ${
               compactPrint
-                ? 'text-3xl print:text-3xl print:leading-tight md:text-5xl md:leading-none lg:text-7xl'
+                ? // CV court : proportions proches du PDF (titre modéré, équilibré
+                  // avec la petite photo) plutôt qu'un text-7xl géant sur l'écran.
+                  'text-3xl print:text-3xl md:text-4xl'
                 : photoUrl
                 ? // Avec la photo, dès md: le bloc droit ne fait que la moitié de la
                   // largeur : tailles réduites + nowrap (md+) pour 1 ligne. Sur mobile,
