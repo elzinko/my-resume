@@ -55,6 +55,24 @@
   --cv-section-body-gap: 0.5rem;
 }
 
+/* Document A4 mis à l'échelle (ScaledA4, ADR-0004 Option B) : à l'écran le doc à
+   largeur fixe (794px) est zoomé via `transform: scale`. À l'impression, on retire
+   TOUTE transformation pour que Puppeteer rende l'A4 brut → PDF intact. */
+.cv-a4-scale-outer {
+  overflow: hidden;
+}
+@media print {
+  .cv-a4-scale-outer {
+    overflow: visible !important;
+    height: auto !important;
+  }
+  .cv-a4-scale-inner {
+    width: auto !important;
+    transform: none !important;
+    margin-inline: 0 !important;
+  }
+}
+
 @layer components {
   /**
    * Rythme vertical « section majeure » : 2.5rem (`mt-10` / `gap-10`).

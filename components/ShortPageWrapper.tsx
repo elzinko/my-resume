@@ -2,8 +2,9 @@
 
 import HeaderContent from './HeaderContent';
 import HeaderToolbar from './HeaderToolbar';
+import ScaledA4 from './ScaledA4';
 import type { Locale } from 'i18n-config';
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 
 interface ShortPageWrapperProps {
   children: ReactNode;
@@ -30,12 +31,11 @@ export default function ShortPageWrapper({
   photoUrl,
   ageText,
 }: ShortPageWrapperProps) {
-  return (
-    <>
-      <header className="relative z-[70] print:mb-1">
-        <div className="print:hidden">
-          <HeaderToolbar shortLang={lang} hideMalt={hideMalt} />
-        </div>
+  // Document A4 = en-tête (nom/photo) + contenu. Mis à l'échelle ensemble par
+  // ScaledA4 (WYSIWYG). La barre d'outils reste HORS du scale (UI, jamais zoomée).
+  const doc = (
+    <div className="cv-short-page">
+      <header className="print:mb-1">
         <HeaderContent
           name={headerName}
           role={headerRole}
@@ -46,6 +46,17 @@ export default function ShortPageWrapper({
         />
       </header>
       {children}
+    </div>
+  );
+
+  return (
+    <>
+      <div className="relative z-[70] print:hidden">
+        <HeaderToolbar shortLang={lang} hideMalt={hideMalt} />
+      </div>
+      <Suspense fallback={<div className="mx-auto max-w-[800px]">{doc}</div>}>
+        <ScaledA4>{doc}</ScaledA4>
+      </Suspense>
     </>
   );
 }
