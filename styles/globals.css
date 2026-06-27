@@ -45,11 +45,13 @@
   --cv-section-body-gap: 0.5rem;
 }
 
-/* CV complet : à l'ÉCRAN aussi, le gap titre→contenu suit la valeur d'impression
-   (même densité que le PDF). Sans ça, le web du complet hérite du défaut :root
-   (1rem) alors que print/aperçu sont à 0.5rem → divergence visible (ex. l'écart
-   intro Profil → titres des domaines Agile/Dev/Ops). */
+/* CV complet : à l'ÉCRAN aussi, le rythme suit les valeurs d'impression (même
+   densité que le PDF), comme `.cv-short-page`. Sans ça, le web du complet hérite
+   du défaut :root (gap inter-sections 1.5rem, body-gap 1rem) alors que
+   print/aperçu sont à 1.3rem / 0.5rem → divergence visible au switch aperçu↔normal
+   (écart entre sections, et intro Profil → titres des domaines). */
 .cv-full-cv-print-root {
+  --cv-section-gap: 1.3rem;
   --cv-section-body-gap: 0.5rem;
 }
 
