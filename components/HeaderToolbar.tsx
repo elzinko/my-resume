@@ -333,7 +333,11 @@ export default function HeaderToolbar({
           <Suspense fallback={null}>
             <ModeControl shortLang={shortLang} />
           </Suspense>
-          {/* Print preview + Mobile preview retirés : WYSIWYG. */}
+          {showPrintPreviewToggle && (
+            <Suspense fallback={null}>
+              <PrintPreviewToggleLink />
+            </Suspense>
+          )}
           <ToolbarIconList
             onPrint={runPrint}
             printTitle={printTitle}
@@ -395,6 +399,11 @@ export default function HeaderToolbar({
             <Suspense fallback={null}>
               <ModeControl shortLang={shortLang} onNavigate={close} />
             </Suspense>
+            {showPrintPreviewToggle && (
+              <Suspense fallback={null}>
+                <PrintPreviewToggleLink onNavigate={close} />
+              </Suspense>
+            )}
             <ToolbarIconList
               onNavigate={close}
               listClassName={rowListClass}
