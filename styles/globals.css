@@ -45,6 +45,14 @@
   --cv-section-body-gap: 0.5rem;
 }
 
+/* CV complet : à l'ÉCRAN aussi, le gap titre→contenu suit la valeur d'impression
+   (même densité que le PDF). Sans ça, le web du complet hérite du défaut :root
+   (1rem) alors que print/aperçu sont à 0.5rem → divergence visible (ex. l'écart
+   intro Profil → titres des domaines Agile/Dev/Ops). */
+.cv-full-cv-print-root {
+  --cv-section-body-gap: 0.5rem;
+}
+
 @layer components {
   /**
    * Rythme vertical « section majeure » : 2.5rem (`mt-10` / `gap-10`).
