@@ -143,7 +143,6 @@ function FullVersionFromShortLink({
           d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
         />
       </svg>
-      <span className="md:hidden">PDF</span>
     </Link>
   );
 }
@@ -355,7 +354,7 @@ export default function HeaderToolbar({
       />
 
       <div
-        className="fixed inset-x-0 top-0 z-[90] flex items-center gap-2 bg-white/90 px-8 pb-3 backdrop-blur-md supports-[backdrop-filter]:bg-white/80 print:hidden md:hidden"
+        className="fixed inset-x-0 top-0 z-[90] flex items-center gap-2 bg-white/90 px-4 pb-3 backdrop-blur-md supports-[backdrop-filter]:bg-white/80 print:hidden md:hidden"
         style={{
           paddingTop: 'max(0.75rem, env(safe-area-inset-top, 0px))',
         }}

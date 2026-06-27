@@ -360,7 +360,10 @@
    * Même token `text-cv-body-muted` que le profil et les domaines (About, Domain — pas de justification).
    */
   .cv-job-description {
-    @apply text-justify text-xs leading-snug text-cv-body-muted print:text-xs md:text-sm;
+    /* Plancher MOBILE 1rem : base `text-base` (16px) = mobile lisible ; desktop
+       `md:text-sm` (14px, aperçu A4) ; impression `print:text-xs` (12px, ou
+       densifié à 10px sur `.cv-short-page`). Le type-scale propre relève du DS. */
+    @apply text-justify text-base leading-snug text-cv-body-muted print:text-xs md:text-sm;
   }
 
   /**

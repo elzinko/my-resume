@@ -35,9 +35,8 @@ export default function CvModeToggle({ onNavigate }: CvModeToggleProps) {
     : shortHrefFromOfferPath(pathForLogic, lang, sp);
 
   // Affichage du MODE COURANT (pas la cible) : vue courte = « PDF » (aperçu A4
-  // fidèle), vue complète = « Web ». Desktop : icône seule (infobulle). Mobile :
-  // + libellé court.
-  const currentLabel = isShortMode ? 'PDF' : 'Web';
+  // fidèle), vue complète = « Web ». Icône SEULE partout (desktop + mobile),
+  // l'info passe par l'infobulle (`title`).
   const title = isShortMode
     ? 'Affichage PDF (A4) — cliquer pour la version web complète'
     : 'Affichage web — cliquer pour l’aperçu PDF (A4)';
@@ -75,7 +74,6 @@ export default function CvModeToggle({ onNavigate }: CvModeToggleProps) {
           />
         )}
       </svg>
-      <span className="md:hidden">{currentLabel}</span>
     </Link>
   );
 }
