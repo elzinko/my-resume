@@ -67,7 +67,7 @@ export default function ScaledA4({ children }: { children: React.ReactNode }) {
     >
       <div
         ref={innerRef}
-        className="cv-a4-scale-inner"
+        className={`cv-a4-scale-inner${enabled ? ' cv-a4-scaled' : ''}`}
         style={
           enabled
             ? {
