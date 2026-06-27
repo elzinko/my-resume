@@ -5,7 +5,6 @@ import { getCvData } from '@/lib/cv-data';
 import type { CvMode } from '@/lib/cv-contract-text';
 import {
   formatFoldedClientsRecap,
-  formatRemainingClientsRecapForFullCv,
   getExperienceClosingLabels,
 } from '@/lib/cv-experience-footer';
 import { DEFAULT_DETAIL_LEVEL, type DetailLevel } from '@/lib/cv-detail-level';
@@ -33,15 +32,22 @@ export default async function jobs({
       return true;
     },
   );
-  // `?maxJobShown=N` : N postes en entrées, le reste plié dans le footer de synthèse.
+  // Missions citées dans le récap « missions plus anciennes » SANS entrée détaillée :
+  //  - les missions visibles pliées au-delà de `?maxJobShown=N` ;
+  //  - les missions `display:false` (volontairement hors liste) mais à créditer,
+  //    pertinentes pour le mode courant.
   const shownJobs =
     maxJobShown != null ? visibleJobs.slice(0, maxJobShown) : visibleJobs;
-  const foldedJobs = maxJobShown != null ? visibleJobs.slice(maxJobShown) : [];
+  const hiddenRecapJobs = jobsList.filter(
+    (j: { display?: boolean; displayMode?: string }) =>
+      j.display === false && (!j.displayMode || j.displayMode === mode),
+  );
+  const foldedJobs = [
+    ...(maxJobShown != null ? visibleJobs.slice(maxJobShown) : []),
+    ...hiddenRecapJobs,
+  ];
   const closing = getExperienceClosingLabels(locale);
-  const recapLine =
-    maxJobShown != null
-      ? formatFoldedClientsRecap(foldedJobs, locale)
-      : formatRemainingClientsRecapForFullCv(visibleJobs, locale);
+  const recapLine = formatFoldedClientsRecap(foldedJobs, locale);
 
   return (
     <div className="cv-print-jobs-group print-preview:order-[90] print:order-[90]">
