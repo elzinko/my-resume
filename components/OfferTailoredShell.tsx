@@ -41,7 +41,7 @@ export default function OfferTailoredShell({
   showAge = false,
   headerAlign = 'left',
   detailLevel = 'full',
-  detailedJobs = null,
+  maxJobShown = null,
 }: {
   lang: Locale;
   educationLevel: EducationLevelContent;
@@ -73,8 +73,8 @@ export default function OfferTailoredShell({
   headerAlign?: 'left' | 'right';
   /** Niveau de détail des expériences (param `?detail=`). */
   detailLevel?: DetailLevel;
-  /** Pagination : nb de postes en détail complet (`?detailedJobs=N`), reste en bref. */
-  detailedJobs?: number | null;
+  /** Pagination : nb de postes affichés en entrée (`?maxJobShown=N`), reste plié au footer. */
+  maxJobShown?: number | null;
 }) {
   const resolvedContact: ContactLocationOverlay = contactLocation ?? {
     mapsHref: buildContactLocationHref(),
@@ -152,7 +152,7 @@ export default function OfferTailoredShell({
               locale={lang}
               mode={mode}
               detailLevel={detailLevel}
-              detailedJobs={detailedJobs}
+              maxJobShown={maxJobShown}
             />
             {/* @ts-expect-error Server Component */}
             <Studies locale={lang} />

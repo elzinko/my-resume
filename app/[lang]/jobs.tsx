@@ -4,14 +4,11 @@ import ExperienceSection from '@/components/ExperienceSection';
 import { getCvData } from '@/lib/cv-data';
 import type { CvMode } from '@/lib/cv-contract-text';
 import {
+  formatFoldedClientsRecap,
   formatRemainingClientsRecapForFullCv,
   getExperienceClosingLabels,
 } from '@/lib/cv-experience-footer';
-import {
-  DEFAULT_DETAIL_LEVEL,
-  jobDetailLevelAt,
-  type DetailLevel,
-} from '@/lib/cv-detail-level';
+import { DEFAULT_DETAIL_LEVEL, type DetailLevel } from '@/lib/cv-detail-level';
 import { Locale } from 'i18n-config';
 import React from 'react';
 
@@ -19,13 +16,13 @@ export default async function jobs({
   locale,
   mode,
   detailLevel = DEFAULT_DETAIL_LEVEL,
-  detailedJobs = null,
+  maxJobShown = null,
 }: {
   locale: Locale;
   mode?: CvMode;
   detailLevel?: DetailLevel;
-  /** Pagination : nb de postes en détail complet ; les suivants passent en bref. */
-  detailedJobs?: number | null;
+  /** Pagination : N postes affichés en entrée ; au-delà → plié au footer (`?maxJobShown=N`). */
+  maxJobShown?: number | null;
 }) {
   const data: any = await getCvData(locale);
   const jobsList = data?.allJobsModels || [];
@@ -36,8 +33,15 @@ export default async function jobs({
       return true;
     },
   );
+  // `?maxJobShown=N` : N postes en entrées, le reste plié dans le footer de synthèse.
+  const shownJobs =
+    maxJobShown != null ? visibleJobs.slice(0, maxJobShown) : visibleJobs;
+  const foldedJobs = maxJobShown != null ? visibleJobs.slice(maxJobShown) : [];
   const closing = getExperienceClosingLabels(locale);
-  const recapLine = formatRemainingClientsRecapForFullCv(visibleJobs, locale);
+  const recapLine =
+    maxJobShown != null
+      ? formatFoldedClientsRecap(foldedJobs, locale)
+      : formatRemainingClientsRecapForFullCv(visibleJobs, locale);
 
   return (
     <div className="cv-print-jobs-group print-preview:order-[90] print:order-[90]">
@@ -53,12 +57,12 @@ export default async function jobs({
           locale={locale}
           canToggleDetails={detailLevel === 'full'}
         >
-          {visibleJobs.map((job: any, index: number) => (
+          {shownJobs.map((job: any, index: number) => (
             <li key={job.client + index} className="print:break-inside-avoid">
               <Job
                 job={job}
                 locale={locale}
-                detailLevel={jobDetailLevelAt(index, detailLevel, detailedJobs)}
+                detailLevel={detailLevel}
                 presentLabel={locale === 'en' ? 'Present' : 'Présent'}
               />
             </li>

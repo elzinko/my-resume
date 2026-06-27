@@ -70,3 +70,20 @@ export function formatRemainingClientsRecapForFullCv<
     ? `Les missions plus anciennes incluent notamment : ${joined}.`
     : `Earlier roles include engagements with ${joined}.`;
 }
+
+/**
+ * CV complet avec `?maxJobShown=N` : synthèse des missions PLIÉES (au-delà du
+ * N-ième poste affiché). Liste TOUS les clients fournis — pas d'exclusion : ce
+ * sont des postes réellement repliés, on ne veut pas les faire disparaître.
+ */
+export function formatFoldedClientsRecap<T extends { client: string }>(
+  foldedJobs: T[],
+  locale: Locale,
+): string | null {
+  const names = foldedJobs.map((j) => j.client.trim()).filter(Boolean);
+  if (names.length === 0) return null;
+  const joined = names.join(', ');
+  return locale === 'fr'
+    ? `Les missions plus anciennes incluent notamment : ${joined}.`
+    : `Earlier roles include engagements with ${joined}.`;
+}
