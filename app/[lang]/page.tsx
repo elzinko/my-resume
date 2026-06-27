@@ -9,7 +9,7 @@ import { getEducationLevelContent } from '@/lib/education-level-content';
 import { offerPriorityTokensAndContact } from '@/lib/offer-page-data';
 import { resolveOfferFromUrlParams } from '@/lib/query-offer-params';
 import { recordToURLSearchParams } from '@/lib/search-params-to-url';
-import { parseDetailLevel } from '@/lib/cv-detail-level';
+import { parseDetailLevel, parseDetailedJobs } from '@/lib/cv-detail-level';
 import type { ContractType } from '@/data/offers/types';
 import type { CvMode } from '@/lib/cv-contract-text';
 
@@ -88,6 +88,9 @@ export default async function Page({
     sp.get('headerAlign') === 'right' ? 'right' : 'left';
   // Niveau de détail des expériences : `?detail=full|summary|minimal`.
   const detailLevel = parseDetailLevel(sp.get('detail'));
+  // Pagination : `?detailedJobs=N` → les N premiers postes en détail complet,
+  // les suivants en bref (frise intacte). Cale le PDF sans rien retirer.
+  const detailedJobs = parseDetailedJobs(sp.get('detailedJobs'));
 
   return (
     <OfferTailoredShell
@@ -109,6 +112,7 @@ export default async function Page({
       showAge={showAge}
       headerAlign={headerAlign}
       detailLevel={detailLevel}
+      detailedJobs={detailedJobs}
     />
   );
 }

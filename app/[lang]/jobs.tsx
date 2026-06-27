@@ -7,7 +7,11 @@ import {
   formatRemainingClientsRecapForFullCv,
   getExperienceClosingLabels,
 } from '@/lib/cv-experience-footer';
-import { DEFAULT_DETAIL_LEVEL, type DetailLevel } from '@/lib/cv-detail-level';
+import {
+  DEFAULT_DETAIL_LEVEL,
+  jobDetailLevelAt,
+  type DetailLevel,
+} from '@/lib/cv-detail-level';
 import { Locale } from 'i18n-config';
 import React from 'react';
 
@@ -15,10 +19,13 @@ export default async function jobs({
   locale,
   mode,
   detailLevel = DEFAULT_DETAIL_LEVEL,
+  detailedJobs = null,
 }: {
   locale: Locale;
   mode?: CvMode;
   detailLevel?: DetailLevel;
+  /** Pagination : nb de postes en détail complet ; les suivants passent en bref. */
+  detailedJobs?: number | null;
 }) {
   const data: any = await getCvData(locale);
   const jobsList = data?.allJobsModels || [];
@@ -51,7 +58,7 @@ export default async function jobs({
               <Job
                 job={job}
                 locale={locale}
-                detailLevel={detailLevel}
+                detailLevel={jobDetailLevelAt(index, detailLevel, detailedJobs)}
                 presentLabel={locale === 'en' ? 'Present' : 'Présent'}
               />
             </li>
