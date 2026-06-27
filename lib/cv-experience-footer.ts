@@ -67,8 +67,8 @@ export function formatRemainingClientsRecapForFullCv<
   if (names.length === 0) return null;
   const joined = names.join(', ');
   return locale === 'fr'
-    ? `Les missions plus anciennes incluent notamment : ${joined}.`
-    : `Earlier roles include engagements with ${joined}.`;
+    ? `Anciens clients : ${joined}.`
+    : `Earlier clients: ${joined}.`;
 }
 
 /**
@@ -84,6 +84,6 @@ export function formatFoldedClientsRecap<T extends { client: string }>(
   if (names.length === 0) return null;
   const joined = names.join(', ');
   return locale === 'fr'
-    ? `Les missions plus anciennes incluent notamment : ${joined}.`
-    : `Earlier roles include engagements with ${joined}.`;
+    ? `Anciens clients : ${joined}.`
+    : `Earlier clients: ${joined}.`;
 }
