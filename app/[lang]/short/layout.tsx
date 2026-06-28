@@ -1,16 +1,18 @@
 import React from 'react';
 
 /**
- * Wrapper du CV court. La largeur/échelle est désormais gérée par `ScaledA4`
- * (dans `ShortPageWrapper`) : le document A4 à largeur fixe (794px) est zoomé
- * pour remplir l'écran (`print=0`) ou affiché à sa taille réelle 21 cm
- * (`print=1`). La classe `.cv-short-page` (cible du CSS `@page short`) est portée
- * par le document à l'intérieur de `ScaledA4`. Ce layout reste un simple passe-plat.
+ * Wrapper dédié au CV court : ciblage CSS print (`cv-short-page`, `@page short`)
+ * pour tenir sur une page A4 sans impacter le CV complet.
+ *
+ * `max-w-[800px] mx-auto` : sur le WEB, le CV est rendu à sa largeur réelle (≈ A4,
+ * 794px) et centré → aperçu fidèle du PDF (sinon il s'étire pleine largeur, la
+ * photo file à l'extrême droite et paraît minuscule). En impression, la page fait
+ * déjà < 800px : la contrainte ne mord pas, le rendu A4 est inchangé.
  */
 export default function ShortCvLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return <div className="cv-short-page mx-auto max-w-[800px]">{children}</div>;
 }

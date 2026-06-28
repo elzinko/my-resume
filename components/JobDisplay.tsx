@@ -140,7 +140,7 @@ export default function JobDisplay({
           roleName={roleName}
           datesLine={compactDateLine}
         />
-        <div className="cv-row-with-side-meta print:!flex print:gap-1 max-md:hidden">
+        <div className="cv-row-with-side-meta print:flex print:gap-1 max-md:hidden">
           <span className="min-w-0 flex-1 text-cv-meta font-normal leading-snug text-cv-jobs print:text-[8px]">
             {roleName ?? ''}
           </span>
@@ -193,7 +193,7 @@ export default function JobDisplay({
         </span>
       </div>
       <JobMetaMobileRow roleName={roleName} datesLine={datesStr} />
-      <div className="cv-row-with-side-meta pb-2 print:!flex max-md:hidden">
+      <div className="cv-row-with-side-meta pb-2 print:flex max-md:hidden">
         <span className="min-w-0 flex-1 text-cv-meta font-normal leading-snug text-cv-jobs print:text-xs">
           {roleName ?? ''}
           {showRoleAts ? (
