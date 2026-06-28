@@ -240,11 +240,19 @@ function PrintPreviewToggleLink({ onNavigate }: { onNavigate?: () => void }) {
           title: 'Une colonne comme à l’impression (PDF)',
         };
 
+  // Icône SEULE (œil = aperçu), pas de texte. Active (?print=1) → vert : override
+  // `!` sur la couleur/fond de `cvHeaderModeBtn` (comme les `print:!flex` existants
+  // → fiable quel que soit l'ordre Tailwind). `label` → `aria-label`.
+  const activeCls = active
+    ? '!bg-green-50 !text-green-600 hover:!bg-green-100 hover:!text-green-700'
+    : '';
+
   return (
     <Link
       href={href}
-      className={`${cvHeaderModeBtn} max-w-[11rem] truncate text-xs font-normal text-slate-500 hover:text-slate-800 print:hidden`}
+      className={`${cvHeaderModeBtn} px-2 print:hidden ${activeCls}`}
       title={title}
+      aria-label={label}
       onClick={() => onNavigate?.()}
     >
       <svg
@@ -256,21 +264,18 @@ function PrintPreviewToggleLink({ onNavigate }: { onNavigate?: () => void }) {
         strokeWidth={2}
         aria-hidden
       >
-        {active ? (
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        ) : (
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-          />
-        )}
+        {/* Œil = « aperçu ». Même glyphe actif/inactif : seule la couleur change. */}
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+        />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+        />
       </svg>
-      <span className="hidden md:inline">{label}</span>
     </Link>
   );
 }
