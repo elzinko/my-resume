@@ -9,6 +9,7 @@ import Jobs from '@/app/[lang]/jobs';
 import Projects from '@/app/[lang]/projects';
 import JobFitSection from '@/components/JobFitSection';
 import FullCvPrintPreviewEffect from '@/components/FullCvPrintPreviewEffect';
+import AtsLabelsEffect from '@/components/AtsLabelsEffect';
 import ContactLocationProvider from '@/components/ContactLocationProvider';
 import JobFrameworkDisplayProvider from '@/components/JobFrameworkDisplayProvider';
 import { buildContactLocationHref } from '@/lib/contact-maps';
@@ -39,7 +40,9 @@ export default function OfferTailoredShell({
   showEducationLevel = false,
   showPhoto = false,
   showAge = false,
+  headerAlign = 'left',
   detailLevel = 'full',
+  maxJobShown = null,
 }: {
   lang: Locale;
   educationLevel: EducationLevelContent;
@@ -67,8 +70,12 @@ export default function OfferTailoredShell({
   showPhoto?: boolean;
   /** Afficher l'âge sous le rôle (param `?age=0` pour masquer). */
   showAge?: boolean;
+  /** Alignement du bloc titre (défaut `left` ; `?headerAlign=right`). */
+  headerAlign?: 'left' | 'right';
   /** Niveau de détail des expériences (param `?detail=`). */
   detailLevel?: DetailLevel;
+  /** Pagination : nb de postes affichés en entrée (`?maxJobShown=N`), reste plié au footer. */
+  maxJobShown?: number | null;
 }) {
   const resolvedContact: ContactLocationOverlay = contactLocation ?? {
     mapsHref: buildContactLocationHref(),
@@ -83,6 +90,7 @@ export default function OfferTailoredShell({
         <div className="cv-offer-tailored-shell">
           <Suspense fallback={null}>
             <FullCvPrintPreviewEffect />
+            <AtsLabelsEffect />
           </Suspense>
           {/* @ts-expect-error Server Component */}
           <Headers
@@ -92,6 +100,7 @@ export default function OfferTailoredShell({
             subtitleOverride={subtitleOverride}
             showPhoto={showPhoto}
             showAge={showAge}
+            align={headerAlign}
           />
 
           <div className="cv-full-cv-print-root">
@@ -141,7 +150,12 @@ export default function OfferTailoredShell({
               </section>
             )}
             {/* @ts-expect-error Server Component */}
-            <Jobs locale={lang} mode={mode} detailLevel={detailLevel} />
+            <Jobs
+              locale={lang}
+              mode={mode}
+              detailLevel={detailLevel}
+              maxJobShown={maxJobShown}
+            />
             {/* @ts-expect-error Server Component */}
             <Studies locale={lang} />
             {/* @ts-expect-error Server Component */}

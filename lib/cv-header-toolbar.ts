@@ -1,12 +1,19 @@
 /** Barre d’outils CV : boutons carrés compacts, repose lisible (pas « disabled »), survol en couleur. */
 
 /**
- * Bascule « aperçu impression » : réservé au dev local (pas les déploiements prod).
+ * Bascule « aperçu impression » : visible en dev local ET sur les déploiements de
+ * PREVIEW Vercel (review de chaque PR), mais JAMAIS en production. Vercel préfixe
+ * automatiquement la variable système pour le navigateur sur prod+preview :
+ * `NEXT_PUBLIC_VERCEL_ENV` vaut 'preview' sur un preview deploy, 'production' en
+ * prod (et est absente en local → c'est le check NODE_ENV/localhost qui prend le relais).
  * Préférer le hook {@link useCvPrintPreviewToggleVisible} côté client : il couvre aussi
  * `next start` sur localhost et `NEXT_PUBLIC_SHOW_PRINT_PREVIEW` (accès LAN, etc.).
  */
 export function isCvPrintLayoutToolbarEnabled(): boolean {
-  return process.env.NODE_ENV === 'development';
+  return (
+    process.env.NODE_ENV === 'development' ||
+    process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview'
+  );
 }
 
 const LOCAL_DEV_HOSTS = new Set(['localhost', '127.0.0.1', '[::1]']);

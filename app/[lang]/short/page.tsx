@@ -9,9 +9,10 @@ import {
 } from '@/lib/sort-chronological';
 import CompactCvLayout, { CompactCvData } from '@/components/CompactCvLayout';
 import { getEducationLevelContent } from '@/lib/education-level-content';
-import formatDates from '@/lib/date';
+import formatDates, { computeAge } from '@/lib/date';
 import ShortPageWrapper from '@/components/ShortPageWrapper';
 import FullCvPrintPreviewEffect from '@/components/FullCvPrintPreviewEffect';
+import AtsLabelsEffect from '@/components/AtsLabelsEffect';
 import ShortAutoprint from '@/components/ShortAutoprint';
 import {
   resolveAboutText,
@@ -65,6 +66,26 @@ export default async function ShortPage({
       ? sp.get('subtitle_fr') || sp.get('subtitle')
       : sp.get('subtitle_en') || sp.get('subtitle')
     )?.trim() || undefined;
+  // Position du titre : à gauche par défaut, `?headerAlign=right` pour l'aligner à droite.
+  const headerAlign: 'left' | 'right' =
+    sp.get('headerAlign') === 'right' ? 'right' : 'left';
+  // Photo : affichée par défaut (`?photo=0` pour masquer), placée à l'opposé du titre.
+  const photoUrl =
+    sp.get('photo') !== '0' && typeof data?.header?.photo === 'string'
+      ? (data.header.photo as string)
+      : undefined;
+  // Âge : affiché par DÉFAUT (`?age=0` pour masquer) — indépendant des autres params, comme le CV complet.
+  // Garde le null de computeAge (birthDate malformé) → pas de « null ans » rendu (cf. header complet).
+  const ageValue =
+    sp.get('age') !== '0' && typeof data?.header?.birthDate === 'string'
+      ? computeAge(data.header.birthDate)
+      : null;
+  const ageText =
+    ageValue != null
+      ? lang === 'en'
+        ? `${ageValue} years old`
+        : `${ageValue} ans`
+      : undefined;
 
   const offer = resolveOfferFromUrlParams(sp, getMatchCatalog());
   const eduRaw = sp.get('edu')?.trim();
@@ -158,12 +179,16 @@ export default async function ShortPage({
     <>
       <Suspense fallback={null}>
         <FullCvPrintPreviewEffect />
+        <AtsLabelsEffect />
       </Suspense>
       <ShortPageWrapper
         lang={lang}
         headerName={data?.header?.name || ''}
         headerRole={subtitleOverride || data?.header?.role || ''}
         hideMalt={hideMalt}
+        align={headerAlign}
+        photoUrl={photoUrl}
+        ageText={ageText}
       >
         <Suspense fallback={null}>
           <ShortAutoprint />

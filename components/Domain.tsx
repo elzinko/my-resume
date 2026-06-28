@@ -33,8 +33,8 @@ function DomainFiveTagsRow({
   compact: boolean;
 }) {
   const rowClass = compact
-    ? 'mt-auto flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 py-1 print:mt-1 print:gap-x-1 print:py-0.5'
-    : 'mt-auto flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 py-1';
+    ? 'mt-1 flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 py-1 print:gap-x-1 print:py-0.5'
+    : 'mt-2 flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 py-1';
 
   return (
     <div className={rowClass}>
@@ -104,8 +104,12 @@ export default function Domain({
 }: DomainProps) {
   const accent = titleAccent ?? DOMAIN_TITLE_ACCENT_DEFAULT;
 
+  // CV court : domaines en SOUS-titres (text-base = 16px) → nettement plus petits
+  // que le titre de section « Summary » (text-2xl = 24px) pour une hiérarchie
+  // claire et garantie (classes statiques → 16 < 24 sur écran, aperçu ET print).
+  // CV complet : niveau section (text-2xl).
   const titleTypo = compact
-    ? 'text-2xl font-semibold text-blue-400 print:text-sm'
+    ? 'text-base font-semibold text-blue-400'
     : 'text-2xl font-semibold text-blue-400';
 
   const titleBlock =
@@ -128,19 +132,19 @@ export default function Domain({
     );
 
   return (
-    <div
-      className={
-        compact
-          ? 'mt-4 flex min-w-0 flex-col print:mt-1.5'
-          : 'mt-4 flex min-w-0 flex-col'
-      }
-    >
+    <div className="cv-section-body-gap flex min-w-0 flex-col">
       {titleBlock}
       <p
         className={
           compact
-            ? 'mt-4 flex-1 text-cv-body-muted print:mt-1 print:text-[8px] print:leading-tight'
-            : 'mt-4 flex-1 text-cv-body-muted'
+            ? // Court : PAS de flex-1 — les pills collent à la description pour ne
+              // pas creuser de trou (espace A4 compté sur une page).
+              'cv-job-description mt-1 text-left'
+            : // Complet : flex-1 → la description occupe la hauteur de la colonne
+              // (grille md:items-stretch / print:items-stretch) → les pastilles
+              // s'alignent EN BAS, identiques d'une colonne à l'autre quel que
+              // soit le volume de texte au-dessus.
+              'cv-job-description mt-4 flex-1 text-left'
         }
       >
         {domain.description}
@@ -155,8 +159,8 @@ export default function Domain({
             <div
               className={
                 compact
-                  ? 'mt-auto flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 py-1 print:mt-1 print:gap-x-1 print:py-0.5'
-                  : 'mt-auto flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 py-1'
+                  ? 'mt-1 flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 py-1 print:gap-x-1 print:py-0.5'
+                  : 'mt-2 flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 py-1'
               }
             >
               {domain.competencies.map((competency) => (

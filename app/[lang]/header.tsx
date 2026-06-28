@@ -12,6 +12,7 @@ export default async function Header({
   subtitleOverride,
   showPhoto = false,
   showAge = false,
+  align,
 }: {
   locale: Locale;
   /** Pages offre : bandeau coordonnées sous le rôle uniquement en aperçu `?print`. */
@@ -27,6 +28,8 @@ export default async function Header({
   showPhoto?: boolean;
   /** Afficher l'âge sous le rôle (par défaut oui ; `?age=0` pour masquer). */
   showAge?: boolean;
+  /** Alignement du bloc titre (défaut `left`). `?headerAlign=right` pour aligner à droite. */
+  align?: 'left' | 'right';
 }) {
   const data: any = await getCvData(locale);
 
@@ -58,6 +61,7 @@ export default async function Header({
         role={subtitleOverride || data?.header?.role}
         photoUrl={photoUrl}
         ageText={ageText}
+        align={align}
       />
     </header>
   );

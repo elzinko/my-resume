@@ -91,7 +91,7 @@ export default function Pill({
   /* ── Domain (teal) ── */
   if (color === 'domain') {
     const classes = compact
-      ? 'cv-pill-domain shrink-0 whitespace-nowrap px-2 py-0.5 text-xs font-medium leading-snug print:px-1.5 print:py-0.5 print:text-[10px] md:px-2.5 md:py-1 md:text-sm'
+      ? 'cv-pill-domain shrink-0 whitespace-nowrap px-2 py-0.5 text-xs font-medium leading-snug print:px-1 print:py-0.5 print:text-[10px] md:px-2.5 md:py-1 md:text-sm'
       : 'cv-pill-domain shrink-0 whitespace-nowrap px-2 py-0.5 text-xs font-medium leading-snug md:px-2.5 md:py-1 md:text-sm print:px-1.5 print:py-0.5 print:text-[10px]';
     return (
       <Tag className={classes} {...linkProps}>

@@ -9,7 +9,7 @@ import { getEducationLevelContent } from '@/lib/education-level-content';
 import { offerPriorityTokensAndContact } from '@/lib/offer-page-data';
 import { resolveOfferFromUrlParams } from '@/lib/query-offer-params';
 import { recordToURLSearchParams } from '@/lib/search-params-to-url';
-import { parseDetailLevel } from '@/lib/cv-detail-level';
+import { parseDetailLevel, parseMaxJobShown } from '@/lib/cv-detail-level';
 import type { ContractType } from '@/data/offers/types';
 import type { CvMode } from '@/lib/cv-contract-text';
 
@@ -79,12 +79,18 @@ export default async function Page({
     | { email?: string; phone?: string; location?: string }
     | undefined;
 
-  // Photo : masquée par défaut, opt-in via `?photo=1`.
-  const showPhoto = sp.get('photo') === '1';
+  // Photo : affichée par défaut, `?photo=0` pour la masquer.
+  const showPhoto = sp.get('photo') !== '0';
   // Âge : affiché par défaut (sous le rôle), `?age=0` pour le masquer.
   const showAge = sp.get('age') !== '0';
+  // Position du titre : à gauche par défaut, `?headerAlign=right` pour l'aligner à droite.
+  const headerAlign: 'left' | 'right' =
+    sp.get('headerAlign') === 'right' ? 'right' : 'left';
   // Niveau de détail des expériences : `?detail=full|summary|minimal`.
   const detailLevel = parseDetailLevel(sp.get('detail'));
+  // Pagination : `?maxJobShown=N` → N postes affichés en entrée ; au-delà, les
+  // clients sont pliés dans le footer de synthèse. Sans param → tous affichés.
+  const maxJobShown = parseMaxJobShown(sp.get('maxJobShown'));
 
   return (
     <OfferTailoredShell
@@ -104,7 +110,9 @@ export default async function Page({
       showEducationLevel={showEducationLevel}
       showPhoto={showPhoto}
       showAge={showAge}
+      headerAlign={headerAlign}
       detailLevel={detailLevel}
+      maxJobShown={maxJobShown}
     />
   );
 }

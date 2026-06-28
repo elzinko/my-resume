@@ -10,9 +10,75 @@
    */
   --cv-section-body-gap: 1rem; /* = mt-4 */
 
+  /**
+   * Espacement INTER-sections, unique pour tout le CV court : appliqué via
+   * flex-gap (pas de marges par section → pas de margin-collapse → rythme
+   * STRICTEMENT régulier, identique mobile/desktop, et cohérent entre pages).
+   * Une seule valeur par device. Ajuster ici = ajuster partout.
+   */
+  --cv-section-gap: 1.5rem; /* écran (desktop + mobile) */
+
   /** Toolbar boutons / icônes — taille unique pour hamburger + icônes sociales + print. */
   --cv-toolbar-btn: 2.5rem; /* 40px */
   --cv-toolbar-icon: 1.5rem; /* 24px */
+}
+
+/* Impression : rythme inter-sections plus dense (page 1 bien remplie), mais
+   toujours UNIQUE → identique d'une page à l'autre. Couvre @media print ET le
+   mode aperçu `.cv-print-preview` (qui n'écoute pas @media print). */
+@media print {
+  :root {
+    --cv-section-gap: 1.3rem; /* + d'air ENTRE sections (au-dessus du titre) */
+    --cv-section-body-gap: 0.5rem; /* titre collé à SON contenu (en dessous) */
+  }
+}
+.cv-print-preview {
+  --cv-section-gap: 1.3rem;
+  --cv-section-body-gap: 0.5rem;
+}
+
+/* CV court = document A4 : à l'ÉCRAN aussi, le rythme suit les valeurs
+   d'impression. Le short web doit être un aperçu fidèle du PDF (mêmes écarts,
+   pas seulement même largeur) → on ne gonfle pas les gaps hors impression. */
+.cv-short-page {
+  --cv-section-gap: 1.3rem;
+  --cv-section-body-gap: 0.5rem;
+  /* Zoom manuel (curseur CvZoomSlider) — ÉCRAN uniquement, neutralisé en print. */
+  zoom: var(--cv-zoom, 1);
+}
+@media print {
+  .cv-short-page {
+    zoom: 1 !important;
+  }
+}
+
+/* Barre d'outils : annule le zoom du parent .cv-short-page → taille constante
+   quel que soit le curseur / le mode (short plein-largeur vs aperçu A4). Scopé à
+   .cv-short-page pour ne pas affecter la barre du CV complet (pas de zoom là-bas).
+   Print : la barre est `print:hidden`, donc rien à neutraliser pour le PDF. */
+.cv-short-page .cv-toolbar-noscale {
+  zoom: calc(1 / var(--cv-zoom, 1));
+}
+
+/* Libellés ATS anglais (« Summary », « Work Experience », « Job fit »…) : masqués
+   par DÉFAUT (web ET PDF). Affichés uniquement avec `?ats=1` → `.cv-show-ats` posé
+   sur <html> (cf. AtsLabelsEffect), pour cibler un ATS anglo-saxon. Suppression en
+   display:none (pas « invisible mais présent » = red flag ATS). */
+.cv-ats-label {
+  display: none;
+}
+.cv-show-ats .cv-ats-label {
+  display: inline;
+}
+
+/* CV complet : à l'ÉCRAN aussi, le rythme suit les valeurs d'impression (même
+   densité que le PDF), comme `.cv-short-page`. Sans ça, le web du complet hérite
+   du défaut :root (gap inter-sections 1.5rem, body-gap 1rem) alors que
+   print/aperçu sont à 1.3rem / 0.5rem → divergence visible au switch aperçu↔normal
+   (écart entre sections, et intro Profil → titres des domaines). */
+.cv-full-cv-print-root {
+  --cv-section-gap: 1.3rem;
+  --cv-section-body-gap: 0.5rem;
 }
 
 @layer components {
@@ -46,7 +112,7 @@
    * Le CV long utilise désormais un flux linéaire via `.cv-full-cv-print-root`.
    */
   .cv-page-split {
-    @apply grid grid-cols-1 grid-rows-none gap-y-10 max-md:mt-10 md:grid-cols-3 md:items-start md:gap-x-10 md:gap-y-0;
+    @apply grid grid-cols-1 grid-rows-none gap-y-[var(--cv-section-gap)] md:grid-cols-3 md:items-start md:gap-x-10 md:gap-y-0;
     @apply print:grid print:grid-cols-3 print:items-start print:gap-x-4 print:gap-y-0;
   }
 
@@ -56,9 +122,9 @@
    * `mt-10` desktop / `mt-20` mobile (clearance de la toolbar fixe).
    */
   .cv-full-cv-print-root {
-    @apply flex flex-col gap-6 print:mt-0 max-md:mt-20;
-    /* Impression plus dense (proche de la vue web) : gaps inter-sections réduits. */
-    @apply print:gap-3;
+    /* Même token que le CV court → rythme inter-sections identique écran ET
+       impression (web 1.5rem, print 1.3rem), au lieu d'un print:gap-3 codé en dur. */
+    @apply flex flex-col gap-[var(--cv-section-gap)] print:!mt-0 max-md:mt-20;
   }
 
   .cv-full-cv-print-root > section,
@@ -330,7 +396,10 @@
    * Même token `text-cv-body-muted` que le profil et les domaines (About, Domain — pas de justification).
    */
   .cv-job-description {
-    @apply text-justify text-xs leading-snug text-cv-body-muted print:text-xs md:text-sm;
+    /* Plancher MOBILE 1rem : base `text-base` (16px) = mobile lisible ; desktop
+       `md:text-sm` (14px, aperçu A4) ; impression `print:text-xs` (12px, ou
+       densifié à 10px sur `.cv-short-page`). Le type-scale propre relève du DS. */
+    @apply text-justify text-base leading-snug text-cv-body-muted print:text-xs md:text-sm;
   }
 
   /**
@@ -444,8 +513,11 @@ html {
 
   /* ================================================================
    * === SHORT CV — ajustements print (A4 portrait ~794px) =========
-   * Une seule zone pour tout le comportement print du CV court.
-   * Modifier ici ET NULLE PART AILLEURS pour le rendu imprimé du short.
+   * Zone principale du print du CV court. ⚠️ Certaines valeurs (ex.
+   * `column-gap` des grilles ci-dessous) sont AUSSI surchargées sous
+   * `.cv-print-preview` (appliqué en PERMANENCE sur /short via le layout) :
+   * cette surcharge gagne par spécificité, y compris en PDF réel. Donc si
+   * un réglage d'ici « ne prend pas », vérifier le bloc `.cv-print-preview`.
    * ================================================================ */
   @page short {
     size: A4;
@@ -460,24 +532,19 @@ html {
     padding: 0.625rem !important;
   }
 
-  /* Densification typographique pour tenir sur 1 page A4 */
-  .cv-short-page .cv-short-about p {
-    font-size: 0.5625rem !important;
-    line-height: 1.35 !important;
-  }
-
+  /* Densification typographique pour tenir sur 1 page A4 : tout le corps de
+     texte (Profil, domaines, Expérience) partage `.cv-job-description` → même
+     taille partout, densifiée ici à l'impression. */
   .cv-short-page .cv-job-description {
     font-size: 0.625rem;
     line-height: 1.35;
   }
 
-  /* Grille domaines + colonnes : gaps resserrés */
+  /* Grille domaines + colonnes : gaps resserrés.
+     (On NE zéro-te plus le margin-top des domaines : il porte le body-gap
+     `--cv-section-body-gap` pour que intro→domaines == filet→intro à l'impression.) */
   .cv-short-page .cv-domains-grid {
     column-gap: 0.75rem !important;
-  }
-
-  .cv-short-page #domains .cv-domains-grid > div {
-    margin-top: 0 !important;
   }
 
   .cv-short-page .cv-page-split {
@@ -922,6 +989,46 @@ html {
   margin-top: 0.125rem !important;
   font-size: 1rem !important; /* text-base */
   line-height: 1.375 !important;
+}
+
+/* Short print-preview : CORPS de texte aux tailles d'IMPRESSION (les utilitaires
+   Tailwind `print:` ne s'appliquent pas en aperçu → sinon l'aperçu montre 14px
+   alors que le PDF fait 10px). Scopé `.cv-print-preview` → vue normale intacte. */
+.cv-print-preview .cv-short-page .cv-job-description {
+  font-size: 0.625rem !important; /* 10px */
+  line-height: 1.35 !important;
+}
+.cv-print-preview .cv-short-page .cv-experience-footer p {
+  font-size: 0.5625rem !important; /* 9px */
+}
+.cv-print-preview .cv-short-page .cv-page-split .cv-row-with-side-meta {
+  font-size: 0.5rem !important; /* 8px — rôle / lieu / dates */
+}
+.cv-print-preview
+  .cv-short-page
+  .cv-page-split
+  .cv-row-with-side-meta
+  .font-bold {
+  font-size: 0.625rem !important; /* 10px — client (gras) */
+}
+/* Pills (domaines, compétences, adéquation, missions) aux tailles d'impression
+   → tiennent sur 1 ligne comme le PDF (sinon 14px en aperçu → 2 lignes). */
+.cv-print-preview .cv-short-page .cv-pill-domain,
+.cv-print-preview .cv-short-page .cv-pill-skill,
+.cv-print-preview .cv-short-page .cv-pill-match,
+.cv-print-preview .cv-short-page .cv-pill-jobs {
+  font-size: 0.625rem !important; /* 10px */
+}
+.cv-print-preview .cv-short-page .cv-pill-domain {
+  padding: 0.125rem 0.25rem !important; /* px resserré 4px (vs 6) → marge pour que
+                                           Ops (5 tags dont kubernetes/terraform)
+                                           tienne sur 1 ligne (cf. print:px-1). */
+}
+/* Gap des colonnes = valeur d'impression (sinon md:gap-x-10 2.5rem → colonnes
+   plus étroites → les pills wrappent ; print:gap-x-4 = 1rem). */
+.cv-print-preview .cv-short-page .cv-domains-grid,
+.cv-print-preview .cv-short-page .cv-page-split {
+  column-gap: 1rem !important;
 }
 
 .cv-print-preview .cv-short-page #education-level .cv-education-level-blocks {

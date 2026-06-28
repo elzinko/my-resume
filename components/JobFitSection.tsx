@@ -59,8 +59,16 @@ export default function JobFitSection({
   /* ── Compact : pastilles inline uniquement (CV court) ── */
   if (variant === 'compact') {
     return (
-      <section id="job-fit" className="mb-6" aria-label={sectionTitle}>
-        <SectionHeadingAts accent="orange" locale={lang} title={sectionTitle} />
+      <section id="job-fit" aria-label={sectionTitle}>
+        {/* Libellé ATS « Job fit » comme les autres sections — masqué par défaut
+            (`.cv-ats-label`), affiché avec `?ats=1`. Le titre reste un `<h2 flex>`
+            (composant) → même hauteur que les autres → filets alignés. */}
+        <SectionHeadingAts
+          section="jobfit"
+          accent="orange"
+          locale={lang}
+          title={sectionTitle}
+        />
         <div className="cv-section-body-gap flex flex-wrap items-center gap-1.5 print:gap-1">
           {showEducationLevel && (
             <Pill color="match" compact>
@@ -108,6 +116,7 @@ export default function JobFitSection({
       aria-label={sectionTitle}
     >
       <SectionHeadingAts
+        section="jobfit"
         accent="orange"
         locale={lang}
         title={sectionTitle}

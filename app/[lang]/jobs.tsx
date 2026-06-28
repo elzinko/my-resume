@@ -4,7 +4,7 @@ import ExperienceSection from '@/components/ExperienceSection';
 import { getCvData } from '@/lib/cv-data';
 import type { CvMode } from '@/lib/cv-contract-text';
 import {
-  formatRemainingClientsRecapForFullCv,
+  formatFoldedClientsRecap,
   getExperienceClosingLabels,
 } from '@/lib/cv-experience-footer';
 import { DEFAULT_DETAIL_LEVEL, type DetailLevel } from '@/lib/cv-detail-level';
@@ -15,10 +15,13 @@ export default async function jobs({
   locale,
   mode,
   detailLevel = DEFAULT_DETAIL_LEVEL,
+  maxJobShown = null,
 }: {
   locale: Locale;
   mode?: CvMode;
   detailLevel?: DetailLevel;
+  /** Pagination : N postes affichés en entrée ; au-delà → plié au footer (`?maxJobShown=N`). */
+  maxJobShown?: number | null;
 }) {
   const data: any = await getCvData(locale);
   const jobsList = data?.allJobsModels || [];
@@ -29,8 +32,22 @@ export default async function jobs({
       return true;
     },
   );
+  // Missions citées dans le récap « missions plus anciennes » SANS entrée détaillée :
+  //  - les missions visibles pliées au-delà de `?maxJobShown=N` ;
+  //  - les missions `display:false` (volontairement hors liste) mais à créditer,
+  //    pertinentes pour le mode courant.
+  const shownJobs =
+    maxJobShown != null ? visibleJobs.slice(0, maxJobShown) : visibleJobs;
+  const hiddenRecapJobs = jobsList.filter(
+    (j: { display?: boolean; displayMode?: string }) =>
+      j.display === false && (!j.displayMode || j.displayMode === mode),
+  );
+  const foldedJobs = [
+    ...(maxJobShown != null ? visibleJobs.slice(maxJobShown) : []),
+    ...hiddenRecapJobs,
+  ];
   const closing = getExperienceClosingLabels(locale);
-  const recapLine = formatRemainingClientsRecapForFullCv(visibleJobs, locale);
+  const recapLine = formatFoldedClientsRecap(foldedJobs, locale);
 
   return (
     <div className="cv-print-jobs-group print-preview:order-[90] print:order-[90]">
@@ -46,7 +63,7 @@ export default async function jobs({
           locale={locale}
           canToggleDetails={detailLevel === 'full'}
         >
-          {visibleJobs.map((job: any, index: number) => (
+          {shownJobs.map((job: any, index: number) => (
             <li key={job.client + index} className="print:break-inside-avoid">
               <Job
                 job={job}

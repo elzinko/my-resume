@@ -11,17 +11,10 @@ import { stripBasePath } from '@/lib/cv-path-utils';
 import { i18n, type Locale } from 'i18n-config';
 
 interface CvModeToggleProps {
-  labels?: {
-    full: string;
-    compact: string;
-  };
   onNavigate?: () => void;
 }
 
-export default function CvModeToggle({
-  labels = { full: 'Version complète', compact: 'Version courte' },
-  onNavigate,
-}: CvModeToggleProps) {
+export default function CvModeToggle({ onNavigate }: CvModeToggleProps) {
   const pathname = usePathname() || '/';
   const searchParams = useSearchParams();
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
@@ -41,16 +34,21 @@ export default function CvModeToggle({
     ? fullHrefFromShortPath(lang, sp)
     : shortHrefFromOfferPath(pathForLogic, lang, sp);
 
-  const label = isShortMode ? labels.full : labels.compact;
+  // Affichage du MODE COURANT (pas la cible) : vue courte = « PDF » (aperçu A4
+  // fidèle), vue complète = « Web ». Icône SEULE partout (desktop + mobile),
+  // l'info passe par l'infobulle (`title`).
+  const title = isShortMode
+    ? 'Affichage PDF (A4) — cliquer pour la version web complète'
+    : 'Affichage web — cliquer pour l’aperçu PDF (A4)';
 
   return (
     <Link
       href={targetUrl}
       className={`${cvHeaderModeBtn} print:hidden`}
-      title={label}
+      title={title}
+      aria-label={title}
       onClick={() => onNavigate?.()}
     >
-      {/* Icon */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="h-4 w-4 md:h-5 md:w-5"
@@ -58,16 +56,17 @@ export default function CvModeToggle({
         viewBox="0 0 24 24"
         stroke="currentColor"
         strokeWidth={2}
+        aria-hidden
       >
-        {!isShortMode ? (
-          // Document icon for compact mode
+        {isShortMode ? (
+          // Vue courante = PDF → icône document
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
             d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
           />
         ) : (
-          // Grid icon for full view
+          // Vue courante = web → icône grille
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -75,8 +74,6 @@ export default function CvModeToggle({
           />
         )}
       </svg>
-      {/* Label hidden on mobile, visible on desktop */}
-      <span className="hidden md:inline">{label}</span>
     </Link>
   );
 }

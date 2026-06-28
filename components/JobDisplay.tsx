@@ -121,31 +121,33 @@ export default function JobDisplay({
     );
     return (
       <div>
-        <div className="cv-row-with-side-meta">
-          <span className="min-w-0 flex-1 text-sm font-bold leading-snug text-cv-jobs print:text-[10px] print:leading-tight">
-            {job.clientUrl ? (
-              <a href={job.clientUrl} target="_blank" rel="noopener noreferrer">
-                {job.client}
-              </a>
-            ) : (
-              job.client
-            )}
+        {/* En-tête compact sur UNE SEULE ligne : « Client / Rôle » à gauche,
+            « Lieu / Dates » à droite. Client en gras, le reste plus petit
+            (text-cv-meta). Tient en print, desktop ET mobile (truncation). */}
+        <div className="cv-row-with-side-meta items-baseline gap-x-2 text-sm leading-tight print:text-[10px] print:leading-tight">
+          <span className="min-w-0 flex-1 truncate text-left">
+            <span className="text-sm font-bold leading-tight text-cv-jobs print:text-[10px]">
+              {job.clientUrl ? (
+                <a
+                  href={job.clientUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {job.client}
+                </a>
+              ) : (
+                job.client
+              )}
+            </span>
+            {roleName ? (
+              <span className="text-cv-meta font-normal leading-tight text-cv-jobs print:text-[8px]">
+                {` / ${roleName}`}
+              </span>
+            ) : null}
           </span>
-          <span className="min-w-max shrink-0 self-end text-cv-meta font-normal tabular-nums leading-snug text-cv-jobs print:!inline print:text-[8px] max-md:hidden">
+          <span className="min-w-max shrink-0 whitespace-nowrap text-right text-cv-meta font-normal tabular-nums leading-tight text-cv-jobs print:text-[8px]">
+            {job.location ? `${job.location} / ` : ''}
             {compactDateLine}
-          </span>
-        </div>
-        <JobMetaMobileRow
-          compact
-          roleName={roleName}
-          datesLine={compactDateLine}
-        />
-        <div className="cv-row-with-side-meta print:flex print:gap-1 max-md:hidden">
-          <span className="min-w-0 flex-1 text-cv-meta font-normal leading-snug text-cv-jobs print:text-[8px]">
-            {roleName ?? ''}
-          </span>
-          <span className="min-w-max shrink-0 self-end text-cv-meta leading-snug text-cv-jobs print:text-[8px]">
-            {job.location}
           </span>
         </div>
         <JobExperienceBody

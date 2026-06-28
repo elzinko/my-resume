@@ -31,7 +31,7 @@ export default async function About({
         accent="blue"
         className="min-w-0"
       />
-      <p className="mt-4 text-cv-body-muted">
+      <p className="cv-job-description mt-4 text-left">
         {resolveAboutText(data?.about, contract, mode)}
       </p>
     </section>

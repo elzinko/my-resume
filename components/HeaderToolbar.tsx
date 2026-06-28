@@ -36,8 +36,9 @@ import {
 const rowListClass = 'flex flex-nowrap items-center gap-0.5 [&>li]:shrink-0';
 
 /**
- * Affiche le lien d’aperçu impression : `next dev`, ou `next start` sur localhost,
- * ou si `NEXT_PUBLIC_SHOW_PRINT_PREVIEW=true` (ex. test depuis une IP LAN).
+ * Affiche le lien d’aperçu impression : `next dev`, **preview Vercel** (review par
+ * PR), `next start` sur localhost, ou si `NEXT_PUBLIC_SHOW_PRINT_PREVIEW=true` (ex.
+ * test depuis une IP LAN). Jamais en production.
  */
 function useCvPrintPreviewToggleVisible(): boolean {
   const fromNodeEnv = isCvPrintLayoutToolbarEnabled();
@@ -122,9 +123,12 @@ function FullVersionFromShortLink({
     <Link
       href={href}
       className={`${cvHeaderModeBtn} print:hidden`}
-      title="Version complète"
+      title="Affichage PDF (A4) — cliquer pour la version web complète"
+      aria-label="Affichage PDF (A4) — basculer vers la version web complète"
       onClick={() => onNavigate?.()}
     >
+      {/* Icône = mode COURANT (vue PDF / A4) → document. Desktop : icône seule
+          (infobulle). Mobile : + libellé court. */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="h-5 w-5"
@@ -132,14 +136,14 @@ function FullVersionFromShortLink({
         viewBox="0 0 24 24"
         stroke="currentColor"
         strokeWidth={2}
+        aria-hidden
       >
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
-          d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
         />
       </svg>
-      <span className="hidden md:inline">Version complète</span>
     </Link>
   );
 }
@@ -200,15 +204,7 @@ function ModeControl({
       <FullVersionFromShortLink shortLang={shortLang} onNavigate={onNavigate} />
     );
   }
-  return (
-    <CvModeToggle
-      labels={{
-        full: 'Version complète',
-        compact: 'Version courte',
-      }}
-      onNavigate={onNavigate}
-    />
-  );
+  return <CvModeToggle onNavigate={onNavigate} />;
 }
 
 /** CV long ou CV court : bascule `?print=1`. */
@@ -245,11 +241,19 @@ function PrintPreviewToggleLink({ onNavigate }: { onNavigate?: () => void }) {
           title: 'Une colonne comme à l’impression (PDF)',
         };
 
+  // Icône SEULE (œil = aperçu), pas de texte. Active (?print=1) → vert : override
+  // `!` sur la couleur/fond de `cvHeaderModeBtn` (comme les `print:!flex` existants
+  // → fiable quel que soit l'ordre Tailwind). `label` → `aria-label`.
+  const activeCls = active
+    ? '!bg-green-50 !text-green-600 hover:!bg-green-100 hover:!text-green-700'
+    : '';
+
   return (
     <Link
       href={href}
-      className={`${cvHeaderModeBtn} max-w-[11rem] truncate text-xs font-normal text-slate-500 hover:text-slate-800 print:hidden`}
+      className={`${cvHeaderModeBtn} px-2 print:hidden ${activeCls}`}
       title={title}
+      aria-label={label}
       onClick={() => onNavigate?.()}
     >
       <svg
@@ -261,21 +265,18 @@ function PrintPreviewToggleLink({ onNavigate }: { onNavigate?: () => void }) {
         strokeWidth={2}
         aria-hidden
       >
-        {active ? (
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        ) : (
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-          />
-        )}
+        {/* Œil = « aperçu ». Même glyphe actif/inactif : seule la couleur change. */}
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+        />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+        />
       </svg>
-      <span className="hidden md:inline">{label}</span>
     </Link>
   );
 }
@@ -338,7 +339,11 @@ export default function HeaderToolbar({
           <Suspense fallback={null}>
             <ModeControl shortLang={shortLang} />
           </Suspense>
-          {/* Print preview + Mobile preview retirés : WYSIWYG. */}
+          {showPrintPreviewToggle && (
+            <Suspense fallback={null}>
+              <PrintPreviewToggleLink />
+            </Suspense>
+          )}
           <ToolbarIconList
             onPrint={runPrint}
             printTitle={printTitle}
@@ -359,7 +364,7 @@ export default function HeaderToolbar({
       />
 
       <div
-        className="fixed inset-x-0 top-0 z-[90] flex items-center gap-2 bg-white/90 px-8 pb-3 backdrop-blur-md supports-[backdrop-filter]:bg-white/80 print:hidden md:hidden"
+        className="fixed inset-x-0 top-0 z-[90] flex items-center gap-2 bg-white/90 px-4 pb-3 backdrop-blur-md supports-[backdrop-filter]:bg-white/80 print:hidden md:hidden"
         style={{
           paddingTop: 'max(0.75rem, env(safe-area-inset-top, 0px))',
         }}
@@ -400,6 +405,11 @@ export default function HeaderToolbar({
             <Suspense fallback={null}>
               <ModeControl shortLang={shortLang} onNavigate={close} />
             </Suspense>
+            {showPrintPreviewToggle && (
+              <Suspense fallback={null}>
+                <PrintPreviewToggleLink onNavigate={close} />
+              </Suspense>
+            )}
             <ToolbarIconList
               onNavigate={close}
               listClassName={rowListClass}
