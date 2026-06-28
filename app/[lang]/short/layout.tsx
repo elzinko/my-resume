@@ -16,10 +16,12 @@ export default function ShortCvLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    // `cv-print-preview` en PERMANENCE sur le court → la vue normale rend comme
+    // l'aperçu `?print=1` (fidèle au PDF). Le zoom (CvZoomSlider) gère la taille.
+    <div className="cv-print-preview">
       <div className="cv-short-page mx-auto max-w-[800px]">{children}</div>
       {/* Curseur de zoom (hors du document zoomé → ne se zoome pas lui-même). */}
       <CvZoomSlider />
-    </>
+    </div>
   );
 }
