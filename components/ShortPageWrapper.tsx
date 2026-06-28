@@ -33,7 +33,10 @@ export default function ShortPageWrapper({
   return (
     <>
       <header className="relative z-[70] print:mb-1">
-        <div className="print:hidden">
+        {/* `cv-toolbar-noscale` : la barre vit dans .cv-short-page (qui porte le
+            zoom du curseur). On annule ce zoom pour qu'elle garde une taille
+            CONSTANTE quels que soient le réglage et le mode (short ↔ aperçu). */}
+        <div className="cv-toolbar-noscale print:hidden">
           <HeaderToolbar shortLang={lang} hideMalt={hideMalt} />
         </div>
         <HeaderContent

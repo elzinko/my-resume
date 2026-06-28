@@ -52,6 +52,14 @@
   }
 }
 
+/* Barre d'outils : annule le zoom du parent .cv-short-page → taille constante
+   quel que soit le curseur / le mode (short plein-largeur vs aperçu A4). Scopé à
+   .cv-short-page pour ne pas affecter la barre du CV complet (pas de zoom là-bas).
+   Print : la barre est `print:hidden`, donc rien à neutraliser pour le PDF. */
+.cv-short-page .cv-toolbar-noscale {
+  zoom: calc(1 / var(--cv-zoom, 1));
+}
+
 /* Libellés ATS anglais (« Summary », « Work Experience », « Job fit »…) : masqués
    par DÉFAUT (web ET PDF). Affichés uniquement avec `?ats=1` → `.cv-show-ats` posé
    sur <html> (cf. AtsLabelsEffect), pour cibler un ATS anglo-saxon. Suppression en
