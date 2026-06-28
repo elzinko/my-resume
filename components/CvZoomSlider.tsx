@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 const DOC_WIDTH = 800; // largeur naturelle du document court (px)
 const MIN = 0.5;
@@ -9,8 +10,8 @@ const STEP = 0.02;
 
 const clamp = (z: number) => Math.min(MAX, Math.max(MIN, z));
 
-function isPrintPreviewUrl(): boolean {
-  const sp = new URLSearchParams(window.location.search);
+/** `?print=1` (ou `?print`) → aperçu taille réelle ; sinon plein écran. */
+function isPrintParam(sp: URLSearchParams): boolean {
   return sp.has('print') && ['', '1', 'true'].includes(sp.get('print') ?? '');
 }
 
@@ -18,18 +19,20 @@ function isPrintPreviewUrl(): boolean {
  * Curseur de zoom du CV court (écran uniquement). Pilote `--cv-zoom` →
  * `.cv-short-page { zoom }`. Visible sur la vue normale ET l'aperçu `?print=1`.
  *
- * Le MODE fixe la taille au chargement (aucune valeur persistée qui baverait d'un
- * mode à l'autre) :
+ * Le MODE fixe la taille, réappliqué à CHAQUE changement de `?print` (le clic sur
+ * l'œil fait une navigation soft → `useSearchParams` rerend, pas besoin de recharger) :
  *  - vue normale `/fr/short` → **plein écran** (ajusté à la largeur dispo) ;
  *  - aperçu `?print=1`       → **largeur réelle d'un CV** (zoom 1, ~800px = A4).
- * Le curseur permet un ajustement ponctuel en cours de session (non persisté : un
- * rechargement revient à la taille naturelle du mode). Le bouton % réajuste.
+ * Aucune valeur persistée (pas de localStorage qui baverait d'un mode à l'autre).
+ * Le curseur permet un ajustement ponctuel en cours de session. Le bouton % réajuste.
  *
  * Le PDF n'est JAMAIS affecté : `@media print` remet `zoom: 1`, et le curseur est
  * `print:hidden`. Rendu HORS du document zoomé → il ne se zoome pas lui-même.
  */
 export default function CvZoomSlider() {
   const [zoom, setZoom] = useState(1);
+  const searchParams = useSearchParams();
+  const printMode = isPrintParam(new URLSearchParams(searchParams.toString()));
 
   const apply = useCallback((z: number) => {
     const v = clamp(z);
@@ -44,11 +47,10 @@ export default function CvZoomSlider() {
   }, []);
 
   useEffect(() => {
-    // Le mode pilote la taille au chargement — pas de localStorage (qui faisait
-    // que `?print=1` réutilisait une valeur « plein écran » au lieu de réduire à
-    // la largeur d'un CV).
-    apply(isPrintPreviewUrl() ? 1 : fitToWidth());
-  }, [apply, fitToWidth]);
+    // Réappliqué à CHAQUE changement de `?print` (printMode en dépendance) → le
+    // clic sur l'œil rebascule la taille sans recharger. Pas de localStorage.
+    apply(printMode ? 1 : fitToWidth());
+  }, [apply, fitToWidth, printMode]);
 
   return (
     <div

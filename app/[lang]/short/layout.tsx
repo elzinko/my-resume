@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import CvZoomSlider from '@/components/CvZoomSlider';
 
 /**
@@ -20,8 +20,11 @@ export default function ShortCvLayout({
     // l'aperçu `?print=1` (fidèle au PDF). Le zoom (CvZoomSlider) gère la taille.
     <div className="cv-print-preview">
       <div className="cv-short-page mx-auto max-w-[800px]">{children}</div>
-      {/* Curseur de zoom (hors du document zoomé → ne se zoome pas lui-même). */}
-      <CvZoomSlider />
+      {/* Curseur de zoom (hors du document zoomé → ne se zoome pas lui-même).
+          Suspense requis : CvZoomSlider lit useSearchParams (réagit à ?print). */}
+      <Suspense fallback={null}>
+        <CvZoomSlider />
+      </Suspense>
     </div>
   );
 }
