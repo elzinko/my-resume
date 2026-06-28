@@ -1013,7 +1013,9 @@ html {
   font-size: 0.625rem !important; /* 10px */
 }
 .cv-print-preview .cv-short-page .cv-pill-domain {
-  padding: 0.125rem 0.375rem !important; /* print:py-0.5 px-1.5 (resserré) */
+  padding: 0.125rem 0.25rem !important; /* px resserré 4px (vs 6) → marge pour que
+                                           Ops (5 tags dont kubernetes/terraform)
+                                           tienne sur 1 ligne (cf. print:px-1). */
 }
 /* Gap des colonnes = valeur d'impression (sinon md:gap-x-10 2.5rem → colonnes
    plus étroites → les pills wrappent ; print:gap-x-4 = 1rem). */
