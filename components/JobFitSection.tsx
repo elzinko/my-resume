@@ -60,10 +60,15 @@ export default function JobFitSection({
   if (variant === 'compact') {
     return (
       <section id="job-fit" aria-label={sectionTitle}>
-        {/* Pas de libellé ATS ici : colonne 1/3 trop étroite pour « Adéquation
-            poste » + « Job fit » sur une ligne. Le titre reste un `<h2 flex>`
+        {/* Libellé ATS « Job fit » comme les autres sections — masqué par défaut
+            (`.cv-ats-label`), affiché avec `?ats=1`. Le titre reste un `<h2 flex>`
             (composant) → même hauteur que les autres → filets alignés. */}
-        <SectionHeadingAts accent="orange" locale={lang} title={sectionTitle} />
+        <SectionHeadingAts
+          section="jobfit"
+          accent="orange"
+          locale={lang}
+          title={sectionTitle}
+        />
         <div className="cv-section-body-gap flex flex-wrap items-center gap-1.5 print:gap-1">
           {showEducationLevel && (
             <Pill color="match" compact>

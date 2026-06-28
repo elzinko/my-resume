@@ -58,8 +58,10 @@ interface SectionHeadingAtsProps {
  * - Couleur du titre + filet atténué pilotés par `accent` (source unique).
  * - Sur `/en` (ou sans `section`), rend simplement `<h2>{title}</h2>` stylé.
  * - Sur `/fr`, ajoute l'équivalent ATS anglais canonique reconnu par les parseurs,
- *   **uniquement à l'impression** (`hidden print:inline`) : présent dans la couche
- *   texte du PDF pour les ATS, mais SANS doublon visible à l'écran pour un humain.
+ *   dans un `<span class="cv-ats-label">` **masqué par défaut** (web ET PDF) et
+ *   affiché uniquement avec `?ats=1` (classe racine `.cv-show-ats`, cf.
+ *   `AtsLabelsEffect`). Suppression PROPRE en `display:none` — surtout pas la
+ *   version « invisible mais présente » (texte caché = red flag ATS).
  *   Texte réel sans letter-spacing (sinon « E D U C… » à l'extraction).
  */
 export default function SectionHeadingAts({
@@ -88,7 +90,7 @@ export default function SectionHeadingAts({
     >
       <span className="min-w-0">{title}</span>
       {ats ? (
-        <span className="hidden shrink-0 whitespace-nowrap text-[0.5em] font-normal leading-none opacity-60 print-preview:inline print:inline">
+        <span className="cv-ats-label shrink-0 whitespace-nowrap text-[0.5em] font-normal leading-none opacity-60">
           {ats}
         </span>
       ) : null}

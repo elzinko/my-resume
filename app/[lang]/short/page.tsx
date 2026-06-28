@@ -12,6 +12,7 @@ import { getEducationLevelContent } from '@/lib/education-level-content';
 import formatDates, { computeAge } from '@/lib/date';
 import ShortPageWrapper from '@/components/ShortPageWrapper';
 import FullCvPrintPreviewEffect from '@/components/FullCvPrintPreviewEffect';
+import AtsLabelsEffect from '@/components/AtsLabelsEffect';
 import ShortAutoprint from '@/components/ShortAutoprint';
 import {
   resolveAboutText,
@@ -173,6 +174,7 @@ export default async function ShortPage({
     <>
       <Suspense fallback={null}>
         <FullCvPrintPreviewEffect />
+        <AtsLabelsEffect />
       </Suspense>
       <ShortPageWrapper
         lang={lang}

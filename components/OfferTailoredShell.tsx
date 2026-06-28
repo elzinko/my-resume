@@ -9,6 +9,7 @@ import Jobs from '@/app/[lang]/jobs';
 import Projects from '@/app/[lang]/projects';
 import JobFitSection from '@/components/JobFitSection';
 import FullCvPrintPreviewEffect from '@/components/FullCvPrintPreviewEffect';
+import AtsLabelsEffect from '@/components/AtsLabelsEffect';
 import ContactLocationProvider from '@/components/ContactLocationProvider';
 import JobFrameworkDisplayProvider from '@/components/JobFrameworkDisplayProvider';
 import { buildContactLocationHref } from '@/lib/contact-maps';
@@ -89,6 +90,7 @@ export default function OfferTailoredShell({
         <div className="cv-offer-tailored-shell">
           <Suspense fallback={null}>
             <FullCvPrintPreviewEffect />
+            <AtsLabelsEffect />
           </Suspense>
           {/* @ts-expect-error Server Component */}
           <Headers

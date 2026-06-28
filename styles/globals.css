@@ -52,6 +52,17 @@
   }
 }
 
+/* Libellés ATS anglais (« Summary », « Work Experience », « Job fit »…) : masqués
+   par DÉFAUT (web ET PDF). Affichés uniquement avec `?ats=1` → `.cv-show-ats` posé
+   sur <html> (cf. AtsLabelsEffect), pour cibler un ATS anglo-saxon. Suppression en
+   display:none (pas « invisible mais présent » = red flag ATS). */
+.cv-ats-label {
+  display: none;
+}
+.cv-show-ats .cv-ats-label {
+  display: inline;
+}
+
 /* CV complet : à l'ÉCRAN aussi, le rythme suit les valeurs d'impression (même
    densité que le PDF), comme `.cv-short-page`. Sans ça, le web du complet hérite
    du défaut :root (gap inter-sections 1.5rem, body-gap 1rem) alors que
