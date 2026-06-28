@@ -16,19 +16,20 @@ function isPrintPreviewUrl(): boolean {
 }
 
 /**
- * Zoom du CV court (écran uniquement). Pilote `--cv-zoom` → `.cv-short-page { zoom }`.
+ * Curseur de zoom du CV court (écran uniquement). Pilote `--cv-zoom` →
+ * `.cv-short-page { zoom }`. Visible sur la vue normale ET l'aperçu `?print=1`.
  *
- *  - Vue normale (`/fr/short`) : curseur visible. Défaut = **ajusté à la largeur**
- *    de l'écran (plein écran) ; valeur ajustée persistée (localStorage).
- *  - Aperçu (`?print=1`) : **taille réelle** (zoom 1), curseur masqué — c'est la
- *    feuille A4 à sa taille. (Le PDF lui-même n'est JAMAIS affecté : `@media print`
- *    remet `zoom: 1`, et le curseur est `print:hidden`.)
+ * Défaut (si l'utilisateur n'a rien calé) :
+ *  - vue normale `/fr/short` → **ajusté à la largeur** de l'écran (plein largeur) ;
+ *  - aperçu `?print=1`       → **taille réelle** (zoom 1, feuille A4).
+ * Une fois le curseur bougé, la valeur est persistée (localStorage) et s'applique
+ * aux deux vues. Le bouton % réajuste à la largeur.
  *
- * Le curseur est rendu HORS du document zoomé → il ne se zoome pas lui-même.
+ * Le PDF n'est JAMAIS affecté : `@media print` remet `zoom: 1`, et le curseur est
+ * `print:hidden`. Rendu HORS du document zoomé → il ne se zoome pas lui-même.
  */
 export default function CvZoomSlider() {
   const [zoom, setZoom] = useState(1);
-  const [preview, setPreview] = useState(false);
 
   const apply = useCallback((z: number, persist = true) => {
     const v = clamp(z);
@@ -44,21 +45,15 @@ export default function CvZoomSlider() {
   }, []);
 
   useEffect(() => {
-    if (isPrintPreviewUrl()) {
-      setPreview(true);
-      apply(1, false); // aperçu = taille réelle
-      return;
-    }
-    setPreview(false);
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw != null && Number.isFinite(parseFloat(raw))) {
       apply(parseFloat(raw), false); // valeur calée par l'utilisateur
+    } else if (isPrintPreviewUrl()) {
+      apply(1, false); // aperçu → taille réelle
     } else {
-      apply(fitToWidth(), false); // défaut = plein largeur
+      apply(fitToWidth(), false); // normal → plein largeur
     }
   }, [apply, fitToWidth]);
-
-  if (preview) return null;
 
   return (
     <div
