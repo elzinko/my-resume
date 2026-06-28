@@ -962,6 +962,23 @@ html {
   line-height: 1.375 !important;
 }
 
+/* Short print-preview : CORPS de texte aux tailles d'IMPRESSION (les utilitaires
+   Tailwind `print:` ne s'appliquent pas en aperçu → sinon l'aperçu montre 14px
+   alors que le PDF fait 10px). Scopé `.cv-print-preview` → vue normale intacte. */
+.cv-print-preview .cv-short-page .cv-job-description {
+  font-size: 0.625rem !important; /* 10px */
+  line-height: 1.35 !important;
+}
+.cv-print-preview .cv-short-page .cv-experience-footer p {
+  font-size: 0.5625rem !important; /* 9px */
+}
+.cv-print-preview .cv-short-page .cv-page-split .cv-row-with-side-meta {
+  font-size: 0.5rem !important; /* 8px — rôle / lieu / dates */
+}
+.cv-print-preview .cv-short-page .cv-page-split .cv-row-with-side-meta .font-bold {
+  font-size: 0.625rem !important; /* 10px — client (gras) */
+}
+
 .cv-print-preview .cv-short-page #education-level .cv-education-level-blocks {
   margin-top: 0.5rem !important;
   gap: 0.5rem !important;
