@@ -36,8 +36,9 @@ import {
 const rowListClass = 'flex flex-nowrap items-center gap-0.5 [&>li]:shrink-0';
 
 /**
- * Affiche le lien d’aperçu impression : `next dev`, ou `next start` sur localhost,
- * ou si `NEXT_PUBLIC_SHOW_PRINT_PREVIEW=true` (ex. test depuis une IP LAN).
+ * Affiche le lien d’aperçu impression : `next dev`, **preview Vercel** (review par
+ * PR), `next start` sur localhost, ou si `NEXT_PUBLIC_SHOW_PRINT_PREVIEW=true` (ex.
+ * test depuis une IP LAN). Jamais en production.
  */
 function useCvPrintPreviewToggleVisible(): boolean {
   const fromNodeEnv = isCvPrintLayoutToolbarEnabled();
