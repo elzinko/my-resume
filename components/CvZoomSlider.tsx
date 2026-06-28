@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useState } from 'react';
 
-const STORAGE_KEY = 'cv-zoom';
 const DOC_WIDTH = 800; // largeur naturelle du document court (px)
 const MIN = 0.5;
 const MAX = 2.5;
@@ -19,11 +18,12 @@ function isPrintPreviewUrl(): boolean {
  * Curseur de zoom du CV court (écran uniquement). Pilote `--cv-zoom` →
  * `.cv-short-page { zoom }`. Visible sur la vue normale ET l'aperçu `?print=1`.
  *
- * Défaut (si l'utilisateur n'a rien calé) :
- *  - vue normale `/fr/short` → **ajusté à la largeur** de l'écran (plein largeur) ;
- *  - aperçu `?print=1`       → **taille réelle** (zoom 1, feuille A4).
- * Une fois le curseur bougé, la valeur est persistée (localStorage) et s'applique
- * aux deux vues. Le bouton % réajuste à la largeur.
+ * Le MODE fixe la taille au chargement (aucune valeur persistée qui baverait d'un
+ * mode à l'autre) :
+ *  - vue normale `/fr/short` → **plein écran** (ajusté à la largeur dispo) ;
+ *  - aperçu `?print=1`       → **largeur réelle d'un CV** (zoom 1, ~800px = A4).
+ * Le curseur permet un ajustement ponctuel en cours de session (non persisté : un
+ * rechargement revient à la taille naturelle du mode). Le bouton % réajuste.
  *
  * Le PDF n'est JAMAIS affecté : `@media print` remet `zoom: 1`, et le curseur est
  * `print:hidden`. Rendu HORS du document zoomé → il ne se zoome pas lui-même.
@@ -31,11 +31,10 @@ function isPrintPreviewUrl(): boolean {
 export default function CvZoomSlider() {
   const [zoom, setZoom] = useState(1);
 
-  const apply = useCallback((z: number, persist = true) => {
+  const apply = useCallback((z: number) => {
     const v = clamp(z);
     setZoom(v);
     document.documentElement.style.setProperty('--cv-zoom', String(v));
-    if (persist) localStorage.setItem(STORAGE_KEY, String(v));
   }, []);
 
   const fitToWidth = useCallback(() => {
@@ -45,14 +44,10 @@ export default function CvZoomSlider() {
   }, []);
 
   useEffect(() => {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw != null && Number.isFinite(parseFloat(raw))) {
-      apply(parseFloat(raw), false); // valeur calée par l'utilisateur
-    } else if (isPrintPreviewUrl()) {
-      apply(1, false); // aperçu → taille réelle
-    } else {
-      apply(fitToWidth(), false); // normal → plein largeur
-    }
+    // Le mode pilote la taille au chargement — pas de localStorage (qui faisait
+    // que `?print=1` réutilisait une valeur « plein écran » au lieu de réduire à
+    // la largeur d'un CV).
+    apply(isPrintPreviewUrl() ? 1 : fitToWidth());
   }, [apply, fitToWidth]);
 
   return (
