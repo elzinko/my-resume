@@ -513,8 +513,11 @@ html {
 
   /* ================================================================
    * === SHORT CV — ajustements print (A4 portrait ~794px) =========
-   * Une seule zone pour tout le comportement print du CV court.
-   * Modifier ici ET NULLE PART AILLEURS pour le rendu imprimé du short.
+   * Zone principale du print du CV court. ⚠️ Certaines valeurs (ex.
+   * `column-gap` des grilles ci-dessous) sont AUSSI surchargées sous
+   * `.cv-print-preview` (appliqué en PERMANENCE sur /short via le layout) :
+   * cette surcharge gagne par spécificité, y compris en PDF réel. Donc si
+   * un réglage d'ici « ne prend pas », vérifier le bloc `.cv-print-preview`.
    * ================================================================ */
   @page short {
     size: A4;
@@ -1001,7 +1004,11 @@ html {
 .cv-print-preview .cv-short-page .cv-page-split .cv-row-with-side-meta {
   font-size: 0.5rem !important; /* 8px — rôle / lieu / dates */
 }
-.cv-print-preview .cv-short-page .cv-page-split .cv-row-with-side-meta .font-bold {
+.cv-print-preview
+  .cv-short-page
+  .cv-page-split
+  .cv-row-with-side-meta
+  .font-bold {
   font-size: 0.625rem !important; /* 10px — client (gras) */
 }
 /* Pills (domaines, compétences, adéquation, missions) aux tailles d'impression

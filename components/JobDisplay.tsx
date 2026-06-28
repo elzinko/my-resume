@@ -128,7 +128,11 @@ export default function JobDisplay({
           <span className="min-w-0 flex-1 truncate text-left">
             <span className="text-sm font-bold leading-tight text-cv-jobs print:text-[10px]">
               {job.clientUrl ? (
-                <a href={job.clientUrl} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={job.clientUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   {job.client}
                 </a>
               ) : (
@@ -141,7 +145,7 @@ export default function JobDisplay({
               </span>
             ) : null}
           </span>
-          <span className="min-w-max shrink-0 whitespace-nowrap text-right text-cv-meta font-normal leading-tight tabular-nums text-cv-jobs print:text-[8px]">
+          <span className="min-w-max shrink-0 whitespace-nowrap text-right text-cv-meta font-normal tabular-nums leading-tight text-cv-jobs print:text-[8px]">
             {job.location ? `${job.location} / ` : ''}
             {compactDateLine}
           </span>

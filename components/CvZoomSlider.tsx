@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { isCvPrintPreviewQuery } from '@/lib/cv-print-preview';
 
 const DOC_WIDTH = 800; // largeur naturelle du document court (px)
 const MIN = 0.5;
@@ -9,11 +10,6 @@ const MAX = 2.5;
 const STEP = 0.02;
 
 const clamp = (z: number) => Math.min(MAX, Math.max(MIN, z));
-
-/** `?print=1` (ou `?print`) → aperçu taille réelle ; sinon plein écran. */
-function isPrintParam(sp: URLSearchParams): boolean {
-  return sp.has('print') && ['', '1', 'true'].includes(sp.get('print') ?? '');
-}
 
 /**
  * Curseur de zoom du CV court (écran uniquement). Pilote `--cv-zoom` →
@@ -32,7 +28,9 @@ function isPrintParam(sp: URLSearchParams): boolean {
 export default function CvZoomSlider() {
   const [zoom, setZoom] = useState(1);
   const searchParams = useSearchParams();
-  const printMode = isPrintParam(new URLSearchParams(searchParams.toString()));
+  const printMode = isCvPrintPreviewQuery(
+    new URLSearchParams(searchParams.toString()),
+  );
 
   const apply = useCallback((z: number) => {
     const v = clamp(z);

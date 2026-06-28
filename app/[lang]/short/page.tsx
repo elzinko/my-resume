@@ -75,11 +75,16 @@ export default async function ShortPage({
       ? (data.header.photo as string)
       : undefined;
   // Âge : affiché par DÉFAUT (`?age=0` pour masquer) — indépendant des autres params, comme le CV complet.
-  const ageText =
+  // Garde le null de computeAge (birthDate malformé) → pas de « null ans » rendu (cf. header complet).
+  const ageValue =
     sp.get('age') !== '0' && typeof data?.header?.birthDate === 'string'
+      ? computeAge(data.header.birthDate)
+      : null;
+  const ageText =
+    ageValue != null
       ? lang === 'en'
-        ? `${computeAge(data.header.birthDate)} years old`
-        : `${computeAge(data.header.birthDate)} ans`
+        ? `${ageValue} years old`
+        : `${ageValue} ans`
       : undefined;
 
   const offer = resolveOfferFromUrlParams(sp, getMatchCatalog());
