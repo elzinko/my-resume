@@ -104,11 +104,12 @@ export default function Domain({
 }: DomainProps) {
   const accent = titleAccent ?? DOMAIN_TITLE_ACCENT_DEFAULT;
 
-  // CV court : domaines en SOUS-titres (text-lg) → ils se lisent comme une
-  // partie du Profil, pas comme des sections (text-2xl). Taille unique écran
-  // ET impression. CV complet : niveau section (text-2xl).
+  // CV court : domaines en SOUS-titres (text-base = 16px) → nettement plus petits
+  // que le titre de section « Summary » (text-2xl = 24px) pour une hiérarchie
+  // claire et garantie (classes statiques → 16 < 24 sur écran, aperçu ET print).
+  // CV complet : niveau section (text-2xl).
   const titleTypo = compact
-    ? 'text-lg font-semibold text-blue-400'
+    ? 'text-base font-semibold text-blue-400'
     : 'text-2xl font-semibold text-blue-400';
 
   const titleBlock =
@@ -136,12 +137,14 @@ export default function Domain({
       <p
         className={
           compact
-            ? // Corps = même taille que les descriptions d'Expérience
-              // (réutilise .cv-job-description, sans justifier). Pas de flex-1 :
-              // les pills collent à la description (pas d'alignement-bas qui
-              // creuse un trou dans les colonnes plus courtes).
+            ? // Court : PAS de flex-1 — les pills collent à la description pour ne
+              // pas creuser de trou (espace A4 compté sur une page).
               'cv-job-description mt-1 text-left'
-            : 'cv-job-description mt-4 text-left'
+            : // Complet : flex-1 → la description occupe la hauteur de la colonne
+              // (grille md:items-stretch / print:items-stretch) → les pastilles
+              // s'alignent EN BAS, identiques d'une colonne à l'autre quel que
+              // soit le volume de texte au-dessus.
+              'cv-job-description mt-4 flex-1 text-left'
         }
       >
         {domain.description}
