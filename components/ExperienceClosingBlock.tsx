@@ -5,6 +5,8 @@ export interface ExperienceClosingBlockProps {
   moreExperienceTail: string;
   /** Phrase optionnelle (ex. liste dynamique des missions hors CV court). */
   moreClientsLine?: string | null;
+  /** Lien inline optionnel (ex. « see full resume ») prolongeant le paragraphe — un seul bloc. */
+  inlineLink?: React.ReactNode;
 }
 
 /**
@@ -14,6 +16,7 @@ export default function ExperienceClosingBlock({
   moreExperience,
   moreExperienceTail,
   moreClientsLine,
+  inlineLink,
 }: ExperienceClosingBlockProps) {
   return (
     <div
@@ -24,6 +27,7 @@ export default function ExperienceClosingBlock({
         <strong className="text-cv-jobs">{moreExperience}</strong>{' '}
         {moreExperienceTail}
         {moreClientsLine ? <> {moreClientsLine}</> : null}
+        {inlineLink}
       </p>
     </div>
   );

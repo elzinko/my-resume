@@ -420,10 +420,12 @@ export default function CompactCvLayout({
               moreExperience={closing.moreExperience}
               moreExperienceTail={closing.moreExperienceTail}
               moreClientsLine={jobSections ? null : moreClientsLine}
+              inlineLink={
+                <Suspense fallback={null}>
+                  <ShortCvOnlineDetailLink lang={lang} inline />
+                </Suspense>
+              }
             />
-            <Suspense fallback={null}>
-              <ShortCvOnlineDetailLink lang={lang} />
-            </Suspense>
           </section>
         </div>
       </div>
