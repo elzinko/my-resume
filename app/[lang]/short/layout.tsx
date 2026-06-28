@@ -1,4 +1,5 @@
 import React from 'react';
+import CvZoomSlider from '@/components/CvZoomSlider';
 
 /**
  * Wrapper dédié au CV court : ciblage CSS print (`cv-short-page`, `@page short`)
@@ -14,5 +15,11 @@ export default function ShortCvLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div className="cv-short-page mx-auto max-w-[800px]">{children}</div>;
+  return (
+    <>
+      <div className="cv-short-page mx-auto max-w-[800px]">{children}</div>
+      {/* Curseur de zoom (hors du document zoomé → ne se zoome pas lui-même). */}
+      <CvZoomSlider />
+    </>
+  );
 }

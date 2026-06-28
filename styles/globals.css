@@ -43,6 +43,13 @@
 .cv-short-page {
   --cv-section-gap: 1.3rem;
   --cv-section-body-gap: 0.5rem;
+  /* Zoom manuel (curseur CvZoomSlider) — ÉCRAN uniquement, neutralisé en print. */
+  zoom: var(--cv-zoom, 1);
+}
+@media print {
+  .cv-short-page {
+    zoom: 1 !important;
+  }
 }
 
 /* CV complet : à l'ÉCRAN aussi, le rythme suit les valeurs d'impression (même
