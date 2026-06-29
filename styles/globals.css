@@ -123,8 +123,11 @@
    */
   .cv-full-cv-print-root {
     /* Même token que le CV court → rythme inter-sections identique écran ET
-       impression (web 1.5rem, print 1.3rem), au lieu d'un print:gap-3 codé en dur. */
-    @apply flex flex-col gap-[var(--cv-section-gap)] print:!mt-0 max-md:mt-20;
+       impression (web 1.5rem, print 1.3rem), au lieu d'un print:gap-3 codé en dur.
+       `md:mt-12` + `print:!mt-12` : espace header→Summary du CV COMPLET (desktop &
+       impression) pour remplir le haut de page 1 — scopé .cv-full-cv-print-root donc
+       SANS effet sur le court ni sur le mobile (max-md:mt-20 inchangé = clearance toolbar). */
+    @apply flex flex-col gap-[var(--cv-section-gap)] md:mt-12 print:!mt-12 max-md:mt-20;
   }
 
   .cv-full-cv-print-root > section,
