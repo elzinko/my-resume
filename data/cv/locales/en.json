@@ -16,7 +16,7 @@
   },
   "ui": {
     "skillsTitle": "Skills",
-    "studiesTitle": "Studies",
+    "studiesTitle": "Education",
     "jobsTitle": "Professional Experience",
     "projectsTitle": "Projects",
     "hobbiesTitle": "Hobbies",
@@ -55,47 +55,64 @@
     }
   },
   "jobs": {
-    "matiere-web": {
-      "location": "Melun, France",
-      "roleName": "Co-founder & Director",
+    "iut-vacations": {
+      "location": "Lieusaint (77) — Sénart campus",
+      "roleName": "Adjunct lecturer — 1st year",
       "description": "",
-      "descriptionShort": "Co-founder and director of the Matière Web agency: built the agency, led the team and drove client projects through to delivery.",
+      "descriptionShort": "Two consecutive years (2015-2016 and 2016-2017) teaching first-year IUT students on the web module, at the Sénart campus of IUT Sénart-Fontainebleau (UPEC).",
       "bullets": [
         {
-          "id": "job_matiere_web_en_b_found",
-          "text": "Founded and ran the web agency: vision, positioning and business development."
+          "id": "job_iut_vacations_en_b_modules",
+          "text": "Topics taught: HTML / CSS, JavaScript, DOM manipulation, web development fundamentals."
         },
         {
-          "id": "job_matiere_web_en_b_team",
-          "text": "Recruited and led the team: 2 partners and 2 consultants (design & development)."
+          "id": "job_iut_vacations_en_b_outils",
+          "text": "Developer tooling: editor, terminal, Git / GitLab, peer code reviews, team conventions."
         },
         {
-          "id": "job_matiere_web_en_b_delivery",
-          "text": "Owned client projects end to end: scoping, planning, client relationship and delivery."
+          "id": "job_iut_vacations_en_b_cicd",
+          "text": "Continuous integration & delivery: GitLab CI pipelines, quality (lint, tests), automated deployment."
         },
         {
-          "id": "job_matiere_web_en_b_quality",
-          "text": "Designed and shipped WordPress, Next.js/React and e-commerce websites."
+          "id": "job_iut_vacations_en_b_pedagogie",
+          "text": "Hands-on approach: red-thread projects, individual mentoring, deliverable-based grading."
+        }
+      ]
+    },
+    "cours-particuliers-2002-2006": {
+      "location": "Fontainebleau (77) — home",
+      "roleName": "Private tutor",
+      "description": "",
+      "descriptionShort": "Private tutoring in mathematics and physics for middle-school and high-school students, alongside my own studies.",
+      "bullets": [
+        {
+          "id": "job_cours_part_en_b_niveaux",
+          "text": "Levels: 6th grade through senior year, year-long follow-up."
+        },
+        {
+          "id": "job_cours_part_en_b_matieres",
+          "text": "Subjects: mathematics (algebra, geometry, calculus) and physics (mechanics, electricity)."
+        },
+        {
+          "id": "job_cours_part_en_b_approche",
+          "text": "Approach: gap diagnosis, reformulation, progressive exercises, exam preparation."
         }
       ]
     },
     "solopreneur": {
-      "location": "@home · home office",
-      "roleName": "Solopreneur · side projects",
+      "location": "Thomery (77)",
+      "roleName": "Product builder",
       "description": "",
-      "descriptionShort": "Building and shipping B2B and B2C digital products end to end—from ideation through production launch and operations.",
+      "descriptionShort": "Between assignments, I design and ship my own digital products end to end—a product R&D where I own both the engineering and the delivery.",
       "bullets": [
         {
-          "id": "job_solopreneur_en_b_multi",
-          "text": "multi.app — control softwares with midi, osc, webhooks by motion"
+          "id": "job_solopreneur_en_b_muti",
+          "text": "Muti — turns body motion into a MIDI / OSC / WebSocket controller.",
+          "link": "https://muti.app"
         },
         {
-          "id": "job_solopreneur_en_b_city",
-          "text": "City Guided — connected city guide."
-        },
-        {
-          "id": "job_solopreneur_en_b_next",
-          "text": "Up next: Shopify assistant, Livestreamz, Jober, Cop1, Realizator, Okascore, …"
+          "id": "job_solopreneur_en_b_livestreamz",
+          "text": "Livestreamz — turns a phone into a camera for reliable real-time streaming."
         }
       ]
     },
@@ -388,6 +405,30 @@
       "description": "Computer overhaul of the CFA management tool as part of my technological university degree",
       "descriptionShort": "CFA management tool overhaul",
       "bullets": []
+    },
+    "matiere-web": {
+      "location": "Melun, France",
+      "roleName": "Co-founder & Director",
+      "description": "",
+      "descriptionShort": "Co-founder and director of the Matière Web agency: built the agency, led the team and drove client projects through to delivery.",
+      "bullets": [
+        {
+          "id": "job_matiere_web_en_b_found",
+          "text": "Founded and ran the web agency: vision, positioning and business development."
+        },
+        {
+          "id": "job_matiere_web_en_b_team",
+          "text": "Recruited and led the team: 2 partners and 2 consultants (design & development)."
+        },
+        {
+          "id": "job_matiere_web_en_b_delivery",
+          "text": "Owned client projects end to end: scoping, planning, client relationship and delivery."
+        },
+        {
+          "id": "job_matiere_web_en_b_quality",
+          "text": "Designed and shipped WordPress, Next.js/React and e-commerce websites."
+        }
+      ]
     }
   },
   "studies": {
@@ -425,6 +466,10 @@
     }
   },
   "projects": {
+    "module-product-builder": {
+      "title": "Product Builder module — IUT proposal",
+      "description": "A first- or second-year module taking students through a full product cycle: ideation, framing, UI design, MVP development, production deployment and operations. The module embeds modern AI tools (prompt engineering, LLM agents, RAG, MCP) as realistic accelerators of the developer craft. Goal: graduates capable of shipping a digital product end to end, solo or in a team, with the quality and industrialization reflexes expected in industry."
+    },
     "cvproj-shopify-assistant": {
       "description": "AI chat to create Shopify products quickly and easily.",
       "title": "Shopify assistant"

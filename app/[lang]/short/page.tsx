@@ -9,9 +9,10 @@ import {
 } from '@/lib/sort-chronological';
 import CompactCvLayout, { CompactCvData } from '@/components/CompactCvLayout';
 import { getEducationLevelContent } from '@/lib/education-level-content';
-import formatDates from '@/lib/date';
+import formatDates, { computeAge } from '@/lib/date';
 import ShortPageWrapper from '@/components/ShortPageWrapper';
 import FullCvPrintPreviewEffect from '@/components/FullCvPrintPreviewEffect';
+import AtsLabelsEffect from '@/components/AtsLabelsEffect';
 import ShortAutoprint from '@/components/ShortAutoprint';
 import {
   resolveAboutText,
@@ -65,6 +66,31 @@ export default async function ShortPage({
       ? sp.get('subtitle_fr') || sp.get('subtitle')
       : sp.get('subtitle_en') || sp.get('subtitle')
     )?.trim() || undefined;
+  // Position du titre : à gauche par défaut, `?headerAlign=right` pour l'aligner à droite.
+  const headerAlign: 'left' | 'right' =
+    sp.get('headerAlign') === 'right' ? 'right' : 'left';
+  // Photo : affichée par défaut (`?photo=0` pour masquer), placée à l'opposé du titre.
+  const photoUrl =
+    sp.get('photo') !== '0' && typeof data?.header?.photo === 'string'
+      ? (data.header.photo as string)
+      : undefined;
+  // Âge : affiché par DÉFAUT (`?age=0` pour masquer) — indépendant des autres params, comme le CV complet.
+  // Garde le null de computeAge (birthDate malformé) → pas de « null ans » rendu (cf. header complet).
+  const ageValue =
+    sp.get('age') !== '0' && typeof data?.header?.birthDate === 'string'
+      ? computeAge(data.header.birthDate)
+      : null;
+  const ageText =
+    ageValue != null
+      ? lang === 'en'
+        ? `${ageValue} years old`
+        : `${ageValue} ans`
+      : undefined;
+
+  const offer = resolveOfferFromUrlParams(sp, getMatchCatalog());
+  const eduRaw = sp.get('edu')?.trim();
+  const showEducationLevel =
+    offer?.showEducation === true || eduRaw === '1' || eduRaw === 'true';
 
   // Missions mises en avant : l'ORDRE des `job=` (répétable) détermine l'ordre
   // d'affichage. À défaut, on retombe sur `highlightedJobs` du `spec` (même
@@ -113,7 +139,11 @@ export default async function ShortPage({
       competencies: d.competencies || [],
     })),
     jobs: (data?.allJobsModels || [])
-      .filter((j: { display?: boolean }) => j.display !== false)
+      .filter((j: { display?: boolean; displayMode?: string }) => {
+        if (j.display === false) return false;
+        if (j.displayMode) return false;
+        return true;
+      })
       .map((j: any) => {
         const dates = formatDates(j.startDate, j.endDate);
         const [start, end] = dates ? dates.split(' - ') : ['', ''];
@@ -146,7 +176,11 @@ export default async function ShortPage({
     projectsTitle: data?.projectsTitle?.title ?? 'Projects',
     projects: sortChronologicalDesc(
       (data?.allProjectsModels || []).filter(
-        (p: { display?: boolean }) => p.display !== false,
+        (p: { display?: boolean; displayMode?: string }) => {
+          if (p.display === false) return false;
+          if (p.displayMode) return false;
+          return true;
+        },
       ),
       byEndThenStart,
     ),
@@ -156,12 +190,16 @@ export default async function ShortPage({
     <>
       <Suspense fallback={null}>
         <FullCvPrintPreviewEffect />
+        <AtsLabelsEffect />
       </Suspense>
       <ShortPageWrapper
         lang={lang}
         headerName={data?.header?.name || ''}
         headerRole={subtitleOverride || data?.header?.role || ''}
         hideMalt={hideMalt}
+        align={headerAlign}
+        photoUrl={photoUrl}
+        ageText={ageText}
       >
         <Suspense fallback={null}>
           <ShortAutoprint />
@@ -170,6 +208,7 @@ export default async function ShortPage({
           data={compactData}
           lang={lang as 'fr' | 'en'}
           highlightedJobSlugs={highlightedJobSlugs}
+          showEducationLevel={showEducationLevel}
         />
       </ShortPageWrapper>
     </>

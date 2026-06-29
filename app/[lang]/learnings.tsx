@@ -26,7 +26,11 @@ export default async function learnings({
       data-cv-section="learnings"
       className={`cv-cq-section ${sectionClass}`}
     >
-      <LearningsDisplay title={data?.learningsTitle?.title} items={items} />
+      <LearningsDisplay
+        title={data?.learningsTitle?.title}
+        items={items}
+        locale={locale}
+      />
     </section>
   );
 }

@@ -88,7 +88,7 @@ export default function JobExperienceBody({
       {/* Écran large + impression : contenu selon le niveau de détail.
           La description longue + les puces sont dans `.cv-job-detail` :
           cible du bouton écran « Masquer les détails » (ignoré à l'impression). */}
-      <div className="hidden lg:block print:block">
+      <div className="hidden print:block lg:block">
         {showAccroche ? <p className={pClass}>{hookLine}</p> : null}
         {showDetails ? (
           <div className="cv-job-detail">
@@ -101,7 +101,7 @@ export default function JobExperienceBody({
       </div>
 
       {/* Mobile écran uniquement */}
-      <div className="lg:hidden print:hidden">
+      <div className="print:hidden lg:hidden">
         {detailLevel === 'minimal' ? null : detailLevel === 'summary' ? (
           showAccroche ? (
             <p className={`${pClass} mt-1`}>{hookLine}</p>

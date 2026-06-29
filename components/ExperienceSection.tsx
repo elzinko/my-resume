@@ -2,8 +2,12 @@
 
 import React, { useState } from 'react';
 import type { Locale } from 'i18n-config';
+import SectionHeadingAts from './SectionHeadingAts';
+import type { AtsSectionKey } from '@/lib/ats-labels';
 
 interface ExperienceSectionProps {
+  /** Clé de section ATS (libellé EN canonique bilingue dans le `<h2>`). */
+  section: AtsSectionKey;
   title: string;
   locale: Locale;
   /**
@@ -23,6 +27,7 @@ interface ExperienceSectionProps {
  * (PDF) ignore ce bouton et suit le paramètre `?detail=` (cf. styles/globals.css).
  */
 export default function ExperienceSection({
+  section,
   title,
   locale,
   canToggleDetails,
@@ -36,14 +41,21 @@ export default function ExperienceSection({
 
   return (
     <>
-      <div className="flex items-end justify-between gap-2 border-b pb-1 print:break-after-avoid">
-        <h2 className="min-w-0 text-2xl font-semibold text-cv-jobs">{title}</h2>
+      <div className="flex items-end justify-between gap-2 border-b border-cv-jobs/25 pb-1 print:break-after-avoid">
+        <SectionHeadingAts
+          section={section}
+          locale={locale}
+          title={title}
+          accent="pink"
+          withBorder={false}
+          className="min-w-0 flex-1"
+        />
         {canToggleDetails ? (
           <button
             type="button"
             onClick={() => setDetailsHidden((v) => !v)}
             aria-pressed={detailsHidden}
-            className="hidden shrink-0 self-center rounded border border-pink-300/40 px-2 py-0.5 text-xs font-medium text-cv-jobs transition-colors hover:bg-pink-300/10 lg:inline-flex print:!hidden"
+            className="hidden shrink-0 self-center rounded border border-pink-300/40 px-2 py-0.5 text-xs font-medium text-cv-jobs transition-colors hover:bg-pink-300/10 print:!hidden lg:inline-flex"
           >
             {detailsHidden ? labels.show : labels.hide}
           </button>

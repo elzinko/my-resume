@@ -28,7 +28,7 @@ export default function ShortHeaderJobFitPills({
   const listLabel =
     lang === 'en'
       ? 'Role fit at a glance, years of experience per requirement'
-      : 'Adequation poste (apercu), annees d\u2019experience par exigence';
+      : 'Adéquation poste (apercu), annees d\u2019experience par exigence';
 
   return (
     <div

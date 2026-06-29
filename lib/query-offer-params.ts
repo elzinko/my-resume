@@ -127,6 +127,9 @@ export function buildOfferFromQueryParams(
   const highlightedJobs =
     jobParams.length > 0 ? jobParams.slice(0, 24) : undefined;
 
+  const eduRaw = sp.get('edu')?.trim();
+  const showEducation = eduRaw === '1' || eduRaw === 'true';
+
   return enrichJobOfferRequirements(
     {
       id,
@@ -135,6 +138,7 @@ export function buildOfferFromQueryParams(
       requirements,
       contract,
       ...(highlightedJobs ? { highlightedJobs } : {}),
+      ...(showEducation ? { showEducation: true } : {}),
     },
     catalog,
   );

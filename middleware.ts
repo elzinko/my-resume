@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { NextRequest } from 'next/server';
 
 import { i18n } from './i18n-config';
+import { resolveShortLink } from './lib/short-links';
 
 import { match as matchLocale } from '@formatjs/intl-localematcher';
 import Negotiator from 'negotiator';
@@ -31,6 +32,15 @@ export function middleware(request: NextRequest) {
         status: 404,
       });
     }
+  }
+
+  // Liens courts « vanity » (ex. /resilience) → CV ciblé, avant la locale.
+  const shortLinkTarget = resolveShortLink(pathname);
+  if (shortLinkTarget) {
+    return NextResponse.redirect(
+      new URL(`${basePath}${shortLinkTarget}`, request.url),
+      307,
+    );
   }
 
   // Case where the user is accessing the root path

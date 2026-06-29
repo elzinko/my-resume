@@ -58,15 +58,18 @@ export function formatRemainingClientsForShortCv<T extends { client: string }>(
 }
 
 /**
- * CV complet : même jeu de noms que le CV court (missions hors fenêtre), reformulé pour une synthèse en bas de liste.
+ * CV complet avec `?maxJobShown=N` : synthèse des missions PLIÉES (au-delà du
+ * N-ième poste affiché). Liste TOUS les clients fournis — pas d'exclusion : ce
+ * sont des postes réellement repliés, on ne veut pas les faire disparaître.
  */
-export function formatRemainingClientsRecapForFullCv<
-  T extends { client: string },
->(allJobs: T[], locale: Locale): string | null {
-  const names = remainingClientNames(allJobs);
+export function formatFoldedClientsRecap<T extends { client: string }>(
+  foldedJobs: T[],
+  locale: Locale,
+): string | null {
+  const names = foldedJobs.map((j) => j.client.trim()).filter(Boolean);
   if (names.length === 0) return null;
   const joined = names.join(', ');
   return locale === 'fr'
-    ? `Les missions plus anciennes incluent notamment : ${joined}.`
-    : `Earlier roles include engagements with ${joined}.`;
+    ? `Anciens clients : ${joined}.`
+    : `Earlier clients: ${joined}.`;
 }

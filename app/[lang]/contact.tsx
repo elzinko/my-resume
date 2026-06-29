@@ -2,6 +2,7 @@ import { getCvData } from '@/lib/cv-data';
 import { Locale } from 'i18n-config';
 import React from 'react';
 import ContactDisplay from '@/components/ContactDisplay';
+import SectionHeadingAts from '@/components/SectionHeadingAts';
 
 export default async function Contact({
   locale,
@@ -36,9 +37,12 @@ export default async function Contact({
       id={sectionId === false ? undefined : sectionId}
       className={sectionClass}
     >
-      <h2 className="border-b pb-1 text-2xl font-semibold text-cv-jobs">
-        {contactData.title || 'Contact'}
-      </h2>
+      <SectionHeadingAts
+        section="contact"
+        locale={locale}
+        title={contactData.title || 'Contact'}
+        accent="pink"
+      />
       <ContactDisplay contact={contactData} locale={locale} />
     </section>
   );

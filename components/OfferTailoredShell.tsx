@@ -9,13 +9,16 @@ import Jobs from '@/app/[lang]/jobs';
 import Projects from '@/app/[lang]/projects';
 import JobFitSection from '@/components/JobFitSection';
 import FullCvPrintPreviewEffect from '@/components/FullCvPrintPreviewEffect';
+import AtsLabelsEffect from '@/components/AtsLabelsEffect';
 import ContactLocationProvider from '@/components/ContactLocationProvider';
 import JobFrameworkDisplayProvider from '@/components/JobFrameworkDisplayProvider';
 import { buildContactLocationHref } from '@/lib/contact-maps';
 import type { ContactLocationOverlay } from '@/lib/offer-contact-from-params';
 import type { EducationLevelContent } from '@/lib/education-level-content';
 import ContactDisplay from '@/components/ContactDisplay';
+import SectionHeadingAts from '@/components/SectionHeadingAts';
 import type { ContractType } from '@/data/offers/types';
+import type { CvMode } from '@/lib/cv-contract-text';
 import type { DetailLevel } from '@/lib/cv-detail-level';
 import type { Locale } from 'i18n-config';
 /**
@@ -32,10 +35,14 @@ export default function OfferTailoredShell({
   contactLocation,
   hideMalt,
   contract,
+  mode,
   subtitleOverride,
+  showEducationLevel = false,
   showPhoto = false,
   showAge = false,
+  headerAlign = 'left',
   detailLevel = 'full',
+  maxJobShown = null,
 }: {
   lang: Locale;
   educationLevel: EducationLevelContent;
@@ -53,14 +60,22 @@ export default function OfferTailoredShell({
   hideMalt?: boolean;
   /** Type de contrat : adapte les textes Profil et Domaines. */
   contract?: ContractType;
+  /** Mode CV (`teaching` pour la variante enseignement). Affiche les missions/projets `displayMode=mode` et utilise les textes `*Teaching`. */
+  mode?: CvMode;
   /** Surcharge du sous-titre (rôle) dans l'en-tête. */
   subtitleOverride?: string;
+  /** Affiche la pastille « Bac+5 / Master's-level » dans la section adéquation. */
+  showEducationLevel?: boolean;
   /** Afficher la photo de profil (param `?photo=1`). */
   showPhoto?: boolean;
   /** Afficher l'âge sous le rôle (param `?age=0` pour masquer). */
   showAge?: boolean;
+  /** Alignement du bloc titre (défaut `left` ; `?headerAlign=right`). */
+  headerAlign?: 'left' | 'right';
   /** Niveau de détail des expériences (param `?detail=`). */
   detailLevel?: DetailLevel;
+  /** Pagination : nb de postes affichés en entrée (`?maxJobShown=N`), reste plié au footer. */
+  maxJobShown?: number | null;
 }) {
   const resolvedContact: ContactLocationOverlay = contactLocation ?? {
     mapsHref: buildContactLocationHref(),
@@ -75,6 +90,7 @@ export default function OfferTailoredShell({
         <div className="cv-offer-tailored-shell">
           <Suspense fallback={null}>
             <FullCvPrintPreviewEffect />
+            <AtsLabelsEffect />
           </Suspense>
           {/* @ts-expect-error Server Component */}
           <Headers
@@ -84,18 +100,20 @@ export default function OfferTailoredShell({
             subtitleOverride={subtitleOverride}
             showPhoto={showPhoto}
             showAge={showAge}
+            align={headerAlign}
           />
 
           <div className="cv-full-cv-print-root">
-            <div className="mb-2 print-preview:order-[10] max-md:contents print:order-[10]">
+            <div className="mb-2 print-preview:order-[10] print:order-[10] max-md:contents">
               {/* @ts-expect-error Server Component */}
               <About
                 locale={lang}
                 educationLevel={educationLevel}
                 contract={contract}
+                mode={mode}
               />
               {/* @ts-expect-error Server Component */}
-              <Domains locale={lang} contract={contract} />
+              <Domains locale={lang} contract={contract} mode={mode} />
             </div>
             {/* Adéquation poste : niveau de formation + compétences techniques */}
             <Suspense fallback={null}>
@@ -103,16 +121,19 @@ export default function OfferTailoredShell({
                 lang={lang}
                 educationLevel={educationLevel}
                 variant="full"
+                showEducationLevel={showEducationLevel}
               />
             </Suspense>
             {/* Coordonnées : après Adéquation poste, même placement que le CV court. */}
             {headerContactStrip.email && (
               <section className="cv-mobile-section-mt print-preview:order-[30] print:order-[30] print:break-inside-avoid">
-                <div className="border-b pb-1">
-                  <h2 className="min-w-0 text-2xl font-semibold text-rose-300">
-                    {lang === 'fr' ? 'Coordonnées' : 'Contact'}
-                  </h2>
-                </div>
+                <SectionHeadingAts
+                  section="contact"
+                  locale={lang}
+                  title={lang === 'fr' ? 'Coordonnées' : 'Contact'}
+                  accent="emerald"
+                  className="min-w-0"
+                />
                 <ContactDisplay
                   contact={{
                     emailTitle: 'Email',
@@ -129,11 +150,16 @@ export default function OfferTailoredShell({
               </section>
             )}
             {/* @ts-expect-error Server Component */}
-            <Jobs locale={lang} detailLevel={detailLevel} />
+            <Jobs
+              locale={lang}
+              mode={mode}
+              detailLevel={detailLevel}
+              maxJobShown={maxJobShown}
+            />
             {/* @ts-expect-error Server Component */}
             <Studies locale={lang} />
             {/* @ts-expect-error Server Component */}
-            <Projects locale={lang} />
+            <Projects locale={lang} mode={mode} />
             {/* @ts-expect-error Server Component */}
             <Learnings locale={lang} />
             {/* @ts-expect-error Server Component */}

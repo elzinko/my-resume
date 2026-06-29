@@ -1,12 +1,19 @@
 /** Barre d’outils CV : boutons carrés compacts, repose lisible (pas « disabled »), survol en couleur. */
 
 /**
- * Bascule « aperçu impression » : réservé au dev local (pas les déploiements prod).
+ * Bascule « aperçu impression » : visible en dev local ET sur les déploiements de
+ * PREVIEW Vercel (review de chaque PR), mais JAMAIS en production. Vercel préfixe
+ * automatiquement la variable système pour le navigateur sur prod+preview :
+ * `NEXT_PUBLIC_VERCEL_ENV` vaut 'preview' sur un preview deploy, 'production' en
+ * prod (et est absente en local → c'est le check NODE_ENV/localhost qui prend le relais).
  * Préférer le hook {@link useCvPrintPreviewToggleVisible} côté client : il couvre aussi
  * `next start` sur localhost et `NEXT_PUBLIC_SHOW_PRINT_PREVIEW` (accès LAN, etc.).
  */
 export function isCvPrintLayoutToolbarEnabled(): boolean {
-  return process.env.NODE_ENV === 'development';
+  return (
+    process.env.NODE_ENV === 'development' ||
+    process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview'
+  );
 }
 
 const LOCAL_DEV_HOSTS = new Set(['localhost', '127.0.0.1', '[::1]']);
@@ -24,11 +31,16 @@ const iconShell = `inline-flex h-[var(--cv-toolbar-btn)] w-[var(--cv-toolbar-btn
 const iconHoverNeutral =
   'hover:border-slate-500/55 hover:bg-slate-50 hover:text-neutral-900';
 
+// Mobile : pas de survol → on applique la couleur « active » (de marque) PAR DÉFAUT
+// via `max-md:` (les icônes ne restent pas grises faute de hover).
+const iconMobileNeutral =
+  'max-md:border-slate-500/55 max-md:bg-slate-50 max-md:text-neutral-900';
+
 export const cvHeaderIconBtn = {
-  linkedin: `${iconShell} hover:border-[#0A66C2]/45 hover:bg-[#0A66C2]/8 hover:text-[#0A66C2]`,
-  github: `${iconShell} ${iconHoverNeutral}`,
-  malt: `${iconShell} group hover:border-slate-500/55 hover:bg-slate-50`,
-  print: `${iconShell} ${iconHoverNeutral}`,
+  linkedin: `${iconShell} hover:border-[#0A66C2]/45 hover:bg-[#0A66C2]/8 hover:text-[#0A66C2] max-md:border-[#0A66C2]/45 max-md:bg-[#0A66C2]/8 max-md:text-[#0A66C2]`,
+  github: `${iconShell} ${iconHoverNeutral} ${iconMobileNeutral}`,
+  malt: `${iconShell} group hover:border-slate-500/55 hover:bg-slate-50 max-md:border-slate-500/55 max-md:bg-slate-50`,
+  print: `${iconShell} ${iconHoverNeutral} ${iconMobileNeutral}`,
 } as const;
 
 /** Bascule version CV — même hauteur que les icônes. */

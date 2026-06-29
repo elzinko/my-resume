@@ -10,6 +10,7 @@ import JobFitSection from './JobFitSection';
 import ExperienceClosingBlock from './ExperienceClosingBlock';
 import ShortCvOnlineDetailLink from './ShortCvOnlineDetailLink';
 import Project from './Project';
+import SectionHeadingAts from './SectionHeadingAts';
 import type { EducationLevelContent } from '@/lib/education-level-content';
 import {
   formatRemainingClientsForShortCv,
@@ -82,6 +83,8 @@ interface CompactCvLayoutProps {
   lang: 'fr' | 'en';
   /** Slugs de missions à mettre en avant (ex. "jpb-systeme"). Vide = comportement chrono par défaut. */
   highlightedJobSlugs?: string[];
+  /** Affiche la pastille « Bac+5 / Master's-level » dans la section adéquation. Opt-in via `?edu=1`. */
+  showEducationLevel?: boolean;
   /** Emplacement réservé pour extensions — non utilisé par défaut. */
   children?: React.ReactNode;
 }
@@ -90,6 +93,7 @@ export default function CompactCvLayout({
   data,
   lang,
   highlightedJobSlugs,
+  showEducationLevel = false,
   children,
 }: CompactCvLayoutProps) {
   // Fallback labels if bundle.json titles are empty
@@ -109,7 +113,7 @@ export default function CompactCvLayout({
       education: 'Education',
       expertise: 'Domains',
       about: 'Profile',
-      present: 'Now',
+      present: 'Present',
       otherExperience: 'Other experience',
     },
   };
@@ -157,19 +161,39 @@ export default function CompactCvLayout({
         .slice(0, SHORT_CV_MAX_JOBS);
 
   return (
-    <div className="cv-layout-short">
+    <div className="cv-layout-short flex flex-col gap-[var(--cv-section-gap)]">
       {/* About - Full width section (same style as full CV) */}
-      <section id="cv-short-about" className="cv-short-about mb-1 mt-4 pb-1">
-        <div className="border-b pb-1">
-          <h2 className="min-w-0 text-2xl font-semibold text-cv-section">
-            {t.about}
-          </h2>
-        </div>
-        <p className="mt-4 text-cv-body-muted">{data.about}</p>
+      <section
+        id="cv-short-about"
+        className="cv-short-about mt-[var(--cv-section-gap)]"
+      >
+        <SectionHeadingAts
+          section="about"
+          locale={lang}
+          title={t.about}
+          accent="blue"
+          className="min-w-0"
+        />
+        <p className="cv-section-body-gap cv-job-description text-left">
+          {data.about}
+        </p>
       </section>
 
-      {/* Domains - Full width (même grille 1/3 que le CV complet) */}
-      <section id="domains" className="mt-2">
+      {/* Domains — sous-partie du Profil : on ANNULE le flex-gap inter-section
+          (--cv-section-gap) pour que l'écart intro→domaines soit porté par le
+          SEUL body-gap du wrapper Domain (= filet→intro). Rythme uniforme. */}
+      <section id="domains" className="mt-[calc(var(--cv-section-gap)*-1)]">
+        {/* Ancre « Compétences / Skills » réservée à l'impression (anchor ATS au
+            dessus des compétences) ; masquée à l'écran. */}
+        <div className="mb-2 hidden">
+          <SectionHeadingAts
+            section="skills"
+            locale={lang}
+            title={t.skills}
+            accent="tag"
+            className="min-w-0"
+          />
+        </div>
         <div className="cv-domains-grid">
           {data.domains.map((domain) => (
             <Domain
@@ -185,21 +209,25 @@ export default function CompactCvLayout({
       {children}
 
       {/* Mobile-only : Adéquation poste + Coordonnées, hors grille, avant Expérience. */}
-      <div className="mt-6 space-y-6 md:hidden print:hidden">
+      <div className="space-y-[var(--cv-section-gap)] print:hidden md:hidden">
         <Suspense fallback={null}>
           <JobFitSection
             lang={lang}
             educationLevel={data.educationLevel}
             variant="compact"
+            showEducationLevel={showEducationLevel}
           />
         </Suspense>
         <section>
-          <div className="border-b pb-1">
-            <h2 className="min-w-0 text-2xl font-semibold text-rose-300">
-              {data.titles.contact ||
-                (lang === 'fr' ? 'Coordonnées' : 'Contact')}
-            </h2>
-          </div>
+          <SectionHeadingAts
+            section="contact"
+            locale={lang}
+            title={
+              data.titles.contact || (lang === 'fr' ? 'Coordonnées' : 'Contact')
+            }
+            accent="emerald"
+            className="min-w-0"
+          />
           <ContactDisplay
             contact={data.contact}
             cvShortInlineRows
@@ -211,18 +239,19 @@ export default function CompactCvLayout({
       </div>
 
       {/* Colonne gauche 1/3 + expériences 2/3 (grille alignée sur les domaines) */}
-      <div className="cv-page-split mt-8">
+      <div className="cv-page-split">
         <div
           id="left"
-          className="order-last flex w-full min-w-0 flex-col md:order-first md:col-span-1 print:order-first print:col-span-1"
+          className="order-last flex w-full min-w-0 flex-col gap-[var(--cv-section-gap)] print:order-first print:col-span-1 md:order-first md:col-span-1"
         >
           {/* Adéquation poste : masqué en mobile (dupliqué hors grille). */}
-          <div className="hidden md:block print:block">
+          <div className="hidden print:block md:block">
             <Suspense fallback={null}>
               <JobFitSection
                 lang={lang}
                 educationLevel={data.educationLevel}
                 variant="compact"
+                showEducationLevel={showEducationLevel}
               />
             </Suspense>
           </div>
@@ -230,14 +259,18 @@ export default function CompactCvLayout({
           {/* Coordonnées (label : valeur) dans la colonne gauche — masqué en mobile (dupliqué hors grille). */}
           <section
             id="cv-short-contact"
-            className="mb-6 hidden md:block print:block"
+            className="hidden print:block md:block"
           >
-            <div className="border-b pb-1">
-              <h2 className="min-w-0 text-2xl font-semibold text-rose-300">
-                {data.titles.contact ||
-                  (lang === 'fr' ? 'Coordonnées' : 'Contact')}
-              </h2>
-            </div>
+            <SectionHeadingAts
+              section="contact"
+              locale={lang}
+              title={
+                data.titles.contact ||
+                (lang === 'fr' ? 'Coordonnées' : 'Contact')
+              }
+              accent="emerald"
+              className="min-w-0"
+            />
             <ContactDisplay
               contact={data.contact}
               cvShortInlineRows
@@ -248,7 +281,7 @@ export default function CompactCvLayout({
           </section>
 
           {/* Skills — masqué pour le moment (écran + impression). */}
-          <section className="cv-short-skills-block mb-6 hidden">
+          <section className="cv-short-skills-block hidden">
             <h2 className="border-b pb-1 text-2xl font-semibold text-cv-tag-text">
               {t.skills}
             </h2>
@@ -262,10 +295,13 @@ export default function CompactCvLayout({
           </section>
 
           {/* Études sans détail (établissement masqué) — même titre que le CV long (#studies). */}
-          <section id="studies" className="cv-short-studies-section mb-6">
-            <h2 className="border-b pb-1 text-2xl font-semibold text-purple-300">
-              {t.education}
-            </h2>
+          <section id="studies" className="cv-short-studies-section">
+            <SectionHeadingAts
+              section="studies"
+              locale={lang}
+              title={t.education}
+              accent="purple"
+            />
             <ul className="cv-section-simple-list">
               {data.studies.map((study) => (
                 <StudyDisplay
@@ -279,10 +315,13 @@ export default function CompactCvLayout({
           </section>
 
           {/* Projets : même structure flex que les études (compact). */}
-          <section id="projects" data-cv-section="projects" className="mb-6">
-            <h2 className="border-b pb-1 text-2xl font-semibold text-cv-tag-text">
-              {data.projectsTitle}
-            </h2>
+          <section id="projects" data-cv-section="projects">
+            <SectionHeadingAts
+              section="projects"
+              locale={lang}
+              title={data.projectsTitle}
+              accent="tag"
+            />
             <ul className="cv-section-simple-list">
               {data.projects.map((project: any) => (
                 <li key={project.id}>
@@ -295,13 +334,16 @@ export default function CompactCvLayout({
 
         <div
           id="main"
-          className="w-full min-w-0 md:col-span-2 print:col-span-2"
+          className="w-full min-w-0 print:col-span-2 md:col-span-2"
         >
           {/* Experience - Reusing JobDisplay component */}
           <section>
-            <h2 className="border-b pb-1 text-2xl font-semibold text-cv-jobs">
-              {t.experience}
-            </h2>
+            <SectionHeadingAts
+              section="jobs"
+              locale={lang}
+              title={t.experience}
+              accent="pink"
+            />
 
             {jobSections ? (
               /* ── Mode mis-en-avant : missions détaillées dans l'ordre fourni ── */
@@ -321,7 +363,7 @@ export default function CompactCvLayout({
                 {otherJobs.length > 0 ? (
                   /* ── « Autres expériences » : reste compressé (client · rôle · période) ── */
                   <div className="mt-6">
-                    <h3 className="border-b pb-1 text-base font-semibold text-cv-jobs print:text-[10px]">
+                    <h3 className="border-b border-cv-jobs/25 pb-1 text-base font-semibold text-cv-jobs print:text-[10px]">
                       {t.otherExperience}
                     </h3>
                     <ul className="mt-2 space-y-1">
@@ -378,10 +420,12 @@ export default function CompactCvLayout({
               moreExperience={closing.moreExperience}
               moreExperienceTail={closing.moreExperienceTail}
               moreClientsLine={jobSections ? null : moreClientsLine}
+              inlineLink={
+                <Suspense fallback={null}>
+                  <ShortCvOnlineDetailLink lang={lang} inline />
+                </Suspense>
+              }
             />
-            <Suspense fallback={null}>
-              <ShortCvOnlineDetailLink lang={lang} />
-            </Suspense>
           </section>
         </div>
       </div>

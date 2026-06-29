@@ -42,6 +42,8 @@ export interface ExperienceJob {
   startDate: string;
   endDate?: string;
   display?: boolean;
+  /** Restrict visibility to a specific CV mode (e.g. `teaching`). Absent ⇒ visible in all modes. */
+  displayMode?: string;
   roleId: string;
   frameworks: string[];
 }
@@ -63,6 +65,8 @@ export interface ExperienceProject {
   bullets: Array<{ id: string; text: string; link?: string }>;
   tags: Array<{ id: string; name: string }>;
   display?: boolean;
+  /** Restrict visibility to a specific CV mode (e.g. `teaching`). Absent ⇒ visible in all modes. */
+  displayMode?: string;
 }
 
 export interface ExperienceHobby {
@@ -94,7 +98,12 @@ export interface LocaleBundle {
     emailTitle: string;
     locationTitle: string;
   };
-  about: { title: string; text: string; textCdi: string };
+  about: {
+    title: string;
+    text: string;
+    textCdi: string;
+    textTeaching?: string;
+  };
   ui: {
     skillsTitle: string;
     studiesTitle: string;
@@ -110,7 +119,14 @@ export interface LocaleBundle {
     locale: string;
     seo: { description: string; title: string };
   };
-  domains: Record<string, { description: string; descriptionCdi: string }>;
+  domains: Record<
+    string,
+    {
+      description: string;
+      descriptionCdi: string;
+      descriptionTeaching?: string;
+    }
+  >;
   jobs: Record<
     string,
     {
@@ -133,6 +149,12 @@ export interface CvSources {
   techCatalog: TechCatalog;
   experience: Experience;
   locale: LocaleBundle;
+  /**
+   * Locale anglaise optionnelle, fournie sur le rendu `/fr` uniquement, pour
+   * exposer l'intitulé de poste anglais (`role.nameEn`) en complément ATS
+   * discret. Absente sur `/en` (l'intitulé `role.name` y est déjà anglais).
+   */
+  localeEn?: LocaleBundle;
 }
 
 /**
@@ -143,7 +165,7 @@ export interface CvSources {
  */
 export function composeCvSnapshot(
   lang: Locale,
-  { profile, techCatalog, experience, locale }: CvSources,
+  { profile, techCatalog, experience, locale, localeEn }: CvSources,
 ): Record<string, unknown> {
   const entryById = new Map<string, TechCatalogEntry>(
     techCatalog.entries.map((e) => [e.id, e]),
@@ -166,6 +188,7 @@ export function composeCvSnapshot(
     name: d.name,
     description: locale.domains[d.id].description,
     descriptionCdi: locale.domains[d.id].descriptionCdi,
+    descriptionTeaching: locale.domains[d.id].descriptionTeaching,
     position: d.position,
     competencies: d.competencyIds.map(resolveTechNoLink),
   }));
@@ -178,6 +201,7 @@ export function composeCvSnapshot(
     const out: Record<string, unknown> = {};
     out.slug = ej.slug;
     if (ej.display !== undefined) out.display = ej.display;
+    if (ej.displayMode !== undefined) out.displayMode = ej.displayMode;
     out.client = ej.client;
     if (ej.clientUrl !== undefined) out.clientUrl = ej.clientUrl;
     out.location = lj.location;
@@ -186,7 +210,10 @@ export function composeCvSnapshot(
     out.description = lj.description;
     out.bullets = lj.bullets;
     out.frameworks = fwIds.map(resolveTechNoLink);
-    out.role = { id: ej.roleId, name: lj.roleName };
+    const roleNameEn = localeEn?.jobs[ej.slug]?.roleName;
+    out.role = roleNameEn
+      ? { id: ej.roleId, name: lj.roleName, nameEn: roleNameEn }
+      : { id: ej.roleId, name: lj.roleName };
     out.descriptionShort = lj.descriptionShort;
     return out;
   });
@@ -210,6 +237,7 @@ export function composeCvSnapshot(
     const out: Record<string, unknown> = {};
     out.id = ep.id;
     if (ep.display !== undefined) out.display = ep.display;
+    if (ep.displayMode !== undefined) out.displayMode = ep.displayMode;
     out.name = ep.name;
     if (lp.title !== undefined) out.title = lp.title;
     if (ep.link !== undefined) out.link = ep.link;

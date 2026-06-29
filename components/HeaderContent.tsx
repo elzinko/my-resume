@@ -13,6 +13,12 @@ interface HeaderContentProps {
   photoUrl?: string;
   /** Texte d'âge déjà localisé (ex. « 46 ans »). Si absent : non affiché. */
   ageText?: string;
+  /**
+   * Alignement du bloc titre (nom / rôle / âge). Défaut `left` sur TOUTES les vues
+   * (court / complet / impression) ; `right` = aligné à droite en desktop/print
+   * (param `?headerAlign=right`). La barre décorative reste toujours à droite.
+   */
+  align?: 'left' | 'right';
 }
 
 /**
@@ -37,21 +43,36 @@ export default function HeaderContent({
   belowRole,
   photoUrl,
   ageText,
+  align = 'left',
 }: HeaderContentProps) {
+  // Rythme vertical UNIFORME entre les 3 lignes (nom → rôle → âge) : la MÊME
+  // classe pilote rôle ET âge, donc nom→rôle == rôle→âge partout.
+  // CV court (compactPrint) = document A4 : on N'utilise PAS de bump `md:`
+  // (qui grossit le web mais saute à l'impression, où Chrome évalue les
+  // media-queries sous 768px) → le web rend EXACTEMENT les tailles du PDF.
+  // CV complet : conserve son rythme web responsive (mt-1 md:mt-2).
+  const lineGap = compactPrint ? 'mt-2' : 'mt-1 md:mt-2';
   return (
     <div
-      className={`header-content pb-0 pt-2 max-md:pt-0 md:py-12 ${
-        compactPrint ? 'print:py-8' : 'print:!py-2'
+      className={`header-content ${
+        compactPrint
+          ? // A4 : tailles internes = PDF, mais à l'ÉCRAN on garde de l'air au-
+            // dessus (entre la barre d'outils et le nom). À l'impression, pas de
+            // barre d'outils → pt-0 (la marge @page suffit). pb fixe = PDF.
+            'pb-8 pt-8 print:pt-0'
+          : 'pb-0 pt-2 print:!py-2 max-md:pt-0 md:py-12'
       }`}
     >
       <div className="flex w-full items-stretch gap-4 print:gap-4 md:gap-6">
-        {/* Bloc gauche : photo. Dès `md:`, MÊME largeur que le bloc droit
-            (`md:flex-1`) et avatar centré verticalement (`md:items-center`).
-            Sur mobile, largeur intrinsèque + avatar aligné en HAUT (`items-start`)
-            sur le haut du nom, car le bloc texte y est plus haut (lignes wrappées).
-            Avatar collé à gauche. */}
+        {/* Bloc photo — placé à l'OPPOSÉ du titre : titre à gauche → photo à droite,
+            titre à droite (`?headerAlign=right`) → photo à gauche (`order-first`).
+            Dès `md:`, même largeur que le bloc texte (`md:flex-1`), avatar centré. */}
         {photoUrl ? (
-          <div className="flex items-start md:flex-1 md:items-center">
+          <div
+            className={`flex ${
+              compactPrint ? 'items-center' : 'items-start md:items-center'
+            } ${align === 'right' ? 'order-first' : ''}`}
+          >
             {/*
               MASQUE CIRCULAIRE AJUSTABLE.
               Pour recadrer la photo DANS le cercle sans retoucher le fichier,
@@ -63,7 +84,14 @@ export default function HeaderContent({
             <div
               className={`overflow-hidden rounded-full border-2 border-blue-400/40 [--avatar-x:50%] [--avatar-y:50%] [--avatar-zoom:1] ${
                 compactPrint
-                  ? 'h-16 w-16 print:h-16 print:w-16'
+                  ? // A4 : si l'âge est présent, la photo est sensiblement plus
+                    // haute (≈ hauteur du bloc nom+rôle+âge) pour « prendre en
+                    // compte » l'âge ; sinon elle ne couvre que 2 lignes. Taille
+                    // FIXE (pas de stretch → pas de dépendance circulaire avec la
+                    // largeur du texte). Centrée verticalement (items-center).
+                    ageText
+                    ? 'h-[72px] w-[72px]'
+                    : 'h-16 w-16'
                   : 'h-20 w-20 print:h-28 print:w-28 md:h-28 md:w-28 lg:h-36 lg:w-36'
               }`}
             >
@@ -79,42 +107,57 @@ export default function HeaderContent({
 
         {/* Bloc droit : nom + rôle + âge + coordonnées, alignés à droite.
             `flex-1` → même largeur que le bloc photo (ou toute la largeur sans photo). */}
-        <div className="flex flex-1 flex-col items-end text-right">
+        <div
+          className={`flex flex-1 flex-col items-start text-left ${
+            align === 'left' ? 'order-first' : ''
+          } ${align === 'right' ? 'md:items-end md:text-right' : ''}`}
+        >
           <h1
-            className={`font-extrabold leading-tight text-blue-400 ${
+            data-cv-id="fullname"
+            className={`font-extrabold leading-tight text-[#4e94f8] ${
               compactPrint
-                ? 'text-3xl print:text-3xl print:leading-tight md:text-5xl md:leading-none lg:text-7xl'
+                ? // A4 : taille fixe = PDF (text-3xl, 30px). Aucun bump md: qui
+                  // grossirait le web. leading-none → écart visuel = la marge
+                  // (rythme identique entre les 3 lignes). `!` pour battre le
+                  // leading-tight de base partagé avec le CV complet.
+                  'text-3xl !leading-none'
                 : photoUrl
                 ? // Avec la photo, dès md: le bloc droit ne fait que la moitié de la
                   // largeur : tailles réduites + nowrap (md+) pour 1 ligne. Sur mobile,
                   // le texte peut wrapper (sinon il déborde de l'écran).
-                  'text-3xl print:text-5xl print:leading-none md:whitespace-nowrap md:text-4xl md:leading-none lg:text-6xl'
-                : 'text-3xl print:text-7xl print:leading-none md:text-5xl md:leading-none lg:text-7xl'
+                  'text-3xl print:text-4xl print:leading-none md:whitespace-nowrap md:text-4xl md:leading-none lg:text-6xl'
+                : 'text-3xl print:text-5xl print:leading-none md:text-5xl md:leading-none lg:text-7xl'
             }`}
           >
             {name}
           </h1>
           <p
-            className={`mt-1 text-lg leading-snug text-cv-section md:mt-3 md:leading-normal ${
-              photoUrl ? 'md:text-2xl' : 'md:text-3xl'
-            } ${
+            data-cv-id="title"
+            className={
               compactPrint
-                ? 'print:mt-0.5 print:text-base print:leading-snug'
-                : photoUrl
-                ? // Bloc droit à 50 % : rôle nowrap + un cran plus petit pour tenir sur 1 ligne en PDF.
-                  'print:mt-2 print:whitespace-nowrap print:text-2xl print:leading-normal'
-                : 'print:mt-3 print:text-3xl print:leading-normal'
-            }`}
+                ? // A4 : taille fixe = PDF (text-base, 16px), pas de bump md:.
+                  `${lineGap} text-base leading-none text-[#fca658]`
+                : `${lineGap} text-lg leading-snug text-[#fca658] md:leading-normal ${
+                    photoUrl ? 'md:text-2xl' : 'md:text-3xl'
+                  } ${
+                    photoUrl
+                      ? // Bloc droit à 50 % : rôle nowrap + un cran plus petit pour tenir sur 1 ligne en PDF.
+                        'print:whitespace-nowrap print:text-xl print:leading-normal'
+                      : 'print:text-2xl print:leading-normal'
+                  }`
+            }
           >
             {role}
           </p>
           {ageText ? (
             <p
-              className={`mt-1 text-base leading-snug text-gray-400 md:mt-2 md:text-xl ${
+              data-cv-id="age"
+              className={
                 compactPrint
-                  ? 'print:mt-0 print:text-xs'
-                  : 'print:mt-1 print:text-lg'
-              }`}
+                  ? // A4 : taille fixe = PDF (text-xs, 12px), pas de bump md:.
+                    `${lineGap} text-xs leading-none text-[#22c68d]`
+                  : `${lineGap} text-base leading-snug text-[#22c68d] print:text-base md:text-xl`
+              }
             >
               {ageText}
             </p>
@@ -125,12 +168,6 @@ export default function HeaderContent({
             </div>
           ) : null}
         </div>
-
-        {/* Barre verticale décorative */}
-        <div
-          className="w-1 shrink-0 self-stretch rounded-full bg-gradient-to-b from-blue-400/40 to-teal-300/25 print:w-1 md:w-1.5"
-          aria-hidden
-        />
       </div>
     </div>
   );

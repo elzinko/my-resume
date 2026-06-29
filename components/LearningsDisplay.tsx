@@ -2,7 +2,9 @@
 
 import React from 'react';
 import CustomLink from '@/components/CustomLink';
+import SectionHeadingAts from '@/components/SectionHeadingAts';
 import { learningLinkLabel } from '@/lib/learning-label';
+import type { Locale } from 'i18n-config';
 
 export interface LearningItem {
   id: string;
@@ -14,17 +16,22 @@ export interface LearningItem {
 interface LearningsDisplayProps {
   title: string;
   items: LearningItem[];
+  locale?: Locale;
 }
 
 export default function LearningsDisplay({
   title,
   items,
+  locale = 'fr',
 }: LearningsDisplayProps) {
   return (
     <>
-      <h2 className="border-b pb-1 text-2xl font-semibold text-teal-300">
-        {title}
-      </h2>
+      <SectionHeadingAts
+        section="learnings"
+        locale={locale}
+        title={title}
+        accent="teal"
+      />
       <ul className="cv-section-simple-list cv-cq-link-list max-md:mt-6">
         {items.map((learning) => (
           <li className="text-teal-300" key={learning.id}>
