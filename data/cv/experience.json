@@ -208,22 +208,6 @@
       "endDate": "2020-12-02"
     },
     {
-      "slug": "matiere-web",
-      "client": "Matière Web",
-      "startDate": "2020-06-01",
-      "roleId": "role-matiere-web",
-      "frameworks": [
-        "90902399",
-        "90902400",
-        "81826170",
-        "82456019",
-        "82456012",
-        "81826186"
-      ],
-      "clientUrl": "https://matiere-web.com/",
-      "endDate": "2025-09-30"
-    },
-    {
       "slug": "ecocea",
       "client": "Ecocea",
       "startDate": "2019-10-01",

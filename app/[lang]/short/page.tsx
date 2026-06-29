@@ -92,23 +92,13 @@ export default async function ShortPage({
   const showEducationLevel =
     offer?.showEducation === true || eduRaw === '1' || eduRaw === 'true';
 
-  // Missions mises en avant : l'ORDRE des `job=` (répétable) détermine l'ordre
-  // d'affichage. À défaut, on retombe sur `highlightedJobs` du `spec` (même
-  // sémantique d'ordre). Sans aucun des deux → comportement chrono par défaut.
+  // Missions mises en avant par le LLM (param `job`, répétable)
   const jobParam = searchParams?.job;
-  const jobParamSlugs = jobParam
+  const highlightedJobSlugs: string[] | undefined = jobParam
     ? (Array.isArray(jobParam) ? jobParam : [jobParam])
         .map((s) => s.trim())
         .filter(Boolean)
-    : [];
-  const specHighlightedJobs =
-    resolveOfferFromUrlParams(sp, getMatchCatalog())?.highlightedJobs ?? [];
-  const highlightedJobSlugs: string[] | undefined =
-    jobParamSlugs.length > 0
-      ? jobParamSlugs
-      : specHighlightedJobs.length > 0
-      ? specHighlightedJobs
-      : undefined;
+    : undefined;
 
   const compactData: CompactCvData = {
     header: {
@@ -148,7 +138,6 @@ export default async function ShortPage({
         const dates = formatDates(j.startDate, j.endDate);
         const [start, end] = dates ? dates.split(' - ') : ['', ''];
         return {
-          slug: j.slug,
           client: j.client,
           clientUrl: j.clientUrl,
           role: j.role?.name || '',
