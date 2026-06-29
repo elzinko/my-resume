@@ -103,10 +103,39 @@ export function jobMatchesRequirement(
   return false;
 }
 
-function computeYears(startDate: string, endDate?: string): number {
-  const start = new Date(startDate);
-  const end = endDate ? new Date(endDate) : new Date();
-  return (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24 * 365.25);
+/**
+ * Années cumulées = UNION des intervalles [début, fin] des missions (PAS la somme
+ * des durées) → des missions qui SE RECOUPENT (jobs concurrents : solopreneur +
+ * une mission client en parallèle, etc.) ne comptent pas deux fois le même temps
+ * calendaire. On veut « N années d'expérience avec X » au sens du temps réel
+ * écoulé, sans jamais dépasser la durée de carrière.
+ */
+function unionYears(
+  intervals: Array<{ startDate: string; endDate?: string }>,
+): number {
+  const spans = intervals
+    .map((i) => ({
+      start: new Date(i.startDate).getTime(),
+      end: (i.endDate ? new Date(i.endDate) : new Date()).getTime(),
+    }))
+    .filter((s) => Number.isFinite(s.start) && Number.isFinite(s.end) && s.end >= s.start)
+    .sort((a, b) => a.start - b.start);
+  if (spans.length === 0) return 0;
+  let totalMs = 0;
+  let curStart = spans[0].start;
+  let curEnd = spans[0].end;
+  for (let k = 1; k < spans.length; k++) {
+    const s = spans[k];
+    if (s.start <= curEnd) {
+      if (s.end > curEnd) curEnd = s.end; // chevauchement → on étend
+    } else {
+      totalMs += curEnd - curStart; // intervalle disjoint → on clôt
+      curStart = s.start;
+      curEnd = s.end;
+    }
+  }
+  totalMs += curEnd - curStart;
+  return totalMs / (1000 * 60 * 60 * 24 * 365.25);
 }
 
 function deduplicateClients(
@@ -175,10 +204,9 @@ export function buildMatchEntries(
     }
 
     const deduplicated = deduplicateClients(matched);
-    const computedYears = deduplicated.reduce(
-      (sum, m) => sum + computeYears(m.startDate, m.endDate),
-      0,
-    );
+    // Années = UNION des intervalles bruts des missions matchées (dé-chevauchées),
+    // pas la somme par client → pas de double-comptage des périodes concurrentes.
+    const computedYears = unionYears(matched);
 
     const override = req.experienceYearsOverride;
     const useOverride = hasValidExperienceOverride(override);
