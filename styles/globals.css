@@ -798,8 +798,12 @@ html {
     text-decoration: none !important;
   }
 
-  /* « Voir le CV complet en ligne » : conserver la couleur du lien. */
-  .cv-short-full-cv-hint a {
+  /* « Voir le CV complet en ligne » : conserver la couleur rose (= couleur du bloc)
+     + soulignement à l'impression, sinon la règle `a { color: inherit }` ci-dessus
+     le rend en texte gris fin. Couvre le bloc encadré ET le lien INLINE du pied
+     d'expérience (`.cv-experience-footer`, depuis la fusion du pied). */
+  .cv-short-full-cv-hint a,
+  .cv-experience-footer a {
     @apply !text-cv-jobs;
     text-decoration: underline !important;
     text-decoration-color: rgb(249 168 212 / 0.5) !important; /* pink-300/50 */
