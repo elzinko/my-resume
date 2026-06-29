@@ -471,7 +471,11 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* PAS de `scroll-behavior: smooth` ici : sur iOS / iPadOS Safari il entre en
+     conflit avec le défilement à inertie (momentum) et empêche d'atteindre le
+     bas de page en tactile (le scroll s'arrête à des hauteurs variables selon le
+     modèle). Le CV n'a pas de navigation par ancres → smooth-scroll inutile.
+     Scroll natif partout (desktop molette/clic OK, tablette/mobile tactile OK). */
   font-family: 'Raleway', sans-serif;
 }
 
