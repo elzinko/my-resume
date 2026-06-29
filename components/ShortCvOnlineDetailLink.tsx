@@ -47,13 +47,18 @@ export default function ShortCvOnlineDetailLink({
   );
 
   // Inline : prolonge le paragraphe du pied (un seul bloc → gagne de la place).
+  // CTA « voir le CV complet » légèrement plus grand que le reste du pied (em →
+  // relatif : +15 % en vue normale 12px, en aperçu 9px ET en PDF 9px) pour qu'on
+  // le remarque, sans régression sur la vue web normale.
   if (inline) {
     return (
       <>
         {' '}
-        {t.before}
-        {link}
-        {t.after}
+        <span className="text-[1.15em]">
+          {t.before}
+          {link}
+          {t.after}
+        </span>
       </>
     );
   }
