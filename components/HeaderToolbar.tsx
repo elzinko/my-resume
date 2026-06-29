@@ -402,14 +402,11 @@ export default function HeaderToolbar({
                 : 'pointer-events-none max-w-0 opacity-0')
             }
           >
-            <Suspense fallback={null}>
-              <ModeControl shortLang={shortLang} onNavigate={close} />
-            </Suspense>
-            {showPrintPreviewToggle && (
-              <Suspense fallback={null}>
-                <PrintPreviewToggleLink onNavigate={close} />
-              </Suspense>
-            )}
+            {/* Mobile : on masque le toggle short/full, l'aperçu impression (œil) et
+                le zoom (cf. CvZoomSlider). La vue mobile est un reflow de lecture, pas
+                l'atelier A4 → reste langues (à gauche) + réseaux + impression.
+                Impression mobile = CV complet A4 dans la langue courante (le court
+                reste une fonctionnalité desktop). */}
             <ToolbarIconList
               onNavigate={close}
               listClassName={rowListClass}
