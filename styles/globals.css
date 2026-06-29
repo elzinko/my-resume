@@ -43,8 +43,15 @@
 .cv-short-page {
   --cv-section-gap: 1.3rem;
   --cv-section-body-gap: 0.5rem;
-  /* Zoom manuel (curseur CvZoomSlider) — ÉCRAN uniquement, neutralisé en print. */
-  zoom: var(--cv-zoom, 1);
+}
+/* Zoom manuel (curseur CvZoomSlider) — ÉCRAN + DESKTOP uniquement, restreint au
+   POINTEUR FIN (souris). Sur tactile (iPad/tablette/téléphone = pointer:coarse) on
+   ne pose PAS `zoom` : la propriété CSS `zoom` casse le scroll iOS/Safari (bas
+   inatteignable). Sans elle, le court s'affiche à 100% et scrolle nativement. */
+@media (pointer: fine) {
+  .cv-short-page {
+    zoom: var(--cv-zoom, 1);
+  }
 }
 @media print {
   .cv-short-page {
@@ -54,10 +61,18 @@
 
 /* Barre d'outils : annule le zoom du parent .cv-short-page → taille constante
    quel que soit le curseur / le mode (short plein-largeur vs aperçu A4). Scopé à
-   .cv-short-page pour ne pas affecter la barre du CV complet (pas de zoom là-bas).
+   .cv-short-page + pointeur fin (même condition que le zoom ci-dessus).
    Print : la barre est `print:hidden`, donc rien à neutraliser pour le PDF. */
-.cv-short-page .cv-toolbar-noscale {
-  zoom: calc(1 / var(--cv-zoom, 1));
+@media (pointer: fine) {
+  .cv-short-page .cv-toolbar-noscale {
+    zoom: calc(1 / var(--cv-zoom, 1));
+  }
+}
+/* Tactile : pas de zoom du court → le curseur de zoom n'a plus d'utilité, on le masque. */
+@media (pointer: coarse) {
+  [data-testid='cv-zoom-slider'] {
+    display: none !important;
+  }
 }
 
 /* Libellés ATS anglais (« Summary », « Work Experience », « Job fit »…) : masqués
