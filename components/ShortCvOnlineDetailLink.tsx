@@ -19,7 +19,7 @@ const COPY = {
 } as const;
 
 function linkClassName(): string {
-  return 'font-medium text-cv-jobs underline decoration-pink-300/50 underline-offset-[3px] transition-colors hover:decoration-pink-200/80';
+  return 'font-semibold text-cv-jobs underline decoration-pink-300/50 underline-offset-[3px] transition-colors hover:decoration-pink-200/80';
 }
 
 /** Lien vers le CV long sous la section expériences (CV court). */

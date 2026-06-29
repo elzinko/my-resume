@@ -137,13 +137,13 @@ export default function Domain({
       <p
         className={
           compact
-            ? // Court : PAS de flex-1 — les pills collent à la description pour ne
-              // pas creuser de trou (espace A4 compté sur une page).
-              'cv-job-description mt-1 text-left'
+            ? // Court : flex-1 AUSSI → pastilles alignées EN BAS des 3 colonnes
+              // (Agile/Dev/Ops) même si un bloc a moins de texte (ex. Dev). Pas de
+              // surcoût de hauteur (colonnes déjà à hauteur égale via items-stretch) :
+              // le gap éventuel passe AU-DESSUS des pastilles.
+              'cv-job-description mt-1 flex-1 text-left'
             : // Complet : flex-1 → la description occupe la hauteur de la colonne
-              // (grille md:items-stretch / print:items-stretch) → les pastilles
-              // s'alignent EN BAS, identiques d'une colonne à l'autre quel que
-              // soit le volume de texte au-dessus.
+              // (grille md:items-stretch / print:items-stretch) → pastilles alignées EN BAS.
               'cv-job-description mt-4 flex-1 text-left'
         }
       >
