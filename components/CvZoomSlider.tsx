@@ -5,6 +5,10 @@ import { useSearchParams } from 'next/navigation';
 import { isCvPrintPreviewQuery } from '@/lib/cv-print-preview';
 
 const DOC_WIDTH = 800; // largeur naturelle du document court (px)
+/** Zoom par défaut de la vue normale : affiche le CV court à ~21cm (taille A4 réelle)
+ *  sur l'écran de l'auteur. Calibré empiriquement → propre à cet écran ; le curseur
+ *  (et le bouton %) permettent d'ajuster sur d'autres écrans. */
+const SCREEN_A4_ZOOM = 0.82;
 const MIN = 0.5;
 const MAX = 2.5;
 const STEP = 0.02;
@@ -17,8 +21,8 @@ const clamp = (z: number) => Math.min(MAX, Math.max(MIN, z));
  *
  * Le MODE fixe la taille, réappliqué à CHAQUE changement de `?print` (le clic sur
  * l'œil fait une navigation soft → `useSearchParams` rerend, pas besoin de recharger) :
- *  - vue normale `/fr/short` → **plein écran** (ajusté à la largeur dispo) ;
- *  - aperçu `?print=1`       → **largeur réelle d'un CV** (zoom 1, ~800px = A4).
+ *  - vue normale `/fr/short` → **~21cm (A4 réelle)** sur l'écran de l'auteur (SCREEN_A4_ZOOM) ;
+ *  - aperçu `?print=1`       → **largeur CV brute** (zoom 1, ~800px).
  * Aucune valeur persistée (pas de localStorage qui baverait d'un mode à l'autre).
  * Le curseur permet un ajustement ponctuel en cours de session. Le bouton % réajuste.
  *
@@ -45,10 +49,12 @@ export default function CvZoomSlider() {
   }, []);
 
   useEffect(() => {
-    // Réappliqué à CHAQUE changement de `?print` (printMode en dépendance) → le
-    // clic sur l'œil rebascule la taille sans recharger. Pas de localStorage.
-    apply(printMode ? 1 : fitToWidth());
-  }, [apply, fitToWidth, printMode]);
+    // Réappliqué à CHAQUE changement de `?print` (printMode en dépendance) → le clic
+    // sur l'œil rebascule la taille sans recharger. Pas de localStorage.
+    //  - aperçu ?print=1 → zoom 1 (largeur CV « brute » 800px, référence) ;
+    //  - vue normale     → SCREEN_A4_ZOOM (≈ 21cm A4 réelle sur l'écran de l'auteur).
+    apply(printMode ? 1 : SCREEN_A4_ZOOM);
+  }, [apply, printMode]);
 
   return (
     <div
