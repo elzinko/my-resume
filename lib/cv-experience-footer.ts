@@ -53,8 +53,8 @@ export function formatRemainingClientsForShortCv<T extends { client: string }>(
   if (names.length === 0) return null;
   const joined = names.join(', ');
   return locale === 'fr'
-    ? `Autres clients : ${joined}…`
-    : `Other clients include ${joined}…`;
+    ? `Autres clients : ${joined}.`
+    : `Other clients include ${joined}.`;
 }
 
 /**
