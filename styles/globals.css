@@ -44,34 +44,15 @@
   --cv-section-gap: 1.3rem;
   --cv-section-body-gap: 0.5rem;
 }
-/* Zoom manuel (curseur CvZoomSlider) — ÉCRAN + DESKTOP uniquement, restreint au
-   POINTEUR FIN (souris). Sur tactile (iPad/tablette/téléphone = pointer:coarse) on
-   ne pose PAS `zoom` : la propriété CSS `zoom` casse le scroll iOS/Safari (bas
-   inatteignable). Sans elle, le court s'affiche à 100% et scrolle nativement. */
-@media (pointer: fine) {
-  .cv-short-page {
-    zoom: var(--cv-zoom, 1);
-  }
-}
+/* ÉCRAN : AUCUNE transformation sur .cv-short-page → taille réelle (100%) + scroll
+   NATIF partout. (On a retiré le `zoom` écran : la propriété CSS `zoom` casse le
+   scroll iOS/Safari — bas inatteignable — sur iPad ET desktop Safari.)
+   IMPRESSION : on réduit le court à 90% pour GARANTIR 1 page A4 quel que soit le
+   navigateur et les marges (le contenu, surtout avec l'adéquation poste, frôle la
+   limite A4 → débordait sur une 2ᵉ page). Vérifié : 1 page à 1mm ET 10mm de marge. */
 @media print {
   .cv-short-page {
-    zoom: 1 !important;
-  }
-}
-
-/* Barre d'outils : annule le zoom du parent .cv-short-page → taille constante
-   quel que soit le curseur / le mode (short plein-largeur vs aperçu A4). Scopé à
-   .cv-short-page + pointeur fin (même condition que le zoom ci-dessus).
-   Print : la barre est `print:hidden`, donc rien à neutraliser pour le PDF. */
-@media (pointer: fine) {
-  .cv-short-page .cv-toolbar-noscale {
-    zoom: calc(1 / var(--cv-zoom, 1));
-  }
-}
-/* Tactile : pas de zoom du court → le curseur de zoom n'a plus d'utilité, on le masque. */
-@media (pointer: coarse) {
-  [data-testid='cv-zoom-slider'] {
-    display: none !important;
+    zoom: 0.9;
   }
 }
 

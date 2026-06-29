@@ -1,5 +1,4 @@
-import React, { Suspense } from 'react';
-import CvZoomSlider from '@/components/CvZoomSlider';
+import React from 'react';
 
 /**
  * Wrapper dédié au CV court : ciblage CSS print (`cv-short-page`, `@page short`)
@@ -17,14 +16,10 @@ export default function ShortCvLayout({
 }) {
   return (
     // `cv-print-preview` en PERMANENCE sur le court → la vue normale rend comme
-    // l'aperçu `?print=1` (fidèle au PDF). Le zoom (CvZoomSlider) gère la taille.
+    // l'aperçu `?print=1` (fidèle au PDF). Taille réelle (100%) + scroll natif à
+    // l'écran ; réduit à 90% à l'impression (cf. @media print) pour tenir sur 1 page.
     <div className="cv-print-preview">
       <div className="cv-short-page mx-auto max-w-[800px]">{children}</div>
-      {/* Curseur de zoom (hors du document zoomé → ne se zoome pas lui-même).
-          Suspense requis : CvZoomSlider lit useSearchParams (réagit à ?print). */}
-      <Suspense fallback={null}>
-        <CvZoomSlider />
-      </Suspense>
     </div>
   );
 }
