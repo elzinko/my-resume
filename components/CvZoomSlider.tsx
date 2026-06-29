@@ -1,13 +1,12 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
-import { isCvPrintPreviewQuery } from '@/lib/cv-print-preview';
 
-const DOC_WIDTH = 800; // largeur naturelle du document court (px)
-/** Zoom de l'APERÇU print (`?print=1`) par défaut : 100 % (1:1 CSS px). Le curseur et le
- *  bouton % permettent d'ajuster ponctuellement ; plancher MIN volontairement à 75 %. */
-const PRINT_PREVIEW_ZOOM = 1;
+/** Zoom par défaut du CV court à l'ÉCRAN : 100 % (1:1 CSS px), identique en vue
+ *  normale ET en aperçu print. Le curseur ajuste ; le bouton % réinitialise à 100 %.
+ *  Plancher volontairement à 75 %. (Plus de « plein écran » auto : on veut la taille
+ *  réelle par défaut, pas un zoom dépendant de la largeur d'écran.) */
+const DEFAULT_ZOOM = 1;
 const MIN = 0.75;
 const MAX = 2.5;
 const STEP = 0.02;
@@ -18,22 +17,14 @@ const clamp = (z: number) => Math.min(MAX, Math.max(MIN, z));
  * Curseur de zoom du CV court (écran uniquement). Pilote `--cv-zoom` →
  * `.cv-short-page { zoom }`. Visible sur DESKTOP (≥ md) uniquement — masqué sur mobile.
  *
- * Le MODE fixe la taille, réappliqué à CHAQUE changement de `?print` (le clic sur
- * l'œil fait une navigation soft → `useSearchParams` rerend, pas besoin de recharger) :
- *  - vue normale `/fr/short` → **plein écran** (ajusté à la largeur dispo) ;
- *  - aperçu `?print=1`       → **100 %** (1:1, PRINT_PREVIEW_ZOOM).
- * Aucune valeur persistée (pas de localStorage qui baverait d'un mode à l'autre).
- * Le curseur permet un ajustement ponctuel en cours de session. Le bouton % réajuste.
+ * Défaut = **100 %** (1:1), identique vue normale et aperçu print. Le curseur permet
+ * un ajustement ponctuel ; le bouton % réinitialise à 100 %. Aucune valeur persistée.
  *
  * Le PDF n'est JAMAIS affecté : `@media print` remet `zoom: 1`, et le curseur est
  * `print:hidden`. Rendu HORS du document zoomé → il ne se zoome pas lui-même.
  */
 export default function CvZoomSlider() {
-  const [zoom, setZoom] = useState(1);
-  const searchParams = useSearchParams();
-  const printMode = isCvPrintPreviewQuery(
-    new URLSearchParams(searchParams.toString()),
-  );
+  const [zoom, setZoom] = useState(DEFAULT_ZOOM);
 
   const apply = useCallback((z: number) => {
     const v = clamp(z);
@@ -41,19 +32,10 @@ export default function CvZoomSlider() {
     document.documentElement.style.setProperty('--cv-zoom', String(v));
   }, []);
 
-  const fitToWidth = useCallback(() => {
-    const doc = document.querySelector('.cv-short-page');
-    const avail = doc?.parentElement?.clientWidth ?? window.innerWidth;
-    return avail / DOC_WIDTH;
-  }, []);
-
   useEffect(() => {
-    // Réappliqué à CHAQUE changement de `?print` (printMode en dépendance) → le clic
-    // sur l'œil rebascule la taille sans recharger. Pas de localStorage.
-    //  - aperçu ?print=1 → 100 % (PRINT_PREVIEW_ZOOM) ;
-    //  - vue normale     → plein écran (ajusté à la largeur dispo).
-    apply(printMode ? PRINT_PREVIEW_ZOOM : fitToWidth());
-  }, [apply, fitToWidth, printMode]);
+    // Défaut 100 % au montage (écran). Pas de dépendance au mode ni à la largeur.
+    apply(DEFAULT_ZOOM);
+  }, [apply]);
 
   return (
     <div
@@ -73,9 +55,9 @@ export default function CvZoomSlider() {
       />
       <button
         type="button"
-        onClick={() => apply(fitToWidth())}
+        onClick={() => apply(DEFAULT_ZOOM)}
         className="w-10 select-none text-right tabular-nums hover:text-slate-900"
-        title="Ajuster à la largeur de l'écran"
+        title="Réinitialiser le zoom à 100 %"
       >
         {Math.round(zoom * 100)}%
       </button>
