@@ -540,6 +540,16 @@ html {
     line-height: 1.35;
   }
 
+  /* Colonne secondaire du court (Contact / Études / Projets) : 12px UNIFORME au PDF
+     (miroir de l'aperçu écran) → supersede les print:text-xs/[10px] des classes
+     partagées -compact. Scopé .cv-short-page → CV complet inchangé. */
+  .cv-short-page .cv-contact-value-compact,
+  .cv-short-page .cv-study-title-compact,
+  .cv-short-page .cv-study-year-compact {
+    font-size: 0.75rem !important;
+    line-height: 1.35 !important;
+  }
+
   /* Grille domaines + colonnes : gaps resserrés.
      (On NE zéro-te plus le margin-top des domaines : il porte le body-gap
      `--cv-section-body-gap` pour que intro→domaines == filet→intro à l'impression.) */
@@ -1006,14 +1016,24 @@ html {
   font-size: 0.5625rem !important; /* 9px */
 }
 .cv-print-preview .cv-short-page .cv-page-split .cv-row-with-side-meta {
-  font-size: 0.5rem !important; /* 8px — rôle / lieu / dates */
+  font-size: 0.75rem !important; /* 12px — en-tête expérience (uniforme) */
 }
 .cv-print-preview
   .cv-short-page
   .cv-page-split
   .cv-row-with-side-meta
   .font-bold {
-  font-size: 0.625rem !important; /* 10px — client (gras) */
+  font-size: 0.75rem !important; /* 12px — client (gras), uniforme */
+}
+/* Colonne secondaire du court (Contact / Études / Projets) : 12px UNIFORME en aperçu
+   écran — pinné car les classes -compact ne sont pas densifiées (sinon 14px écran vs
+   12px PDF). Miroir du pin @media print ci-dessus. Projets couverts (réutilisent
+   .cv-study-title-compact / -year-compact), couleur intacte (règle orthogonale). */
+.cv-print-preview .cv-short-page .cv-contact-value-compact,
+.cv-print-preview .cv-short-page .cv-study-title-compact,
+.cv-print-preview .cv-short-page .cv-study-year-compact {
+  font-size: 0.75rem !important; /* 12px */
+  line-height: 1.35 !important;
 }
 /* Pills (domaines, compétences, adéquation, missions) aux tailles d'impression
    → tiennent sur 1 ligne comme le PDF (sinon 14px en aperçu → 2 lignes). */
