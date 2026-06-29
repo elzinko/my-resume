@@ -534,8 +534,14 @@ html {
 
   /* Densification typographique pour tenir sur 1 page A4 : tout le corps de
      texte (Profil, domaines, Expérience) partage `.cv-job-description` → même
-     taille partout, densifiée ici à l'impression. */
-  .cv-short-page .cv-job-description {
+     taille partout, densifiée ici à l'impression. La colonne secondaire
+     (Coordonnées, Études, Projets) s'aligne sur la même taille via ses classes
+     compactes (sinon Contact 14px, Projets 14px, Études 16px > 10px). */
+  .cv-short-page .cv-job-description,
+  .cv-short-page .cv-contact-value-compact,
+  .cv-short-page .cv-row-study-title-year,
+  .cv-short-page .cv-study-title-compact,
+  .cv-short-page .cv-study-year-compact {
     font-size: 0.625rem;
     line-height: 1.35;
   }
@@ -993,8 +999,14 @@ html {
 
 /* Short print-preview : CORPS de texte aux tailles d'IMPRESSION (les utilitaires
    Tailwind `print:` ne s'appliquent pas en aperçu → sinon l'aperçu montre 14px
-   alors que le PDF fait 10px). Scopé `.cv-print-preview` → vue normale intacte. */
-.cv-print-preview .cv-short-page .cv-job-description {
+   alors que le PDF fait 10px). Scopé `.cv-print-preview` → vue normale intacte.
+   La colonne secondaire (Coordonnées, Études, Projets) reprend la même taille
+   que `.cv-job-description` via ses classes compactes (sinon 14/14/16px). */
+.cv-print-preview .cv-short-page .cv-job-description,
+.cv-print-preview .cv-short-page .cv-contact-value-compact,
+.cv-print-preview .cv-short-page .cv-row-study-title-year,
+.cv-print-preview .cv-short-page .cv-study-title-compact,
+.cv-print-preview .cv-short-page .cv-study-year-compact {
   font-size: 0.625rem !important; /* 10px */
   line-height: 1.35 !important;
 }
