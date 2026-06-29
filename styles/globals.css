@@ -1060,6 +1060,24 @@ html {
   gap: 0.5rem !important;
 }
 
+/* (B) Pied d'expérience + marges de bas de section : valeurs d'IMPRESSION reproduites
+   en aperçu écran (miroir du bloc @media print) → le bas des colonnes tombe au même
+   endroit qu'au PDF (sinon le pied gardait son mt-4 = 1rem à l'écran). */
+.cv-print-preview .cv-short-page .cv-experience-footer {
+  margin-top: 0.375rem !important;
+  padding-left: 0.5rem !important;
+}
+.cv-print-preview .cv-short-page #education-level h2 {
+  margin-bottom: 0 !important;
+}
+.cv-print-preview .cv-short-page section#domains {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+.cv-print-preview .cv-short-page .cv-short-about {
+  padding-bottom: 0 !important;
+}
+
 /**
  * Pages offre — aperçu `?print` : veille en une ligne avec `/`.
  * Loisirs : liste verticale avec descriptions (même rendu que le storybook).
