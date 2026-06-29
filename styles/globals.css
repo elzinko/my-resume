@@ -44,17 +44,14 @@
   --cv-section-gap: 1.3rem;
   --cv-section-body-gap: 0.5rem;
 }
-/* ÉCRAN : AUCUNE transformation sur .cv-short-page → taille réelle (100%) + scroll
-   NATIF partout. (On a retiré le `zoom` écran : la propriété CSS `zoom` casse le
-   scroll iOS/Safari — bas inatteignable — sur iPad ET desktop Safari.)
-   IMPRESSION : on réduit le court à 90% pour GARANTIR 1 page A4 quel que soit le
-   navigateur et les marges (le contenu, surtout avec l'adéquation poste, frôle la
-   limite A4 → débordait sur une 2ᵉ page). Vérifié : 1 page à 1mm ET 10mm de marge. */
-@media print {
-  .cv-short-page {
-    zoom: 0.9;
-  }
-}
+/* ÉCRAN comme IMPRESSION : AUCUNE transformation sur .cv-short-page → taille réelle
+   (100%) partout. La propriété CSS `zoom` est PROSCRITE ici :
+   - à l'écran elle casse le scroll iOS/Safari (bas inatteignable, iPad + desktop) ;
+   - à l'impression, `zoom: 0.9` rapetissait TOUT le CV (titres compris) et laissait
+     un blanc en bas — l'inverse du PDF plein cadre voulu.
+   Le CV court tient sur 1 page A4 à PLEINE TAILLE grâce à `@page short { margin: 1mm }`
+   (cf. plus bas), honoré par le générateur PDF (`preferCSSPageSize`) et par Chrome.
+   Vérifié : contenu ≈1100px ≤ A4 (1122px à 1mm) → 1 page, plein cadre, titres uniformes. */
 
 /* Libellés ATS anglais (« Summary », « Work Experience », « Job fit »…) : masqués
    par DÉFAUT (web ET PDF). Affichés uniquement avec `?ats=1` → `.cv-show-ats` posé
