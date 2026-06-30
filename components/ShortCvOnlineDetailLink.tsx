@@ -2,8 +2,9 @@
 
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { fullHrefFromShortPath } from '@/lib/cv-mode-nav';
+import { CV_VIEWPORT_PARAM } from '@/lib/cv-viewport-mobile';
 
 const COPY = {
   fr: {
@@ -33,10 +34,30 @@ export default function ShortCvOnlineDetailLink({
 }) {
   const sp = useSearchParams();
   const queryKey = sp.toString();
-  const href = useMemo(
-    () => fullHrefFromShortPath(lang, new URLSearchParams(queryKey)),
-    [lang, queryKey],
-  );
+
+  // Origine capturée après le montage : produit un lien ABSOLU (même DNS, repris
+  // dynamiquement de la page courante — prod, preview Vercel, etc.) dans le PDF
+  // exporté, sans casser l'hydratation. Le rendu serveur reste relatif et laisse
+  // Next préfixer le `basePath`.
+  const [origin, setOrigin] = useState('');
+  useEffect(() => {
+    setOrigin(window.location.origin);
+  }, []);
+
+  const href = useMemo(() => {
+    // Reprend les paramètres d'offre de l'URL courante, sans les paramètres
+    // d'état d'UI (`print`, `cvViewport`) qui n'ont pas de sens pour le lecteur.
+    const params = new URLSearchParams(queryKey);
+    params.delete('print');
+    params.delete(CV_VIEWPORT_PARAM);
+    const relative = fullHrefFromShortPath(lang, params);
+    if (!origin) return relative;
+    const basePath = (process.env.NEXT_PUBLIC_BASE_PATH || '').replace(
+      /\/$/,
+      '',
+    );
+    return `${origin}${basePath}${relative}`;
+  }, [lang, queryKey, origin]);
 
   const t = COPY[lang];
 
