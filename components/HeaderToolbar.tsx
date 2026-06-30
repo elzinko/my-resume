@@ -18,6 +18,7 @@ import LogoLinkedin from '@/components/LogoLinkedin';
 import LogoGithub from '@/components/LogoGithub';
 import LogoMalt from '@/components/LogoMalt';
 import LogoPrint from '@/components/LogoPrint';
+import { safePrint } from '@/lib/safe-print';
 import {
   cvHeaderModeBtn,
   isCvPrintLayoutToolbarEnabled,
@@ -313,8 +314,12 @@ export default function HeaderToolbar({
     };
   }, [pathname]);
 
+  // `safePrint` attend `document.fonts.ready` + un cycle de paint avant
+  // `window.print()` : sans ça, un clic immédiat imprimait le CV court avant
+  // stabilisation du layout → une 2ᵉ page parasite (⌘P, plus tardif, ne l'avait
+  // pas). Même garde-fou que l'auto-impression (cf. `ShortAutoprint`).
   const runPrint = useCallback(() => {
-    window.print();
+    safePrint();
   }, []);
 
   useEffect(() => {
@@ -329,7 +334,7 @@ export default function HeaderToolbar({
   return (
     <>
       <div
-        className="hidden print:hidden md:flex md:w-full md:flex-row md:items-center md:justify-between"
+        className="hidden md:flex md:w-full md:flex-row md:items-center md:justify-between print:hidden"
         data-testid="cv-header-toolbar"
       >
         <Suspense fallback={null}>
@@ -364,7 +369,7 @@ export default function HeaderToolbar({
       />
 
       <div
-        className="fixed inset-x-0 top-0 z-[90] flex items-center gap-2 bg-white/90 px-4 pb-3 backdrop-blur-md supports-[backdrop-filter]:bg-white/80 print:hidden md:hidden"
+        className="fixed inset-x-0 top-0 z-[90] flex items-center gap-2 bg-white/90 px-4 pb-3 backdrop-blur-md supports-[backdrop-filter]:bg-white/80 md:hidden print:hidden"
         style={{
           paddingTop: 'max(0.75rem, env(safe-area-inset-top, 0px))',
         }}
