@@ -104,13 +104,14 @@ export default function Domain({
 }: DomainProps) {
   const accent = titleAccent ?? DOMAIN_TITLE_ACCENT_DEFAULT;
 
-  // CV court : domaines en SOUS-titres (text-base = 16px) → nettement plus petits
-  // que le titre de section « Summary » (text-2xl = 24px) pour une hiérarchie
-  // claire et garantie (classes statiques → 16 < 24 sur écran, aperçu ET print).
-  // CV complet : niveau section (text-2xl).
+  // Domaines (Agile/Dev/Ops) = SOUS-titres du Profil, jamais des sections sœurs.
+  // CV court : text-base (16px). CV complet / tablette : text-xl (20px) — nettement
+  // sous le titre de section « Profil » (text-2xl = 24px) pour une hiérarchie claire
+  // sur TOUS les supports (écran, aperçu ET impression : classes statiques sans
+  // variante print → 16/20 < 24 partout).
   const titleTypo = compact
     ? 'text-base font-semibold text-blue-400'
-    : 'text-2xl font-semibold text-blue-400';
+    : 'text-xl font-semibold text-blue-400';
 
   const titleBlock =
     accent === 'verticalBar' ? (
