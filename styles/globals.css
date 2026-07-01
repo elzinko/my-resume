@@ -190,12 +190,13 @@
   }
 
   /**
-   * Description inline générique (Projets, Education) — même comportement que
-   * Learnings/Hobbies : masquée en colonne étroite (mobile), inline en large
-   * (desktop ≥ 36rem). Garantit « une ligne » au desktop + espacement homogène.
+   * Description générique (Projets, Education). Mobile (conteneur < 36rem) : on
+   * l'affiche EN BLOC sous le titre (pas de contrainte de place → scroll) au lieu
+   * de la masquer. Desktop ≥ 36rem : inline sur la même ligne (rendu inchangé).
+   * Impression (A4 ≥ 36rem) et CV court (composants compacts distincts) inchangés.
    */
   .cv-cq-section .cv-row-inline-desc {
-    display: none;
+    display: block;
   }
   @container (min-width: 36rem) {
     .cv-cq-section .cv-row-inline-desc {
