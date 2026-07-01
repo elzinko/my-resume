@@ -93,8 +93,9 @@ export default function Pill({
   if (color === 'domain') {
     const classes = compact
       ? 'cv-pill-domain shrink-0 whitespace-nowrap px-2 py-0.5 text-xs font-medium leading-snug print:px-1 print:py-0.5 print:text-[10px] md:px-2.5 md:py-1 md:text-sm'
-      : // Mobile (<768) : text-base (16px) pour la lisibilité (fiche 0011) ; md/print inchangés.
-        'cv-pill-domain shrink-0 whitespace-nowrap px-2 py-1 text-base font-medium leading-snug md:px-2.5 md:py-1 md:text-sm print:px-1.5 print:py-0.5 print:text-[10px]';
+      : // Mobile : sous-domaines (Agile/Dev/Ops) tenus sur 1 SEULE ligne → 13px +
+        // padding resserré (les 5 tags ne tiennent pas à 16px). md/print inchangés.
+        'cv-pill-domain shrink-0 whitespace-nowrap px-1.5 py-0.5 text-[13px] font-medium leading-snug md:px-2.5 md:py-1 md:text-sm print:px-1.5 print:py-0.5 print:text-[10px]';
     return (
       <Tag className={classes} {...linkProps}>
         {children}
