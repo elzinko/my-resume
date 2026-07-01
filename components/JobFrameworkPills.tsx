@@ -136,13 +136,8 @@ export default function JobFrameworkPills({
         return;
       }
 
-      /** Desktop replié : `cap` pastilles. */
-      if (window.innerWidth >= MD_MIN) {
-        setVisibleCount(Math.min(cap, frameworks.length));
-        return;
-      }
-
-      /** Mobile replié : hauteur ~2 lignes + pastille « … », plafond `cap`. */
+      /** Desktop / tablette : UNE seule ligne, « … » garanti EN FIN DE 1re ligne.
+          Mobile : ~2 lignes. Fit mesuré dynamiquement (« … » réservé), plafond `cap`. */
       const outer = outerRef.current;
       const measure = measureRef.current;
       if (!outer || !measure) {
@@ -178,8 +173,12 @@ export default function JobFrameworkPills({
       const rootFont = parseFloat(
         getComputedStyle(document.documentElement).fontSize || '16',
       );
-      const maxHPx = rem * rootFont;
-      const k = maxFitCountOneRow(widths, moreW, cw, maxH, gapPx, maxHPx);
+      // ≥768 (desktop/tablette) → 1 ligne (maxH+2) ; <768 (mobile) → ~2 lignes.
+      const maxHPx = window.innerWidth >= MD_MIN ? maxH + 2 : rem * rootFont;
+      // Gap RÉEL du conteneur (gap-1.5=6px mobile, md:gap-2=8px ≥768) : sinon le
+      // calcul sous-estime et une pastille passe en 2e ligne au lieu du « … ».
+      const rowGapPx = parseFloat(getComputedStyle(measure).columnGap) || gapPx;
+      const k = maxFitCountOneRow(widths, moreW, cw, maxH, rowGapPx, maxHPx);
       setVisibleCount(Math.min(cap, k));
     };
 
