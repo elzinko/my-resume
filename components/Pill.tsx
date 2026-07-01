@@ -82,8 +82,9 @@ export default function Pill({
   if (color === 'jobs') {
     const classes = compact
       ? 'cv-pill-jobs whitespace-nowrap px-1 py-0.5 text-[9px] print:text-[8px]'
-      : // Mobile (<768) : text-base (16px) pour la lisibilité (fiche 0011) ; md/print inchangés.
-        'cv-pill-jobs whitespace-nowrap px-2 py-1 text-base md:px-2 md:py-1 md:text-xs';
+      : // Taille UNIFORME par vue avec les autres pastilles : mobile 13px, md 14px
+        // (text-sm), impression 10px — identique à domain / match / skill.
+        'cv-pill-jobs whitespace-nowrap px-2 py-0.5 text-[13px] md:px-2 md:py-1 md:text-sm print:px-1.5 print:py-0.5 print:text-[10px]';
     return (
       <Tag className={classes} {...linkProps}>
         {children}
@@ -109,8 +110,9 @@ export default function Pill({
   if (color === 'skill') {
     const classes = compact
       ? 'cv-pill-skill whitespace-nowrap px-2 py-0.5 text-xs print:px-1.5 print:text-[10px] print:!text-cv-tag-text'
-      : // Mobile (<768) : text-base (16px) pour la lisibilité (fiche 0011) ; md/print inchangés.
-        'cv-pill-skill whitespace-nowrap px-2 py-1 text-base transition-colors hover:text-cv-tag-text-hover md:px-3 md:text-sm print:!text-cv-tag-text';
+      : // Taille UNIFORME par vue : mobile 13px, md 14px (text-sm) — comme les
+        // autres pastilles (masqué en mobile/print, cohérent quand même).
+        'cv-pill-skill whitespace-nowrap px-2 py-1 text-[13px] transition-colors hover:text-cv-tag-text-hover md:px-3 md:text-sm print:!text-cv-tag-text';
     return (
       <Tag className={classes} {...linkProps}>
         {children}
