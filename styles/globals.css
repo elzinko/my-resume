@@ -476,8 +476,18 @@
 }
 
 html {
-  scroll-behavior: smooth;
   font-family: 'Raleway', sans-serif;
+}
+
+/* `scroll-behavior: smooth` UNIQUEMENT sur pointeur fin (souris).
+   ⚠️ Régression connue : posé sur `html` sans garde-fou, il casse le scroll par
+   inertie tactile (WebKit iPad / tablette Chrome) → impossible d'atteindre le bas
+   de page (Loisirs coupés). Les appareils tactiles (pointer: coarse) gardent donc
+   le scroll natif. Ne pas remettre `scroll-behavior: smooth` directement sur `html`. */
+@media (hover: hover) and (pointer: fine) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 /* Print styles */
