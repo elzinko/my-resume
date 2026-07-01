@@ -190,17 +190,45 @@
   }
 
   /**
-   * Description générique (Projets, Education). Mobile (conteneur < 36rem) : on
-   * l'affiche EN BLOC sous le titre (pas de contrainte de place → scroll) au lieu
-   * de la masquer. Desktop ≥ 36rem : inline sur la même ligne (rendu inchangé).
-   * Impression (A4 ≥ 36rem) et CV court (composants compacts distincts) inchangés.
+   * Entrées Études / Projets / Apprentissages (CV complet).
+   * MOBILE (conteneur < 36rem) : titre (+ année à droite) sur la ligne 1, détail
+   * sur la ligne 2 SANS tiret — comme l'en-tête d'une expérience.
+   * DESKTOP (≥ 36rem) : inline « titre — détail · année » (rendu proche de
+   * l'existant). Impression (A4 ≥ 36rem) → inline aussi. CV court non concerné.
    */
-  .cv-cq-section .cv-row-inline-desc {
-    display: block;
+  .cv-cq-section .cv-entry {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: 'title year' 'detail detail';
+    column-gap: 0.75rem;
+    align-items: baseline;
+  }
+  .cv-cq-section .cv-entry-title {
+    grid-area: title;
+    min-width: 0;
+  }
+  .cv-cq-section .cv-entry-year {
+    grid-area: year;
+    justify-self: end;
+    white-space: nowrap;
+  }
+  .cv-cq-section .cv-entry-detail {
+    grid-area: detail;
   }
   @container (min-width: 36rem) {
-    .cv-cq-section .cv-row-inline-desc {
+    .cv-cq-section .cv-entry {
+      display: block;
+    }
+    .cv-cq-section .cv-entry-title,
+    .cv-cq-section .cv-entry-year,
+    .cv-cq-section .cv-entry-detail {
       display: inline;
+    }
+    .cv-cq-section .cv-entry-detail::before {
+      content: '— ';
+    }
+    .cv-cq-section .cv-entry-year::before {
+      content: ' · ';
     }
   }
 

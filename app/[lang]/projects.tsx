@@ -61,23 +61,36 @@ export default async function projects({
             typeof project.description === 'string'
               ? project.description.trim()
               : '';
+          const year =
+            (project.endDate && new Date(project.endDate).getFullYear()) ||
+            (project.startDate && new Date(project.startDate).getFullYear()) ||
+            '';
+          // Markup : titre → détail → année (cf. `.cv-entry`) : desktop inline,
+          // mobile en 2 lignes avec l'année à droite de la ligne 1.
           return (
-            <li className="text-cv-tag-text" key={project.id}>
-              {project.link ? (
-                <a
-                  href={project.link}
-                  className="text-cv-tag-text underline-offset-2 hover:underline print:!text-cv-tag-text"
-                >
-                  {name}
-                </a>
-              ) : (
-                <span className="text-cv-tag-text print:!text-cv-tag-text">
-                  {name}
-                </span>
-              )}
+            <li className="cv-entry text-cv-tag-text" key={project.id}>
+              <span className="cv-entry-title">
+                {project.link ? (
+                  <a
+                    href={project.link}
+                    className="text-cv-tag-text underline-offset-2 hover:underline print:!text-cv-tag-text"
+                  >
+                    {name}
+                  </a>
+                ) : (
+                  <span className="text-cv-tag-text print:!text-cv-tag-text">
+                    {name}
+                  </span>
+                )}
+              </span>
               {description ? (
-                <span className="cv-row-inline-desc ml-1 text-sm text-cv-body-muted">
-                  {'—'} {description}
+                <span className="cv-entry-detail text-sm text-cv-body-muted">
+                  {description}
+                </span>
+              ) : null}
+              {year ? (
+                <span className="cv-entry-year text-sm tabular-nums text-cv-body-muted">
+                  {year}
                 </span>
               ) : null}
             </li>
