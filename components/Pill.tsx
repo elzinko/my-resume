@@ -55,7 +55,7 @@ export default function Pill({
       s: compact
         ? 'px-1 py-0.5 text-[9px] print:text-[8px]'
         : 'px-1.5 py-0.5 text-[10px] print:px-1 print:py-0 print:text-[8px] md:text-xs',
-      m: 'px-2 py-0.5 text-xs print:px-1.5 print:py-0.5 print:text-[10px] md:text-sm',
+      m: 'px-2 py-0.5 text-base print:px-1.5 print:py-0.5 print:text-[10px] md:text-sm',
       l: compact
         ? 'px-2.5 py-1 text-sm print:px-2 print:py-0.5 print:text-xs'
         : 'px-3 py-1 text-sm md:text-base',
@@ -66,7 +66,7 @@ export default function Pill({
     const truncCls = compact ? 'min-w-0 truncate' : 'min-w-0';
 
     const metricCls =
-      'text-[10px] font-normal tabular-nums text-orange-200/95 print:text-[9px] print:!text-orange-300 md:text-xs';
+      'text-sm font-normal tabular-nums text-orange-200/95 print:text-[9px] print:!text-orange-300 md:text-xs';
 
     return (
       <Tag className={classes} {...linkProps}>
@@ -80,7 +80,8 @@ export default function Pill({
   if (color === 'jobs') {
     const classes = compact
       ? 'cv-pill-jobs whitespace-nowrap px-1 py-0.5 text-[9px] print:text-[8px]'
-      : 'cv-pill-jobs whitespace-nowrap px-1.5 py-0.5 text-[10px] md:px-2 md:py-1 md:text-xs';
+      : // Mobile (<768) : text-base (16px) pour la lisibilité (fiche 0011) ; md/print inchangés.
+        'cv-pill-jobs whitespace-nowrap px-2 py-1 text-base md:px-2 md:py-1 md:text-xs';
     return (
       <Tag className={classes} {...linkProps}>
         {children}
@@ -92,7 +93,8 @@ export default function Pill({
   if (color === 'domain') {
     const classes = compact
       ? 'cv-pill-domain shrink-0 whitespace-nowrap px-2 py-0.5 text-xs font-medium leading-snug print:px-1 print:py-0.5 print:text-[10px] md:px-2.5 md:py-1 md:text-sm'
-      : 'cv-pill-domain shrink-0 whitespace-nowrap px-2 py-0.5 text-xs font-medium leading-snug md:px-2.5 md:py-1 md:text-sm print:px-1.5 print:py-0.5 print:text-[10px]';
+      : // Mobile (<768) : text-base (16px) pour la lisibilité (fiche 0011) ; md/print inchangés.
+        'cv-pill-domain shrink-0 whitespace-nowrap px-2 py-1 text-base font-medium leading-snug md:px-2.5 md:py-1 md:text-sm print:px-1.5 print:py-0.5 print:text-[10px]';
     return (
       <Tag className={classes} {...linkProps}>
         {children}
@@ -104,7 +106,8 @@ export default function Pill({
   if (color === 'skill') {
     const classes = compact
       ? 'cv-pill-skill whitespace-nowrap px-2 py-0.5 text-xs print:px-1.5 print:text-[10px] print:!text-cv-tag-text'
-      : 'cv-pill-skill whitespace-nowrap px-2 py-1 text-xs transition-colors hover:text-cv-tag-text-hover md:px-3 md:text-sm print:!text-cv-tag-text';
+      : // Mobile (<768) : text-base (16px) pour la lisibilité (fiche 0011) ; md/print inchangés.
+        'cv-pill-skill whitespace-nowrap px-2 py-1 text-base transition-colors hover:text-cv-tag-text-hover md:px-3 md:text-sm print:!text-cv-tag-text';
     return (
       <Tag className={classes} {...linkProps}>
         {children}
