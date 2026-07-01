@@ -55,7 +55,9 @@ export default function Pill({
       s: compact
         ? 'px-1 py-0.5 text-[9px] print:text-[8px]'
         : 'px-1.5 py-0.5 text-[10px] print:px-1 print:py-0 print:text-[8px] md:text-xs',
-      m: 'px-2 py-0.5 text-base print:px-1.5 print:py-0.5 print:text-[10px] md:text-sm',
+      // Mobile : 13px comme les pastilles de sous-domaines juste au-dessus
+      // (Agile/Dev/Ops) → hiérarchie cohérente. md (14px) / print (10px) inchangés.
+      m: 'px-2 py-0.5 text-[13px] print:px-1.5 print:py-0.5 print:text-[10px] md:text-sm',
       l: compact
         ? 'px-2.5 py-1 text-sm print:px-2 print:py-0.5 print:text-xs'
         : 'px-3 py-1 text-sm md:text-base',
@@ -66,7 +68,7 @@ export default function Pill({
     const truncCls = compact ? 'min-w-0 truncate' : 'min-w-0';
 
     const metricCls =
-      'text-sm font-normal tabular-nums text-orange-200/95 print:text-[9px] print:!text-orange-300 md:text-xs';
+      'text-xs font-normal tabular-nums text-orange-200/95 print:text-[9px] print:!text-orange-300 md:text-xs';
 
     return (
       <Tag className={classes} {...linkProps}>
