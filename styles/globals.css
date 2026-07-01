@@ -41,8 +41,12 @@
    d'impression. Le short web doit être un aperçu fidèle du PDF (mêmes écarts,
    pas seulement même largeur) → on ne gonfle pas les gaps hors impression. */
 .cv-short-page {
-  --cv-section-gap: 1.3rem;
-  --cv-section-body-gap: 0.5rem;
+  /* Rythme resserré : le CV court DOIT tenir sur 1 page A4 à l'impression.
+     À 1.3/0.5 le contenu débordait de ~15-30px → 2e page (⌘P comme bouton).
+     Mesuré au PDF (Playwright) : 0.9/0.4 ramène le bas du contenu ~13px sous la
+     limite de page. Tokens partagés écran+print → l'aperçu reste fidèle au PDF. */
+  --cv-section-gap: 0.9rem;
+  --cv-section-body-gap: 0.4rem;
   /* Zoom manuel (curseur CvZoomSlider) — ÉCRAN uniquement, neutralisé en print. */
   zoom: var(--cv-zoom, 1);
 }
@@ -999,8 +1003,10 @@ html {
  * Nécessaire car les classes Tailwind `print:` ne s'appliquent pas en mode `cv-print-preview`.
  */
 .cv-print-preview .cv-short-page .header-content {
-  padding-top: 2rem !important;
-  padding-bottom: 0.5rem !important;
+  /* En-tête remonté : 2rem de padding haut gaspillaient ~24px et poussaient le
+     CV court sur une 2e page à l'impression. 0.5rem garde un filet d'air. */
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.25rem !important;
 }
 
 .cv-print-preview .cv-short-page .header-content h1 {
