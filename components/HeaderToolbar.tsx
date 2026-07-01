@@ -533,11 +533,8 @@ export default function HeaderToolbar({
             <Suspense fallback={null}>
               <ModeControl shortLang={shortLang} onNavigate={close} />
             </Suspense>
-            {showPrintPreviewToggle && (
-              <Suspense fallback={null}>
-                <PrintPreviewToggleLink onNavigate={close} />
-              </Suspense>
-            )}
+            {/* Pas d'œil « aperçu impression » en mobile : outil de dev (comparer
+                web/PDF) réservé au desktop. */}
             <ToolbarIconList
               onNavigate={close}
               listClassName={rowListClass}
