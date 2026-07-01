@@ -70,7 +70,11 @@ export default function HeaderContent({
         {photoUrl ? (
           <div
             className={`flex ${
-              compactPrint ? 'items-center' : 'items-start md:items-center'
+              compactPrint
+                ? 'items-center'
+                : // Full CV : photo masquée en mobile (< 768px) → toute la largeur
+                  // pour les infos. Desktop/print et CV court (compactPrint) inchangés.
+                  'items-start max-md:hidden md:items-center'
             } ${align === 'right' ? 'order-first' : ''}`}
           >
             {/*
