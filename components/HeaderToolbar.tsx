@@ -530,11 +530,9 @@ export default function HeaderToolbar({
                 : 'pointer-events-none max-w-0 opacity-0')
             }
           >
-            <Suspense fallback={null}>
-              <ModeControl shortLang={shortLang} onNavigate={close} />
-            </Suspense>
-            {/* Pas d'œil « aperçu impression » en mobile : outil de dev (comparer
-                web/PDF) réservé au desktop. */}
+            {/* Mobile : ni bascule court/complet (ModeControl) ni œil aperçu —
+                on ne switche pas de vue en mobile. Le choix court/complet se fait
+                au moment d'imprimer (popup). Ces contrôles restent sur desktop. */}
             <ToolbarIconList
               onNavigate={close}
               listClassName={rowListClass}
