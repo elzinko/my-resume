@@ -108,6 +108,7 @@ function SnapshotCard({
   file,
   bust,
   isPdf,
+  phone,
 }: {
   label: string;
   tag: string;
@@ -115,6 +116,9 @@ function SnapshotCard({
   file: string;
   bust: number;
   isPdf?: boolean;
+  /** Rendu « téléphone » : largeur bornée + cadre arrondi (la capture mobile ne
+   *  doit pas être étirée à la largeur de la colonne). */
+  phone?: boolean;
 }) {
   return (
     <div
@@ -158,6 +162,33 @@ function SnapshotCard({
             background: 'white',
           }}
         />
+      ) : phone ? (
+        // Capture mobile : largeur de téléphone (≈ écran réel), centrée, cadre
+        // arrondi façon device → on ne l'étire plus à la largeur de la colonne.
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            padding: '0.5rem 0',
+          }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={renderFileUrl(file, bust)}
+            alt={label}
+            style={{
+              width: '100%',
+              maxWidth: '300px',
+              height: 'auto',
+              border: '8px solid #0f172a',
+              borderRadius: '28px',
+              background: '#0f172a',
+              boxShadow: '0 6px 18px rgba(0,0,0,0.45)',
+              cursor: 'zoom-in',
+            }}
+            onClick={() => window.open(renderFileUrl(file, bust), '_blank')}
+          />
+        </div>
       ) : (
         // eslint-disable-next-line @next/next/no-img-element
         <img
@@ -697,6 +728,7 @@ export default function DevRendersPage() {
                       tagClass="tag-mobile"
                       file={l.mobile}
                       bust={bust}
+                      phone
                     />
                   ))}
                   {langs.map((l) => (

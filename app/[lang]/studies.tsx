@@ -60,13 +60,23 @@ export default async function studies({
           }
           const meta = studyMetaLine(study);
           const year = studyYear(study);
-          const tail = [meta, year].filter(Boolean).join(' · ');
+          // Ordre du markup = titre → détail → année : le desktop rend inline
+          // « titre — meta · année » ; le mobile (grid) place l'année à droite (L1)
+          // et le détail en L2 (cf. `.cv-entry` dans globals.css).
           return (
-            <li className="text-purple-300" key={study.id}>
-              <span className="text-purple-300">{study.name}</span>
-              {tail ? (
-                <span className="cv-row-inline-desc ml-1 text-sm text-cv-body-muted">
-                  {'—'} {tail}
+            <li className="cv-entry text-purple-300" key={study.id}>
+              <span className="cv-entry-title text-purple-300">
+                {study.name}
+              </span>
+              {meta ? (
+                <span className="cv-entry-detail text-sm text-cv-body-muted">
+                  {meta}
+                </span>
+              ) : null}
+              {year ? (
+                // Date à la couleur de la section (comme les dates d'expérience).
+                <span className="cv-entry-year text-sm tabular-nums text-purple-300 print:!text-purple-300">
+                  {year}
                 </span>
               ) : null}
             </li>

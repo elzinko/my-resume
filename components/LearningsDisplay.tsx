@@ -32,17 +32,21 @@ export default function LearningsDisplay({
         title={title}
         accent="teal"
       />
-      <ul className="cv-section-simple-list cv-cq-link-list max-md:mt-6">
+      <ul className="cv-section-simple-list max-md:mt-6">
         {items.map((learning) => (
-          <li className="text-teal-300" key={learning.id}>
-            <CustomLink
-              name={learningLinkLabel(learning)}
-              link={learning.link}
-              className="text-teal-300 print:!text-teal-300"
-            />
+          // Pas d'année pour les apprentissages : titre (L1) puis détail (L2 sans
+          // tiret) en mobile ; inline « titre — détail » en desktop/print (.cv-entry).
+          <li className="cv-entry text-teal-300" key={learning.id}>
+            <span className="cv-entry-title">
+              <CustomLink
+                name={learningLinkLabel(learning)}
+                link={learning.link}
+                className="text-teal-300 print:!text-teal-300"
+              />
+            </span>
             {learning.description ? (
-              <span className="cv-learning-desc ml-1 text-sm text-cv-body-muted">
-                — {learning.description}
+              <span className="cv-entry-detail text-sm text-cv-body-muted">
+                {learning.description}
               </span>
             ) : null}
           </li>

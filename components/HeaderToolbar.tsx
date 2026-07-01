@@ -13,11 +13,17 @@ import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import LocaleSwitcher from '@/components/LocaleSwitcher';
 import CvModeToggle from '@/components/CvModeToggle';
-import { fullHrefFromShortPath } from '@/lib/cv-mode-nav';
+import {
+  fullHrefFromShortPath,
+  shortHrefFromOfferPath,
+} from '@/lib/cv-mode-nav';
+import { stripBasePath } from '@/lib/cv-path-utils';
+import { i18n, type Locale } from 'i18n-config';
 import LogoLinkedin from '@/components/LogoLinkedin';
 import LogoGithub from '@/components/LogoGithub';
 import LogoMalt from '@/components/LogoMalt';
 import LogoPrint from '@/components/LogoPrint';
+import { safePrint } from '@/lib/safe-print';
 import {
   cvHeaderModeBtn,
   isCvPrintLayoutToolbarEnabled,
@@ -282,6 +288,123 @@ function PrintPreviewToggleLink({ onNavigate }: { onNavigate?: () => void }) {
 }
 
 /**
+ * Sélecteur d'impression mobile : le CV n'a pas de bascule court/complet visible
+ * en mobile → au clic sur imprimer, on demande QUEL PDF. Chaque choix ouvre la
+ * route canonique (`/[lang]` ou `/[lang]/short`) avec `?autoprint=1` dans un
+ * nouvel onglet (cf. `CvAutoprint`) → PDF strictement identique au desktop.
+ * Rendu sous `<Suspense>` (lit `useSearchParams`).
+ */
+function MobilePrintChooser({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}) {
+  const pathname = usePathname() || '/';
+  const searchParams = useSearchParams();
+  const pathForLogic = stripBasePath(
+    pathname,
+    process.env.NEXT_PUBLIC_BASE_PATH || '',
+  );
+  const seg = pathForLogic.split('/')[1];
+  const lang: Locale = i18n.locales.includes(seg as Locale)
+    ? (seg as Locale)
+    : i18n.defaultLocale;
+
+  const { fullHref, shortHref } = useMemo(() => {
+    const sp = new URLSearchParams(searchParams?.toString() ?? '');
+    sp.set('autoprint', '1');
+    return {
+      fullHref: fullHrefFromShortPath(lang, sp),
+      shortHref: shortHrefFromOfferPath(pathForLogic, lang, sp),
+    };
+  }, [searchParams, lang, pathForLogic]);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [open, onClose]);
+
+  if (!open) return null;
+
+  const isEn = lang === 'en';
+  const t = isEn
+    ? {
+        title: 'Print CV',
+        full: 'Full CV',
+        fullSub: 'several pages',
+        short: 'Short CV',
+        shortSub: '1 page',
+        cancel: 'Cancel',
+      }
+    : {
+        title: 'Imprimer le CV',
+        full: 'CV complet',
+        fullSub: 'plusieurs pages',
+        short: 'CV court',
+        shortSub: '1 page',
+        cancel: 'Annuler',
+      };
+
+  const optionClass =
+    'flex items-center justify-between rounded-xl border border-slate-200 px-4 py-3 text-slate-800 active:bg-slate-50';
+
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={t.title}
+      data-testid="cv-mobile-print-chooser"
+      className="fixed inset-0 z-[120] flex items-end justify-center bg-black/40 p-4 md:hidden print:hidden"
+      onClick={onClose}
+    >
+      <div
+        className="w-full max-w-sm rounded-2xl bg-white p-4 shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h2 className="mb-3 text-center text-base font-semibold text-slate-800">
+          {t.title}
+        </h2>
+        <div className="flex flex-col gap-2">
+          <a
+            href={fullHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={onClose}
+            className={optionClass}
+          >
+            <span className="font-medium">{t.full}</span>
+            <span className="text-sm text-slate-500">{t.fullSub}</span>
+          </a>
+          <a
+            href={shortHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={onClose}
+            className={optionClass}
+          >
+            <span className="font-medium">{t.short}</span>
+            <span className="text-sm text-slate-500">{t.shortSub}</span>
+          </a>
+        </div>
+        <button
+          type="button"
+          onClick={onClose}
+          className="mt-3 w-full rounded-xl px-4 py-2 text-sm text-slate-500 active:bg-slate-50"
+        >
+          {t.cancel}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/**
  * Desktop : langues à gauche, actions à droite.
  * Mobile : barre fixe en haut ; ouvert = langues à gauche, actions + menu à droite (pas de séparateur).
  */
@@ -294,6 +417,7 @@ export default function HeaderToolbar({
 }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [printChooserOpen, setPrintChooserOpen] = useState(false);
   const titleId = useId();
   const showPrintPreviewToggle = useCvPrintPreviewToggleVisible();
   const close = useCallback(() => setOpen(false), []);
@@ -313,8 +437,12 @@ export default function HeaderToolbar({
     };
   }, [pathname]);
 
+  // `safePrint` attend `document.fonts.ready` + un cycle de paint avant
+  // `window.print()` : sans ça, un clic immédiat imprimait le CV court avant
+  // stabilisation du layout → une 2ᵉ page parasite (⌘P, plus tardif, ne l'avait
+  // pas). Même garde-fou que l'auto-impression (cf. `ShortAutoprint`).
   const runPrint = useCallback(() => {
-    window.print();
+    safePrint();
   }, []);
 
   useEffect(() => {
@@ -329,7 +457,7 @@ export default function HeaderToolbar({
   return (
     <>
       <div
-        className="hidden print:hidden md:flex md:w-full md:flex-row md:items-center md:justify-between"
+        className="hidden md:flex md:w-full md:flex-row md:items-center md:justify-between print:hidden"
         data-testid="cv-header-toolbar"
       >
         <Suspense fallback={null}>
@@ -364,7 +492,7 @@ export default function HeaderToolbar({
       />
 
       <div
-        className="fixed inset-x-0 top-0 z-[90] flex items-center gap-2 bg-white/90 px-4 pb-3 backdrop-blur-md supports-[backdrop-filter]:bg-white/80 print:hidden md:hidden"
+        className="fixed inset-x-0 top-0 z-[90] flex items-center gap-2 bg-white/90 px-4 pb-3 backdrop-blur-md supports-[backdrop-filter]:bg-white/80 md:hidden print:hidden"
         style={{
           paddingTop: 'max(0.75rem, env(safe-area-inset-top, 0px))',
         }}
@@ -402,18 +530,14 @@ export default function HeaderToolbar({
                 : 'pointer-events-none max-w-0 opacity-0')
             }
           >
-            <Suspense fallback={null}>
-              <ModeControl shortLang={shortLang} onNavigate={close} />
-            </Suspense>
-            {showPrintPreviewToggle && (
-              <Suspense fallback={null}>
-                <PrintPreviewToggleLink onNavigate={close} />
-              </Suspense>
-            )}
+            {/* Mobile : ni bascule court/complet (ModeControl) ni œil aperçu —
+                on ne switche pas de vue en mobile. Le choix court/complet se fait
+                au moment d'imprimer (popup). Ces contrôles restent sur desktop. */}
             <ToolbarIconList
               onNavigate={close}
               listClassName={rowListClass}
-              onPrint={runPrint}
+              // Mobile : pas de bascule court/complet → on demande quel PDF imprimer.
+              onPrint={() => setPrintChooserOpen(true)}
               printTitle={printTitle}
               printAriaLabel={printAriaLabel}
               hideMalt={hideMalt}
@@ -466,6 +590,13 @@ export default function HeaderToolbar({
           )}
         </button>
       </div>
+
+      <Suspense fallback={null}>
+        <MobilePrintChooser
+          open={printChooserOpen}
+          onClose={() => setPrintChooserOpen(false)}
+        />
+      </Suspense>
     </>
   );
 }

@@ -41,8 +41,12 @@
    d'impression. Le short web doit être un aperçu fidèle du PDF (mêmes écarts,
    pas seulement même largeur) → on ne gonfle pas les gaps hors impression. */
 .cv-short-page {
-  --cv-section-gap: 1.3rem;
-  --cv-section-body-gap: 0.5rem;
+  /* Rythme resserré : le CV court DOIT tenir sur 1 page A4 à l'impression.
+     À 1.3/0.5 le contenu débordait de ~15-30px → 2e page (⌘P comme bouton).
+     Mesuré au PDF (Playwright) : 0.9/0.4 ramène le bas du contenu ~13px sous la
+     limite de page. Tokens partagés écran+print → l'aperçu reste fidèle au PDF. */
+  --cv-section-gap: 0.9rem;
+  --cv-section-body-gap: 0.4rem;
   /* Zoom manuel (curseur CvZoomSlider) — ÉCRAN uniquement, neutralisé en print. */
   zoom: var(--cv-zoom, 1);
 }
@@ -124,7 +128,7 @@
   .cv-full-cv-print-root {
     /* Même token que le CV court → rythme inter-sections identique écran ET
        impression (web 1.5rem, print 1.3rem), au lieu d'un print:gap-3 codé en dur. */
-    @apply flex flex-col gap-[var(--cv-section-gap)] print:!mt-0 max-md:mt-20;
+    @apply flex flex-col gap-[var(--cv-section-gap)] max-md:mt-20 print:!mt-0;
   }
 
   .cv-full-cv-print-root > section,
@@ -186,17 +190,61 @@
   }
 
   /**
-   * Description inline générique (Projets, Education) — même comportement que
-   * Learnings/Hobbies : masquée en colonne étroite (mobile), inline en large
-   * (desktop ≥ 36rem). Garantit « une ligne » au desktop + espacement homogène.
+   * Entrées Études / Projets / Apprentissages (CV complet).
+   * ÉCRAN (mobile, tablette ET desktop) : titre (+ année à droite) sur la ligne 1,
+   * détail sur la ligne 2 SANS tiret — comme l'en-tête d'une expérience.
+   * IMPRESSION (PDF + aperçu ?print) : inline dense « titre — détail · année ».
+   * CV court non concerné (composants compacts distincts).
    */
-  .cv-cq-section .cv-row-inline-desc {
-    display: none;
+  .cv-cq-section .cv-entry {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: 'title year' 'detail detail';
+    column-gap: 0.75rem;
+    align-items: baseline;
   }
-  @container (min-width: 36rem) {
-    .cv-cq-section .cv-row-inline-desc {
+  .cv-cq-section .cv-entry-title {
+    grid-area: title;
+    min-width: 0;
+  }
+  .cv-cq-section .cv-entry-year {
+    grid-area: year;
+    justify-self: end;
+    white-space: nowrap;
+  }
+  .cv-cq-section .cv-entry-detail {
+    grid-area: detail;
+  }
+  /* Impression : repli inline dense (PDF réel + aperçu écran `.cv-print-preview`). */
+  @media print {
+    .cv-cq-section .cv-entry {
+      display: block;
+    }
+    .cv-cq-section .cv-entry-title,
+    .cv-cq-section .cv-entry-year,
+    .cv-cq-section .cv-entry-detail {
       display: inline;
     }
+    .cv-cq-section .cv-entry-detail::before {
+      content: '— ';
+    }
+    .cv-cq-section .cv-entry-year::before {
+      content: ' · ';
+    }
+  }
+  .cv-print-preview .cv-cq-section .cv-entry {
+    display: block;
+  }
+  .cv-print-preview .cv-cq-section .cv-entry-title,
+  .cv-print-preview .cv-cq-section .cv-entry-year,
+  .cv-print-preview .cv-cq-section .cv-entry-detail {
+    display: inline;
+  }
+  .cv-print-preview .cv-cq-section .cv-entry-detail::before {
+    content: '— ';
+  }
+  .cv-print-preview .cv-cq-section .cv-entry-year::before {
+    content: ' · ';
   }
 
   /**
@@ -399,7 +447,7 @@
     /* Plancher MOBILE 1rem : base `text-base` (16px) = mobile lisible ; desktop
        `md:text-sm` (14px, aperçu A4) ; impression `print:text-xs` (12px, ou
        densifié à 10px sur `.cv-short-page`). Le type-scale propre relève du DS. */
-    @apply text-justify text-base leading-snug text-cv-body-muted print:text-xs md:text-sm;
+    @apply text-justify text-base leading-snug text-cv-body-muted md:text-sm print:text-xs;
   }
 
   /**
@@ -472,8 +520,18 @@
 }
 
 html {
-  scroll-behavior: smooth;
   font-family: 'Raleway', sans-serif;
+}
+
+/* `scroll-behavior: smooth` UNIQUEMENT sur pointeur fin (souris).
+   ⚠️ Régression connue : posé sur `html` sans garde-fou, il casse le scroll par
+   inertie tactile (WebKit iPad / tablette Chrome) → impossible d'atteindre le bas
+   de page (Loisirs coupés). Les appareils tactiles (pointer: coarse) gardent donc
+   le scroll natif. Ne pas remettre `scroll-behavior: smooth` directement sur `html`. */
+@media (hover: hover) and (pointer: fine) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 /* Print styles */
@@ -509,6 +567,15 @@ html {
   }
   .cv-full-cv-print-root .border-b:has(> h2) {
     break-after: avoid;
+  }
+
+  /* Profil + Domaines : corps remonté à 14px à l'impression (parité avec
+     Études/Projets/Learnings/Hobbies en `text-sm`). Scopé #about/#domains du CV
+     COMPLET → les missions (mêmes `.cv-job-description`) restent denses à 12px
+     pour tenir l'A4. L'aperçu `?print=1` est déjà à 14px (md:text-sm) → PDF == aperçu. */
+  .cv-full-cv-print-root #about .cv-job-description,
+  .cv-full-cv-print-root #domains .cv-job-description {
+    font-size: 0.875rem !important;
   }
 
   /* ================================================================
@@ -990,8 +1057,10 @@ html {
  * Nécessaire car les classes Tailwind `print:` ne s'appliquent pas en mode `cv-print-preview`.
  */
 .cv-print-preview .cv-short-page .header-content {
-  padding-top: 2rem !important;
-  padding-bottom: 0.5rem !important;
+  /* En-tête remonté : 2rem de padding haut gaspillaient ~24px et poussaient le
+     CV court sur une 2e page à l'impression. 0.5rem garde un filet d'air. */
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.25rem !important;
 }
 
 .cv-print-preview .cv-short-page .header-content h1 {
