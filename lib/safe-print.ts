@@ -11,9 +11,11 @@
  * Source unique partagée par le bouton imprimer (`HeaderToolbar`) et
  * l'auto-impression (`ShortAutoprint`).
  *
+ * @param onAfterPrint appelé une fois `window.print()` déclenché (ex. pour
+ *   consommer le paramètre `?autoprint=1` de l'URL et éviter qu'il ne persiste).
  * @returns une fonction d'annulation (à appeler au cleanup d'un effet React).
  */
-export function safePrint(): () => void {
+export function safePrint(onAfterPrint?: () => void): () => void {
   let cancelled = false;
   let printed = false;
 
@@ -21,6 +23,7 @@ export function safePrint(): () => void {
     if (cancelled || printed) return;
     printed = true;
     window.print();
+    onAfterPrint?.();
   };
 
   document.fonts.ready.then(() => {
