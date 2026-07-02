@@ -478,11 +478,7 @@
       "client": "La Compagnie 1818",
       "startDate": "2008-02-01",
       "roleId": "81994135",
-      "frameworks": [
-        "90601531",
-        "91050008",
-        "91050009"
-      ],
+      "frameworks": ["90601531", "91050008", "91050009"],
       "endDate": "2008-09-01",
       "display": false
     },
@@ -506,11 +502,7 @@
       "client": "Renault SA",
       "startDate": "2005-10-01",
       "roleId": "82089336",
-      "frameworks": [
-        "90601531",
-        "91050002",
-        "91050003"
-      ],
+      "frameworks": ["90601531", "91050002", "91050003"],
       "endDate": "2006-09-01",
       "display": false
     },
@@ -519,10 +511,7 @@
       "client": "CFA SUP 2000",
       "startDate": "2004-09-01",
       "roleId": "81994135",
-      "frameworks": [
-        "90601531",
-        "91050001"
-      ],
+      "frameworks": ["90601531", "91050001"],
       "endDate": "2005-08-01",
       "display": false
     }
@@ -603,10 +592,7 @@
       "name": "shopify-plugin-product-assistant",
       "startDate": "2025-12-01",
       "endDate": null,
-      "frameworks": [
-        "81826170",
-        "82456019"
-      ],
+      "frameworks": ["81826170", "82456019"],
       "bullets": [],
       "tags": [
         {
@@ -621,10 +607,7 @@
       "name": "cop1",
       "startDate": "2026-02-15",
       "endDate": null,
-      "frameworks": [
-        "81826170",
-        "82456019"
-      ],
+      "frameworks": ["81826170", "82456019"],
       "bullets": [],
       "tags": [
         {
@@ -640,10 +623,7 @@
       "name": "iamthelaw",
       "startDate": "2026-02-01",
       "endDate": null,
-      "frameworks": [
-        "81826170",
-        "82456019"
-      ],
+      "frameworks": ["81826170", "82456019"],
       "bullets": [],
       "tags": [
         {
@@ -659,10 +639,7 @@
       "name": "lifefindsaway",
       "startDate": "2026-02-01",
       "endDate": null,
-      "frameworks": [
-        "81826170",
-        "82456019"
-      ],
+      "frameworks": ["81826170", "82456019"],
       "bullets": [],
       "tags": [
         {
@@ -678,10 +655,7 @@
       "name": "realizator",
       "startDate": "2026-01-15",
       "endDate": null,
-      "frameworks": [
-        "81826170",
-        "82456019"
-      ],
+      "frameworks": ["81826170", "82456019"],
       "bullets": [],
       "tags": [
         {
@@ -696,10 +670,7 @@
       "name": "livestreamz",
       "startDate": "2026-01-15",
       "endDate": null,
-      "frameworks": [
-        "81826170",
-        "82456019"
-      ],
+      "frameworks": ["81826170", "82456019"],
       "bullets": [],
       "tags": [
         {
@@ -714,10 +685,7 @@
       "name": "MUTI",
       "startDate": "2026-01-01",
       "endDate": null,
-      "frameworks": [
-        "81826170",
-        "82456019"
-      ],
+      "frameworks": ["81826170", "82456019"],
       "bullets": [],
       "tags": [
         {
@@ -732,10 +700,7 @@
       "name": "byhere",
       "startDate": "2026-03-01",
       "endDate": null,
-      "frameworks": [
-        "81826170",
-        "82456019"
-      ],
+      "frameworks": ["81826170", "82456019"],
       "bullets": [],
       "tags": [
         {

@@ -1,0 +1,46 @@
+# E2E workflow — runs ONLY the print section-rhythm spec (regression net for my-resume#108).
+#
+# Deliberately NOT the full Playwright suite: e2e/dev-components.spec.ts carries
+# darwin pixel snapshots that would fail on ubuntu runners.
+#
+# The Playwright webServer (playwright.config.ts) runs `next start` on :3457, which
+# needs a prior production build — so we `npm run build` before `playwright test`.
+name: E2E
+
+on:
+  push:
+    branches: ['main']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: e2e-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  print-rhythm:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright (chromium)
+        run: npx playwright install --with-deps chromium
+
+      - name: Build
+        run: npm run build
+
+      - name: Run print section-rhythm e2e
+        run: npx playwright test e2e/print-section-rhythm.spec.ts

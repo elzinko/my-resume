@@ -118,7 +118,10 @@ function unionYears(
       start: new Date(i.startDate).getTime(),
       end: (i.endDate ? new Date(i.endDate) : new Date()).getTime(),
     }))
-    .filter((s) => Number.isFinite(s.start) && Number.isFinite(s.end) && s.end >= s.start)
+    .filter(
+      (s) =>
+        Number.isFinite(s.start) && Number.isFinite(s.end) && s.end >= s.start,
+    )
     .sort((a, b) => a.start - b.start);
   if (spans.length === 0) return 0;
   let totalMs = 0;
