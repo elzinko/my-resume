@@ -350,6 +350,18 @@ export default function DevRendersPage() {
   // correct on the client to avoid a hydration mismatch.
   const [isLocal, setIsLocal] = useState(true);
 
+  // Viewport étroit (téléphone) : on empile les grilles (compare / live / snapshots)
+  // sur une seule colonne pour rester lisible et sans débordement horizontal.
+  // Défaut `false` (desktop) → SSR/premier paint desktop, corrigé au montage.
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 640px)');
+    const sync = () => setIsMobile(mq.matches);
+    sync();
+    mq.addEventListener('change', sync);
+    return () => mq.removeEventListener('change', sync);
+  }, []);
+
   // Resolve the candidate default to the current origin, client-side only
   // (avoids any SSR/CSR mismatch on window.location).
   useEffect(() => {
@@ -401,15 +413,18 @@ export default function DevRendersPage() {
         background: '#1a1a2e',
         color: '#e0e0e0',
         minHeight: '100vh',
-        padding: '2rem',
+        padding: isMobile ? '1rem' : '2rem',
+        overflowX: 'hidden',
       }}
     >
       {/* Header */}
       <div
         style={{
           display: 'flex',
-          alignItems: 'center',
+          alignItems: isMobile ? 'flex-start' : 'center',
           justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: '1rem',
           marginBottom: '2rem',
         }}
       >
@@ -432,7 +447,14 @@ export default function DevRendersPage() {
             ) : null}
           </p>
         </div>
-        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+        <div
+          style={{
+            display: 'flex',
+            gap: '0.75rem',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+          }}
+        >
           {/* Language filter */}
           <div
             style={{
@@ -749,7 +771,7 @@ export default function DevRendersPage() {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: '160px 1fr 1fr',
+              gridTemplateColumns: isMobile ? '1fr' : '160px 1fr 1fr',
               gap: '1rem',
               marginBottom: '0.5rem',
               color: '#94a3b8',
@@ -779,7 +801,7 @@ export default function DevRendersPage() {
                     onClick={() => setExpandedRow(isOpen ? null : row.id)}
                     style={{
                       display: 'grid',
-                      gridTemplateColumns: '160px 1fr 1fr',
+                      gridTemplateColumns: isMobile ? '1fr' : '160px 1fr 1fr',
                       gap: '1rem',
                       alignItems: 'center',
                       cursor: 'pointer',
@@ -814,7 +836,7 @@ export default function DevRendersPage() {
                     <div
                       style={{
                         display: 'grid',
-                        gridTemplateColumns: '1fr 1fr',
+                        gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
                         gap: '1rem',
                         marginTop: '0.75rem',
                       }}
@@ -943,7 +965,7 @@ export default function DevRendersPage() {
                       style={{
                         display: 'grid',
                         gridTemplateColumns:
-                          langs.length === 1 ? '1fr' : '1fr 1fr',
+                          isMobile || langs.length === 1 ? '1fr' : '1fr 1fr',
                         gap: '1rem',
                       }}
                     >
@@ -973,7 +995,7 @@ export default function DevRendersPage() {
                       style={{
                         display: 'grid',
                         gridTemplateColumns:
-                          langs.length === 1 ? '1fr' : '1fr 1fr',
+                          isMobile || langs.length === 1 ? '1fr' : '1fr 1fr',
                         gap: '1rem',
                       }}
                     >
@@ -1000,7 +1022,9 @@ export default function DevRendersPage() {
                   <div
                     style={{
                       display: 'grid',
-                      gridTemplateColumns: `repeat(${colCount}, 1fr)`,
+                      gridTemplateColumns: isMobile
+                        ? '1fr'
+                        : `repeat(${colCount}, 1fr)`,
                       gap: '1rem',
                     }}
                   >
@@ -1029,7 +1053,9 @@ export default function DevRendersPage() {
                   <div
                     style={{
                       display: 'grid',
-                      gridTemplateColumns: `repeat(${colCount}, 1fr)`,
+                      gridTemplateColumns: isMobile
+                        ? '1fr'
+                        : `repeat(${colCount}, 1fr)`,
                       gap: '1rem',
                     }}
                   >
