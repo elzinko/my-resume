@@ -1,0 +1,48 @@
+# Revue visuelle (Argos) — gate de merge, SUR DEMANDE.
+#
+# Déclenché manuellement (workflow_dispatch) OU en posant le label `visual` sur une PR.
+# NE tourne PAS à chaque commit (coût). Capture les rendus du CV, les envoie à Argos,
+# qui compare à la baseline (main) et poste un check GitHub à approuver/rejeter.
+# Via branch protection (check requis), le squash+merge reste bloqué tant que non validé.
+#
+# ⚠️ PRÉREQUIS (voir VISUAL-REVIEW.md) : projet Argos + app GitHub Argos + secret ARGOS_TOKEN
+# + rendre le check Argos requis en branch protection.
+name: Visual review (Argos)
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [labeled]
+
+jobs:
+  visual:
+    if: github.event_name == 'workflow_dispatch' || github.event.label.name == 'visual'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright (chromium)
+        run: npx playwright install --with-deps chromium
+
+      - name: Build, start & capture screenshots
+        run: |
+          npm run build
+          npm run start &
+          npx wait-on http://localhost:3000 --timeout 90000
+          node scripts/argos-capture.mjs
+        env:
+          BASE_URL: http://localhost:3000
+
+      - name: Upload to Argos
+        run: npx @argos-ci/cli upload ./screenshots
+        env:
+          ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
