@@ -10,7 +10,17 @@ name: E2E
 on:
   push:
     branches: ['main']
+  # Sur PR : uniquement quand un fichier pouvant affecter le rendu print change.
+  # → pas de run sur les bumps Dependabot (package.json/lock) ni les PR doc/CI.
   pull_request:
+    paths:
+      - 'app/**'
+      - 'components/**'
+      - 'styles/**'
+      - 'lib/**'
+      - 'data/**'
+      - 'e2e/**'
+      - 'playwright.config.ts'
   workflow_dispatch:
 
 permissions:
