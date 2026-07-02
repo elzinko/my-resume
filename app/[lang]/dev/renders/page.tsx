@@ -345,10 +345,24 @@ export default function DevRendersPage() {
   const [compareLang, setCompareLang] = useState<CompareLang>('fr');
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
 
+  // Snapshots reads local files via /api/renders/* which are dev-only (404 « Dev
+  // only » on any deployment). Default to `true` so SSR/first paint match, then
+  // correct on the client to avoid a hydration mismatch.
+  const [isLocal, setIsLocal] = useState(true);
+
   // Resolve the candidate default to the current origin, client-side only
   // (avoids any SSR/CSR mismatch on window.location).
   useEffect(() => {
     setCandBase((prev) => prev || window.location.origin);
+
+    const localHosts = ['localhost', '127.0.0.1', '0.0.0.0'];
+    const local = localHosts.includes(window.location.hostname);
+    setIsLocal(local);
+    // Hors local, l'onglet Snapshots (fichiers dev-only) est masqué : bascule le
+    // défaut sur « Comparer » plutôt que de laisser un onglet cassé sélectionné.
+    if (!local) {
+      setActiveTab((prev) => (prev === 'snapshots' ? 'compare' : prev));
+    }
   }, []);
 
   // Fetch last generated time
@@ -455,27 +469,29 @@ export default function DevRendersPage() {
               border: '1px solid #334155',
             }}
           >
-            {(['snapshots', 'live', 'compare'] as const).map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                style={{
-                  padding: '0.4rem 1rem',
-                  background: activeTab === tab ? '#334155' : 'transparent',
-                  color: activeTab === tab ? '#5eead4' : '#94a3b8',
-                  border: 'none',
-                  cursor: 'pointer',
-                  fontSize: '0.85rem',
-                  fontWeight: 600,
-                }}
-              >
-                {tab === 'snapshots'
-                  ? 'Snapshots'
-                  : tab === 'live'
-                  ? 'Live'
-                  : 'Comparer'}
-              </button>
-            ))}
+            {(['snapshots', 'live', 'compare'] as const)
+              .filter((tab) => tab !== 'snapshots' || isLocal)
+              .map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  style={{
+                    padding: '0.4rem 1rem',
+                    background: activeTab === tab ? '#334155' : 'transparent',
+                    color: activeTab === tab ? '#5eead4' : '#94a3b8',
+                    border: 'none',
+                    cursor: 'pointer',
+                    fontSize: '0.85rem',
+                    fontWeight: 600,
+                  }}
+                >
+                  {tab === 'snapshots'
+                    ? 'Snapshots'
+                    : tab === 'live'
+                    ? 'Live'
+                    : 'Comparer'}
+                </button>
+              ))}
           </div>
           {/* Generate button */}
           <button
