@@ -1,6 +1,11 @@
 'use client';
 
 import React, { useCallback, useEffect, useState } from 'react';
+import {
+  compareCellSrc,
+  compareRows,
+  type CompareRow,
+} from '../../../../lib/dev-renders-compare';
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                              */
@@ -8,6 +13,10 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 type GenerateState = 'idle' | 'running' | 'done' | 'error';
 type LangFilter = 'FR' | 'EN' | 'all';
+type ActiveTab = 'snapshots' | 'live' | 'compare';
+type CompareLang = 'fr' | 'en';
+
+const DEFAULT_REFERENCE = 'https://www.elzinko.fr';
 
 /* ------------------------------------------------------------------ */
 /*  Variant definitions — FR + EN grouped per variant                  */
@@ -241,6 +250,78 @@ function LiveCard({ label, src }: { label: string; src: string }) {
 }
 
 /* ------------------------------------------------------------------ */
+/*  Compare — reduced live iframe cell                                 */
+/* ------------------------------------------------------------------ */
+
+/** Scale factor for the reduced (thumbnail) iframes in the compare matrix. */
+const COMPARE_SCALE = 0.4;
+/** Bounded height (px) of a reduced compare cell before overflow is clipped. */
+const COMPARE_CELL_HEIGHT = 320;
+/** Phone viewport width (px) for the mobile compare row. */
+const COMPARE_MOBILE_WIDTH = 390;
+
+function CompareCell({
+  src,
+  scale,
+  mobile,
+}: {
+  src: string;
+  scale: number;
+  mobile?: boolean;
+}) {
+  if (!src) {
+    return (
+      <div
+        style={{
+          height: COMPARE_CELL_HEIGHT,
+          border: '1px dashed #334155',
+          borderRadius: '4px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: '#64748b',
+          fontSize: '0.8rem',
+        }}
+      >
+        (URL manquante)
+      </div>
+    );
+  }
+  // Conteneur borné + overflow caché ; l'iframe est mise à l'échelle et sa
+  // taille inverse (100%/scale) pour remplir la cellule après réduction.
+  const inner: React.CSSProperties = mobile
+    ? {
+        width: COMPARE_MOBILE_WIDTH,
+        height: COMPARE_CELL_HEIGHT / scale,
+        transform: `scale(${scale})`,
+        transformOrigin: 'top left',
+        border: 'none',
+        background: 'white',
+      }
+    : {
+        width: `${100 / scale}%`,
+        height: COMPARE_CELL_HEIGHT / scale,
+        transform: `scale(${scale})`,
+        transformOrigin: 'top left',
+        border: 'none',
+        background: 'white',
+      };
+  return (
+    <div
+      style={{
+        height: COMPARE_CELL_HEIGHT,
+        overflow: 'hidden',
+        border: '1px solid #334155',
+        borderRadius: '4px',
+        background: 'white',
+      }}
+    >
+      <iframe src={src} style={inner} title={src} />
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /*  Page                                                               */
 /* ------------------------------------------------------------------ */
 
@@ -250,11 +331,23 @@ export default function DevRendersPage() {
   const [showLog, setShowLog] = useState(false);
   const [bust, setBust] = useState(Date.now());
   const [lastGenerated, setLastGenerated] = useState<number | null>(null);
-  const [activeTab, setActiveTab] = useState<'snapshots' | 'live'>('snapshots');
+  const [activeTab, setActiveTab] = useState<ActiveTab>('snapshots');
   const [expandedVariant, setExpandedVariant] = useState<string | null>(
     'short',
   );
   const [langFilter, setLangFilter] = useState<LangFilter>('FR');
+
+  // Compare mode state
+  const [refBase, setRefBase] = useState(DEFAULT_REFERENCE);
+  const [candBase, setCandBase] = useState('');
+  const [compareLang, setCompareLang] = useState<CompareLang>('fr');
+  const [expandedRow, setExpandedRow] = useState<string | null>(null);
+
+  // Resolve the candidate default to the current origin, client-side only
+  // (avoids any SSR/CSR mismatch on window.location).
+  useEffect(() => {
+    setCandBase((prev) => prev || window.location.origin);
+  }, []);
 
   // Fetch last generated time
   const refreshList = useCallback(() => {
@@ -360,7 +453,7 @@ export default function DevRendersPage() {
               border: '1px solid #334155',
             }}
           >
-            {(['snapshots', 'live'] as const).map((tab) => (
+            {(['snapshots', 'live', 'compare'] as const).map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
@@ -374,7 +467,11 @@ export default function DevRendersPage() {
                   fontWeight: 600,
                 }}
               >
-                {tab === 'snapshots' ? 'Snapshots' : 'Live'}
+                {tab === 'snapshots'
+                  ? 'Snapshots'
+                  : tab === 'live'
+                  ? 'Live'
+                  : 'Comparer'}
               </button>
             ))}
           </div>
@@ -524,10 +621,207 @@ export default function DevRendersPage() {
         </div>
       ) : null}
 
+      {/* ---------------------------------------------------------------- */}
+      {/*  Compare mode                                                     */}
+      {/* ---------------------------------------------------------------- */}
+      {activeTab === 'compare' ? (
+        <>
+          {/* Sticky controls: Reference / Candidate URLs + language */}
+          <div
+            style={{
+              position: 'sticky',
+              top: 0,
+              zIndex: 20,
+              background: '#1a1a2e',
+              borderBottom: '1px solid #334155',
+              padding: '0.75rem 0 1rem',
+              marginBottom: '1rem',
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: '1rem',
+              alignItems: 'flex-end',
+            }}
+          >
+            <label style={{ flex: '1 1 260px', minWidth: 220 }}>
+              <span
+                style={{
+                  display: 'block',
+                  color: '#94a3b8',
+                  fontSize: '0.75rem',
+                  marginBottom: '0.25rem',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em',
+                }}
+              >
+                Référence
+              </span>
+              <input
+                value={refBase}
+                onChange={(e) => setRefBase(e.target.value)}
+                placeholder="https://www.elzinko.fr"
+                style={{
+                  width: '100%',
+                  padding: '0.4rem 0.6rem',
+                  borderRadius: '6px',
+                  border: '1px solid #334155',
+                  background: '#0f172a',
+                  color: '#e0e0e0',
+                  fontSize: '0.85rem',
+                }}
+              />
+            </label>
+            <label style={{ flex: '1 1 260px', minWidth: 220 }}>
+              <span
+                style={{
+                  display: 'block',
+                  color: '#94a3b8',
+                  fontSize: '0.75rem',
+                  marginBottom: '0.25rem',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em',
+                }}
+              >
+                Candidat
+              </span>
+              <input
+                value={candBase}
+                onChange={(e) => setCandBase(e.target.value)}
+                placeholder="http://localhost:3000"
+                style={{
+                  width: '100%',
+                  padding: '0.4rem 0.6rem',
+                  borderRadius: '6px',
+                  border: '1px solid #334155',
+                  background: '#0f172a',
+                  color: '#e0e0e0',
+                  fontSize: '0.85rem',
+                }}
+              />
+            </label>
+            <div
+              style={{
+                display: 'flex',
+                borderRadius: '6px',
+                overflow: 'hidden',
+                border: '1px solid #334155',
+                height: 'fit-content',
+              }}
+            >
+              {(['fr', 'en'] as const).map((opt) => (
+                <button
+                  key={opt}
+                  onClick={() => setCompareLang(opt)}
+                  style={{
+                    padding: '0.4rem 0.9rem',
+                    background: compareLang === opt ? '#334155' : 'transparent',
+                    color: compareLang === opt ? '#f0abfc' : '#94a3b8',
+                    border: 'none',
+                    cursor: 'pointer',
+                    fontSize: '0.85rem',
+                    fontWeight: 600,
+                  }}
+                >
+                  {opt.toUpperCase()}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Column headers */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '160px 1fr 1fr',
+              gap: '1rem',
+              marginBottom: '0.5rem',
+              color: '#94a3b8',
+              fontSize: '0.8rem',
+              fontWeight: 600,
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em',
+            }}
+          >
+            <span />
+            <span>Référence</span>
+            <span>Candidat</span>
+          </div>
+
+          {/* Matrix: one row per (variant × medium) + mobile */}
+          <div
+            style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}
+          >
+            {compareRows().map((row) => {
+              const refSrc = compareCellSrc(refBase, compareLang, row);
+              const candSrc = compareCellSrc(candBase, compareLang, row);
+              const isOpen = expandedRow === row.id;
+              return (
+                <div key={row.id}>
+                  {/* Reduced row (click to expand/collapse) */}
+                  <div
+                    onClick={() => setExpandedRow(isOpen ? null : row.id)}
+                    style={{
+                      display: 'grid',
+                      gridTemplateColumns: '160px 1fr 1fr',
+                      gap: '1rem',
+                      alignItems: 'center',
+                      cursor: 'pointer',
+                      background: isOpen ? '#16213e' : 'transparent',
+                      borderRadius: '8px',
+                      padding: '0.5rem',
+                    }}
+                  >
+                    <div
+                      style={{
+                        color: isOpen ? '#5eead4' : '#a5b4fc',
+                        fontSize: '0.9rem',
+                        fontWeight: 600,
+                      }}
+                    >
+                      {row.label}
+                    </div>
+                    <CompareCell
+                      src={refSrc}
+                      scale={COMPARE_SCALE}
+                      mobile={row.mobile}
+                    />
+                    <CompareCell
+                      src={candSrc}
+                      scale={COMPARE_SCALE}
+                      mobile={row.mobile}
+                    />
+                  </div>
+
+                  {/* Detail: full-size iframes side by side, independent scroll */}
+                  {isOpen ? (
+                    <div
+                      style={{
+                        display: 'grid',
+                        gridTemplateColumns: '1fr 1fr',
+                        gap: '1rem',
+                        marginTop: '0.75rem',
+                      }}
+                    >
+                      <LiveCard
+                        label={`Référence — ${row.label}`}
+                        src={refSrc}
+                      />
+                      <LiveCard
+                        label={`Candidat — ${row.label}`}
+                        src={candSrc}
+                      />
+                    </div>
+                  ) : null}
+                </div>
+              );
+            })}
+          </div>
+        </>
+      ) : null}
+
       {/* Nav links */}
       <nav
         style={{
-          display: 'flex',
+          display: activeTab === 'compare' ? 'none' : 'flex',
           flexWrap: 'wrap',
           gap: '0.5rem',
           marginBottom: '1.5rem',
@@ -569,185 +863,186 @@ export default function DevRendersPage() {
         ))}
       </nav>
 
-      {/* Variants */}
-      {VARIANTS.map((v) => (
-        <section
-          key={v.id}
-          style={{
-            marginBottom: '2rem',
-            display:
-              expandedVariant === null || expandedVariant === v.id
-                ? 'block'
-                : 'none',
-          }}
-        >
-          <h2
+      {/* Variants (snapshots / live only) */}
+      {activeTab !== 'compare' &&
+        VARIANTS.map((v) => (
+          <section
+            key={v.id}
             style={{
-              fontSize: '1.3rem',
-              color: '#93c5fd',
-              borderBottom: '1px solid #334155',
-              paddingBottom: '0.5rem',
-              marginBottom: '1rem',
-              cursor: 'pointer',
+              marginBottom: '2rem',
+              display:
+                expandedVariant === null || expandedVariant === v.id
+                  ? 'block'
+                  : 'none',
             }}
-            onClick={() =>
-              setExpandedVariant(expandedVariant === v.id ? null : v.id)
-            }
           >
-            {v.title}
-          </h2>
+            <h2
+              style={{
+                fontSize: '1.3rem',
+                color: '#93c5fd',
+                borderBottom: '1px solid #334155',
+                paddingBottom: '0.5rem',
+                marginBottom: '1rem',
+                cursor: 'pointer',
+              }}
+              onClick={() =>
+                setExpandedVariant(expandedVariant === v.id ? null : v.id)
+              }
+            >
+              {v.title}
+            </h2>
 
-          {(() => {
-            const langs =
-              langFilter === 'all'
-                ? v.langs
-                : v.langs.filter((l) => l.lang === langFilter);
-            const colCount = langs.length === 1 ? 2 : 4;
+            {(() => {
+              const langs =
+                langFilter === 'all'
+                  ? v.langs
+                  : v.langs.filter((l) => l.lang === langFilter);
+              const colCount = langs.length === 1 ? 2 : 4;
 
-            return activeTab === 'live' ? (
-              /* -------- Live iframes -------- */
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '1rem',
-                }}
-              >
-                {/* Row 1: Screen */}
-                <div>
-                  <h3
-                    style={{
-                      color: '#94a3b8',
-                      fontSize: '0.85rem',
-                      marginBottom: '0.5rem',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.05em',
-                    }}
-                  >
-                    Screen
-                  </h3>
+              return activeTab === 'live' ? (
+                /* -------- Live iframes -------- */
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '1rem',
+                  }}
+                >
+                  {/* Row 1: Screen */}
+                  <div>
+                    <h3
+                      style={{
+                        color: '#94a3b8',
+                        fontSize: '0.85rem',
+                        marginBottom: '0.5rem',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.05em',
+                      }}
+                    >
+                      Screen
+                    </h3>
+                    <div
+                      style={{
+                        display: 'grid',
+                        gridTemplateColumns:
+                          langs.length === 1 ? '1fr' : '1fr 1fr',
+                        gap: '1rem',
+                      }}
+                    >
+                      {langs.map((l) => (
+                        <LiveCard
+                          key={l.lang}
+                          label={`${l.lang} Screen`}
+                          src={l.screenPath}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  {/* Row 2: Print Preview */}
+                  <div>
+                    <h3
+                      style={{
+                        color: '#94a3b8',
+                        fontSize: '0.85rem',
+                        marginBottom: '0.5rem',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.05em',
+                      }}
+                    >
+                      Print Preview
+                    </h3>
+                    <div
+                      style={{
+                        display: 'grid',
+                        gridTemplateColumns:
+                          langs.length === 1 ? '1fr' : '1fr 1fr',
+                        gap: '1rem',
+                      }}
+                    >
+                      {langs.map((l) => (
+                        <LiveCard
+                          key={l.lang}
+                          label={`${l.lang} Print Preview`}
+                          src={l.previewPath}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                /* -------- Snapshots -------- */
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '1rem',
+                  }}
+                >
+                  {/* Row 1: Screen + Print Preview */}
                   <div
                     style={{
                       display: 'grid',
-                      gridTemplateColumns:
-                        langs.length === 1 ? '1fr' : '1fr 1fr',
+                      gridTemplateColumns: `repeat(${colCount}, 1fr)`,
                       gap: '1rem',
                     }}
                   >
                     {langs.map((l) => (
-                      <LiveCard
-                        key={l.lang}
+                      <SnapshotCard
+                        key={`${l.lang}-screen`}
                         label={`${l.lang} Screen`}
-                        src={l.screenPath}
+                        tag="desktop"
+                        tagClass="tag-screen"
+                        file={l.screen}
+                        bust={bust}
+                      />
+                    ))}
+                    {langs.map((l) => (
+                      <SnapshotCard
+                        key={`${l.lang}-preview`}
+                        label={`${l.lang} Print Preview`}
+                        tag="?print=1"
+                        tagClass="tag-preview"
+                        file={l.printPreview}
+                        bust={bust}
                       />
                     ))}
                   </div>
-                </div>
-                {/* Row 2: Print Preview */}
-                <div>
-                  <h3
-                    style={{
-                      color: '#94a3b8',
-                      fontSize: '0.85rem',
-                      marginBottom: '0.5rem',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.05em',
-                    }}
-                  >
-                    Print Preview
-                  </h3>
+                  {/* Row 2: Mobile + PDF */}
                   <div
                     style={{
                       display: 'grid',
-                      gridTemplateColumns:
-                        langs.length === 1 ? '1fr' : '1fr 1fr',
+                      gridTemplateColumns: `repeat(${colCount}, 1fr)`,
                       gap: '1rem',
                     }}
                   >
                     {langs.map((l) => (
-                      <LiveCard
-                        key={l.lang}
-                        label={`${l.lang} Print Preview`}
-                        src={l.previewPath}
+                      <SnapshotCard
+                        key={`${l.lang}-mobile`}
+                        label={`${l.lang} Mobile`}
+                        tag="390px"
+                        tagClass="tag-mobile"
+                        file={l.mobile}
+                        bust={bust}
+                        phone
+                      />
+                    ))}
+                    {langs.map((l) => (
+                      <SnapshotCard
+                        key={`${l.lang}-pdf`}
+                        label={`${l.lang} PDF`}
+                        tag="A4"
+                        tagClass="tag-pdf"
+                        file={l.pdf}
+                        bust={bust}
+                        isPdf
                       />
                     ))}
                   </div>
                 </div>
-              </div>
-            ) : (
-              /* -------- Snapshots -------- */
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '1rem',
-                }}
-              >
-                {/* Row 1: Screen + Print Preview */}
-                <div
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: `repeat(${colCount}, 1fr)`,
-                    gap: '1rem',
-                  }}
-                >
-                  {langs.map((l) => (
-                    <SnapshotCard
-                      key={`${l.lang}-screen`}
-                      label={`${l.lang} Screen`}
-                      tag="desktop"
-                      tagClass="tag-screen"
-                      file={l.screen}
-                      bust={bust}
-                    />
-                  ))}
-                  {langs.map((l) => (
-                    <SnapshotCard
-                      key={`${l.lang}-preview`}
-                      label={`${l.lang} Print Preview`}
-                      tag="?print=1"
-                      tagClass="tag-preview"
-                      file={l.printPreview}
-                      bust={bust}
-                    />
-                  ))}
-                </div>
-                {/* Row 2: Mobile + PDF */}
-                <div
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: `repeat(${colCount}, 1fr)`,
-                    gap: '1rem',
-                  }}
-                >
-                  {langs.map((l) => (
-                    <SnapshotCard
-                      key={`${l.lang}-mobile`}
-                      label={`${l.lang} Mobile`}
-                      tag="390px"
-                      tagClass="tag-mobile"
-                      file={l.mobile}
-                      bust={bust}
-                      phone
-                    />
-                  ))}
-                  {langs.map((l) => (
-                    <SnapshotCard
-                      key={`${l.lang}-pdf`}
-                      label={`${l.lang} PDF`}
-                      tag="A4"
-                      tagClass="tag-pdf"
-                      file={l.pdf}
-                      bust={bust}
-                      isPdf
-                    />
-                  ))}
-                </div>
-              </div>
-            );
-          })()}
-        </section>
-      ))}
+              );
+            })()}
+          </section>
+        ))}
 
       {/* Tag color classes */}
       <style>{`
