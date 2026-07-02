@@ -1,0 +1,53 @@
+# Déploiement PRODUCTION (elzinko.fr) — UNIQUEMENT sur tag `v*`.
+#
+# Stratégie (fiche 0013) : `main` + branches → PREVIEW/STAGING (auto via l'intégration
+# git Vercel) ; la PROD ne part QUE quand on versionne (tag). Vercel n'ayant pas de
+# déploiement-sur-tag natif, on le fait ici via la CLI Vercel.
+#
+# ⚠️ PRÉREQUIS (à faire UNE fois — voir DEPLOY.md) :
+#   1) Vercel dashboard → Settings → Git → "Production Branch" = `production`
+#      (branche jamais poussée) → `main` devient un déploiement PREVIEW (= staging).
+#   2) Secrets repo : VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID.
+#
+# Usage : `git tag v1.2.3 && git push origin v1.2.3`.
+name: Deploy production (on tag)
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+concurrency:
+  group: prod-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy-prod:
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel@latest
+
+      - name: Pull Vercel env (production)
+        run: vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build (production)
+        run: vercel build --prod --token="$VERCEL_TOKEN"
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy prebuilt to production (elzinko.fr)
+        run: vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
