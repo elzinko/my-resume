@@ -237,6 +237,8 @@ function LiveCard({ label, src }: { label: string; src: string }) {
       </h3>
       <iframe
         src={src}
+        title={label}
+        loading="lazy"
         style={{
           width: '100%',
           height: '900px',
@@ -316,7 +318,7 @@ function CompareCell({
         background: 'white',
       }}
     >
-      <iframe src={src} style={inner} title={src} />
+      <iframe src={src} style={inner} title={src} loading="lazy" />
     </div>
   );
 }

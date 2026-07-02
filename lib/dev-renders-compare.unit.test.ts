@@ -71,6 +71,26 @@ test('compareCellSrc returns empty string when base is empty', () => {
   assert.equal(compareCellSrc('   ', 'fr', row), '');
 });
 
+test('compareCellSrc rejects a non-http(s) scheme (javascript:)', () => {
+  const row: CompareRow = {
+    id: 'full-web',
+    label: 'Full — Web',
+    variantPath: '',
+    mediumQuery: '',
+  };
+  assert.equal(compareCellSrc('javascript:alert(1)', 'fr', row), '');
+});
+
+test('compareCellSrc rejects a base without an http(s) scheme', () => {
+  const row: CompareRow = {
+    id: 'full-web',
+    label: 'Full — Web',
+    variantPath: '',
+    mediumQuery: '',
+  };
+  assert.equal(compareCellSrc('elzinko.fr', 'fr', row), '');
+});
+
 // --- compareRows: the matrix (variant × medium) + mobile ---
 
 test('compareRows lists variant×medium combos plus a mobile row', () => {

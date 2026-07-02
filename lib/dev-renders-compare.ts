@@ -30,6 +30,9 @@ export function compareCellSrc(
 ): string {
   const cleanBase = base.trim().replace(/\/+$/, '');
   if (!cleanBase) return '';
+  // Whitelist http(s) only: a base without scheme, or a javascript:/data: URL,
+  // must not be injected into an iframe src. Caller renders a placeholder on ''.
+  if (!/^https?:\/\//i.test(cleanBase)) return '';
   return `${cleanBase}/${lang}${row.variantPath}${row.mediumQuery}`;
 }
 
