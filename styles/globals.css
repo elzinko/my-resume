@@ -638,9 +638,12 @@ html {
     margin-bottom: 0 !important;
   }
 
-  /* Pied de bloc expériences */
+  /* Pied de bloc expériences.
+     Pas de `margin-top` ici : l'écart au-dessus doit rester celui de l'inter-
+     expérience (`space-y-4` = 1rem, via le `mt-4` de base) dans TOUS les régimes.
+     Le compresser en print (ex. 0.375rem) collait le bloc à la dernière expérience
+     sur le PDF alors que l'aperçu/web l'espaçaient normalement (dérive WYSIWYG). */
   .cv-short-page .cv-experience-footer {
-    margin-top: 0.375rem !important;
     padding-left: 0.5rem !important;
   }
 
