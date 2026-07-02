@@ -6,6 +6,14 @@ Layout unifié en une seule colonne linéaire. Le CV complet (`OfferTailoredShel
 
 **Nettoyage futur** : retirer entièrement `?print` / `FullCvPrintPreviewEffect` / les classes `print-preview:*` devenues quasi-inutiles.
 
+## Loisirs — bascule inline / 2 lignes via `?entriesLayout`
+
+Les **Études** supportent déjà `?entriesLayout=inline|stacked` (défaut `inline` : titre + détail sur une ligne, année à droite ; `stacked` : détail en L2). Étendre le **même paramètre partagé** aux **Loisirs** (description sur 1 ligne inline vs 2 lignes). Le séparateur `·` des Loisirs est déjà en place (fait avec les Études).
+
+**Pourquoi pas fait en même temps que les Études** : contrairement aux Études (grille `.cv-entry`), la visibilité des descriptions loisirs (`.cv-hobby-desc`) est pilotée par des règles **empilées** — container-query (`display:none` < 36rem / `inline` ≥ 36rem), `@media print` et `.cv-print-preview` — **toutes en `!important` dans `@layer components`**. Or `!important` **inverse** l'ordre des cascade-layers : un override fiable de `stacked` doit être **hors layer** (top-level), placé **après** le bloc `.cv-print-preview … .cv-hobby-desc` (~`styles/globals.css:1123`), et il **changerait le comportement mobile** (description actuellement masquée < 36rem). Donc pas trivial → passe dédiée.
+
+**Plan** : câbler `entriesLayout` à `<Hobbies>` (`OfferTailoredShell`) + `data-entries-layout` sur la section `#hobbies` ; règle top-level `.cv-cq-section[data-cv-section='hobbies'][data-entries-layout='stacked'] .cv-hobby-desc { display: block !important }` (+ `::before{content:none}`) ; décider du comportement mobile (desc en 2 lignes ou masquée) ; vérifier les 4 rendus (cf. `docs/cv-rendering-review-checklist.md`).
+
 ## Design system — CSS variables et tokens
 
 Remplacer les classes Tailwind `print:*` dispersées dans le JSX par des **CSS variables** dans `styles/globals.css`. Un seul jeu de tokens avec override `@media print` :
