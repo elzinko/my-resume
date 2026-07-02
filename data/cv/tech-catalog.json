@@ -48,9 +48,9 @@
     },
     {
       "id": "skill_hexa_tc2026",
-      "name": "Architecture hexagonale",
+      "name": "Hexagonal",
       "link": "https://alistair.cockburn.us/hexagonal-architecture/",
-      "nameEn": "Hexagonal architecture"
+      "nameEn": "Hexagonal"
     },
     {
       "id": "skill_nodejs_tc2026",
@@ -203,7 +203,7 @@
     },
     {
       "id": "90733900",
-      "name": "Hexagonal architecture",
+      "name": "Hexagonal",
       "link": "https://en.wikipedia.org/wiki/Hexagonal_architecture_(software)"
     },
     {
