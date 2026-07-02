@@ -10,6 +10,7 @@ import { offerPriorityTokensAndContact } from '@/lib/offer-page-data';
 import { resolveOfferFromUrlParams } from '@/lib/query-offer-params';
 import { recordToURLSearchParams } from '@/lib/search-params-to-url';
 import { parseDetailLevel, parseMaxJobShown } from '@/lib/cv-detail-level';
+import { parseEntriesLayout } from '@/lib/cv-entries-layout';
 import type { ContractType } from '@/data/offers/types';
 import type { CvMode } from '@/lib/cv-contract-text';
 
@@ -91,6 +92,9 @@ export default async function Page({
   // Pagination : `?maxJobShown=N` → N postes affichés en entrée ; au-delà, les
   // clients sont pliés dans le footer de synthèse. Sans param → tous affichés.
   const maxJobShown = parseMaxJobShown(sp.get('maxJobShown'));
+  // Disposition des entrées Études / Loisirs : `?entriesLayout=inline|stacked`
+  // (défaut inline : titre + détail sur une ligne, année à droite ; stacked = 2 lignes).
+  const entriesLayout = parseEntriesLayout(sp.get('entriesLayout'));
 
   return (
     <OfferTailoredShell
@@ -113,6 +117,7 @@ export default async function Page({
       headerAlign={headerAlign}
       detailLevel={detailLevel}
       maxJobShown={maxJobShown}
+      entriesLayout={entriesLayout}
     />
   );
 }

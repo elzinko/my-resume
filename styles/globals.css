@@ -248,6 +248,71 @@
   }
 
   /**
+   * Disposition des entrées pilotée par `?entriesLayout` (attribut
+   * `data-entries-layout` posé sur la SECTION : Études, Loisirs). Ces règles
+   * gagnent en spécificité sur la base `.cv-cq-section .cv-entry` (0,3,x vs 0,2,x)
+   * → elles UNIFIENT web / aperçu / PDF sans copie print dupliquée (cf. invariants
+   * CLAUDE.md). Projets / Apprentissages n'ont pas l'attribut → base inchangée.
+   *
+   * - `stacked` : titre (+ année à droite) L1, détail L2, dans TOUS les régimes
+   *   (on annule le repli inline `— · ` de l'impression → web == PDF).
+   * - `inline` : titre + détail sur UNE ligne, année collée à droite, en desktop
+   *   (`min-width: 768px`, ce qui couvre AUSSI l'aperçu `?print`, un écran ≥ 768px)
+   *   ET impression. Sous md (mobile), aucune règle → repli sur la grille 2 lignes
+   *   de base (lisible sur petit écran).
+   */
+  .cv-cq-section[data-entries-layout='stacked'] .cv-entry {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: 'title year' 'detail detail';
+    column-gap: 0.75rem;
+    align-items: baseline;
+  }
+  .cv-cq-section[data-entries-layout='stacked'] .cv-entry-title {
+    grid-area: title;
+    min-width: 0;
+  }
+  .cv-cq-section[data-entries-layout='stacked'] .cv-entry-year {
+    grid-area: year;
+    justify-self: end;
+    white-space: nowrap;
+  }
+  .cv-cq-section[data-entries-layout='stacked'] .cv-entry-detail {
+    grid-area: detail;
+  }
+  .cv-cq-section[data-entries-layout='stacked'] .cv-entry-detail::before,
+  .cv-cq-section[data-entries-layout='stacked'] .cv-entry-year::before {
+    content: none;
+  }
+
+  @media (min-width: 768px), print {
+    .cv-cq-section[data-entries-layout='inline'] .cv-entry {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      column-gap: 0;
+    }
+    .cv-cq-section[data-entries-layout='inline'] .cv-entry-title {
+      min-width: 0;
+    }
+    /* Séparateur titre → détail : point médian entouré d'espaces INSÉCABLES
+       (`\00a0`) — un espace normal en tête de flex-item serait rogné, collant le
+       « · » au titre. Espace avant ET après (lisibilité), pas de tiret cadratin. */
+    .cv-cq-section[data-entries-layout='inline'] .cv-entry-detail::before {
+      content: '\00a0·\00a0';
+    }
+    /* Année collée à droite, sur la ligne du titre (poussée par le flex). */
+    .cv-cq-section[data-entries-layout='inline'] .cv-entry-year {
+      margin-left: auto;
+      padding-left: 0.75rem;
+      white-space: nowrap;
+    }
+    .cv-cq-section[data-entries-layout='inline'] .cv-entry-year::before {
+      content: none;
+    }
+  }
+
+  /**
    * Sections dont le rendu dépend de la largeur disponible (container queries) :
    * projets (titre / description / date), études (méta lieu), veille et loisirs (liste vs slashs).
    */

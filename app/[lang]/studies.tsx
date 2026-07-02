@@ -5,6 +5,10 @@ import {
   byEndThenStart,
   sortChronologicalDesc,
 } from '@/lib/sort-chronological';
+import {
+  DEFAULT_ENTRIES_LAYOUT,
+  type EntriesLayout,
+} from '@/lib/cv-entries-layout';
 import { Locale } from 'i18n-config';
 import React from 'react';
 
@@ -26,10 +30,13 @@ function studyYear(study: any): string {
 export default async function studies({
   locale,
   condensed = false,
+  entriesLayout = DEFAULT_ENTRIES_LAYOUT,
 }: {
   locale: Locale;
   /** `true` : rendu compact (CV court). `false` : une ligne inline (CV complet). */
   condensed?: boolean;
+  /** Disposition des entrées (`inline` = 1 ligne + année à droite ; `stacked` = 2 lignes). */
+  entriesLayout?: EntriesLayout;
 }) {
   const data: any = await getCvData(locale);
   const studiesOrdered = sortChronologicalDesc(
@@ -39,6 +46,7 @@ export default async function studies({
   return (
     <section
       id="studies"
+      data-entries-layout={entriesLayout}
       className="cv-cq-section mt-10 print-preview:order-[95] print:order-[95]"
     >
       <SectionHeadingAts
