@@ -25,7 +25,10 @@ export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
-  if (process.env.VERCEL === '1') {
+  // Les outils /dev/* (renders, components…) restent accessibles en local ET
+  // sur les déploiements de preview/staging (pour comparer un rendu avant merge),
+  // mais sont masqués (404) sur la prod publique (elzinko.fr) où le CV est servi.
+  if (process.env.VERCEL_ENV === 'production') {
     const devPattern = /^\/(?:fr|en)\/dev\//;
     if (devPattern.test(pathname)) {
       return NextResponse.rewrite(new URL('/not-found', request.url), {
