@@ -21,6 +21,7 @@ import SectionHeadingAts from '@/components/SectionHeadingAts';
 import type { ContractType } from '@/data/offers/types';
 import type { CvMode } from '@/lib/cv-contract-text';
 import type { DetailLevel } from '@/lib/cv-detail-level';
+import type { EntriesLayout } from '@/lib/cv-entries-layout';
 import type { Locale } from 'i18n-config';
 /**
  * Mise en page commune des pages CV « sur mesure » (custom / match).
@@ -44,6 +45,7 @@ export default function OfferTailoredShell({
   headerAlign = 'left',
   detailLevel = 'full',
   maxJobShown = null,
+  entriesLayout = 'inline',
 }: {
   lang: Locale;
   educationLevel: EducationLevelContent;
@@ -77,6 +79,8 @@ export default function OfferTailoredShell({
   detailLevel?: DetailLevel;
   /** Pagination : nb de postes affichés en entrée (`?maxJobShown=N`), reste plié au footer. */
   maxJobShown?: number | null;
+  /** Disposition des entrées Études / Loisirs (`?entriesLayout=inline|stacked`). */
+  entriesLayout?: EntriesLayout;
 }) {
   const resolvedContact: ContactLocationOverlay = contactLocation ?? {
     mapsHref: buildContactLocationHref(),
@@ -106,7 +110,7 @@ export default function OfferTailoredShell({
           />
 
           <div className="cv-full-cv-print-root">
-            <div className="mb-2 print-preview:order-[10] max-md:contents print:order-[10]">
+            <div className="mb-2 print-preview:order-[10] print:order-[10] max-md:contents">
               {/* @ts-expect-error Server Component */}
               <About
                 locale={lang}
@@ -159,7 +163,7 @@ export default function OfferTailoredShell({
               maxJobShown={maxJobShown}
             />
             {/* @ts-expect-error Server Component */}
-            <Studies locale={lang} />
+            <Studies locale={lang} entriesLayout={entriesLayout} />
             {/* @ts-expect-error Server Component */}
             <Projects locale={lang} mode={mode} />
             {/* @ts-expect-error Server Component */}
