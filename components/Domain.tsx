@@ -109,14 +109,18 @@ export default function Domain({
   // sous le titre de section « Profil » (text-2xl = 24px) pour une hiérarchie claire
   // sur TOUS les supports (écran, aperçu ET impression : classes statiques sans
   // variante print → 16/20 < 24 partout).
+  // Sous-domaines = SOUS-titres du Profil : couleur TAMISÉE (slate-500) pour les
+  // subordonner visuellement au titre de section « Profil » (lui en blue-400 vif via
+  // SectionHeadingAts accent=blue). L'accent techno reste porté par les pastilles bleues
+  // en dessous. slate-500 (#64748b) = contraste 4.76:1 sur blanc (lisible web ET print).
   const titleTypo = compact
-    ? 'text-base font-semibold text-blue-400'
-    : 'text-xl font-semibold text-blue-400';
+    ? 'text-base font-semibold text-slate-500'
+    : 'text-xl font-semibold text-slate-500';
 
   const titleBlock =
     accent === 'verticalBar' ? (
       <div
-        className={`flex items-stretch gap-1.5 text-blue-400 ${
+        className={`flex items-stretch gap-1.5 text-slate-500 ${
           compact ? 'print:gap-1' : ''
         }`}
       >
