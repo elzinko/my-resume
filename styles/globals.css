@@ -806,10 +806,12 @@ html {
     page-break-inside: auto !important;
   }
 
-  /* Espacement avant la section Experience pour eviter un titre orphelin en bas de page. */
-  .cv-print-jobs-group {
-    padding-top: 1rem;
-  }
+  /* Rythme inter-sections UNIFORME avant « Expérience » : pas de padding ici.
+     Un `padding-top` créait +1rem d'écart avant le titre Expérience vs les autres
+     sections (seulement en impression/aperçu → le web, lui, était bon). L'écart est
+     désormais porté par le seul flex-gap de `.cv-full-cv-print-root`, comme partout.
+     L'anti-titre-orphelin est déjà assuré par `break-after: avoid` sur les `h2`
+     (cf. plus haut) → un titre n'est jamais seul en bas de page. */
 
   /**
    * Le bouton écran « Masquer les détails » ne doit JAMAIS affecter le PDF :
@@ -1198,8 +1200,4 @@ html {
 .cv-print-preview .cv-full-cv-print-root #jobs {
   break-before: auto !important;
   page-break-before: auto !important;
-}
-
-.cv-print-preview .cv-print-jobs-group {
-  padding-top: 1rem;
 }
