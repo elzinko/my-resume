@@ -51,14 +51,26 @@ export default function CvZoomSlider() {
   useEffect(() => {
     // Réappliqué à CHAQUE changement de `?print` (printMode en dépendance) → le clic
     // sur l'œil rebascule la taille sans recharger. Pas de localStorage.
+    //  - MOBILE (< md), vue normale → zoom 1 : le CV court se rend en vue responsive
+    //    lisible (pas un document A4 réduit). `fitToWidth` viserait l'A4 (800px) → ~0.5
+    //    sur téléphone = illisible (« affichage trop petit » quand on ouvre un lien
+    //    /short sur mobile). La typo A4 est neutralisée en parallèle (globals.css,
+    //    garde-fou `min-width: 768px`). Le curseur reste `md:flex` (masqué mobile).
     //  - aperçu ?print=1 → SCREEN_A4_ZOOM (≈ 21cm A4 réelle sur l'écran de l'auteur) ;
-    //  - vue normale     → plein écran (ajusté à la largeur dispo).
+    //  - vue normale desktop → plein écran (ajusté à la largeur dispo).
+    const isMobile =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(max-width: 767px)').matches;
+    if (isMobile && !printMode) {
+      apply(1);
+      return;
+    }
     apply(printMode ? SCREEN_A4_ZOOM : fitToWidth());
   }, [apply, fitToWidth, printMode]);
 
   return (
     <div
-      className="fixed bottom-4 right-4 z-[200] hidden items-center gap-2 rounded-full border border-slate-300/70 bg-white/90 px-3 py-1.5 text-xs text-slate-600 shadow-md backdrop-blur supports-[backdrop-filter]:bg-white/70 md:flex print:hidden"
+      className="fixed bottom-4 right-4 z-[200] hidden items-center gap-2 rounded-full border border-slate-300/70 bg-white/90 px-3 py-1.5 text-xs text-slate-600 shadow-md backdrop-blur supports-[backdrop-filter]:bg-white/70 print:hidden md:flex"
       data-testid="cv-zoom-slider"
     >
       <span className="select-none font-medium">Zoom</span>
