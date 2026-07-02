@@ -41,7 +41,7 @@ export default function HobbiesDisplay({
             />
             {hobby.description ? (
               <span className="cv-hobby-desc ml-1 text-sm text-cv-body-muted">
-                — {hobby.description}
+                · {hobby.description}
               </span>
             ) : null}
           </li>
