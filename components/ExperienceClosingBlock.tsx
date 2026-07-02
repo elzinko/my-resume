@@ -21,7 +21,11 @@ export default function ExperienceClosingBlock({
   return (
     <div
       id="experience-footer"
-      className="cv-experience-footer mt-4 border-l-4 border-pink-300/50 pl-3 print:mt-2"
+      // Écart au-dessus = MÊME que l'inter-expérience (`space-y-4` = 1rem) dans TOUS
+      // les régimes : ce bloc de clôture se lit comme un « item » de la liste des
+      // expériences. Pas de compression print-only (sinon le PDF colle le bloc à la
+      // dernière expérience alors que l'aperçu/web l'espacent — cf. CLAUDE.md WYSIWYG).
+      className="cv-experience-footer mt-4 border-l-4 border-pink-300/50 pl-3"
     >
       <p className="text-xs text-gray-400 print:text-[10px]">
         <strong className="text-cv-jobs">{moreExperience}</strong>{' '}
