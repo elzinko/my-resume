@@ -128,7 +128,7 @@
   .cv-full-cv-print-root {
     /* Même token que le CV court → rythme inter-sections identique écran ET
        impression (web 1.5rem, print 1.3rem), au lieu d'un print:gap-3 codé en dur. */
-    @apply flex flex-col gap-[var(--cv-section-gap)] max-md:mt-20 print:!mt-0;
+    @apply flex flex-col gap-[var(--cv-section-gap)] print:!mt-0 max-md:mt-20;
   }
 
   .cv-full-cv-print-root > section,
@@ -447,7 +447,7 @@
     /* Plancher MOBILE 1rem : base `text-base` (16px) = mobile lisible ; desktop
        `md:text-sm` (14px, aperçu A4) ; impression `print:text-xs` (12px, ou
        densifié à 10px sur `.cv-short-page`). Le type-scale propre relève du DS. */
-    @apply text-justify text-base leading-snug text-cv-body-muted md:text-sm print:text-xs;
+    @apply text-justify text-base leading-snug text-cv-body-muted print:text-xs md:text-sm;
   }
 
   /**
@@ -1057,79 +1057,89 @@ html {
 /*
  * Short CV print-preview : header compact (même tailles que compactPrint en @media print).
  * Nécessaire car les classes Tailwind `print:` ne s'appliquent pas en mode `cv-print-preview`.
+ *
+ * ⚠️ MOBILE (< md) : ces tailles d'IMPRESSION (A4, 9-12px) ne doivent PAS s'appliquer
+ * sur téléphone. Le CV court `.cv-print-preview` est actif EN PERMANENCE (cf.
+ * app/[lang]/short/layout.tsx) ; sans ce garde-fou `min-width: 768px`, un lien `/short`
+ * ouvert sur mobile rendait le corps à ~10px (illisible = « affichage trop petit »).
+ * Sous md, le court retombe sur la typo responsive de base (`text-base` = 16px), tandis
+ * que le vrai PDF conserve ses tailles via les copies `@media print`. Le zoom d'ajustement
+ * est neutralisé en parallèle dans CvZoomSlider. Cf. render `fr-short-mobile` + CLAUDE.md.
  */
-.cv-print-preview .cv-short-page .header-content {
-  /* En-tête remonté : 2rem de padding haut gaspillaient ~24px et poussaient le
+@media (min-width: 768px) {
+  .cv-print-preview .cv-short-page .header-content {
+    /* En-tête remonté : 2rem de padding haut gaspillaient ~24px et poussaient le
      CV court sur une 2e page à l'impression. 0.5rem garde un filet d'air. */
-  padding-top: 0.5rem !important;
-  padding-bottom: 0.25rem !important;
-}
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.25rem !important;
+  }
 
-.cv-print-preview .cv-short-page .header-content h1 {
-  font-size: 1.875rem !important; /* text-3xl */
-  line-height: 1.25 !important;
-}
+  .cv-print-preview .cv-short-page .header-content h1 {
+    font-size: 1.875rem !important; /* text-3xl */
+    line-height: 1.25 !important;
+  }
 
-.cv-print-preview .cv-short-page .header-content p {
-  margin-top: 0.125rem !important;
-  font-size: 1rem !important; /* text-base */
-  line-height: 1.375 !important;
-}
+  .cv-print-preview .cv-short-page .header-content p {
+    margin-top: 0.125rem !important;
+    font-size: 1rem !important; /* text-base */
+    line-height: 1.375 !important;
+  }
 
-/* Short print-preview : CORPS de texte aux tailles d'IMPRESSION (les utilitaires
+  /* Short print-preview : CORPS de texte aux tailles d'IMPRESSION (les utilitaires
    Tailwind `print:` ne s'appliquent pas en aperçu → sinon l'aperçu montre 14px
    alors que le PDF fait 10px). Scopé `.cv-print-preview` → vue normale intacte. */
-.cv-print-preview .cv-short-page .cv-job-description {
-  font-size: 0.625rem !important; /* 10px */
-  line-height: 1.35 !important;
-}
-.cv-print-preview .cv-short-page .cv-experience-footer p {
-  font-size: 0.5625rem !important; /* 9px */
-}
-.cv-print-preview .cv-short-page .cv-page-split .cv-row-with-side-meta {
-  font-size: 0.75rem !important; /* 12px — en-tête expérience (uniforme) */
-}
-.cv-print-preview
-  .cv-short-page
-  .cv-page-split
-  .cv-row-with-side-meta
-  .font-bold {
-  font-size: 0.75rem !important; /* 12px — client (gras), uniforme */
-}
-/* Colonne secondaire du court (Contact / Études / Projets) : 12px UNIFORME en aperçu
+  .cv-print-preview .cv-short-page .cv-job-description {
+    font-size: 0.625rem !important; /* 10px */
+    line-height: 1.35 !important;
+  }
+  .cv-print-preview .cv-short-page .cv-experience-footer p {
+    font-size: 0.5625rem !important; /* 9px */
+  }
+  .cv-print-preview .cv-short-page .cv-page-split .cv-row-with-side-meta {
+    font-size: 0.75rem !important; /* 12px — en-tête expérience (uniforme) */
+  }
+  .cv-print-preview
+    .cv-short-page
+    .cv-page-split
+    .cv-row-with-side-meta
+    .font-bold {
+    font-size: 0.75rem !important; /* 12px — client (gras), uniforme */
+  }
+  /* Colonne secondaire du court (Contact / Études / Projets) : 12px UNIFORME en aperçu
    écran — pinné car les classes -compact ne sont pas densifiées (sinon 14px écran vs
    12px PDF). Miroir du pin @media print ci-dessus. Projets couverts (réutilisent
    .cv-study-title-compact / -year-compact), couleur intacte (règle orthogonale). */
-.cv-print-preview .cv-short-page .cv-contact-value-compact,
-.cv-print-preview .cv-short-page .cv-study-title-compact,
-.cv-print-preview .cv-short-page .cv-study-year-compact {
-  font-size: 0.75rem !important; /* 12px */
-  line-height: 1.35 !important;
-}
-/* Pills (domaines, compétences, adéquation, missions) aux tailles d'impression
+  .cv-print-preview .cv-short-page .cv-contact-value-compact,
+  .cv-print-preview .cv-short-page .cv-study-title-compact,
+  .cv-print-preview .cv-short-page .cv-study-year-compact {
+    font-size: 0.75rem !important; /* 12px */
+    line-height: 1.35 !important;
+  }
+  /* Pills (domaines, compétences, adéquation, missions) aux tailles d'impression
    → tiennent sur 1 ligne comme le PDF (sinon 14px en aperçu → 2 lignes). */
-.cv-print-preview .cv-short-page .cv-pill-domain,
-.cv-print-preview .cv-short-page .cv-pill-skill,
-.cv-print-preview .cv-short-page .cv-pill-match,
-.cv-print-preview .cv-short-page .cv-pill-jobs {
-  font-size: 0.625rem !important; /* 10px */
-}
-.cv-print-preview .cv-short-page .cv-pill-domain {
-  padding: 0.125rem 0.25rem !important; /* px resserré 4px (vs 6) → marge pour que
+  .cv-print-preview .cv-short-page .cv-pill-domain,
+  .cv-print-preview .cv-short-page .cv-pill-skill,
+  .cv-print-preview .cv-short-page .cv-pill-match,
+  .cv-print-preview .cv-short-page .cv-pill-jobs {
+    font-size: 0.625rem !important; /* 10px */
+  }
+  .cv-print-preview .cv-short-page .cv-pill-domain {
+    padding: 0.125rem 0.25rem !important; /* px resserré 4px (vs 6) → marge pour que
                                            Ops (5 tags dont kubernetes/terraform)
                                            tienne sur 1 ligne (cf. print:px-1). */
-}
-/* Gap des colonnes = valeur d'impression (sinon md:gap-x-10 2.5rem → colonnes
+  }
+  /* Gap des colonnes = valeur d'impression (sinon md:gap-x-10 2.5rem → colonnes
    plus étroites → les pills wrappent ; print:gap-x-4 = 1rem). */
-.cv-print-preview .cv-short-page .cv-domains-grid,
-.cv-print-preview .cv-short-page .cv-page-split {
-  column-gap: 1rem !important;
-}
+  .cv-print-preview .cv-short-page .cv-domains-grid,
+  .cv-print-preview .cv-short-page .cv-page-split {
+    column-gap: 1rem !important;
+  }
 
-.cv-print-preview .cv-short-page #education-level .cv-education-level-blocks {
-  margin-top: 0.5rem !important;
-  gap: 0.5rem !important;
-}
+  .cv-print-preview .cv-short-page #education-level .cv-education-level-blocks {
+    margin-top: 0.5rem !important;
+    gap: 0.5rem !important;
+  }
+} /* fin @media (min-width: 768px) — typo A4 du CV court réservée au desktop/print */
 
 /**
  * Pages offre — aperçu `?print` : veille en une ligne avec `/`.
