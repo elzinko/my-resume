@@ -9,9 +9,12 @@ const DOC_WIDTH = 800; // largeur naturelle du document court (px)
  *  l'écran de l'auteur. Calibré empiriquement → propre à cet écran (le navigateur ne
  *  connaît PAS la résolution physique) ; le curseur (et le bouton %) ajustent ailleurs. */
 const SCREEN_A4_ZOOM = 0.82;
-const MIN = 0.5;
-const MAX = 2.5;
-const STEP = 0.02;
+const MIN = 0.75;
+const MAX = 1.5;
+const STEP = 0.05; // pas de 5 % → 75 / 100 / 150 % tombent pile sur un cran
+/** Zoom par défaut de la vue normale (`/short` web desktop) : 100 % — le CV court
+ *  s'affiche à sa taille naturelle, pas étiré à la largeur de l'écran. */
+const DEFAULT_ZOOM = 1;
 
 const clamp = (z: number) => Math.min(MAX, Math.max(MIN, z));
 
@@ -30,7 +33,7 @@ const clamp = (z: number) => Math.min(MAX, Math.max(MIN, z));
  * `print:hidden`. Rendu HORS du document zoomé → il ne se zoome pas lui-même.
  */
 export default function CvZoomSlider() {
-  const [zoom, setZoom] = useState(1);
+  const [zoom, setZoom] = useState(DEFAULT_ZOOM);
   const searchParams = useSearchParams();
   const printMode = isCvPrintPreviewQuery(
     new URLSearchParams(searchParams.toString()),
@@ -57,16 +60,18 @@ export default function CvZoomSlider() {
     //    /short sur mobile). La typo A4 est neutralisée en parallèle (globals.css,
     //    garde-fou `min-width: 768px`). Le curseur reste `md:flex` (masqué mobile).
     //  - aperçu ?print=1 → SCREEN_A4_ZOOM (≈ 21cm A4 réelle sur l'écran de l'auteur) ;
-    //  - vue normale desktop → plein écran (ajusté à la largeur dispo).
+    //  - vue normale desktop → 100 % (DEFAULT_ZOOM) : taille naturelle, pas étiré à la
+    //    largeur de l'écran. Le curseur / le bouton « ajuster » permettent d'élargir
+    //    ponctuellement (borné à MAX = 150 %).
     const isMobile =
       typeof window !== 'undefined' &&
       window.matchMedia('(max-width: 767px)').matches;
     if (isMobile && !printMode) {
-      apply(1);
+      apply(DEFAULT_ZOOM);
       return;
     }
-    apply(printMode ? SCREEN_A4_ZOOM : fitToWidth());
-  }, [apply, fitToWidth, printMode]);
+    apply(printMode ? SCREEN_A4_ZOOM : DEFAULT_ZOOM);
+  }, [apply, printMode]);
 
   return (
     <div
