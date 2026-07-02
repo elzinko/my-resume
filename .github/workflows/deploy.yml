@@ -1,0 +1,105 @@
+# Déploiement my-resume — mécanique « muti » (vercel deploy + vercel alias), pilotée par la CI.
+#
+#   push sur `main`     → déploiement PREVIEW aliasé sur https://staging.elzinko.fr
+#   push d'un tag `v*`  → déploiement PRODUCTION sur https://www.elzinko.fr
+#   « Run workflow »    → choix manuel staging | production (comme muti)
+#
+# L'auto-deploy git de Vercel sur `main` est désactivé dans vercel.json
+# (`git.deploymentEnabled.main = false`) → AUCUN réglage dashboard requis, et les
+# previews de PR (branches) restent actives. Seul secret nécessaire : VERCEL_TOKEN.
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Environnement cible
+        type: choice
+        options: [staging, production]
+        default: staging
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Résout l'environnement cible
+        id: target
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            ENV="${{ inputs.environment }}"
+          elif [[ "${{ github.ref }}" == refs/tags/v* ]]; then
+            ENV="production"
+          else
+            ENV="staging"
+          fi
+          if [ "$ENV" = "production" ]; then
+            echo "vercel_env=production" >> "$GITHUB_OUTPUT"
+            echo "prod_flag=--prod" >> "$GITHUB_OUTPUT"
+            echo "alias=www.elzinko.fr" >> "$GITHUB_OUTPUT"
+          else
+            echo "vercel_env=preview" >> "$GITHUB_OUTPUT"
+            echo "prod_flag=" >> "$GITHUB_OUTPUT"
+            echo "alias=staging.elzinko.fr" >> "$GITHUB_OUTPUT"
+          fi
+          echo "env=$ENV" >> "$GITHUB_OUTPUT"
+          echo "Cible : $ENV"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Installe la CLI Vercel
+        run: npm install -g vercel@latest
+
+      - name: Pull config + env Vercel
+        run: vercel pull --yes --environment=${{ steps.target.outputs.vercel_env }} --token="$VERCEL_TOKEN"
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build
+        run: vercel build ${{ steps.target.outputs.prod_flag }} --token="$VERCEL_TOKEN"
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+      - name: Déploiement (prebuilt)
+        id: deploy
+        run: |
+          set +e
+          vercel deploy --prebuilt ${{ steps.target.outputs.prod_flag }} --token="$VERCEL_TOKEN" --yes 1>/tmp/url.txt 2>/tmp/err.txt
+          code=$?
+          set -e
+          cat /tmp/err.txt
+          url=$(tr -d '\n\r' < /tmp/url.txt | grep -oE 'https://[a-zA-Z0-9.-]+\.vercel\.app' | head -1)
+          [ -z "$url" ] && url=$(tr -d '\n\r' < /tmp/url.txt)
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          echo "Déployé : $url"
+          exit $code
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+      - name: Alias vers ${{ steps.target.outputs.alias }}
+        if: steps.deploy.outputs.url != ''
+        run: vercel alias set "${{ steps.deploy.outputs.url }}" "${{ steps.target.outputs.alias }}" --token="$VERCEL_TOKEN"
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+      - name: Résumé
+        if: always()
+        run: |
+          echo "## Deploy — ${{ steps.target.outputs.env }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "**URL :** https://${{ steps.target.outputs.alias }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "**Vercel :** ${{ steps.deploy.outputs.url }}" >> "$GITHUB_STEP_SUMMARY"

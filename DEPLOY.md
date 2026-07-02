@@ -1,34 +1,27 @@
 # Déploiement — my-resume
 
-## Stratégie (fiche 0013)
+Modèle « muti » : **la CI pilote tout** via `vercel deploy` + `vercel alias`.
 
-- **`main` + branches → PREVIEW / STAGING** : déployés automatiquement par l'intégration
-  Git de Vercel (chaque push = une preview). `main` sert d'environnement de **staging**.
-- **PRODUCTION (`elzinko.fr`) → uniquement sur tag `v*`** : on ne déploie en prod que
-  quand on **versionne**. Vercel n'ayant pas de déploiement-sur-tag natif, c'est la GitHub
-  Action [`.github/workflows/deploy-prod-on-tag.yml`](.github/workflows/deploy-prod-on-tag.yml)
-  (CLI Vercel) qui s'en charge.
+## Flux
 
-## Mise en place (à faire UNE fois — actions manuelles)
+- **push sur `main`** → déploiement _preview_ aliasé sur **https://staging.elzinko.fr** (on teste l'intégration).
+- **push d'un tag `v*`** (`git tag v1.0.0 && git push origin v1.0.0`) → **production** sur **https://www.elzinko.fr**.
+- **« Run workflow »** (Actions → _Deploy_) → choix manuel `staging` | `production`.
 
-1. **Couper la prod automatique depuis `main`.** Vercel dashboard → Project → Settings →
-   Git → **Production Branch** : mettre `production` (une branche jamais poussée). Effet :
-   `main` devient un déploiement **preview** (staging), plus de prod automatique.
-2. **Secrets GitHub** (repo → Settings → Secrets and variables → Actions) :
-   - `VERCEL_TOKEN` — https://vercel.com/account/tokens
-   - `VERCEL_ORG_ID` et `VERCEL_PROJECT_ID` — obtenus via `npx vercel link` puis lus dans
-     `.vercel/project.json`.
+## Pourquoi AUCUN réglage dashboard
 
-## Déployer en production
+- L'auto-deploy git de Vercel sur `main` est **désactivé dans `vercel.json`**
+  (`git.deploymentEnabled.main = false`) → `main` ne publie plus tout seul en prod.
+- Les **previews de PR** (branches) restent actives (intégration git conservée).
+- Le workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) déploie + aliase via la CLI Vercel.
 
-```bash
-git tag v1.2.3
-git push origin v1.2.3   # → la GH Action déploie main (taggé) sur elzinko.fr
-```
+## Mise en place (à faire UNE fois)
+
+- Secret repo **`VERCEL_TOKEN`** (https://vercel.com/account/tokens).
+  Les IDs `VERCEL_ORG_ID` / `VERCEL_PROJECT_ID` sont **déjà posés**.
+- `staging.elzinko.fr` : un **CNAME** chez IONOS (`staging` → `cname.vercel-dns.com`).
 
 ## Vérifier
 
-- Un push sur `main` → une **preview** (staging) sur `*.vercel.app`, **pas** `elzinko.fr`.
-- Un tag `v*` → un **déploiement production** sur `elzinko.fr`.
-
-> Le `vercel.json` existant (skip des builds `dependabot/*`) reste inchangé.
+- Push `main` → `https://staging.elzinko.fr` se met à jour ; `www.elzinko.fr` ne bouge pas.
+- `git tag vX.Y.Z && git push origin vX.Y.Z` → `www.elzinko.fr` se met à jour.
