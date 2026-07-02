@@ -60,10 +60,10 @@ export default function HeaderContent({
             // dessus (entre la barre d'outils et le nom). À l'impression, pas de
             // barre d'outils → pt-0 (la marge @page suffit). pb fixe = PDF.
             'pb-8 pt-8 print:pt-0'
-          : 'pb-0 pt-2 max-md:pt-0 md:py-12 print:!py-2'
+          : 'pb-0 pt-2 print:!py-2 max-md:pt-0 md:py-12'
       }`}
     >
-      <div className="flex w-full items-stretch gap-4 md:gap-6 print:gap-4">
+      <div className="flex w-full items-stretch gap-4 print:gap-4 md:gap-6">
         {/* Bloc photo — placé à l'OPPOSÉ du titre : titre à gauche → photo à droite,
             titre à droite (`?headerAlign=right`) → photo à gauche (`order-first`).
             Dès `md:`, même largeur que le bloc texte (`md:flex-1`), avatar centré. */}
@@ -96,7 +96,7 @@ export default function HeaderContent({
                     ageText
                     ? 'h-[72px] w-[72px]'
                     : 'h-16 w-16'
-                  : 'h-20 w-20 md:h-28 md:w-28 lg:h-36 lg:w-36 print:h-28 print:w-28'
+                  : 'h-20 w-20 print:h-28 print:w-28 md:h-28 md:w-28 lg:h-36 lg:w-36'
               }`}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -128,8 +128,8 @@ export default function HeaderContent({
                 : photoUrl
                 ? // Mobile : text-2xl (24px) → « Thomas Couderc » tient sur 1 ligne
                   // même sur un petit écran (375px). md+ : tailles d'origine.
-                  'text-2xl md:whitespace-nowrap md:text-4xl md:leading-none lg:text-6xl print:text-4xl print:leading-none'
-                : 'text-2xl md:text-5xl md:leading-none lg:text-7xl print:text-5xl print:leading-none'
+                  'text-2xl print:text-4xl print:leading-none md:whitespace-nowrap md:text-4xl md:leading-none lg:text-6xl'
+                : 'text-2xl print:text-5xl print:leading-none md:text-5xl md:leading-none lg:text-7xl'
             }`}
           >
             {name}
@@ -159,14 +159,14 @@ export default function HeaderContent({
                 compactPrint
                   ? // A4 : taille fixe = PDF (text-xs, 12px), pas de bump md:.
                     `${lineGap} text-xs leading-none text-[#22c68d]`
-                  : `${lineGap} text-base leading-snug text-[#22c68d] md:text-xl print:text-base`
+                  : `${lineGap} text-base leading-snug text-[#22c68d] print:text-base md:text-xl`
               }
             >
               {ageText}
             </p>
           ) : null}
           {belowRole ? (
-            <div className="mt-1 hidden w-full md:mt-2 md:block print:mt-2 print:block">
+            <div className="mt-1 hidden w-full print:mt-2 print:block md:mt-2 md:block">
               {belowRole}
             </div>
           ) : null}
