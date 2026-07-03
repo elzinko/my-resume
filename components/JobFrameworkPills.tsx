@@ -29,12 +29,17 @@ const MAX_H_REM = { default: 3.1 } as const;
 /** Gaps flex (gap-1 / gap-1.5) en px pour coller au layout Tailwind mobile. */
 const GAP_PX = { compact: 4, default: 6 } as const;
 
-/** Nombre max de pastilles visibles sans « tout voir » (écran + impression). */
+/** Nombre max de pastilles visibles À L'ÉCRAN sans « tout voir » (CV long : 1 ligne + « … »). */
 const MAX_VISIBLE_WHEN_COLLAPSED = 10;
 
 /**
- * Pastilles techno : CV long — max {@link MAX_VISIBLE_WHEN_COLLAPSED} + « … » (mobile et desktop), idem à l’impression sans extension.
- * **CV court (`compact`)** : une seule ligne mesurée, cap à 10 hors impression ; impression limitée à 10.
+ * Pastilles techno :
+ * - **CV long à l'écran** : fit 1 ligne (desktop/tablette) ou ~2 lignes (mobile),
+ *   plafonné à {@link MAX_VISIBLE_WHEN_COLLAPSED} + bouton « … » (déplier).
+ * - **CV long à l'impression** (PDF ⌘P + aperçu `?print`) : TOUTES les pastilles
+ *   (catalogue complet), sur plusieurs lignes — pas de troncature ni de « … ».
+ * - **CV court (`compact`)** : une seule ligne mesurée à l'écran, plafonnée à 10 ;
+ *   à l'impression aussi (le short doit tenir sur 1 page A4).
  */
 export default function JobFrameworkPills({
   frameworks,
@@ -81,7 +86,22 @@ export default function JobFrameworkPills({
 
       const cap = MAX_VISIBLE_WHEN_COLLAPSED;
 
-      /** Impression : au plus `cap` pastilles (pas d’extension). */
+      // Régime « impression » de l'APERÇU : `.cv-print-preview` sur <html> (posé par
+      // `?print` ET pendant ⌘P). Le CV court /short l'a en permanence → on ne s'y fie
+      // QUE pour le CV long (`!compact`), sinon on casserait le fit mesuré du short écran.
+      const inPrintPreview =
+        typeof document !== 'undefined' &&
+        document.documentElement.classList.contains('cv-print-preview');
+
+      /** CV LONG en impression (PDF via `printing` OU aperçu `.cv-print-preview`) :
+          on affiche TOUTES les pastilles techno (catalogue complet), sur plusieurs
+          lignes si besoin — le conteneur est `flex-wrap` (écran) / `print:max-h-none`. */
+      if (!compact && (printing || inPrintPreview)) {
+        setVisibleCount(frameworks.length);
+        return;
+      }
+
+      /** CV COURT en impression (⌘P) : au plus `cap` (le short doit tenir sur 1 page A4). */
       if (printing) {
         setVisibleCount(Math.min(cap, frameworks.length));
         return;
@@ -191,11 +211,23 @@ export default function JobFrameworkPills({
     const onResize = () => compute();
     window.addEventListener('resize', onResize);
 
+    // Aperçu impression : l'œil bascule `.cv-print-preview` sur <html> sans changer
+    // les props → on recalcule quand cette classe apparaît/disparaît (CV long : tout
+    // voir en aperçu, revenir au fit 1 ligne à la sortie).
+    const classObserver = new MutationObserver(compute);
+    if (typeof document !== 'undefined') {
+      classObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class'],
+      });
+    }
+
     setLayoutReady(true);
 
     return () => {
       window.removeEventListener('resize', onResize);
       ro.disconnect();
+      classObserver.disconnect();
     };
   }, [frameworks, expanded, printing, compact, rem, gapPx]);
 
