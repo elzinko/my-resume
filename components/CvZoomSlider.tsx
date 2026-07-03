@@ -4,69 +4,76 @@ import { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { isCvPrintPreviewQuery } from '@/lib/cv-print-preview';
 
-const DOC_WIDTH = 800; // largeur naturelle du document court (px)
-/** Zoom de l'APERÇU print (`?print=1`) : affiche le CV court à ~21cm (A4 réelle) sur
- *  l'écran de l'auteur. Calibré empiriquement → propre à cet écran (le navigateur ne
- *  connaît PAS la résolution physique) ; le curseur (et le bouton %) ajustent ailleurs. */
-const SCREEN_A4_ZOOM = 0.82;
-const MIN = 0.5;
-const MAX = 2.5;
-const STEP = 0.02;
+/**
+ * Calibration ÉCRAN → A4 réelle.
+ *
+ * Le document court fait 800px CSS de large (≈ A4 = 210mm = 794px CSS, car le
+ * navigateur mappe TOUJOURS les unités physiques à 96px/pouce, quelle que soit la
+ * dalle). Mais 1 px CSS n'a PAS la même taille physique sur tous les écrans : le
+ * navigateur ne connaît pas la résolution réelle du moniteur. Sur l'écran de l'auteur
+ * (mesuré à la règle : ~79 px/pouce), il faut donc appliquer `zoom: 79/96 ≈ 0.82`
+ * pour que le document mesure physiquement 21cm (A4 réelle).
+ *
+ * → `A4_SCREEN_CAL` = zoom CSS qui rend le CV court à sa TAILLE D'IMPRESSION réelle
+ *   (A4) sur CET écran. C'est notre référence « 100 % ». Empirique et propre à l'écran
+ *   (à re-mesurer si on change de moniteur). Le PDF, lui, est toujours en A4 exacte
+ *   (unités physiques réelles côté imprimante) → il n'a pas besoin de cette calibration.
+ */
+const A4_SCREEN_CAL = 0.82;
 
-const clamp = (z: number) => Math.min(MAX, Math.max(MIN, z));
+/** Facteur affiché : 1 = 100 % = taille d'impression réelle (A4). Bornes 75 %–150 %. */
+const DEFAULT_PCT = 1;
+const MIN_PCT = 0.75;
+const MAX_PCT = 1.5;
+const STEP = 0.05; // pas de 5 % → 75 / 100 / 150 % tombent pile sur un cran
+
+const clamp = (p: number) => Math.min(MAX_PCT, Math.max(MIN_PCT, p));
 
 /**
  * Curseur de zoom du CV court (écran uniquement). Pilote `--cv-zoom` →
  * `.cv-short-page { zoom }`. Visible sur la vue normale ET l'aperçu `?print=1`.
  *
- * Le MODE fixe la taille, réappliqué à CHAQUE changement de `?print` (le clic sur
- * l'œil fait une navigation soft → `useSearchParams` rerend, pas besoin de recharger) :
- *  - vue normale `/fr/short` → **plein écran** (ajusté à la largeur dispo) ;
- *  - aperçu `?print=1`       → **~21cm (A4 réelle)** sur l'écran de l'auteur (SCREEN_A4_ZOOM).
- * Aucune valeur persistée (pas de localStorage qui baverait d'un mode à l'autre).
- * Le curseur permet un ajustement ponctuel en cours de session. Le bouton % réajuste.
+ * **Le pourcentage affiché = fraction de la TAILLE RÉELLE (A4)**, pas un zoom CSS brut :
+ *  - **100 %** = le CV court à sa taille d'impression réelle (21cm de large sur l'écran
+ *    de l'auteur) → CSS `zoom = A4_SCREEN_CAL`. C'est le défaut, vue normale ET aperçu.
+ *  - 75 % … 150 % = fraction de cette taille réelle (CSS `zoom = pct × A4_SCREEN_CAL`).
+ *  - **Mobile** (< md, hors aperçu) : pas de mise à l'échelle A4 (le CV se rend en vue
+ *    responsive lisible) → `--cv-zoom: 1`. Le curseur est masqué (`md:flex`).
  *
- * Le PDF n'est JAMAIS affecté : `@media print` remet `zoom: 1`, et le curseur est
- * `print:hidden`. Rendu HORS du document zoomé → il ne se zoome pas lui-même.
+ * Aucune valeur persistée. Le PDF n'est JAMAIS affecté : `@media print` remet `zoom: 1`
+ * (A4 réelle imprimée) et le curseur est `print:hidden`.
  */
 export default function CvZoomSlider() {
-  const [zoom, setZoom] = useState(1);
+  const [pct, setPct] = useState(DEFAULT_PCT);
   const searchParams = useSearchParams();
   const printMode = isCvPrintPreviewQuery(
     new URLSearchParams(searchParams.toString()),
   );
 
-  const apply = useCallback((z: number) => {
-    const v = clamp(z);
-    setZoom(v);
-    document.documentElement.style.setProperty('--cv-zoom', String(v));
-  }, []);
-
-  const fitToWidth = useCallback(() => {
-    const doc = document.querySelector('.cv-short-page');
-    const avail = doc?.parentElement?.clientWidth ?? window.innerWidth;
-    return avail / DOC_WIDTH;
+  /** Applique un pourcentage de taille réelle → CSS `zoom = pct × calibration`. */
+  const apply = useCallback((p: number) => {
+    const v = clamp(p);
+    setPct(v);
+    document.documentElement.style.setProperty(
+      '--cv-zoom',
+      String(v * A4_SCREEN_CAL),
+    );
   }, []);
 
   useEffect(() => {
-    // Réappliqué à CHAQUE changement de `?print` (printMode en dépendance) → le clic
-    // sur l'œil rebascule la taille sans recharger. Pas de localStorage.
-    //  - MOBILE (< md), vue normale → zoom 1 : le CV court se rend en vue responsive
-    //    lisible (pas un document A4 réduit). `fitToWidth` viserait l'A4 (800px) → ~0.5
-    //    sur téléphone = illisible (« affichage trop petit » quand on ouvre un lien
-    //    /short sur mobile). La typo A4 est neutralisée en parallèle (globals.css,
-    //    garde-fou `min-width: 768px`). Le curseur reste `md:flex` (masqué mobile).
-    //  - aperçu ?print=1 → SCREEN_A4_ZOOM (≈ 21cm A4 réelle sur l'écran de l'auteur) ;
-    //  - vue normale desktop → plein écran (ajusté à la largeur dispo).
+    // Réappliqué à chaque changement de `?print` (clic sur l'œil = navigation soft).
+    // MOBILE hors aperçu → vue responsive (pas de document A4 réduit) : `--cv-zoom: 1`.
     const isMobile =
       typeof window !== 'undefined' &&
       window.matchMedia('(max-width: 767px)').matches;
     if (isMobile && !printMode) {
-      apply(1);
+      setPct(DEFAULT_PCT);
+      document.documentElement.style.setProperty('--cv-zoom', '1');
       return;
     }
-    apply(printMode ? SCREEN_A4_ZOOM : fitToWidth());
-  }, [apply, fitToWidth, printMode]);
+    // Desktop (vue normale + aperçu) : 100 % = taille réelle A4.
+    apply(DEFAULT_PCT);
+  }, [apply, printMode]);
 
   return (
     <div
@@ -76,21 +83,21 @@ export default function CvZoomSlider() {
       <span className="select-none font-medium">Zoom</span>
       <input
         type="range"
-        min={MIN}
-        max={MAX}
+        min={MIN_PCT}
+        max={MAX_PCT}
         step={STEP}
-        value={zoom}
+        value={pct}
         onChange={(e) => apply(parseFloat(e.target.value))}
         className="h-1 w-28 cursor-pointer accent-blue-500"
-        aria-label="Zoom du CV (écran uniquement)"
+        aria-label="Zoom du CV (100 % = taille A4 réelle, écran uniquement)"
       />
       <button
         type="button"
-        onClick={() => apply(fitToWidth())}
+        onClick={() => apply(DEFAULT_PCT)}
         className="w-10 select-none text-right tabular-nums hover:text-slate-900"
-        title="Ajuster à la largeur de l'écran"
+        title="Revenir à 100 % (taille A4 réelle)"
       >
-        {Math.round(zoom * 100)}%
+        {Math.round(pct * 100)}%
       </button>
     </div>
   );
