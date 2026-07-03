@@ -4,8 +4,8 @@ title: Tablette — titres Agile/Dev/Ops alignés (première ligne au même nive
 type: bug
 priority: P2
 version:
-status: todo
-pr:
+status: shipped
+pr: '#123'
 created: 2026-07-02
 ---
 
