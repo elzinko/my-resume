@@ -109,14 +109,18 @@ export default function Domain({
   // sous le titre de section « Profil » (text-2xl = 24px) pour une hiérarchie claire
   // sur TOUS les supports (écran, aperçu ET impression : classes statiques sans
   // variante print → 16/20 < 24 partout).
+  // Sous-domaines = SOUS-titres du Profil : MÊME bleu que le titre de section « Profil »
+  // (blue-400 via SectionHeadingAts accent=blue) mais TAMISÉ par l'opacité (/70) pour
+  // les subordonner sans changer de teinte. La barre d'accent suit (`bg-current`). Les
+  // pastilles techno restent en blue-400 plein (accent).
   const titleTypo = compact
-    ? 'text-base font-semibold text-blue-400'
-    : 'text-xl font-semibold text-blue-400';
+    ? 'text-base font-semibold text-blue-400/70'
+    : 'text-xl font-semibold text-blue-400/70';
 
   const titleBlock =
     accent === 'verticalBar' ? (
       <div
-        className={`flex items-stretch gap-1.5 text-blue-400 ${
+        className={`flex items-stretch gap-1.5 text-blue-400/70 ${
           compact ? 'print:gap-1' : ''
         }`}
       >
