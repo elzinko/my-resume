@@ -60,7 +60,12 @@ export default function HeaderContent({
             // dessus (entre la barre d'outils et le nom). À l'impression, pas de
             // barre d'outils → pt-0 (la marge @page suffit). pb fixe = PDF.
             'pb-8 pt-8 print:pt-0'
-          : 'pb-0 pt-2 print:!py-2 max-md:pt-0 md:py-12'
+          : // Impression : on aligne l'écart en-tête → Profile sur le web desktop
+            // (WYSIWYG, invariant #1). Le web desktop a `md:py-12` (3rem) sous l'âge ;
+            // l'impression utilisait `print:!py-2` (0.5rem) → bloc du haut collé à
+            // Profile. On rétablit `pb-12` en print (le haut reste `pt-2` : pas de barre
+            // d'outils en PDF, la marge @page suffit → on n'ajoute pas d'air en haut).
+            'pb-0 pt-2 print:!pb-12 print:!pt-2 max-md:pt-0 md:py-12'
       }`}
     >
       <div className="flex w-full items-stretch gap-4 print:gap-4 md:gap-6">
@@ -126,10 +131,11 @@ export default function HeaderContent({
                   // leading-tight de base partagé avec le CV complet.
                   'text-3xl !leading-none'
                 : photoUrl
-                ? // Mobile : text-2xl (24px) → « Thomas Couderc » tient sur 1 ligne
-                  // même sur un petit écran (375px). md+ : tailles d'origine.
-                  'text-2xl print:text-4xl print:leading-none md:whitespace-nowrap md:text-4xl md:leading-none lg:text-6xl'
-                : 'text-2xl print:text-5xl print:leading-none md:text-5xl md:leading-none lg:text-7xl'
+                ? // Mobile : nom FLUIDE qui remplit ~la largeur dispo (pas de photo <md
+                  // → toute la largeur pour le nom), borné pour rester sur 1 ligne à 375px
+                  // et ne pas dépasser la taille md (pas de saut à 768px). md+ : tailles d'origine.
+                  'text-[clamp(1.75rem,10.2vw,2.75rem)] print:text-4xl print:leading-none md:whitespace-nowrap md:text-4xl md:leading-none lg:text-6xl'
+                : 'text-[clamp(1.75rem,10.2vw,2.75rem)] print:text-5xl print:leading-none md:text-5xl md:leading-none lg:text-7xl'
             }`}
           >
             {name}
