@@ -77,7 +77,7 @@ export default function CvZoomSlider() {
 
   return (
     <div
-      className="fixed bottom-4 right-4 z-[200] hidden items-center gap-2 rounded-full border border-slate-300/70 bg-white/90 px-3 py-1.5 text-xs text-slate-600 shadow-md backdrop-blur supports-[backdrop-filter]:bg-white/70 print:hidden md:flex"
+      className="fixed right-3 top-1.5 z-[120] hidden items-center gap-2 rounded-full border border-slate-300/70 bg-white/90 px-3 py-1.5 text-xs text-slate-600 shadow-md backdrop-blur supports-[backdrop-filter]:bg-white/70 print:hidden md:flex"
       data-testid="cv-zoom-slider"
     >
       <span className="select-none font-medium">Zoom</span>

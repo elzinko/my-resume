@@ -36,7 +36,10 @@ export default function DevNav({ lang }: { lang: string }) {
   return (
     <nav
       aria-label="Navigation dev (hors production)"
-      className="fixed bottom-3 right-3 z-50 flex items-center gap-3 rounded-md border border-slate-700 bg-slate-900/90 px-3 py-1.5 text-xs font-medium shadow-lg backdrop-blur-sm print-preview:hidden print:hidden"
+      // Desktop (md+) : barre pleine largeur EN HAUT (menu à gauche ; le zoom du CV
+      // court vient se placer à droite, cf. CvZoomSlider). Mobile : pastille en bas à
+      // droite (pas de conflit avec la barre d'outils mobile fixe en haut).
+      className="fixed bottom-3 right-3 z-[100] flex items-center gap-3 rounded-md border border-slate-700 bg-slate-900/90 px-3 py-1.5 text-xs font-medium shadow-lg backdrop-blur-sm print-preview:hidden print:hidden md:inset-x-0 md:bottom-auto md:top-0 md:h-10 md:rounded-none md:border-x-0 md:border-t-0 md:px-4 md:shadow-md"
     >
       <span className="rounded bg-slate-800 px-1.5 py-0.5 font-mono text-[0.65rem] tracking-wide text-teal-300">
         {badge}
