@@ -1,7 +1,16 @@
-# E2E workflow — runs ONLY the print section-rhythm spec (regression net for my-resume#108).
+# E2E workflow — filet de régression « technico-fonctionnel », robuste à l'OS.
 #
-# Deliberately NOT the full Playwright suite: e2e/dev-components.spec.ts carries
-# darwin pixel snapshots that would fail on ubuntu runners.
+# On lance TOUTE la suite Playwright SAUF :
+#   - e2e/dev-components.spec.ts : snapshots pixel macOS → échoueraient sur ubuntu
+#     (exclu en ne le passant pas au runner) ;
+#   - les tests marqués `@local-only` : ils mesurent des pixels dépendant des
+#     métriques de glyphes (police système macOS ≠ ubuntu) → filtrés via
+#     `--grep-invert`. Ils restent joués en local. Les règles générales
+#     (comportement, navigation, largeurs/positions CSS, rythme inter-sections)
+#     sont, elles, gatées ici.
+#
+# Ajouter un nouveau spec le met AUTOMATIQUEMENT sous CI (glob `e2e/*.spec.ts`) —
+# c'est voulu : éviter qu'un test répare aujourd'hui re-casse sans filet demain.
 #
 # The Playwright webServer (playwright.config.ts) runs `next start` on :3457, which
 # needs a prior production build — so we `npm run build` before `playwright test`.
@@ -31,7 +40,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  print-rhythm:
+  e2e:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -52,5 +61,7 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Run print section-rhythm e2e
-        run: npx playwright test e2e/print-section-rhythm.spec.ts
+      # Toute la suite sauf dev-components (snapshots macOS) et les tests
+      # `@local-only` (sensibles aux polices système). Cf. l'en-tête du fichier.
+      - name: Run e2e (OS-agnostic subset)
+        run: npx playwright test --grep-invert "@local-only" $(ls e2e/*.spec.ts | grep -v 'dev-components.spec.ts')

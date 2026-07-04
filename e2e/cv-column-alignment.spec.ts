@@ -1,10 +1,15 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * Grille 3 colonnes (domaines) + split 1/3 + 2/3 (#left / #main) :
- * le bord gauche de la 2ᵉ colonne domaine (Dev) doit coïncider avec #main.
+ * Alignement colonnes du CV COURT (`/short`, `CompactCvLayout`) : grille 3 colonnes
+ * (domaines) + split 1/3 + 2/3 (`#left` / `#main`). Le bord gauche de la 2ᵉ colonne
+ * domaine (Dev) doit coïncider avec `#main`, la 1ʳᵉ (Agile) avec `#left`.
+ *
+ * ⚠️ Le CV COMPLET (`/fr`, `OfferTailoredShell`) n'a plus de split `#main`/`#left` :
+ * il a été unifié en une seule colonne linéaire (`.cv-full-cv-print-root`). Il n'y a
+ * donc plus rien à aligner de ce côté — l'ancien cas « CV complet » a été retiré.
  */
-test.describe('CV desktop column alignment', () => {
+test.describe('CV court — alignement colonnes', () => {
   test.use({ viewport: { width: 1280, height: 900 } });
 
   async function expectDevAlignedWithMain(
@@ -50,12 +55,6 @@ test.describe('CV desktop column alignment', () => {
       `First domain left (${aX}px) should match #left left (${lX}px)`,
     ).toBeLessThanOrEqual(2);
   }
-
-  test('CV complet : Dev ↔ #main, Agile ↔ #left', async ({ page }) => {
-    await page.goto('/fr');
-    await expectDevAlignedWithMain(page);
-    await expectAgileAlignedWithLeft(page);
-  });
 
   test('CV court : Dev ↔ #main, Agile ↔ #left', async ({ page }) => {
     await page.goto('/fr/short');

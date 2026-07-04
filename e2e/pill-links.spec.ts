@@ -37,10 +37,12 @@ test.describe('Pill links', () => {
         if (href) anchorIds.add(href.slice(1)); // strip leading #
       }
 
-      // Every referenced id must exist as an element on the page
+      // Every referenced id must exist as an element on the page.
+      // NB : sélecteur par attribut `[id="…"]` (et non `#${CSS.escape(id)}`) —
+      // `CSS` est un global navigateur, indéfini dans le contexte Node de Playwright.
       for (const id of anchorIds) {
         await expect(
-          page.locator(`#${CSS.escape(id)}`),
+          page.locator(`[id="${id}"]`),
           `Anchor target #${id} should exist`,
         ).toHaveCount(1);
       }
