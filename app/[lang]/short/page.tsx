@@ -14,6 +14,7 @@ import ShortPageWrapper from '@/components/ShortPageWrapper';
 import FullCvPrintPreviewEffect from '@/components/FullCvPrintPreviewEffect';
 import AtsLabelsEffect from '@/components/AtsLabelsEffect';
 import CvAutoprint from '@/components/CvAutoprint';
+import MobileShortToFullRedirect from '@/components/MobileShortToFullRedirect';
 import {
   resolveAboutText,
   resolveDomainDescription,
@@ -178,6 +179,9 @@ export default async function ShortPage({
   return (
     <>
       <Suspense fallback={null}>
+        {/* Mobile : le court ne s'affiche jamais → rebascule vers le complet
+            (sauf impression `?autoprint`/`?print`). Cf. backlog job-app 0016. */}
+        <MobileShortToFullRedirect lang={lang} />
         <FullCvPrintPreviewEffect />
         <AtsLabelsEffect />
       </Suspense>
