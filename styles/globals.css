@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Réserve TOUJOURS la gouttière de scrollbar → quand le contenu déborde (ex. zoom du
+   CV court augmenté) et que la scrollbar apparaît/disparaît, la largeur utile ne bouge
+   pas : les éléments fixes (barre dev + zoom) ne se décalent plus. Neutre à l'impression. */
+@media screen {
+  html {
+    scrollbar-gutter: stable;
+  }
+}
+
 :root {
   /**
    * Espacement entre la barre de titre (border-b) et le contenu de la section.
