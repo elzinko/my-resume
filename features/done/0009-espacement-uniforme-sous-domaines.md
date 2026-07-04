@@ -4,8 +4,8 @@ title: Espacement uniforme au-dessus des sous-domaines (Agile == Dev == Ops)
 type: bug
 priority: P1
 version:
-status: todo
-pr:
+status: shipped
+pr: '#123'
 created: 2026-07-02
 ---
 

@@ -4,8 +4,8 @@ title: Impression CV complet — afficher toutes les pastilles techno des expér
 type: bug
 priority: P1
 version:
-status: todo
-pr:
+status: shipped
+pr: '#126'
 created: 2026-07-03
 ---
 

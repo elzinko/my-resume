@@ -4,8 +4,8 @@ title: /short web — zoom par défaut 100 % (min 75 %, max 150 %)
 type: bug
 priority: P1
 version:
-status: todo
-pr:
+status: shipped
+pr: '#122'
 created: 2026-07-02
 ---
 

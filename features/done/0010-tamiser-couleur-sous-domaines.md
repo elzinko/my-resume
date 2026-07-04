@@ -4,8 +4,8 @@ title: Tamiser la couleur des sous-domaines Agile/Dev/Ops (hiérarchie sous Prof
 type: feature
 priority: P2
 version:
-status: todo
-pr:
+status: shipped
+pr: '#123'
 created: 2026-07-02
 ---
 

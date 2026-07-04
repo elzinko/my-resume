@@ -4,8 +4,8 @@ title: Espacement âge→Profile identique web/impression (WYSIWYG print == web 
 type: bug
 priority: P1
 version:
-status: todo
-pr:
+status: shipped
+pr: '#124'
 created: 2026-07-02
 ---
 

@@ -4,8 +4,8 @@ title: /dev/renders lisible et utilisable en vue mobile
 type: feature
 priority: P3
 version:
-status: todo
-pr:
+status: shipped
+pr: '#125'
 created: 2026-07-02
 ---
 

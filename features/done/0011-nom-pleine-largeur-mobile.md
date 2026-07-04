@@ -4,8 +4,8 @@ title: Nom en pleine largeur sur mobile (pas de photo → agrandir le nom)
 type: feature
 priority: P2
 version:
-status: todo
-pr:
+status: shipped
+pr: '#124'
 created: 2026-07-02
 ---
 
