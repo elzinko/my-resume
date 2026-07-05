@@ -3,7 +3,16 @@ import { test, expect, type Page } from '@playwright/test';
 /**
  * CV court (`/fr/short`) — rythme vertical RÉGULIER, piloté par des tokens uniques.
  *
- * Deux règles générales (mêmes valeurs web / impression / mobile) :
+ * NB (backlog 0016) : sur un viewport mobile, `/short` rebascule vers le complet
+ * (le court ne s'affiche jamais en mobile ; le choix court/complet se fait à
+ * l'impression). On mesure donc via `?print=1`, EXEMPTÉ de cette bascule : le court
+ * reste rendu dans son régime d'IMPRESSION (que Chrome évalue < 768px) — c'est le
+ * rythme A4 canonique, le seul qui compte désormais pour le court. Ce régime est
+ * plus DENSE que l'ancien reflow mobile (écarts ~5px au lieu de ~6+) : le vrai
+ * garde-fou reste le RATIO (rythme uniforme), le plancher n'assure que des écarts
+ * positifs et réels (token `--cv-section-body-gap`, stable inter-OS).
+ *
+ * Deux règles générales (rythme identique web / impression) :
  *  1. Profil : filet→intro == intro→domaines. Les domaines sont une SOUS-PARTIE
  *     du Profil → espacés comme du body (`--cv-section-body-gap`), pas comme une
  *     section (le `#domains` annule le flex-gap inter-section, le seul écart
@@ -32,7 +41,9 @@ test.describe('CV court — rythme vertical régulier', () => {
     page,
   }) => {
     await page.setViewportSize({ width: 390, height: 1600 });
-    await page.goto(`/fr/short?${OFFER_QS}`);
+    // `print=1` : exempte le redirect mobile→complet (0016) → le court reste
+    // rendu (identique à la vue normale, `.cv-print-preview` permanent).
+    await page.goto(`/fr/short?print=1&${OFFER_QS}`);
 
     const filet = await bbox(page, '#cv-short-about h2');
     const intro = await bbox(page, '#cv-short-about p');
@@ -41,8 +52,10 @@ test.describe('CV court — rythme vertical régulier', () => {
     const filetToIntro = intro.top - filet.bottom;
     const introToDomains = firstDomain.top - intro.bottom;
 
-    expect(filetToIntro, 'filet Profil → intro').toBeGreaterThanOrEqual(6);
-    expect(introToDomains, 'intro → 1er domaine').toBeGreaterThanOrEqual(6);
+    // Régime impression du court (via `?print=1`) : écarts denses (~5px mesurés).
+    // Plancher = juste « positif et réel » ; le vrai garde-fou est le ratio ci-dessous.
+    expect(filetToIntro, 'filet Profil → intro').toBeGreaterThanOrEqual(4);
+    expect(introToDomains, 'intro → 1er domaine').toBeGreaterThanOrEqual(4);
     expect(
       ratio(filetToIntro, introToDomains),
       `body-gap homogène (${Math.round(filetToIntro)}px vs ${Math.round(
