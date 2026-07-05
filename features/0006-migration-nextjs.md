@@ -27,6 +27,11 @@ Chantier dédié — plusieurs breaking changes :
   `tailwind.config.js` + `@apply`).
 - Les `@ts-expect-error Server Component` partout pourraient changer de comportement.
 - Turbopack par défaut (Next 15+), nouvelle API de cache (Next 16).
+- **ESLint 8 → 10 fait partie du chantier** : `eslint-config-next` de Next 14 exige
+  ESLint `^7 || ^8` — impossible de bumper avant Next 15+ (flat config). Les majeures
+  Next 16 et ESLint 10 sont **ignorées côté Dependabot** (`@dependabot ignore this major
+version`, PRs #60/#62/#83 fermées le 2026-07-05) : à la migration, bumper ESLint
+  manuellement.
 
 Plan suggéré :
 
