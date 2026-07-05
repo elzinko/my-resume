@@ -33,6 +33,11 @@ try {
       waitUntil: 'networkidle',
       timeout: 60000,
     });
+    // La barre de nav dev (hors production) ne fait pas partie du CV : on la
+    // retire des captures pour un diff visuel stable entre environnements.
+    await page.addStyleTag({
+      content: '[data-devnav]{display:none !important}',
+    });
     await page.waitForTimeout(600);
     await page.screenshot({ path: `${OUT}/${t.name}.png`, fullPage: true });
     await page.close();

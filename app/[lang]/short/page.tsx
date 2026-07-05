@@ -1,5 +1,3 @@
-import '../../../styles/globals.css';
-
 import { Suspense } from 'react';
 import { Locale } from '../../../i18n-config';
 import { getCvData } from '@/lib/cv-data';

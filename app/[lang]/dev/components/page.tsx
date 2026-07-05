@@ -1,5 +1,3 @@
-import '../../../../styles/globals.css';
-
 import React, { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { Locale } from '../../../../i18n-config';

@@ -25,16 +25,24 @@ export default function DevNav({ lang }: { lang: string }) {
   // Défaut LOCAL → identique au premier rendu client ; corrigé en effect pour
   // éviter tout mismatch d'hydratation (le hostname n'existe pas au SSR).
   const [badge, setBadge] = useState<EnvBadge>('LOCAL');
+  // Masquée dans les iframes : les vignettes de /dev/renders (onglets Live et
+  // Comparer) et les stories iframe de /dev/components embarquent les pages CV —
+  // la barre dev n'y a rien à faire. Détection client-only (SSR : visible).
+  const [inIframe, setInIframe] = useState(false);
 
   useEffect(() => {
     setBadge(resolveEnvBadge(window.location.hostname));
+    setInIframe(window.self !== window.top);
   }, []);
+
+  if (inIframe) return null;
 
   const linkClass =
     'text-slate-300 no-underline hover:text-teal-300 transition-colors';
 
   return (
     <nav
+      data-devnav
       aria-label="Navigation dev (hors production)"
       // Desktop (md+) : barre pleine largeur EN HAUT (menu à gauche ; le zoom du CV
       // court vient se placer à droite, cf. CvZoomSlider). Mobile : pastille en bas à
@@ -50,7 +58,7 @@ export default function DevNav({ lang }: { lang: string }) {
       <a className={linkClass} href={`/${lang}/dev/components`}>
         Components
       </a>
-      <a className={linkClass} href="/api/llm-guide">
+      <a className={linkClass} href={`/${lang}/dev/llm-guide`}>
         LLM guide
       </a>
     </nav>
