@@ -413,7 +413,9 @@ export default function DevRendersPage() {
         background: '#1a1a2e',
         color: '#e0e0e0',
         minHeight: '100vh',
-        padding: isMobile ? '1rem' : '2rem',
+        // Mobile : la pastille de nav dev flotte en haut à gauche → on dégage
+        // la zone du titre (56px ≈ safe-area + hauteur de la pastille).
+        padding: isMobile ? '3.5rem 1rem 1rem' : '2rem',
         overflowX: 'hidden',
       }}
     >

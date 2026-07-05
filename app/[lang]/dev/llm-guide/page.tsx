@@ -21,7 +21,8 @@ export default function DevLlmGuidePage() {
   const markdown = buildLlmGuideMarkdown();
 
   return (
-    <div className="mx-auto max-w-4xl">
+    // max-md:pt-12 : dégage la pastille de nav dev flottante (mobile).
+    <div className="mx-auto max-w-4xl max-md:pt-12">
       <h1 className="mb-2 text-3xl font-semibold">Dev · LLM guide</h1>
       <p className="mb-6 text-sm text-slate-500">
         Rendu lisible de{' '}
