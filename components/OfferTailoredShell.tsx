@@ -46,6 +46,7 @@ export default function OfferTailoredShell({
   detailLevel = 'full',
   maxJobShown = null,
   entriesLayout = 'inline',
+  renderEffects = true,
 }: {
   lang: Locale;
   educationLevel: EducationLevelContent;
@@ -81,6 +82,13 @@ export default function OfferTailoredShell({
   maxJobShown?: number | null;
   /** Disposition des entrées Études / Loisirs (`?entriesLayout=inline|stacked`). */
   entriesLayout?: EntriesLayout;
+  /**
+   * Monte les effets globaux (aperçu print, labels ATS, autoprint). Défaut `true`.
+   * Passer `false` quand ce shell est monté comme sous-vue mobile d'une autre route
+   * qui gère déjà ces effets au niveau page (ex. `/[lang]/short` — cf. ADR-0006),
+   * pour éviter le double-montage (double beforeprint/autoprint).
+   */
+  renderEffects?: boolean;
 }) {
   const resolvedContact: ContactLocationOverlay = contactLocation ?? {
     mapsHref: buildContactLocationHref(),
@@ -93,11 +101,13 @@ export default function OfferTailoredShell({
     >
       <ContactLocationProvider value={resolvedContact} locale={lang}>
         <div className="cv-offer-tailored-shell">
-          <Suspense fallback={null}>
-            <FullCvPrintPreviewEffect />
-            <AtsLabelsEffect />
-            <CvAutoprint />
-          </Suspense>
+          {renderEffects && (
+            <Suspense fallback={null}>
+              <FullCvPrintPreviewEffect />
+              <AtsLabelsEffect />
+              <CvAutoprint />
+            </Suspense>
+          )}
           {/* @ts-expect-error Server Component */}
           <Headers
             locale={lang}

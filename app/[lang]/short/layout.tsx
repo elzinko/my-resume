@@ -1,30 +1,19 @@
-import React, { Suspense } from 'react';
-import CvZoomSlider from '@/components/CvZoomSlider';
+import React from 'react';
 
 /**
- * Wrapper dédié au CV court : ciblage CSS print (`cv-short-page`, `@page short`)
- * pour tenir sur une page A4 sans impacter le CV complet.
+ * Layout du CV court — transparent depuis ADR-0006 (vue mobile indépendante).
  *
- * `max-w-[800px] mx-auto` : sur le WEB, le CV est rendu à sa largeur réelle (≈ A4,
- * 794px) et centré → aperçu fidèle du PDF (sinon il s'étire pleine largeur, la
- * photo file à l'extrême droite et paraît minuscule). En impression, la page fait
- * déjà < 800px : la contrainte ne mord pas, le rendu A4 est inchangé.
+ * L'enveloppe A4 (`cv-print-preview` + `cv-short-page mx-auto max-w-[800px]` + zoom)
+ * n'est PLUS posée ici : elle est portée par la **branche desktop/impression** dans
+ * `page.tsx`. Raison : sur mobile, `/short` rend désormais la vue COMPLÈTE
+ * (`OfferTailoredShell`, identique à `/[lang]`) — elle ne doit pas hériter du cadrage
+ * A4 du court (tokens d'espacement densifiés, largeur 800px, zoom). Seule la branche
+ * desktop/impression (le vrai CV court A4) reste enveloppée.
  */
 export default function ShortCvLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    // `cv-print-preview` en PERMANENCE sur le court → la vue normale rend comme
-    // l'aperçu `?print=1` (fidèle au PDF). Le zoom (CvZoomSlider) gère la taille.
-    <div className="cv-print-preview">
-      <div className="cv-short-page mx-auto max-w-[800px]">{children}</div>
-      {/* Curseur de zoom (hors du document zoomé → ne se zoome pas lui-même).
-          Suspense requis : CvZoomSlider lit useSearchParams (réagit à ?print). */}
-      <Suspense fallback={null}>
-        <CvZoomSlider />
-      </Suspense>
-    </div>
-  );
+  return <>{children}</>;
 }

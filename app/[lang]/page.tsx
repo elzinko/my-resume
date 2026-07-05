@@ -2,15 +2,7 @@ import OfferTailoredShell from '@/components/OfferTailoredShell';
 import { Locale } from '../../i18n-config';
 import type { Metadata } from 'next';
 import { getCvData } from '@/lib/cv-data';
-import { getMatchCatalog } from '@/lib/match-catalog-server';
-import { getEducationLevelContent } from '@/lib/education-level-content';
-import { offerPriorityTokensAndContact } from '@/lib/offer-page-data';
-import { resolveOfferFromUrlParams } from '@/lib/query-offer-params';
-import { recordToURLSearchParams } from '@/lib/search-params-to-url';
-import { parseDetailLevel, parseMaxJobShown } from '@/lib/cv-detail-level';
-import { parseEntriesLayout } from '@/lib/cv-entries-layout';
-import type { ContractType } from '@/data/offers/types';
-import type { CvMode } from '@/lib/cv-contract-text';
+import { buildFullCvShellProps } from '@/lib/full-cv-shell-props';
 
 export const dynamic = 'force-dynamic';
 
@@ -42,80 +34,6 @@ export default async function Page({
   params: { lang: Locale };
   searchParams?: Record<string, string | string[] | undefined>;
 }) {
-  const data: Record<string, unknown> = (await getCvData(lang)) as Record<
-    string,
-    unknown
-  >;
-  const educationLevel = getEducationLevelContent(data, lang);
-  const matchCatalog = getMatchCatalog();
-  const sp = recordToURLSearchParams(searchParams);
-  const offer = resolveOfferFromUrlParams(sp, matchCatalog);
-  const contractParam =
-    typeof searchParams?.contract === 'string'
-      ? searchParams.contract
-      : undefined;
-  const contract: ContractType | undefined =
-    contractParam === 'cdi' || contractParam === 'freelance'
-      ? contractParam
-      : undefined;
-  const modeParam =
-    typeof searchParams?.mode === 'string' ? searchParams.mode : undefined;
-  const mode: CvMode | undefined =
-    modeParam === 'teaching' ? 'teaching' : undefined;
-  const { priorityTokens, contactLocation } = offerPriorityTokensAndContact(
-    offer,
-    sp,
-  );
-  const subtitleOverride =
-    (lang === 'fr'
-      ? sp.get('subtitle_fr') || sp.get('subtitle')
-      : sp.get('subtitle_en') || sp.get('subtitle')
-    )?.trim() || undefined;
-  const eduRaw = sp.get('edu')?.trim();
-  const showEducationLevel =
-    offer?.showEducation === true || eduRaw === '1' || eduRaw === 'true';
-  const contact = data.contact as
-    | { email?: string; phone?: string; location?: string }
-    | undefined;
-
-  // Photo : affichée par défaut, `?photo=0` pour la masquer.
-  const showPhoto = sp.get('photo') !== '0';
-  // Âge : affiché par défaut (sous le rôle), `?age=0` pour le masquer.
-  const showAge = sp.get('age') !== '0';
-  // Position du titre : à gauche par défaut, `?headerAlign=right` pour l'aligner à droite.
-  const headerAlign: 'left' | 'right' =
-    sp.get('headerAlign') === 'right' ? 'right' : 'left';
-  // Niveau de détail des expériences : `?detail=full|summary|minimal`.
-  const detailLevel = parseDetailLevel(sp.get('detail'));
-  // Pagination : `?maxJobShown=N` → N postes affichés en entrée ; au-delà, les
-  // clients sont pliés dans le footer de synthèse. Sans param → tous affichés.
-  const maxJobShown = parseMaxJobShown(sp.get('maxJobShown'));
-  // Disposition des entrées Études / Loisirs : `?entriesLayout=inline|stacked`
-  // (défaut inline : titre + détail sur une ligne, année à droite ; stacked = 2 lignes).
-  const entriesLayout = parseEntriesLayout(sp.get('entriesLayout'));
-
-  return (
-    <OfferTailoredShell
-      lang={lang}
-      educationLevel={educationLevel}
-      headerContactStrip={{
-        email: contact?.email ?? '',
-        phone: contact?.phone ?? '',
-        location: contact?.location ?? '',
-      }}
-      frameworkDisplayPriorityTokens={priorityTokens}
-      contactLocation={contactLocation}
-      hideMalt={contract === 'cdi' || mode === 'teaching'}
-      contract={contract}
-      mode={mode}
-      subtitleOverride={subtitleOverride}
-      showEducationLevel={showEducationLevel}
-      showPhoto={showPhoto}
-      showAge={showAge}
-      headerAlign={headerAlign}
-      detailLevel={detailLevel}
-      maxJobShown={maxJobShown}
-      entriesLayout={entriesLayout}
-    />
-  );
+  const shellProps = await buildFullCvShellProps(lang, searchParams);
+  return <OfferTailoredShell {...shellProps} />;
 }

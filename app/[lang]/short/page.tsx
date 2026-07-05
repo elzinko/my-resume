@@ -12,7 +12,9 @@ import ShortPageWrapper from '@/components/ShortPageWrapper';
 import FullCvPrintPreviewEffect from '@/components/FullCvPrintPreviewEffect';
 import AtsLabelsEffect from '@/components/AtsLabelsEffect';
 import CvAutoprint from '@/components/CvAutoprint';
-import MobileShortToFullRedirect from '@/components/MobileShortToFullRedirect';
+import OfferTailoredShell from '@/components/OfferTailoredShell';
+import { buildFullCvShellProps } from '@/lib/full-cv-shell-props';
+import CvZoomSlider from '@/components/CvZoomSlider';
 import {
   resolveAboutText,
   resolveDomainDescription,
@@ -174,34 +176,54 @@ export default async function ShortPage({
     ),
   };
 
+  // Props du CV complet (source unique, partagée avec `/[lang]`) — pour le rendu MOBILE.
+  const fullShellProps = await buildFullCvShellProps(lang, searchParams);
+
   return (
     <>
+      {/* Effets globaux montés UNE seule fois (couvrent les 2 branches). */}
       <Suspense fallback={null}>
-        {/* Mobile : le court ne s'affiche jamais → rebascule vers le complet
-            (sauf impression `?autoprint`/`?print`). Cf. backlog job-app 0016. */}
-        <MobileShortToFullRedirect lang={lang} />
         <FullCvPrintPreviewEffect />
         <AtsLabelsEffect />
+        <CvAutoprint />
       </Suspense>
-      <ShortPageWrapper
-        lang={lang}
-        headerName={data?.header?.name || ''}
-        headerRole={subtitleOverride || data?.header?.role || ''}
-        hideMalt={hideMalt}
-        align={headerAlign}
-        photoUrl={photoUrl}
-        ageText={ageText}
-      >
-        <Suspense fallback={null}>
-          <CvAutoprint />
-        </Suspense>
-        <CompactCvLayout
-          data={compactData}
-          lang={lang as 'fr' | 'en'}
-          highlightedJobSlugs={highlightedJobSlugs}
-          showEducationLevel={showEducationLevel}
-        />
-      </ShortPageWrapper>
+
+      {/* MOBILE (écran uniquement) — ADR-0006 : le CV court ne s'affiche JAMAIS sur
+          mobile. On rend la vue COMPLÈTE (identique à `/[lang]`), sans redirect ni
+          réécriture d'URL. Hors de l'enveloppe A4 (`cv-short-page`) → rendu mobile
+          fidèle au complet. `renderEffects={false}` : effets déjà montés ci-dessus. */}
+      <div className="md:hidden print:hidden print-preview:hidden">
+        <OfferTailoredShell {...fullShellProps} renderEffects={false} />
+      </div>
+
+      {/* DESKTOP + IMPRESSION — le CV court A4 (inchangé). L'enveloppe A4
+          (`cv-print-preview` + `cv-short-page` + zoom), auparavant dans le layout,
+          est portée ici pour ne pas contaminer la branche mobile ci-dessus. */}
+      <div className="hidden md:block print:block print-preview:block">
+        <div className="cv-print-preview">
+          <div className="cv-short-page mx-auto max-w-[800px]">
+            <ShortPageWrapper
+              lang={lang}
+              headerName={data?.header?.name || ''}
+              headerRole={subtitleOverride || data?.header?.role || ''}
+              hideMalt={hideMalt}
+              align={headerAlign}
+              photoUrl={photoUrl}
+              ageText={ageText}
+            >
+              <CompactCvLayout
+                data={compactData}
+                lang={lang as 'fr' | 'en'}
+                highlightedJobSlugs={highlightedJobSlugs}
+                showEducationLevel={showEducationLevel}
+              />
+            </ShortPageWrapper>
+          </div>
+          <Suspense fallback={null}>
+            <CvZoomSlider />
+          </Suspense>
+        </div>
+      </div>
     </>
   );
 }
