@@ -64,9 +64,11 @@ test.describe('Offer match (query params)', () => {
       title: 'Développeur Java',
       requirement: 'Java:java,spring',
     });
+    // Le CV court ne s'affiche qu'en desktop/impression (ADR-0006 : mobile = complet).
+    await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto(`/fr/short?${q.toString()}`);
     await expect(page.locator('#profile-match')).toHaveCount(0);
-    await expect(page.locator('#domains')).toBeVisible();
+    await expect(page.locator('.cv-short-page #domains')).toBeVisible();
   });
 
   test('CV court : paramètres company + requirement — pas de #profile-match dans le corps', async ({

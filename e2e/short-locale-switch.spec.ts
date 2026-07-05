@@ -5,7 +5,7 @@ test.describe('Short CV locale', () => {
     await page.goto('/en/short');
     await expect(page).toHaveURL(/\/en\/short/);
     await page
-      .getByTestId('cv-header-toolbar')
+      .locator('[data-testid="cv-header-toolbar"]:visible')
       .getByTestId('locale-switch')
       .click();
     await expect(page).toHaveURL(/\/fr\/short/);
@@ -15,7 +15,7 @@ test.describe('Short CV locale', () => {
     await page.goto('/fr/short');
     await expect(page).toHaveURL(/\/fr\/short/);
     await page
-      .getByTestId('cv-header-toolbar')
+      .locator('[data-testid="cv-header-toolbar"]:visible')
       .getByTestId('locale-switch')
       .click();
     await expect(page).toHaveURL(/\/en\/short/);
@@ -27,7 +27,7 @@ test.describe('Short CV locale', () => {
     await page.goto('/fr/short?company=TestCo&requirement=Java:java');
     await expect(page).toHaveURL(/company=TestCo/);
     await page
-      .getByTestId('cv-header-toolbar')
+      .locator('[data-testid="cv-header-toolbar"]:visible')
       .getByTestId('locale-switch')
       .click();
     await expect(page).toHaveURL(/\/en\/short/);
