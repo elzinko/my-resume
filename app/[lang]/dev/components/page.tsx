@@ -341,7 +341,8 @@ export default async function DevComponentsPage({
   ];
 
   return (
-    <main className="text-cv-body mx-auto max-w-5xl px-6 py-10">
+    // max-md:pt-16 : dégage la pastille de nav dev flottante (mobile).
+    <main className="text-cv-body mx-auto max-w-5xl px-6 py-10 max-md:pt-16">
       <header className="mb-10">
         <h1 className="text-3xl font-semibold">Dev · Components storybook</h1>
         <p className="mt-2 text-sm text-cv-body-muted">

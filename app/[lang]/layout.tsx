@@ -21,8 +21,9 @@ export default async function RootLayout({
       enableAnalitycs = false;
     }
   }
-  // Hors production : barre de nav dev EN HAUT (pleine largeur, desktop) → on réserve
-  // la hauteur en haut du contenu pour ne pas la recouvrir (mobile : barre en bas).
+  // Hors production : barre de nav dev EN HAUT sur tous les viewports (desktop :
+  // pleine largeur → on réserve la hauteur ; mobile : pastille repliée alignée sur
+  // la barre d'outils CV, aucune réserve nécessaire).
   const isDev = process.env.VERCEL_ENV !== 'production';
   return (
     <>
@@ -33,7 +34,8 @@ export default async function RootLayout({
       ) : null}
       {/* Réserve la hauteur de la barre dev (desktop) → le contenu démarre dessous.
           Écran uniquement : masqué en impression ET en aperçu `?print` (barre cachée
-          là), donc AUCUN impact sur le PDF / l'aperçu. Mobile : barre dev en bas. */}
+          là), donc AUCUN impact sur le PDF / l'aperçu. Mobile : pastille dev en haut
+          à gauche, dans la rangée de la barre d'outils CV (pas de réserve). */}
       {isDev ? (
         <div
           aria-hidden
