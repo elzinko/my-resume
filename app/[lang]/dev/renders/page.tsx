@@ -331,7 +331,13 @@ export default function DevRendersPage() {
   const [genState, setGenState] = useState<GenerateState>('idle');
   const [genOutput, setGenOutput] = useState('');
   const [showLog, setShowLog] = useState(false);
-  const [bust, setBust] = useState(Date.now());
+  // Cache-buster des URLs /api/renders/file. Init stable (0) pour que le HTML
+  // SSR et le premier rendu client soient identiques (sinon warning
+  // d'hydratation « Prop src did not match ») ; résolu au montage.
+  const [bust, setBust] = useState(0);
+  useEffect(() => {
+    setBust(Date.now());
+  }, []);
   const [lastGenerated, setLastGenerated] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState<ActiveTab>('snapshots');
   const [expandedVariant, setExpandedVariant] = useState<string | null>(
