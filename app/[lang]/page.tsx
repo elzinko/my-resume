@@ -1,5 +1,3 @@
-import '../../styles/globals.css';
-
 import OfferTailoredShell from '@/components/OfferTailoredShell';
 import { Locale } from '../../i18n-config';
 import type { Metadata } from 'next';

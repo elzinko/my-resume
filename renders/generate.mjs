@@ -14,6 +14,9 @@ async function screenshot(url, filename, opts = {}) {
   });
   const p = await ctx.newPage();
   await p.goto(url, { waitUntil: 'networkidle' });
+  // Les renders sont des captures de référence du CV : on retire la barre de
+  // nav dev (présente hors production) pour ne pas polluer les comparaisons.
+  await p.addStyleTag({ content: '[data-devnav]{display:none !important}' });
   if (opts.waitMs) await p.waitForTimeout(opts.waitMs);
   await p.screenshot({ path: path.join(OUT, filename), fullPage: true });
   console.log(`  screenshot: ${filename}`);
