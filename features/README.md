@@ -7,7 +7,7 @@ Règles : 1 PR par feature, squash-merge quand la CI est verte. Priorités P0 (u
 Statuts : 🔴 todo · 🟠 in-progress · ⛔ blocked · ✅ shipped. Rendu CV : respecter les
 invariants de `CLAUDE.md` et la checklist `docs/cv-rendering-review-checklist.md`.
 
-Dernière mise à jour : 2026-07-03
+Dernière mise à jour : 2026-07-05
 
 ## Actives (triées par priorité)
 
@@ -16,7 +16,7 @@ Dernière mise à jour : 2026-07-03
 | 0002 | Loisirs — bascule inline / 2 lignes via `?entriesLayout`             | feature  | P2   | 🔴 todo |     |
 | 0003 | Design system — CSS variables et tokens                              | refactor | P2   | 🔴 todo |     |
 | 0006 | Migration Next.js 14 → 15+/16                                        | chore    | P2   | 🔴 todo |     |
-| 0004 | Data layer découplée (bundle → cv/tech-catalog/locales)              | refactor | P3   | 🔴 todo |     |
+| 0004 | Retirer les derniers textes en dur des composants (fallbacks FR/EN)  | refactor | P3   | 🔴 todo |     |
 | 0005 | Primitives React réutilisables                                       | refactor | P3   | 🔴 todo |     |
 | 0007 | Retirer `?print` / `FullCvPrintPreviewEffect` résiduels              | refactor | P3   | 🔴 todo |     |
 | 0016 | /dev/renders — scroll bloqué dans certaines cellules de comparaison  | bug      | P3   | 🔴 todo |     |
