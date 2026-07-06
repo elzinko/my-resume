@@ -208,35 +208,9 @@ export default function CompactCvLayout({
 
       {children}
 
-      {/* Mobile-only : Adéquation poste + Coordonnées, hors grille, avant Expérience. */}
-      <div className="space-y-[var(--cv-section-gap)] print:hidden md:hidden">
-        <Suspense fallback={null}>
-          <JobFitSection
-            lang={lang}
-            educationLevel={data.educationLevel}
-            variant="compact"
-            showEducationLevel={showEducationLevel}
-          />
-        </Suspense>
-        <section>
-          <SectionHeadingAts
-            section="contact"
-            locale={lang}
-            title={
-              data.titles.contact || (lang === 'fr' ? 'Coordonnées' : 'Contact')
-            }
-            accent="emerald"
-            className="min-w-0"
-          />
-          <ContactDisplay
-            contact={data.contact}
-            cvShortInlineRows
-            showLabels={false}
-            compact={true}
-            locale={lang}
-          />
-        </section>
-      </div>
+      {/* NB : le bloc mobile-only Adéquation+Coordonnées empilés (jadis `print:hidden md:hidden`)
+          a été retiré (ADR-0006 / my-resume#140) : `/short` ne rend plus JAMAIS CompactCvLayout
+          en mobile (le mobile affiche le CV complet via OfferTailoredShell), il était donc mort. */}
 
       {/* Colonne gauche 1/3 + expériences 2/3 (grille alignée sur les domaines) */}
       <div className="cv-page-split">
