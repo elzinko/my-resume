@@ -5,7 +5,7 @@ test.use({ viewport: { width: 1100, height: 800 } });
 async function assertToolbarHeightsUniform(
   page: import('@playwright/test').Page,
 ) {
-  const bar = page.getByTestId('cv-header-toolbar');
+  const bar = page.locator('[data-testid="cv-header-toolbar"]:visible');
   await expect(bar).toBeVisible();
   const controls = bar.locator('a, button');
   const n = await controls.count();

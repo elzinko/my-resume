@@ -15,7 +15,7 @@ test.describe('CV court — alignement colonnes', () => {
   async function expectDevAlignedWithMain(
     page: import('@playwright/test').Page,
   ) {
-    const devCol = page.locator('#domains .cv-domains-grid > *').nth(1);
+    const devCol = page.locator('.cv-short-page #domains .cv-domains-grid > *').nth(1);
     const main = page.locator('#main');
 
     await expect(devCol).toBeVisible();
@@ -37,7 +37,7 @@ test.describe('CV court — alignement colonnes', () => {
   async function expectAgileAlignedWithLeft(
     page: import('@playwright/test').Page,
   ) {
-    const agileCol = page.locator('#domains .cv-domains-grid > *').first();
+    const agileCol = page.locator('.cv-short-page #domains .cv-domains-grid > *').first();
     const left = page.locator('#left');
 
     await expect(agileCol).toBeVisible();

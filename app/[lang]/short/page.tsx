@@ -12,7 +12,10 @@ import ShortPageWrapper from '@/components/ShortPageWrapper';
 import FullCvPrintPreviewEffect from '@/components/FullCvPrintPreviewEffect';
 import AtsLabelsEffect from '@/components/AtsLabelsEffect';
 import CvAutoprint from '@/components/CvAutoprint';
-import MobileShortToFullRedirect from '@/components/MobileShortToFullRedirect';
+import OfferTailoredShell from '@/components/OfferTailoredShell';
+import { buildFullCvShellProps } from '@/lib/full-cv-shell-props';
+import CvZoomSlider from '@/components/CvZoomSlider';
+import { isCvPrintPreviewQuery } from '@/lib/cv-print-preview';
 import {
   resolveAboutText,
   resolveDomainDescription,
@@ -174,34 +177,71 @@ export default async function ShortPage({
     ),
   };
 
+  // Props du CV complet (source unique, partagée avec `/[lang]`) — pour le rendu MOBILE.
+  const fullShellProps = await buildFullCvShellProps(lang, searchParams);
+
+  // Contexte impression (URL `?print` / `?autoprint`) : la sortie est TOUJOURS le CV
+  // court A4 — le shell mobile n'est ni affiché ni imprimé, on ne le rend donc PAS.
+  // Bonus : allège le DOM de l'aperçu et du PDF Puppeteer, et rend `/short?print`
+  // structurellement identique à l'avant-ADR-0006 (aucun décalage de rendu).
+  const isPrintContext =
+    isCvPrintPreviewQuery(sp) || sp.get('autoprint') === '1';
+
+  // Enveloppe A4 du CV court (aperçu fidèle + zoom). Source unique de {desktop-écran,
+  // aperçu `?print`, PDF} → WYSIWYG préservé (arbre A4 inchangé).
+  const shortA4 = (
+    <div className="cv-print-preview">
+      <div className="cv-short-page mx-auto max-w-[800px]">
+        <ShortPageWrapper
+          lang={lang}
+          headerName={data?.header?.name || ''}
+          headerRole={subtitleOverride || data?.header?.role || ''}
+          hideMalt={hideMalt}
+          align={headerAlign}
+          photoUrl={photoUrl}
+          ageText={ageText}
+        >
+          <CompactCvLayout
+            data={compactData}
+            lang={lang as 'fr' | 'en'}
+            highlightedJobSlugs={highlightedJobSlugs}
+            showEducationLevel={showEducationLevel}
+          />
+        </ShortPageWrapper>
+      </div>
+      <Suspense fallback={null}>
+        <CvZoomSlider />
+      </Suspense>
+    </div>
+  );
+
   return (
     <>
+      {/* Effets globaux montés UNE seule fois. */}
       <Suspense fallback={null}>
-        {/* Mobile : le court ne s'affiche jamais → rebascule vers le complet
-            (sauf impression `?autoprint`/`?print`). Cf. backlog job-app 0016. */}
-        <MobileShortToFullRedirect lang={lang} />
         <FullCvPrintPreviewEffect />
         <AtsLabelsEffect />
+        <CvAutoprint />
       </Suspense>
-      <ShortPageWrapper
-        lang={lang}
-        headerName={data?.header?.name || ''}
-        headerRole={subtitleOverride || data?.header?.role || ''}
-        hideMalt={hideMalt}
-        align={headerAlign}
-        photoUrl={photoUrl}
-        ageText={ageText}
-      >
-        <Suspense fallback={null}>
-          <CvAutoprint />
-        </Suspense>
-        <CompactCvLayout
-          data={compactData}
-          lang={lang as 'fr' | 'en'}
-          highlightedJobSlugs={highlightedJobSlugs}
-          showEducationLevel={showEducationLevel}
-        />
-      </ShortPageWrapper>
+
+      {isPrintContext ? (
+        // IMPRESSION / APERÇU : uniquement le CV court A4 (pas de shell mobile).
+        shortA4
+      ) : (
+        <>
+          {/* MOBILE (écran uniquement) — ADR-0006 : le CV court ne s'affiche JAMAIS
+              sur mobile. On rend la vue COMPLÈTE (identique à `/[lang]`), sans redirect
+              ni réécriture d'URL. Hors de l'enveloppe A4 → rendu mobile fidèle au complet.
+              `renderEffects={false}` : effets déjà montés ci-dessus. */}
+          <div className="md:hidden print:hidden print-preview:hidden">
+            <OfferTailoredShell {...fullShellProps} renderEffects={false} />
+          </div>
+          {/* DESKTOP + IMPRESSION (Cmd+P sans `?print`) — le CV court A4 (inchangé). */}
+          <div className="hidden md:block print:block print-preview:block">
+            {shortA4}
+          </div>
+        </>
+      )}
     </>
   );
 }
