@@ -47,7 +47,10 @@ test.describe('CV court — rythme vertical régulier', () => {
 
     const filet = await bbox(page, '#cv-short-about h2');
     const intro = await bbox(page, '#cv-short-about p');
-    const firstDomain = await bbox(page, '.cv-short-page #domains .cv-domains-grid h2');
+    const firstDomain = await bbox(
+      page,
+      '.cv-short-page #domains .cv-domains-grid h2',
+    );
 
     const filetToIntro = intro.top - filet.bottom;
     const introToDomains = firstDomain.top - intro.bottom;
