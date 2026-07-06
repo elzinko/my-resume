@@ -16,10 +16,17 @@ export default async function domains({
   mode?: CvMode;
 }) {
   const data: any = await getCvData(locale);
+  // Mobile : les domaines sont des SOUS-blocs du Profil, pas une section sœur
+  // (même logique que le CV court, cf. CompactCvLayout `#domains`). Le margin-top
+  // négatif remplace le flex-gap inter-section (--cv-section-gap) par un body-gap :
+  // avec le body-gap propre au premier wrapper Domain, l'écart au-dessus d'« Agile »
+  // = 2 × --cv-section-body-gap (16px) = l'écart titre→texte et l'écart entre
+  // domaines (row-gap + body-gap). `max-md:mb-0` posé côté About pour ne pas
+  // fausser ce calcul.
   return (
     <section
       id="domains"
-      className="mt-2 print-preview:order-[20] print:order-[20] max-md:!mt-0"
+      className="mt-2 print-preview:order-[20] print:order-[20] max-md:!mt-[calc(var(--cv-section-body-gap)-var(--cv-section-gap))]"
     >
       {/* Ancre de section « Compétences / Skills » réservée à l'impression :
           à l'écran ce titre est porté par la sidebar `skills.tsx` (donc pas de
