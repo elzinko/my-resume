@@ -116,12 +116,29 @@
    * même gabarit horizontal que `.cv-page-split` (1/3 + 1/3 + 1/3).
    */
   .cv-domains-grid {
-    /* Mobile (empilé, 1 colonne) : `gap-y-7` → l'écart AU-DESSUS de Dev/Ops rejoint
-       celui au-dessus d'Agile (hérité du gap inter-blocs Profil→domaines) ⇒ rythme
-       régulier entre les 3 sous-domaines. En md+ et à l'impression, retour à 3 colonnes
-       (`gap-y-0`) : les titres sont côte à côte, donc déjà « au même niveau ». */
+    /* Base commune (CV court inclus). Mobile empilé (1 colonne) ; en md+ et à
+       l'impression : 3 colonnes côte à côte (`gap-y-0`). Le CV COMPLET resserre en plus
+       l'écart inter-domaines sur mobile — voir la règle `@media screen` ci-dessous. */
     @apply grid w-full grid-cols-1 grid-rows-none gap-x-2 gap-y-7 md:grid-cols-3 md:items-stretch md:gap-x-10 md:gap-y-0;
     @apply print:grid print:grid-cols-3 print:items-stretch print:gap-x-4 print:gap-y-0;
+  }
+
+  /* CV COMPLET — mobile (ÉCRAN uniquement, JAMAIS en impression) :
+     Agile/Dev/Ops = SOUS-titres groupés sous le Profil, pas des sections. On annule le
+     gap flex de section au-dessus des domaines (comme le CV court) et on aligne l'écart
+     inter-domaines sur l'écart titre→texte (--cv-section-body-gap) ⇒ rythme vertical
+     UNIFORME : « Profil + domaines » perçu comme un seul bloc.
+     `screen and (max-width)` (et non le `max-md:` de Tailwind, qui vaut aussi en print) borne
+     la règle à l'écran : un PDF à marges @page larges peut rendre <768px et déclencherait
+     sinon ce groupement à l'impression (cf. régression photo). Desktop (≥md) et PDF gardent
+     leurs 3 colonnes. Scopé `.cv-full-cv-print-root` → le CV court (.cv-short-page) intact. */
+  @media screen and (max-width: 767px) {
+    .cv-full-cv-print-root #domains {
+      margin-top: calc(var(--cv-section-gap) * -1) !important;
+    }
+    .cv-full-cv-print-root .cv-domains-grid {
+      row-gap: var(--cv-section-body-gap) !important;
+    }
   }
 
   /**

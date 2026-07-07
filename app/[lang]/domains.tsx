@@ -19,7 +19,7 @@ export default async function domains({
   return (
     <section
       id="domains"
-      className="mt-2 print-preview:order-[20] print:order-[20] max-md:!mt-0"
+      className="mt-2 print-preview:order-[20] print:order-[20]"
     >
       {/* Ancre de section « Compétences / Skills » réservée à l'impression :
           à l'écran ce titre est porté par la sidebar `skills.tsx` (donc pas de
