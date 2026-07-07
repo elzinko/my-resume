@@ -24,14 +24,19 @@ test.describe('Filets de section — alignement (impression)', () => {
       document.documentElement.classList.add('cv-print-preview'),
     );
 
-    const bottomOf = (sel: string) =>
-      page
-        .locator(sel)
-        .first()
-        .evaluate((el) => Math.round(el.getBoundingClientRect().bottom));
-
-    const adequation = await bottomOf('#left #job-fit h2');
-    const experience = await bottomOf('#main > section h2');
+    // Sélecteurs scopés `.cv-short-page` (ADR-0006 : /short rend 2 arbres DOM en desktop)
+    // + les 2 bottoms mesurés dans UN SEUL `page.evaluate` (atomique). Le zoom du court est
+    // appliqué par JS (CvZoomSlider) après hydratation ; 2 mesures séparées peuvent enjamber
+    // ce reflow → bottoms lus à des zooms différents = désalignement fantôme (~100px observé
+    // sur le runner ubuntu, pas en local macOS). Cf. short-cv-section-spacing « En-tête ».
+    const { adequation, experience } = await page.evaluate(() => {
+      const bottom = (s: string) =>
+        Math.round(document.querySelector(s)!.getBoundingClientRect().bottom);
+      return {
+        adequation: bottom('.cv-short-page #left #job-fit h2'),
+        experience: bottom('.cv-short-page #main > section h2'),
+      };
+    });
 
     expect(
       Math.abs(adequation - experience),

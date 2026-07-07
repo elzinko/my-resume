@@ -67,41 +67,44 @@ test.describe('CV court — rythme vertical régulier', () => {
     ).toBeLessThanOrEqual(1.2);
   });
 
-  // @local-only : écarts entre lignes de texte (nom/rôle/âge) grignotés par le
-  // débord de glyphe → dépend de la police système (macOS ≠ ubuntu). Le ratio
-  // (rythme uniforme) reste vrai partout, mais les valeurs absolues divergent.
-  // Exclu de la CI (cf. .github/workflows/e2e.yml).
-  test(
-    'En-tête : nom→rôle == rôle→âge (rythme uniforme)',
-    { tag: '@local-only' },
-    async ({ page }) => {
-      // Desktop : c'est là que les marges divergeaient (rôle md:mt-3 vs âge md:mt-2).
-      await page.setViewportSize({ width: 1024, height: 1400 });
-      await page.goto(`/fr/short?${OFFER_QS}`);
+  // Gaps inter-lignes de l'en-tête : DÉTERMINISTES et indépendants de la police → GATÉS
+  // en CI (l'ancienne hypothèse « débord de glyphe, macOS ≠ ubuntu » était fausse ;
+  // `getBoundingClientRect` mesure la BOÎTE de bloc, pas l'encre du glyphe, et les
+  // line-height sont explicites). L'écart = margin-top 0.125rem (2px, styles/globals.css)
+  // × zoom (1 avant hydratation, 0.82 après CvZoomSlider) → toujours positif et homogène.
+  //
+  // DEUX précautions, sinon rouge sur le runner ubuntu (pas en local macOS) :
+  //  1. Sélecteurs scopés `.cv-short-page` — ADR-0006 : /short rend 2 arbres DOM en
+  //     desktop ; sans scope, `.first()` tombe sur le shell mobile caché → rect 0×0.
+  //  2. Les 3 rects mesurés dans UN SEUL `page.evaluate` (atomique). Le zoom du court est
+  //     appliqué par JS (CvZoomSlider) après hydratation : 3 mesures séparées peuvent
+  //     enjamber ce reflow (nom mesuré à zoom 1, rôle à zoom 0.82) → écart négatif
+  //     fantôme (~-6px observé en CI). Une passe synchrone fige un layout cohérent.
+  test('En-tête : nom→rôle == rôle→âge (rythme uniforme)', async ({ page }) => {
+    await page.setViewportSize({ width: 1024, height: 1400 });
+    await page.goto(`/fr/short?${OFFER_QS}`);
 
-      // Scope `.cv-short-page` OBLIGATOIRE : depuis ADR-0006, `/short` hors `?print`
-      // rend AUSSI l'arbre du CV complet (branche mobile, `md:hidden`) AVANT l'arbre
-      // A4 court → un `[data-cv-id]` nu matche d'abord le header caché du complet
-      // (rects 0×0 → gaps mesurés à 0, plancher cassé).
-      const name = await bbox(page, '.cv-short-page [data-cv-id="fullname"]');
-      const role = await bbox(page, '.cv-short-page [data-cv-id="title"]');
-      const age = await bbox(page, '.cv-short-page [data-cv-id="age"]');
+    const { nameToRole, roleToAge } = await page.evaluate(() => {
+      const bottomTop = (s: string) => {
+        const r = document.querySelector(s)!.getBoundingClientRect();
+        return { top: r.top, bottom: r.bottom };
+      };
+      const name = bottomTop('.cv-short-page [data-cv-id="fullname"]');
+      const role = bottomTop('.cv-short-page [data-cv-id="title"]');
+      const age = bottomTop('.cv-short-page [data-cv-id="age"]');
+      return {
+        nameToRole: role.top - name.bottom,
+        roleToAge: age.top - role.bottom,
+      };
+    });
 
-      const nameToRole = role.top - name.bottom;
-      const roleToAge = age.top - role.bottom;
-
-      // En desktop, `/short` rend en typo A4 compacte (`.cv-print-preview` permanent
-      // + règles `min-width: 768px`) : les marges inter-lignes retombent à 2px → gaps
-      // ~1,6px. Le plancher garde juste des écarts POSITIFS et réels ; le vrai garde-fou
-      // est le ratio ci-dessous (rythme uniforme nom→rôle == rôle→âge).
-      expect(nameToRole, 'nom → rôle').toBeGreaterThanOrEqual(1);
-      expect(roleToAge, 'rôle → âge').toBeGreaterThanOrEqual(1);
-      expect(
-        ratio(nameToRole, roleToAge),
-        `gaps en-tête homogènes (${Math.round(nameToRole)}px vs ${Math.round(
-          roleToAge,
-        )}px)`,
-      ).toBeLessThanOrEqual(1.25);
-    },
-  );
+    expect(nameToRole, 'nom → rôle').toBeGreaterThanOrEqual(1);
+    expect(roleToAge, 'rôle → âge').toBeGreaterThanOrEqual(1);
+    expect(
+      ratio(nameToRole, roleToAge),
+      `gaps en-tête homogènes (${Math.round(nameToRole)}px vs ${Math.round(
+        roleToAge,
+      )}px)`,
+    ).toBeLessThanOrEqual(1.25);
+  });
 });
