@@ -116,11 +116,14 @@
    * même gabarit horizontal que `.cv-page-split` (1/3 + 1/3 + 1/3).
    */
   .cv-domains-grid {
-    /* Mobile (empilé, 1 colonne) : `gap-y-7` → l'écart AU-DESSUS de Dev/Ops rejoint
-       celui au-dessus d'Agile (hérité du gap inter-blocs Profil→domaines) ⇒ rythme
-       régulier entre les 3 sous-domaines. En md+ et à l'impression, retour à 3 colonnes
-       (`gap-y-0`) : les titres sont côte à côte, donc déjà « au même niveau ». */
-    @apply grid w-full grid-cols-1 grid-rows-none gap-x-2 gap-y-7 md:grid-cols-3 md:items-stretch md:gap-x-10 md:gap-y-0;
+    /* Mobile (empilé, 1 colonne) : rythme de SOUS-bloc, pas de section — l'écart
+       visuel entre deux domaines = row-gap (--cv-section-body-gap) + le body-gap
+       propre du wrapper Domain suivant = 2 × body-gap (16px) ≈ l'écart titre→texte.
+       Même total au-dessus d'« Agile » via le margin-top négatif de `#domains`
+       (cf. domains.tsx) ⇒ Agile/Dev/Ops se lisent comme un groupe du Profil.
+       En md+ et à l'impression, retour à 3 colonnes (`gap-y-0`) : les titres sont
+       côte à côte, donc déjà « au même niveau ». */
+    @apply grid w-full grid-cols-1 grid-rows-none gap-x-2 gap-y-[var(--cv-section-body-gap)] md:grid-cols-3 md:items-stretch md:gap-x-10 md:gap-y-0;
     @apply print:grid print:grid-cols-3 print:items-stretch print:gap-x-4 print:gap-y-0;
   }
 

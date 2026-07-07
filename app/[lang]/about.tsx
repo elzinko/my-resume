@@ -22,7 +22,7 @@ export default async function About({
   return (
     <section
       id="about"
-      className="mb-1 mt-4 pb-1 print-preview:order-[10] print:order-[10] max-md:!mt-0"
+      className="mb-1 mt-4 pb-1 print-preview:order-[10] print:order-[10] max-md:!mt-0 max-md:mb-0"
     >
       <SectionHeadingAts
         section="about"
