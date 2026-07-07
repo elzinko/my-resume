@@ -90,7 +90,7 @@
    print/aperçu sont à 1.3rem / 0.5rem → divergence visible au switch aperçu↔normal
    (écart entre sections, et intro Profil → titres des domaines). */
 .cv-full-cv-print-root {
-  --cv-section-gap: 1.3rem;
+  --cv-section-gap: 1.8rem;
   --cv-section-body-gap: 0.5rem;
 }
 
