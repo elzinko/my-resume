@@ -47,7 +47,8 @@ export async function buildFullCvShellProps(
       : undefined;
   const modeParam =
     typeof searchParams?.mode === 'string' ? searchParams.mode : undefined;
-  const mode: CvMode | undefined = modeParam === 'teaching' ? 'teaching' : undefined;
+  const mode: CvMode | undefined =
+    modeParam === 'teaching' ? 'teaching' : undefined;
   const { priorityTokens, contactLocation } = offerPriorityTokensAndContact(
     offer,
     sp,

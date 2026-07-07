@@ -233,11 +233,11 @@ export default async function ShortPage({
               sur mobile. On rend la vue COMPLÈTE (identique à `/[lang]`), sans redirect
               ni réécriture d'URL. Hors de l'enveloppe A4 → rendu mobile fidèle au complet.
               `renderEffects={false}` : effets déjà montés ci-dessus. */}
-          <div className="md:hidden print:hidden print-preview:hidden">
+          <div className="print-preview:hidden print:hidden md:hidden">
             <OfferTailoredShell {...fullShellProps} renderEffects={false} />
           </div>
           {/* DESKTOP + IMPRESSION (Cmd+P sans `?print`) — le CV court A4 (inchangé). */}
-          <div className="hidden md:block print:block print-preview:block">
+          <div className="hidden print-preview:block print:block md:block">
             {shortA4}
           </div>
         </>
