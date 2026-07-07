@@ -76,21 +76,47 @@ test.describe('CV court — rythme vertical régulier', () => {
   // Sélecteurs scopés `.cv-short-page` : depuis ADR-0006, /short rend 2 arbres DOM en
   // desktop ; sans scope, `.first()` tomberait sur le shell mobile caché → rect 0×0.
   test('En-tête : nom→rôle == rôle→âge (rythme uniforme)', async ({ page }) => {
-    // Desktop : c'est là que les marges divergeaient (rôle md:mt-3 vs âge md:mt-2).
     await page.setViewportSize({ width: 1024, height: 1400 });
+
+    const probe = async (label: string) => {
+      const d = await page.evaluate(() => {
+        const rect = (s: string) => {
+          const el = document.querySelector(s);
+          if (!el) return null;
+          const r = el.getBoundingClientRect();
+          return { top: r.top, bottom: r.bottom };
+        };
+        const sp = document.querySelector('.cv-short-page');
+        const cs = sp ? getComputedStyle(sp) : null;
+        const name = rect('.cv-short-page [data-cv-id="fullname"]');
+        const role = rect('.cv-short-page [data-cv-id="title"]');
+        const age = rect('.cv-short-page [data-cv-id="age"]');
+        return {
+          htmlClass: document.documentElement.className,
+          shortPageCount: document.querySelectorAll('.cv-short-page').length,
+          fullRootCount: document.querySelectorAll('.cv-full-cv-print-root')
+            .length,
+          zoom: cs ? (cs as unknown as { zoom?: string }).zoom : 'n/a',
+          name,
+          role,
+          age,
+          nameToRole: name && role ? role.top - name.bottom : null,
+          roleToAge: role && age ? age.top - role.bottom : null,
+        };
+      });
+      console.log(`[CIDIAG][${label}] ${JSON.stringify(d)}`);
+      return d;
+    };
+
     await page.goto(`/fr/short?${OFFER_QS}`);
+    await probe('noprint');
 
-    const name = await bbox(page, '.cv-short-page [data-cv-id="fullname"]');
-    const role = await bbox(page, '.cv-short-page [data-cv-id="title"]');
-    const age = await bbox(page, '.cv-short-page [data-cv-id="age"]');
+    await page.goto(`/fr/short?print=1&${OFFER_QS}`);
+    const d = await probe('print');
 
-    const nameToRole = role.top - name.bottom;
-    const roleToAge = age.top - role.bottom;
+    const nameToRole = d.nameToRole ?? -999;
+    const roleToAge = d.roleToAge ?? -999;
 
-    // En desktop, `/short` rend en typo A4 compacte (`.cv-print-preview` permanent
-    // + règles `min-width: 768px`) : les marges inter-lignes retombent à 2px → gaps
-    // ~1,6px. Le plancher garde juste des écarts POSITIFS et réels ; le vrai garde-fou
-    // est le ratio ci-dessous (rythme uniforme nom→rôle == rôle→âge).
     expect(nameToRole, 'nom → rôle').toBeGreaterThanOrEqual(1);
     expect(roleToAge, 'rôle → âge').toBeGreaterThanOrEqual(1);
     expect(
