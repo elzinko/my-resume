@@ -78,8 +78,13 @@ export default function HeaderContent({
               compactPrint
                 ? 'items-center'
                 : // Full CV : photo masquée en mobile (< 768px) → toute la largeur
-                  // pour les infos. Desktop/print et CV court (compactPrint) inchangés.
-                  'items-start max-md:hidden md:items-center'
+                  // pour les infos. `print:!flex` = garde-fou d'IMPRESSION : selon la
+                  // marge @page choisie, la largeur de rendu print peut passer SOUS
+                  // 768px → `max-md:hidden` masquerait la photo dans le PDF (l'aperçu
+                  // `?print`, lui, reste à la largeur desktop et la montrait → mensonge
+                  // WYSIWYG). On force donc l'affichage à l'impression, quelle que soit
+                  // la marge. Desktop web et CV court (compactPrint) inchangés.
+                  'items-start print:!flex print:items-center max-md:hidden md:items-center'
             } ${align === 'right' ? 'order-first' : ''}`}
           >
             {/*
