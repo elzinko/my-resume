@@ -67,55 +67,36 @@ test.describe('CV court — rythme vertical régulier', () => {
     ).toBeLessThanOrEqual(1.2);
   });
 
-  // Gaps inter-lignes de l'en-tête : DÉTERMINISTES, indépendants de la police → GATÉS
-  // en CI (l'ancienne hypothèse « écarts grignotés par le débord de glyphe, macOS ≠
-  // ubuntu » était fausse). `getBoundingClientRect` mesure la BOÎTE de bloc, pas l'encre
-  // du glyphe ; les line-height sont toutes explicites (h1 1.25, p 1.375) et chaque écart
-  // = margin-top 0.125rem (2px, styles/globals.css) × zoom 0.82 = 1,625px — vérifié
-  // identique AU BIT PRÈS sur macOS ET ubuntu (conteneur Linux, 2026-07-07).
-  // Sélecteurs scopés `.cv-short-page` : depuis ADR-0006, /short rend 2 arbres DOM en
-  // desktop ; sans scope, `.first()` tomberait sur le shell mobile caché → rect 0×0.
+  // Gaps inter-lignes de l'en-tête : DÉTERMINISTES et indépendants de la police → GATÉS
+  // en CI (l'ancienne hypothèse « débord de glyphe, macOS ≠ ubuntu » était fausse ;
+  // `getBoundingClientRect` mesure la BOÎTE de bloc, pas l'encre du glyphe, et les
+  // line-height sont explicites). L'écart = margin-top 0.125rem (2px, styles/globals.css)
+  // × zoom (1 avant hydratation, 0.82 après CvZoomSlider) → toujours positif et homogène.
+  //
+  // DEUX précautions, sinon rouge sur le runner ubuntu (pas en local macOS) :
+  //  1. Sélecteurs scopés `.cv-short-page` — ADR-0006 : /short rend 2 arbres DOM en
+  //     desktop ; sans scope, `.first()` tombe sur le shell mobile caché → rect 0×0.
+  //  2. Les 3 rects mesurés dans UN SEUL `page.evaluate` (atomique). Le zoom du court est
+  //     appliqué par JS (CvZoomSlider) après hydratation : 3 mesures séparées peuvent
+  //     enjamber ce reflow (nom mesuré à zoom 1, rôle à zoom 0.82) → écart négatif
+  //     fantôme (~-6px observé en CI). Une passe synchrone fige un layout cohérent.
   test('En-tête : nom→rôle == rôle→âge (rythme uniforme)', async ({ page }) => {
     await page.setViewportSize({ width: 1024, height: 1400 });
-
-    const probe = async (label: string) => {
-      const d = await page.evaluate(() => {
-        const rect = (s: string) => {
-          const el = document.querySelector(s);
-          if (!el) return null;
-          const r = el.getBoundingClientRect();
-          return { top: r.top, bottom: r.bottom };
-        };
-        const sp = document.querySelector('.cv-short-page');
-        const cs = sp ? getComputedStyle(sp) : null;
-        const name = rect('.cv-short-page [data-cv-id="fullname"]');
-        const role = rect('.cv-short-page [data-cv-id="title"]');
-        const age = rect('.cv-short-page [data-cv-id="age"]');
-        return {
-          htmlClass: document.documentElement.className,
-          shortPageCount: document.querySelectorAll('.cv-short-page').length,
-          fullRootCount: document.querySelectorAll('.cv-full-cv-print-root')
-            .length,
-          zoom: cs ? (cs as unknown as { zoom?: string }).zoom : 'n/a',
-          name,
-          role,
-          age,
-          nameToRole: name && role ? role.top - name.bottom : null,
-          roleToAge: role && age ? age.top - role.bottom : null,
-        };
-      });
-      console.log(`[CIDIAG][${label}] ${JSON.stringify(d)}`);
-      return d;
-    };
-
     await page.goto(`/fr/short?${OFFER_QS}`);
-    await probe('noprint');
 
-    await page.goto(`/fr/short?print=1&${OFFER_QS}`);
-    const d = await probe('print');
-
-    const nameToRole = d.nameToRole ?? -999;
-    const roleToAge = d.roleToAge ?? -999;
+    const { nameToRole, roleToAge } = await page.evaluate(() => {
+      const bottomTop = (s: string) => {
+        const r = document.querySelector(s)!.getBoundingClientRect();
+        return { top: r.top, bottom: r.bottom };
+      };
+      const name = bottomTop('.cv-short-page [data-cv-id="fullname"]');
+      const role = bottomTop('.cv-short-page [data-cv-id="title"]');
+      const age = bottomTop('.cv-short-page [data-cv-id="age"]');
+      return {
+        nameToRole: role.top - name.bottom,
+        roleToAge: age.top - role.bottom,
+      };
+    });
 
     expect(nameToRole, 'nom → rôle').toBeGreaterThanOrEqual(1);
     expect(roleToAge, 'rôle → âge').toBeGreaterThanOrEqual(1);
