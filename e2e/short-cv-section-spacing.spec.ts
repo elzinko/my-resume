@@ -47,7 +47,10 @@ test.describe('CV court — rythme vertical régulier', () => {
 
     const filet = await bbox(page, '#cv-short-about h2');
     const intro = await bbox(page, '#cv-short-about p');
-    const firstDomain = await bbox(page, '.cv-short-page #domains .cv-domains-grid h2');
+    const firstDomain = await bbox(
+      page,
+      '.cv-short-page #domains .cv-domains-grid h2',
+    );
 
     const filetToIntro = intro.top - filet.bottom;
     const introToDomains = firstDomain.top - intro.bottom;
@@ -76,9 +79,13 @@ test.describe('CV court — rythme vertical régulier', () => {
       await page.setViewportSize({ width: 1024, height: 1400 });
       await page.goto(`/fr/short?${OFFER_QS}`);
 
-      const name = await bbox(page, '[data-cv-id="fullname"]');
-      const role = await bbox(page, '[data-cv-id="title"]');
-      const age = await bbox(page, '[data-cv-id="age"]');
+      // Scope `.cv-short-page` OBLIGATOIRE : depuis ADR-0006, `/short` hors `?print`
+      // rend AUSSI l'arbre du CV complet (branche mobile, `md:hidden`) AVANT l'arbre
+      // A4 court → un `[data-cv-id]` nu matche d'abord le header caché du complet
+      // (rects 0×0 → gaps mesurés à 0, plancher cassé).
+      const name = await bbox(page, '.cv-short-page [data-cv-id="fullname"]');
+      const role = await bbox(page, '.cv-short-page [data-cv-id="title"]');
+      const age = await bbox(page, '.cv-short-page [data-cv-id="age"]');
 
       const nameToRole = role.top - name.bottom;
       const roleToAge = age.top - role.bottom;
