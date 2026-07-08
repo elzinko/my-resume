@@ -1,0 +1,122 @@
+# Rollback prod en 1 clic — re-pointe www.elzinko.fr sur un déploiement antérieur.
+#
+#   Actions → « Rollback » → Run workflow.
+#     • champ vide           → revient à la RELEASE DE PROD PRÉCÉDENTE (auto).
+#     • URL d'un déploiement → revient EXACTEMENT sur ce déploiement.
+#
+# Mécanique = l'inverse EXACT de deploy.yml : `vercel alias set <url> www.elzinko.fr`.
+# Instantané (pas de rebuild), et les déploiements Vercel sont immuables → sûr et
+# réversible (re-cliquer avec un autre déploiement, ou redéployer un tag `v*`).
+name: Rollback
+
+run-name: "⏪ Rollback prod ← ${{ inputs.deployment_url || 'release précédente (auto)' }}"
+
+on:
+  workflow_dispatch:
+    inputs:
+      deployment_url:
+        description: "Déploiement cible (vide = release de prod précédente). Ex : https://my-resume-xxxx.vercel.app"
+        required: false
+        type: string
+      reason:
+        description: "Raison (optionnel, tracée dans le résumé)"
+        required: false
+        type: string
+
+# Groupe `prod-alias` PARTAGÉ avec les déploiements de prod de deploy.yml → un rollback
+# et un deploy sur tag ne peuvent pas se croiser sur `vercel alias set` (ils s'enchaînent).
+concurrency:
+  group: prod-alias
+  cancel-in-progress: false
+
+# Least privilege : lecture du code seule ; les actions Vercel passent par VERCEL_TOKEN.
+permissions:
+  contents: read
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  PROD_ALIAS: www.elzinko.fr
+
+jobs:
+  rollback:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Installe la CLI Vercel
+        run: npm install -g vercel@latest
+
+      - name: Résout le déploiement cible
+        id: pick
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          DEPLOYMENT_URL: ${{ inputs.deployment_url }}
+        run: |
+          set -euo pipefail
+          LIST=$(curl -sf -H "Authorization: Bearer $VERCEL_TOKEN" \
+            "https://api.vercel.com/v6/deployments?projectId=$VERCEL_PROJECT_ID&target=production&state=READY&limit=10&teamId=$VERCEL_ORG_ID")
+
+          {
+            echo "### Déploiements de production récents"
+            echo "$LIST" | jq -r '.deployments[] | "- `https://\(.url)` · \((.createdAt/1000)|todate)"' | head -6
+            echo ""
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          CURRENT=$(echo "$LIST" | jq -r '.deployments[0].url // empty')
+          if [ -n "$DEPLOYMENT_URL" ]; then
+            TARGET="$DEPLOYMENT_URL"
+          else
+            # index 0 = prod actuelle ; index 1 = release précédente = cible du rollback.
+            TARGET=$(echo "$LIST" | jq -r '.deployments[1].url // empty')
+          fi
+
+          if [ -z "$TARGET" ]; then
+            echo "::error::Aucun déploiement cible trouvé (pas de release précédente ?). Passe une URL explicite."
+            exit 1
+          fi
+          case "$TARGET" in https://*) ;; *) TARGET="https://$TARGET" ;; esac
+
+          {
+            echo "current=https://$CURRENT"
+            echo "target=$TARGET"
+          } >> "$GITHUB_OUTPUT"
+          echo "Cible : $TARGET (prod actuelle : https://$CURRENT)"
+
+      - name: Re-pointe la prod sur la cible
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          TARGET: ${{ steps.pick.outputs.target }}
+        run: |
+          set -euo pipefail
+          vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+          vercel alias set "$TARGET" "$PROD_ALIAS" --token="$VERCEL_TOKEN"
+
+      - name: Vérifie que la prod répond
+        run: |
+          sleep 3
+          code=$(curl -s -o /dev/null -w "%{http_code}" "https://$PROD_ALIAS")
+          echo "HTTP $code — https://$PROD_ALIAS"
+          if [ "$code" != "200" ]; then
+            echo "::warning::https://$PROD_ALIAS a répondu $code (propagation de l'alias en cours ?) — vérifie manuellement."
+          fi
+
+      - name: Résumé
+        if: always()
+        env:
+          CURRENT: ${{ steps.pick.outputs.current }}
+          TARGET: ${{ steps.pick.outputs.target }}
+          REASON: ${{ inputs.reason }}
+        run: |
+          {
+            echo "## ⏪ Rollback prod"
+            echo "**De :** $CURRENT"
+            echo "**Vers :** $TARGET"
+            echo "**Domaine :** https://$PROD_ALIAS"
+            if [ -n "$REASON" ]; then echo "**Raison :** $REASON"; fi
+          } >> "$GITHUB_STEP_SUMMARY"
