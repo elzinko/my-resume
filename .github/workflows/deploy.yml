@@ -21,9 +21,18 @@ on:
         options: [staging, production]
         default: staging
 
+# Un déploiement de PROD (push d'un tag `v*`) et le workflow Rollback partagent le
+# groupe `prod-alias` → ils s'enchaînent au lieu de se courir après sur
+# `vercel alias set www.elzinko.fr` (sinon le dernier à finir gagne). Le staging
+# (push `main`) garde son groupe par-ref, avec annulation du run précédent.
 concurrency:
-  group: deploy-${{ github.ref }}
-  cancel-in-progress: true
+  group: ${{ startsWith(github.ref, 'refs/tags/v') && 'prod-alias' || format('deploy-{0}', github.ref) }}
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/v') }}
+
+# Least privilege : le job n'a besoin que de lire le code (checkout) ; tout le reste
+# passe par VERCEL_TOKEN, pas par le GITHUB_TOKEN.
+permissions:
+  contents: read
 
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}

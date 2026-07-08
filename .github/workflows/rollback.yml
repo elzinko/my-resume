@@ -23,10 +23,15 @@ on:
         required: false
         type: string
 
-# Sérialise avec les déploiements de prod (évite qu'un rollback et un deploy se croisent).
+# Groupe `prod-alias` PARTAGÉ avec les déploiements de prod de deploy.yml → un rollback
+# et un deploy sur tag ne peuvent pas se croiser sur `vercel alias set` (ils s'enchaînent).
 concurrency:
   group: prod-alias
   cancel-in-progress: false
+
+# Least privilege : lecture du code seule ; les actions Vercel passent par VERCEL_TOKEN.
+permissions:
+  contents: read
 
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
