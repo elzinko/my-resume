@@ -1197,8 +1197,15 @@ html {
 
   .cv-print-preview .cv-short-page .header-content p {
     margin-top: 0.125rem !important;
-    font-size: 1rem !important; /* text-base */
     line-height: 1.375 !important;
+  }
+  /* Aperçu = PDF : tailles PAR élément (poste 18px > âge 16px), au lieu d'aplatir
+     les deux à 16px (ce qui masquait l'âge réel du PDF, 12px avant). */
+  .cv-print-preview .cv-short-page .header-content p[data-cv-id='title'] {
+    font-size: 1.125rem !important; /* text-lg, 18px */
+  }
+  .cv-print-preview .cv-short-page .header-content p[data-cv-id='age'] {
+    font-size: 1rem !important; /* text-base, 16px */
   }
 
   /* Short print-preview : CORPS de texte aux tailles d'IMPRESSION (les utilitaires

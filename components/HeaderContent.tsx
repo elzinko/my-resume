@@ -149,15 +149,17 @@ export default function HeaderContent({
             data-cv-id="title"
             className={
               compactPrint
-                ? // A4 : taille fixe = PDF (text-base, 16px), pas de bump md:.
-                  `${lineGap} text-base leading-none text-[#fca658]`
+                ? // A4 : taille fixe = PDF (text-lg, 18px), pas de bump md:. 18 > âge 16
+                  // → petite hiérarchie, cohérent avec le complet (24 > 20).
+                  `${lineGap} text-lg leading-none text-[#fca658]`
                 : `${lineGap} text-lg leading-snug text-[#fca658] md:leading-normal ${
                     photoUrl ? 'md:text-2xl' : 'md:text-3xl'
                   } ${
                     photoUrl
-                      ? // Bloc droit à 50 % : rôle nowrap + un cran plus petit pour tenir sur 1 ligne en PDF.
-                        'print:whitespace-nowrap print:text-xl print:leading-normal'
-                      : 'print:text-2xl print:leading-normal'
+                      ? // Bloc droit à 50 % : rôle nowrap. Taille print ALIGNÉE sur le web
+                        // (md:text-2xl = 24px) → WYSIWYG aperçu == PDF (avant : print 20px).
+                        'print:whitespace-nowrap print:text-2xl print:leading-normal'
+                      : 'print:text-3xl print:leading-normal'
                   }`
             }
           >
@@ -168,9 +170,12 @@ export default function HeaderContent({
               data-cv-id="age"
               className={
                 compactPrint
-                  ? // A4 : taille fixe = PDF (text-xs, 12px), pas de bump md:.
-                    `${lineGap} text-xs leading-none text-[#22c68d]`
-                  : `${lineGap} text-base leading-snug text-[#22c68d] print:text-base md:text-xl`
+                  ? // A4 : taille fixe = PDF (text-base, 16px). Avant text-xs (12px) →
+                    // trop petit ET incohérent avec l'aperçu (que la règle globals.css
+                    // 1198 forçait déjà à 16px) : on aligne l'élément sur l'aperçu.
+                    `${lineGap} text-base leading-none text-[#22c68d]`
+                  : // Print ALIGNÉ sur le web (md:text-xl = 20px) → WYSIWYG (avant 16px).
+                    `${lineGap} text-base leading-snug text-[#22c68d] print:text-xl md:text-xl`
               }
             >
               {ageText}
