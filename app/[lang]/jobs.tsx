@@ -1,6 +1,7 @@
 import Job from '@/components/Job';
 import ExperienceClosingBlock from '@/components/ExperienceClosingBlock';
 import ExperienceSection from '@/components/ExperienceSection';
+import FullCvOnlineLink from '@/components/FullCvOnlineLink';
 import { getCvData } from '@/lib/cv-data';
 import type { CvMode } from '@/lib/cv-contract-text';
 import {
@@ -9,7 +10,7 @@ import {
 } from '@/lib/cv-experience-footer';
 import { DEFAULT_DETAIL_LEVEL, type DetailLevel } from '@/lib/cv-detail-level';
 import { Locale } from 'i18n-config';
-import React from 'react';
+import React, { Suspense } from 'react';
 
 export default async function jobs({
   locale,
@@ -79,6 +80,11 @@ export default async function jobs({
             moreExperience={closing.moreExperience}
             moreExperienceTail={closing.moreExperienceTail}
             moreClientsLine={recapLine}
+            inlineLink={
+              <Suspense fallback={null}>
+                <FullCvOnlineLink lang={locale} />
+              </Suspense>
+            }
           />
         ) : null}
       </section>

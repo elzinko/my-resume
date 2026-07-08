@@ -48,6 +48,21 @@ ment sur le PDF (ou l'inverse). Une modif « web-only » n'a aucun effet sur le 
 6. **Tokens d'espacement** : passer par `--cv-section-gap` / `--cv-section-body-gap`,
    pas de marges par section codées en dur (évite le margin-collapse et la dérive de
    rythme entre régimes).
+7. **Photo** : affichée sur desktop, **masquée sous `md`** (mobile), **toujours à
+   l'impression** (garde-fou `print:!flex` sur le conteneur — sans lui, une marge
+   `@page` large fait passer la largeur de rendu sous 768px et `max-md:hidden` masque
+   la photo dans le PDF alors que l'aperçu la montre).
+8. **Domaines Agile/Dev/Ops en print** : les 5 pastilles de chaque colonne tiennent sur
+   **1 seule ligne** (compaction police 10px + padding/gap resserrés + `column-gap`
+   aligné sur le PDF, en `@media print` **ET** `.cv-print-preview`) — on **compacte**,
+   on ne tronque pas. Web/mobile (13-14px) intacts.
+
+## Référentiel des règles (agrégé, lisible)
+
+Toutes les règles de rendu — régimes, en-tête/photo, domaines, pastilles, espacement,
+entrées, liens, params URL — sont consolidées et lisibles dans
+[`docs/cv-rendering-rules.md`](docs/cv-rendering-rules.md) (avec, pour chaque règle, le
+rendu concerné et le test qui la protège). **Le lire avant toute modif de rendu.**
 
 ## Vérification obligatoire avant toute PR touchant le rendu CV
 
