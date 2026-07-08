@@ -38,6 +38,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:
+      - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -89,6 +91,15 @@ jobs:
           set -euo pipefail
           vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
           vercel alias set "$TARGET" "$PROD_ALIAS" --token="$VERCEL_TOKEN"
+
+      - name: Vérifie que la prod répond
+        run: |
+          sleep 3
+          code=$(curl -s -o /dev/null -w "%{http_code}" "https://$PROD_ALIAS")
+          echo "HTTP $code — https://$PROD_ALIAS"
+          if [ "$code" != "200" ]; then
+            echo "::warning::https://$PROD_ALIAS a répondu $code (propagation de l'alias en cours ?) — vérifie manuellement."
+          fi
 
       - name: Résumé
         if: always()
