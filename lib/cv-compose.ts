@@ -72,12 +72,18 @@ export interface ExperienceProject {
 export interface ExperienceHobby {
   id: string;
   link?: string;
+  /** Pratiqué DEPUIS cette date (fin ouverte) → période « depuis AAAA ». */
+  startDate?: string;
+  endDate?: string | null;
 }
 
 export interface ExperienceLearning {
   id: string;
   name: string;
   link?: string;
+  /** Année d'apprentissage (endDate == startDate) ou « depuis AAAA » si fin ouverte. */
+  startDate?: string;
+  endDate?: string | null;
 }
 
 export interface Experience {
@@ -259,6 +265,8 @@ export function composeCvSnapshot(
       description: lh.description,
     };
     if (eh.link !== undefined) out.link = eh.link;
+    if (eh.startDate !== undefined) out.startDate = eh.startDate;
+    if (eh.endDate !== undefined) out.endDate = eh.endDate;
     return out;
   });
 
@@ -270,6 +278,8 @@ export function composeCvSnapshot(
       name: el.name,
     };
     if (el.link !== undefined) out.link = el.link;
+    if (el.startDate !== undefined) out.startDate = el.startDate;
+    if (el.endDate !== undefined) out.endDate = el.endDate;
     out.description = ll.description;
     return out;
   });
