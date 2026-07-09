@@ -45,7 +45,7 @@ export default function OfferTailoredShell({
   headerAlign = 'left',
   detailLevel = 'full',
   maxJobShown = null,
-  entriesLayout = 'inline',
+  entriesLayout = 'stacked',
   renderEffects = true,
 }: {
   lang: Locale;
