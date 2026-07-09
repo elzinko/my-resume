@@ -54,14 +54,17 @@ export default function LearningsDisplay({
                   className="text-teal-300 print:!text-teal-300"
                 />
               </span>
-              {period ? (
-                <span className="cv-entry-year tabular-nums text-teal-300 print:!text-teal-300">
-                  {period}
-                </span>
-              ) : null}
               {learning.description ? (
                 <span className="cv-entry-detail text-sm text-cv-body-muted">
                   {learning.description}
+                </span>
+              ) : null}
+              {/* Année APRÈS le détail (ordre DOM = titre → détail → année, comme
+                  Études) : sans effet en grille (slot `year`), correct si un jour
+                  l'entrée passe inline (le `·` s'attache à l'année, pas au détail). */}
+              {period ? (
+                <span className="cv-entry-year tabular-nums text-teal-300 print:!text-teal-300">
+                  {period}
                 </span>
               ) : null}
             </li>

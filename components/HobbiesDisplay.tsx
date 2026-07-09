@@ -52,14 +52,15 @@ export default function HobbiesDisplay({
                   className="text-orange-300 print:!text-orange-300"
                 />
               </span>
-              {period ? (
-                <span className="cv-entry-year tabular-nums text-orange-300 print:!text-orange-300">
-                  {period}
-                </span>
-              ) : null}
               {hobby.description ? (
                 <span className="cv-entry-detail cv-hobby-desc text-sm text-cv-body-muted">
                   {hobby.description}
+                </span>
+              ) : null}
+              {/* Année APRÈS le détail (ordre DOM cohérent avec Études). */}
+              {period ? (
+                <span className="cv-entry-year tabular-nums text-orange-300 print:!text-orange-300">
+                  {period}
                 </span>
               ) : null}
             </li>

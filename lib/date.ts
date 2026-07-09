@@ -44,8 +44,8 @@ export function formatEntryPeriod(
   endDate: string | null | undefined,
   locale: 'fr' | 'en' = 'fr',
 ): string | null {
-  const sy = startDate ? new Date(startDate).getFullYear() : null;
-  const ey = endDate ? new Date(endDate).getFullYear() : null;
+  const sy = startDate ? yearFromIso(startDate) : null;
+  const ey = endDate ? yearFromIso(endDate) : null;
   if (sy && !ey) return locale === 'en' ? `since ${sy}` : `depuis ${sy}`;
   if (sy && ey) return sy === ey ? `${ey}` : `${sy} - ${ey}`;
   return ey ? `${ey}` : null;
@@ -71,10 +71,13 @@ export function formatJobDatesCompactYears(
   return `${sy} - ${ey}`;
 }
 
+// Année depuis une chaîne ISO `YYYY-…` SANS `new Date` : `new Date('2025-01-01')`
+// est minuit UTC et `.getFullYear()` re-projette en local → en fuseau négatif
+// (America/*) l'année tombe à 2024 (et mismatch d'hydratation). On lit les 4
+// chiffres de tête : fiable et indépendant du fuseau.
 function yearFromIso(s: string): string | null {
-  const d = new Date(s);
-  if (Number.isNaN(d.getTime())) return null;
-  return String(d.getFullYear());
+  const m = /^\s*(\d{4})/.exec(String(s));
+  return m ? m[1] : null;
 }
 
 /**
