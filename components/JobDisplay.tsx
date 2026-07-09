@@ -210,7 +210,7 @@ export default function JobDisplay({
             {job.location ? ` / ${job.location}` : ''}
           </span>
         </span>
-        <span className="min-w-max shrink-0 self-end text-cv-meta font-normal tabular-nums leading-snug text-cv-jobs print-preview:!inline print:!inline print:text-xs max-md:hidden">
+        <span className="cv-date min-w-max shrink-0 self-end font-normal tabular-nums leading-snug text-cv-jobs print-preview:!inline print:!inline max-md:hidden">
           {dates}
         </span>
       </div>

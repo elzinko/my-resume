@@ -83,7 +83,7 @@ export default async function studies({
               ) : null}
               {year ? (
                 // Date à la couleur de la section (comme les dates d'expérience).
-                <span className="cv-entry-year text-sm tabular-nums text-purple-300 print:!text-purple-300">
+                <span className="cv-entry-year cv-date tabular-nums text-purple-300 print:!text-purple-300">
                   {year}
                 </span>
               ) : null}

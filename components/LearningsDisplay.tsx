@@ -63,7 +63,7 @@ export default function LearningsDisplay({
                   Études) : sans effet en grille (slot `year`), correct si un jour
                   l'entrée passe inline (le `·` s'attache à l'année, pas au détail). */}
               {period ? (
-                <span className="cv-entry-year tabular-nums text-teal-300 print:!text-teal-300">
+                <span className="cv-entry-year cv-date tabular-nums text-teal-300 print:!text-teal-300">
                   {period}
                 </span>
               ) : null}

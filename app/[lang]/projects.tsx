@@ -90,7 +90,7 @@ export default async function projects({
               ) : null}
               {year ? (
                 // Date à la couleur de la section (comme les dates d'expérience).
-                <span className="cv-entry-year text-sm tabular-nums text-cv-tag-text print:!text-cv-tag-text">
+                <span className="cv-entry-year cv-date tabular-nums text-cv-tag-text print:!text-cv-tag-text">
                   {year}
                 </span>
               ) : null}
