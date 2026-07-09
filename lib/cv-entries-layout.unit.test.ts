@@ -5,17 +5,17 @@ import {
   DEFAULT_ENTRIES_LAYOUT,
 } from './cv-entries-layout';
 
-test('parseEntriesLayout : stacked (insensible à la casse / espaces)', () => {
-  assert.equal(parseEntriesLayout('stacked'), 'stacked');
-  assert.equal(parseEntriesLayout('STACKED'), 'stacked');
-  assert.equal(parseEntriesLayout('  Stacked  '), 'stacked');
+test('parseEntriesLayout : inline (insensible à la casse / espaces)', () => {
+  assert.equal(parseEntriesLayout('inline'), 'inline');
+  assert.equal(parseEntriesLayout('INLINE'), 'inline');
+  assert.equal(parseEntriesLayout('  Inline  '), 'inline');
 });
 
-test('parseEntriesLayout : défaut inline (absent / vide / inconnu)', () => {
-  assert.equal(DEFAULT_ENTRIES_LAYOUT, 'inline');
-  assert.equal(parseEntriesLayout('inline'), 'inline');
-  assert.equal(parseEntriesLayout(null), 'inline');
-  assert.equal(parseEntriesLayout(undefined), 'inline');
-  assert.equal(parseEntriesLayout(''), 'inline');
-  assert.equal(parseEntriesLayout('whatever'), 'inline');
+test('parseEntriesLayout : défaut stacked (absent / vide / inconnu / stacked)', () => {
+  assert.equal(DEFAULT_ENTRIES_LAYOUT, 'stacked');
+  assert.equal(parseEntriesLayout('stacked'), 'stacked');
+  assert.equal(parseEntriesLayout(null), 'stacked');
+  assert.equal(parseEntriesLayout(undefined), 'stacked');
+  assert.equal(parseEntriesLayout(''), 'stacked');
+  assert.equal(parseEntriesLayout('whatever'), 'stacked');
 });
