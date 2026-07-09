@@ -123,9 +123,9 @@ export default function JobDisplay({
     );
     return (
       <div>
-        {/* En-tête compact sur UNE SEULE ligne : « Client / Rôle » à gauche,
-            « Lieu / Dates » à droite. Client en gras, le reste plus petit
-            (text-cv-meta). Tient en print, desktop ET mobile (truncation). */}
+        {/* En-tête compact sur UNE SEULE ligne : « Client / Rôle / Ville » à gauche,
+            période SEULE à droite (cohérent avec Études/Projets : que des dates à droite).
+            Client en gras, le reste plus petit. Gauche en `truncate` → toujours 1 ligne. */}
         <div className="cv-row-with-side-meta items-baseline gap-x-2 leading-tight print:leading-tight">
           <span className="min-w-0 flex-1 truncate text-left">
             <span className="text-[12px] font-bold leading-tight text-cv-jobs">
@@ -146,9 +146,13 @@ export default function JobDisplay({
                 {` / ${roleName}`}
               </span>
             ) : null}
+            {job.location ? (
+              <span className="text-[12px] font-normal leading-tight text-cv-jobs">
+                {` / ${job.location}`}
+              </span>
+            ) : null}
           </span>
           <span className="min-w-max shrink-0 whitespace-nowrap text-right text-[12px] font-normal tabular-nums leading-tight text-cv-jobs">
-            {job.location ? `${job.location} / ` : ''}
             {compactDateLine}
           </span>
         </div>
@@ -182,7 +186,12 @@ export default function JobDisplay({
 
   return (
     <div id={slugifyClient(job.client)}>
-      <div className="cv-row-with-side-meta">
+      {/* En-tête sur UNE ligne : « Entreprise / poste / ville » à gauche (entreprise en
+          gras, poste+ville en normal), période SEULE à droite. Le poste+ville sont
+          INLINE (desktop + print) ; sous md, la ligne mobile ci-dessous les porte.
+          `print:!inline` fait survivre poste/ville ET dates à @media print malgré
+          `max-md:hidden` (sinon un PDF rendu <768px les masquerait — cf. photo/dates). */}
+      <div className="cv-row-with-side-meta pb-2">
         <span className="min-w-0 flex-1 text-base font-bold leading-snug text-cv-jobs print:text-sm">
           {job.clientUrl ? (
             <a href={job.clientUrl} target="_blank" rel="noopener noreferrer">
@@ -191,23 +200,19 @@ export default function JobDisplay({
           ) : (
             job.client
           )}
+          <span className="font-normal print:!inline max-md:hidden">
+            {roleName ? ` / ${roleName}` : ''}
+            {showRoleAts ? (
+              <span className="italic opacity-70">{` · ${roleNameEn}`}</span>
+            ) : null}
+            {job.location ? ` / ${job.location}` : ''}
+          </span>
         </span>
         <span className="min-w-max shrink-0 self-end text-cv-meta font-normal tabular-nums leading-snug text-cv-jobs print:!inline print:text-xs max-md:hidden">
           {dates}
         </span>
       </div>
       <JobMetaMobileRow roleName={roleName} datesLine={datesStr} />
-      <div className="cv-row-with-side-meta pb-2 print:flex max-md:hidden">
-        <span className="min-w-0 flex-1 text-cv-meta font-normal leading-snug text-cv-jobs print:text-xs">
-          {roleName ?? ''}
-          {showRoleAts ? (
-            <span className="italic opacity-70">{` · ${roleNameEn}`}</span>
-          ) : null}
-        </span>
-        <span className="min-w-max shrink-0 self-end text-cv-meta leading-snug text-cv-jobs print:text-xs">
-          {job.location}
-        </span>
-      </div>
       <JobExperienceBody
         descriptionShort={job.descriptionShort}
         description={job.description}
