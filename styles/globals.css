@@ -94,6 +94,16 @@
   --cv-section-body-gap: 0.5rem;
 }
 
+/* Taille UNIQUE des dates / années de TOUTES les sections du CV complet
+   (Expériences, Études, Projets, Learnings, Loisirs) → cohérence garantie et
+   pérenne. `!important` = source de vérité unique : une section ne peut plus
+   diverger accidentellement (avant : Expériences 12px, Études/Projets 14px,
+   Learnings/Loisirs 16px). 14px en web ET en impression. Le CV court garde ses
+   dates compactes propres (12px, éléments NON tagués `.cv-date`). */
+.cv-date {
+  font-size: 0.875rem !important; /* 14px */
+}
+
 @layer components {
   /**
    * Rythme vertical « section majeure » : 2.5rem (`mt-10` / `gap-10`).

@@ -59,7 +59,7 @@ export default function HobbiesDisplay({
               ) : null}
               {/* Année APRÈS le détail (ordre DOM cohérent avec Études). */}
               {period ? (
-                <span className="cv-entry-year tabular-nums text-orange-300 print:!text-orange-300">
+                <span className="cv-entry-year cv-date tabular-nums text-orange-300 print:!text-orange-300">
                   {period}
                 </span>
               ) : null}
