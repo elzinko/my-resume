@@ -4,6 +4,7 @@ import React from 'react';
 import CustomLink from '@/components/CustomLink';
 import SectionHeadingAts from '@/components/SectionHeadingAts';
 import { learningLinkLabel } from '@/lib/learning-label';
+import { formatEntryPeriod } from '@/lib/date';
 import type { Locale } from 'i18n-config';
 
 export interface LearningItem {
@@ -11,6 +12,8 @@ export interface LearningItem {
   name: string;
   link: string;
   description?: string;
+  startDate?: string;
+  endDate?: string | null;
 }
 
 interface LearningsDisplayProps {
@@ -33,24 +36,37 @@ export default function LearningsDisplay({
         accent="teal"
       />
       <ul className="cv-section-simple-list max-md:mt-6">
-        {items.map((learning) => (
-          // Pas d'année pour les apprentissages : titre (L1) puis détail (L2 sans
-          // tiret) en mobile ; inline « titre — détail » en desktop/print (.cv-entry).
-          <li className="cv-entry text-teal-300" key={learning.id}>
-            <span className="cv-entry-title">
-              <CustomLink
-                name={learningLinkLabel(learning)}
-                link={learning.link}
-                className="text-teal-300 print:!text-teal-300"
-              />
-            </span>
-            {learning.description ? (
-              <span className="cv-entry-detail text-sm text-cv-body-muted">
-                {learning.description}
+        {items.map((learning) => {
+          // Année d'apprentissage collée à droite (slot `year` de `.cv-entry`),
+          // « depuis AAAA » si en cours (ex. LLM). Titre (L1) puis détail (L2) en
+          // mobile ; inline « titre — détail · année » en desktop/print (.cv-entry).
+          const period = formatEntryPeriod(
+            learning.startDate,
+            learning.endDate,
+            locale,
+          );
+          return (
+            <li className="cv-entry text-teal-300" key={learning.id}>
+              <span className="cv-entry-title">
+                <CustomLink
+                  name={learningLinkLabel(learning)}
+                  link={learning.link}
+                  className="text-teal-300 print:!text-teal-300"
+                />
               </span>
-            ) : null}
-          </li>
-        ))}
+              {period ? (
+                <span className="cv-entry-year tabular-nums text-teal-300 print:!text-teal-300">
+                  {period}
+                </span>
+              ) : null}
+              {learning.description ? (
+                <span className="cv-entry-detail text-sm text-cv-body-muted">
+                  {learning.description}
+                </span>
+              ) : null}
+            </li>
+          );
+        })}
       </ul>
     </>
   );

@@ -714,51 +714,71 @@
   "hobbies": [
     {
       "id": "81779577",
-      "link": "https://docs.cycling74.com/legacy/max8/vignettes/live_object_model"
+      "link": "https://docs.cycling74.com/legacy/max8/vignettes/live_object_model",
+      "startDate": "2001-01-01",
+      "endDate": null
     },
     {
       "id": "81779962",
-      "link": "https://www.nba.com/stats/"
+      "link": "https://www.nba.com/stats/",
+      "startDate": "1985-01-01",
+      "endDate": null
     },
     {
       "id": "81780862",
-      "link": "https://www.passportesdusoleil.com/"
+      "link": "https://www.passportesdusoleil.com/",
+      "startDate": "1997-01-01",
+      "endDate": null
     },
     {
       "id": "81781610",
-      "link": "https://www.chess.com/fr"
+      "link": "https://www.chess.com/fr",
+      "startDate": "2021-01-01",
+      "endDate": null
     }
   ],
   "learnings": [
     {
       "id": "cnZskAq6SqSbkXAmAB0KIQ",
       "name": "LLM",
-      "link": "https://www.langchain.com/"
+      "link": "https://www.langchain.com/",
+      "startDate": "2022-01-01",
+      "endDate": null
     },
     {
       "id": "Taq3bWZ6Stu5rt42dP1_WQ",
       "name": "AWS Bedrock",
-      "link": "https://aws.amazon.com/fr/bedrock/agents/"
+      "link": "https://aws.amazon.com/fr/bedrock/agents/",
+      "startDate": "2025-01-01",
+      "endDate": "2025-01-01"
     },
     {
       "id": "UsM_i8jNSFK12ePhrc0x0g",
       "name": "MCP",
-      "link": "https://modelcontextprotocol.io/specification/2025-06-18"
+      "link": "https://modelcontextprotocol.io/specification/2025-06-18",
+      "startDate": "2025-01-01",
+      "endDate": "2025-01-01"
     },
     {
       "id": "learn-langchain-stack",
       "name": "LangChain",
-      "link": "https://docs.langchain.com/"
+      "link": "https://docs.langchain.com/",
+      "startDate": "2025-01-01",
+      "endDate": "2025-01-01"
     },
     {
       "id": "learn-openrag",
       "name": "OpenRAG",
-      "link": "https://docs.openr.ag/"
+      "link": "https://docs.openr.ag/",
+      "startDate": "2025-01-01",
+      "endDate": "2025-01-01"
     },
     {
       "id": "learn-bmad-method",
       "name": "BMAD",
-      "link": "https://docs.bmad-method.org/"
+      "link": "https://docs.bmad-method.org/",
+      "startDate": "2025-01-01",
+      "endDate": "2025-01-01"
     }
   ]
 }
