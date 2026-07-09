@@ -46,7 +46,7 @@ function JobMetaMobileRow({
 
   return (
     <div
-      className={`flex w-full max-w-full items-baseline justify-between gap-x-3 print:hidden md:hidden ${typo}`}
+      className={`flex w-full max-w-full items-baseline justify-between gap-x-3 print-preview:hidden print:hidden md:hidden ${typo}`}
       data-testid="job-meta-mobile"
     >
       <span className="min-w-0 truncate text-left" data-job-meta="role">
@@ -189,8 +189,10 @@ export default function JobDisplay({
       {/* En-tête sur UNE ligne : « Entreprise / poste / ville » à gauche (entreprise en
           gras, poste+ville en normal), période SEULE à droite. Le poste+ville sont
           INLINE (desktop + print) ; sous md, la ligne mobile ci-dessous les porte.
-          `print:!inline` fait survivre poste/ville ET dates à @media print malgré
-          `max-md:hidden` (sinon un PDF rendu <768px les masquerait — cf. photo/dates). */}
+          `print:!inline` + `print-preview:!inline` font survivre poste/ville ET dates
+          en PDF réel ET en aperçu `.cv-print-preview` (où `print:` n'agit pas) malgré
+          `max-md:hidden` (sinon un rendu <768px les masquerait). La ligne mobile est en
+          plus `print-preview:hidden` → l'aperçu ne double PAS le poste (WYSIWYG <768). */}
       <div className="cv-row-with-side-meta pb-2">
         <span className="min-w-0 flex-1 text-base font-bold leading-snug text-cv-jobs print:text-sm">
           {job.clientUrl ? (
@@ -200,7 +202,7 @@ export default function JobDisplay({
           ) : (
             job.client
           )}
-          <span className="font-normal print:!inline max-md:hidden">
+          <span className="font-normal print-preview:!inline print:!inline max-md:hidden">
             {roleName ? ` / ${roleName}` : ''}
             {showRoleAts ? (
               <span className="italic opacity-70">{` · ${roleNameEn}`}</span>
@@ -208,7 +210,7 @@ export default function JobDisplay({
             {job.location ? ` / ${job.location}` : ''}
           </span>
         </span>
-        <span className="min-w-max shrink-0 self-end text-cv-meta font-normal tabular-nums leading-snug text-cv-jobs print:!inline print:text-xs max-md:hidden">
+        <span className="min-w-max shrink-0 self-end text-cv-meta font-normal tabular-nums leading-snug text-cv-jobs print-preview:!inline print:!inline print:text-xs max-md:hidden">
           {dates}
         </span>
       </div>
