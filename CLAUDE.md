@@ -64,6 +64,11 @@ entrées, liens, params URL — sont consolidées et lisibles dans
 [`docs/cv-rendering-rules.md`](docs/cv-rendering-rules.md) (avec, pour chaque règle, le
 rendu concerné et le test qui la protège). **Le lire avant toute modif de rendu.**
 
+Pour **localiser une dérive à sa position dans le flux** : la carte structurelle
+[`docs/cv-layout-map.md`](docs/cv-layout-map.md) parcourt le CV **bloc par bloc, de haut
+en bas**, avec les **valeurs réelles par régime** (web mobile / desktop / PDF / aperçu)
+et la liste des **divergences web ≠ PDF** connues (classées voulue / vraie dérive / code mort).
+
 ## Vérification obligatoire avant toute PR touchant le rendu CV
 
 Lancer le dev server et **vérifier les 4 rendus + le mobile** (Playwright), pas un

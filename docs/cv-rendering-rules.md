@@ -7,6 +7,12 @@ décision de l'[ADR-0001](adr/0001-cv-rendering-regimes.md) et la
 fait foi**. Chaque règle indique **ce qu'elle garantit**, **dans quels rendus**, et **ce
 qui la protège** (test e2e / code).
 
+> **Vue complémentaire, ordonnée de haut en bas** : [`cv-layout-map.md`](cv-layout-map.md)
+> parcourt le CV **bloc par bloc** (en-tête → … → loisirs) avec, pour chacun, les
+> **valeurs réelles par régime** (web mobile / web desktop / PDF / aperçu) et la liste
+> des **divergences web ≠ PDF** repérées. Ce document-ci est thématique ; celui-là est
+> structurel — les deux se complètent pour localiser une dérive.
+
 > Convention : ✅ = garanti (règle en place) · 🧪 = couvert par un test e2e ·
 > ⚠️ = discipline manuelle (pas de filet automatique).
 
