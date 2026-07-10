@@ -7,7 +7,7 @@ type LogoLinkedinProps = {
   onNavigate?: () => void;
 };
 
-export default function logoLinkedin({ onNavigate }: LogoLinkedinProps) {
+export default function LogoLinkedin({ onNavigate }: LogoLinkedinProps) {
   return (
     <a
       href="https://www.linkedin.com/in/thomas-couderc-product-builder/"

@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default function customLink({
+export default function CustomLink({
   link,
   name,
   className = '',
