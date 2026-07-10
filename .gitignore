@@ -53,6 +53,10 @@ playwright-report/
 test-results/
 storybook-static
 
+# renders — captures de référence régénérables (renders/generate.mjs + index.html restent versionnés)
+/renders/*.png
+/renders/*.pdf
+
 # claude code
 .claude/
 

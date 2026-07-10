@@ -7,7 +7,7 @@ type LogoGithubProps = {
   onNavigate?: () => void;
 };
 
-export default function logoGithub({ onNavigate }: LogoGithubProps) {
+export default function LogoGithub({ onNavigate }: LogoGithubProps) {
   return (
     <a
       href="https://github.com/elzinko/"

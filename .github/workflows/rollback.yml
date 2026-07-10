@@ -15,11 +15,11 @@ on:
   workflow_dispatch:
     inputs:
       deployment_url:
-        description: "Déploiement cible (vide = release de prod précédente). Ex : https://my-resume-xxxx.vercel.app"
+        description: 'Déploiement cible (vide = release de prod précédente). Ex : https://my-resume-xxxx.vercel.app'
         required: false
         type: string
       reason:
-        description: "Raison (optionnel, tracée dans le résumé)"
+        description: 'Raison (optionnel, tracée dans le résumé)'
         required: false
         type: string
 

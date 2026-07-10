@@ -145,8 +145,8 @@ s'appliquent a l'ecran **et** au PDF imprime (le rendu PDF suit le choix).
   - \`full\` (defaut) : accroche + description detaillee + puces.
   - \`summary\` : accroche seule -- utile pour un CV synthetique tenant sur moins de pages.
   - \`minimal\` : titre / poste / dates / technos uniquement, sans aucune description.
-- \`photo=1\` : affiche la photo de profil (masquee par defaut). A eviter pour les
-  candidatures passant par un ATS (parsing), a privilegier pour un envoi direct.
+- \`photo=0\` : masque la photo de profil (affichee par defaut). A privilegier pour les
+  candidatures passant par un ATS (parsing) ; garder la photo pour un envoi direct.
 - \`age=0\` : masque l'age (affiche par defaut sous le role).
 
 ### Ordre des requirements

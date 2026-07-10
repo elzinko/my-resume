@@ -32,7 +32,8 @@ npm run build
 - **JSON compact base64** : `/{lang}?spec=…`
 - **Type de contrat** : `?contract=cdi` adapte les textes profil/domaines pour un poste permanent ; `freelance` par défaut.
 - **Mode enseignement** : `?mode=teaching` bascule sur la variante CV enseignement (profil/domaines reformulés, missions d'enseignement et proposition de module Product Builder visibles, lien Malt masqué). Voir [`letters/`](letters/) pour les lettres associées.
-- **Présentation** (écran **et** PDF) : `?detail=full|summary|minimal` (densité des expériences — `full` par défaut), `?photo=1` (affiche la photo, masquée par défaut), `?age=0` (masque l'âge, affiché par défaut sous le rôle).
+- **Présentation** (écran **et** PDF) : `?detail=full|summary|minimal` (densité des expériences — `full` par défaut), `?photo=0` (masque la photo, affichée par défaut), `?age=0` (masque l'âge, affiché par défaut sous le rôle).
+- **Liste complète des paramètres d'URL** : voir [`docs/cv-rendering-rules.md`](docs/cv-rendering-rules.md) §8 — dont `?print`, `?ats=1`, `?entriesLayout=inline|stacked`, `?headerAlign=right`, `?subtitle(_fr|_en)`, `?edu=1`, `?maxJobShown=N`, `?job=<slug>` (répétable).
 - **Guide LLM dynamique** : `GET /api/llm-guide` — markdown auto-généré, point d'entrée recommandé pour les agents LLM. Liste tous les endpoints publics (`/api/profile`, `/api/openapi.yaml`, `/{lang}`), le catalogue de technos complet et des exemples d'URLs.
 
 Plafonds (longueurs, nombre d’exigences) : `lib/dynamic-offer-spec.ts`, `lib/query-offer-params.ts`. URLs limitées à ~2k caractères par le navigateur ; au-delà, préférer `spec` base64.
@@ -50,5 +51,5 @@ Encodage CLI : `npm run encode-offer-spec -- path/to/offer.json`
 | Types offre (interfaces TS) | [`data/offers/types.ts`](data/offers/types.ts)                                                                                                 |
 | Guide LLM                   | `GET /api/llm-guide`                                                                                                                           |
 | Storybook maison (dev)      | `http://localhost:3000/{lang}/dev/components`                                                                                                  |
-| Storybook (Chromatic)       | `http://localhost:6006` (`npm run storybook`)                                                                                                  |
+| Storybook (local)           | `http://localhost:6006` (`npm run storybook`)                                                                                                  |
 | Rendus PDF / screenshots    | [`renders/`](renders/) -- [`renders/index.html`](renders/index.html)                                                                           |

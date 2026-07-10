@@ -85,7 +85,7 @@ test('buildProfileResponse — jobs/projects/etc are arrays of objects', () => {
     'learnings',
     'skills',
   ] as const) {
-    const v = (r as Record<string, unknown>)[key];
+    const v = (r as unknown as Record<string, unknown>)[key];
     assert.ok(Array.isArray(v), `${key} is array`);
     assert.ok((v as unknown[]).length > 0, `${key} non-empty`);
   }

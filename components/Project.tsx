@@ -22,7 +22,7 @@ function projectPrimaryLabel(project: {
   return capitalizeFirstLetter(name);
 }
 
-export default function project({
+export default function Project({
   project: projectData,
   hideDatesPrint = false,
   compact = false,

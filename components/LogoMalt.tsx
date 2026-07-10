@@ -7,7 +7,7 @@ type LogoMaltProps = {
   onNavigate?: () => void;
 };
 
-export default function logoMalt({ onNavigate }: LogoMaltProps) {
+export default function LogoMalt({ onNavigate }: LogoMaltProps) {
   return (
     <a
       href="https://www.malt.fr/profile/thomascouderc1/"
