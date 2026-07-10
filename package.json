@@ -32,7 +32,6 @@
   "dependencies": {
     "@formatjs/intl-localematcher": "0.2.32",
     "@vercel/analytics": "2.0.1",
-    "eslint": "8.28.0",
     "intl-dateformat": "0.1.4",
     "negotiator": "0.6.3",
     "next": "14.2.35",
@@ -52,6 +51,7 @@
     "ajv": "8.18.0",
     "autoprefixer": "^10.4.13",
     "encoding": "^0.1.13",
+    "eslint": "8.28.0",
     "eslint-config-next": "14.2.35",
     "ngrok": "^4.3.3",
     "postcss": "^8.5.10",
