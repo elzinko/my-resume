@@ -43,7 +43,7 @@
   "devDependencies": {
     "@playwright/test": "^1.50.1",
     "@storybook/addon-a11y": "10.3.5",
-    "@storybook/nextjs": "10.3.5",
+    "@storybook/nextjs": "10.4.6",
     "@storybook/react": "10.3.5",
     "@types/negotiator": "0.6.1",
     "@types/node": "25.6.0",
