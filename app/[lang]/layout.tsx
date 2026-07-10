@@ -3,6 +3,7 @@ import { i18n, type Locale } from '../../i18n-config';
 import { Analytics } from '@vercel/analytics/react';
 import CvMobilePreviewOverlay from '@/components/CvMobilePreviewOverlay';
 import DevNav from '@/components/DevNav';
+import AiTailorMacaron from '@/components/AiTailorMacaron';
 
 export async function generateStaticParams() {
   return i18n.locales.map((locale) => ({ lang: locale }));
@@ -45,6 +46,9 @@ export default async function RootLayout({
       <div className="container mx-auto min-h-screen p-8 print:min-h-0 print:px-8 print:py-0 max-md:px-4 max-md:pb-8 max-md:pt-3">
         <main>{children}</main>
       </div>
+      {/* Macaron flottant « adapter ce CV par IA » → `/{lang}/ai`. Écran uniquement
+          (masqué print + aperçu), hors flux DOM du CV. Voir AiTailorMacaron. */}
+      <AiTailorMacaron lang={lang} />
       {/* Nav dev vers les pages internes — hors production uniquement (absente du
           DOM en prod, même gating que le middleware qui 404 les /dev/* en prod). */}
       {isDev && <DevNav lang={lang} />}
