@@ -27,8 +27,8 @@ fidèle).
 
 ## Problème observé
 
-La duplication `@media print` ⟺ `.cv-print-preview` (et les 2 layouts) crée **4+
-rendus** à maintenir cohérents à la main. Symptômes récurrents :
+La duplication `@media print` ⟺ `.cv-print-preview` (et les 2 layouts) crée **4 rendus
+(+ mobile)** à maintenir cohérents à la main. Symptômes récurrents :
 
 - une correction appliquée à `@media print` mais pas à `.cv-print-preview` (ou
   l'inverse) → l'aperçu ment sur le PDF (ex. PR #108, padding avant « Expérience ») ;

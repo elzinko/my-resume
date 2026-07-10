@@ -20,7 +20,7 @@ Ce qui change l'apparence = une **couche CSS par régime**, posée sur le DOM co
 
 Et il y a **2 layouts distincts** : CV complet (`OfferTailoredShell`) et CV court
 (`CompactCvLayout`, route `/[lang]/short`). Donc **4 rendus** à garder cohérents :
-`complet-web`, `complet-print`, `court-web`, `court-print` (+ le mobile).
+`full-web`, `full-print`, `short-web`, `short-print` (+ le mobile).
 
 **La dérive vient de là** : une règle « print » doit souvent être écrite DEUX fois
 (`@media print` ET `.cv-print-preview`). Corriger l'une en oubliant l'autre = l'aperçu
@@ -79,3 +79,5 @@ diff visuel avant/après.
   pilotent le rendu : les préserver et les documenter à l'ajout.
 - `npm test` = `prettier:check` + `lint`. Formater avant de committer.
 - Commits : Conventional Commits en français (`fix(cv): …`, `feat(cv): …`).
+- Langue : **commentaires de code en français** (cohérent avec les commits) ; identifiants,
+  noms de fichiers et classes CSS en anglais (`full`/`short`, pas `complet`/`court`).
