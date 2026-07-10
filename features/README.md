@@ -7,7 +7,7 @@ Règles : 1 PR par feature, squash-merge quand la CI est verte. Priorités P0 (u
 Statuts : 🔴 todo · 🟠 in-progress · ⛔ blocked · ✅ shipped. Rendu CV : respecter les
 invariants de `CLAUDE.md` et la checklist `docs/cv-rendering-review-checklist.md`.
 
-Dernière mise à jour : 2026-07-05
+Dernière mise à jour : 2026-07-10
 
 ## Actives (triées par priorité)
 
@@ -16,11 +16,17 @@ Dernière mise à jour : 2026-07-05
 | 0002 | Loisirs — bascule inline / 2 lignes via `?entriesLayout`             | feature  | P2   | 🔴 todo |     |
 | 0003 | Design system — CSS variables et tokens                              | refactor | P2   | 🔴 todo |     |
 | 0006 | Migration Next.js 14 → 15+/16                                        | chore    | P2   | 🔴 todo |     |
+| 0018 | Découper HeaderToolbar (602 l.) et CompactCvLayout (434 l.)          | refactor | P2   | 🔴 todo |     |
+| 0019 | Centraliser les types de données et homogénéiser les props           | refactor | P2   | 🔴 todo |     |
 | 0004 | Retirer les derniers textes en dur des composants (fallbacks FR/EN)  | refactor | P3   | 🔴 todo |     |
 | 0005 | Primitives React réutilisables                                       | refactor | P3   | 🔴 todo |     |
 | 0007 | Retirer `?print` / `FullCvPrintPreviewEffect` résiduels              | refactor | P3   | 🔴 todo |     |
 | 0016 | /dev/renders — scroll bloqué dans certaines cellules de comparaison  | bug      | P3   | 🔴 todo |     |
 | 0017 | /dev/renders — navigation rapide (onglets/arborescence) comparaisons | feature  | P3   | 🔴 todo |     |
+| 0020 | Renommer la classe CSS `.cv-full-cv-print-root` → `.cv-full-page`    | refactor | P3   | 🔴 todo |     |
+| 0021 | Déplacer `renders/generate.mjs` → `scripts/generate-renders.mjs`     | chore    | P3   | 🔴 todo |     |
+| 0022 | Extraire les seuils magiques des tests e2e en constantes             | refactor | P3   | 🔴 todo |     |
+| 0023 | Aligner les versions `@storybook/*` sur `storybook@10.4.6`           | chore    | P3   | 🔴 todo |     |
 
 ## Livré (`done/`)
 
