@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <title>Ce CV a déménagé — www.elzinko.fr</title>
+    <link rel="canonical" href="https://www.elzinko.fr/" />
+    <script>
+      // GitHub Pages sert ce repo sous /my-resume/. On retire ce préfixe et on
+      // renvoie vers le domaine de prod (Vercel) en préservant la langue et le
+      // reste du chemin : /my-resume/fr -> https://www.elzinko.fr/fr.
+      // Ce fichier sert aussi de 404 : il capte donc /fr, /en, /short, etc.
+      (function () {
+        var base = '/my-resume';
+        var path =
+          location.pathname.indexOf(base) === 0
+            ? location.pathname.slice(base.length)
+            : location.pathname;
+        location.replace(
+          'https://www.elzinko.fr' + path + location.search + location.hash,
+        );
+      })();
+    </script>
+    <meta http-equiv="refresh" content="0; url=https://www.elzinko.fr/" />
+  </head>
+  <body>
+    <p>
+      Ce CV a déménagé : <a href="https://www.elzinko.fr/">www.elzinko.fr</a>
+    </p>
+  </body>
+</html>
