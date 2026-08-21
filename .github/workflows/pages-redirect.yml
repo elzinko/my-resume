@@ -1,0 +1,42 @@
+# GitHub Pages — page de redirection.
+#
+# Contexte : le CV a migré de GitHub Pages vers Vercel (cf. deploy.yml → www.elzinko.fr).
+# L'ancienne URL https://elzinko.github.io/my-resume/ n'était plus rafraîchie et servait
+# encore un CV périmé. Ce workflow republie à sa place une simple page de redirection
+# (voir .github/pages-redirect/) qui renvoie vers www.elzinko.fr en préservant la langue.
+#
+# Le contenu ne change quasi jamais → déclenchement manuel, ou push touchant la redirection.
+name: Pages redirect
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/pages-redirect/**'
+      - '.github/workflows/pages-redirect.yml'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Un seul déploiement Pages à la fois ; on ne coupe pas un déploiement en cours.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .github/pages-redirect
+      - id: deployment
+        uses: actions/deploy-pages@v4
