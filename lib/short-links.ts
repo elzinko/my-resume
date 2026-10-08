@@ -5,8 +5,15 @@
  * saut vers la version ciblée du CV.
  *
  * Pour ajouter un lien : une entrée dans `SHORT_LINKS`. La destination est
- * construite via `cvOfferTarget()` pour garantir un encodage correct.
+ * construite via `cvOfferTarget()` pour garantir un encodage correct, ou bien
+ * c'est le chemin d'un fichier statique de `public/` (ex. un CV en PDF).
  */
+
+/**
+ * CV généraliste (PDF A4, une page), hors moteur de rendu du CV : il est conçu à
+ * part pour les forums emploi et servi tel quel depuis `public/cv/`.
+ */
+export const GENERIC_CV_PDF = '/cv/thomas-couderc-cv-generaliste.pdf';
 
 interface CvOfferParams {
   company: string;
@@ -44,6 +51,8 @@ export const SHORT_LINKS: Record<string, string> = {
       'APIs REST:rest,openapi,swagger,ktor',
     ],
   }),
+  generic: GENERIC_CV_PDF,
+  generaliste: GENERIC_CV_PDF,
 };
 
 /**

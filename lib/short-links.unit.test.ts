@@ -1,6 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { cvOfferTarget, resolveShortLink, SHORT_LINKS } from './short-links';
+import {
+  cvOfferTarget,
+  GENERIC_CV_PDF,
+  resolveShortLink,
+  SHORT_LINKS,
+} from './short-links';
 
 test('cvOfferTarget encodes company, title, subtitle and requirements', () => {
   const target = cvOfferTarget({
@@ -39,6 +44,12 @@ test('resolveShortLink resolves a known slug', () => {
 test('resolveShortLink is case-insensitive and tolerates trailing slash', () => {
   assert.equal(resolveShortLink('/Resilience'), SHORT_LINKS.resilience);
   assert.equal(resolveShortLink('/resilience/'), SHORT_LINKS.resilience);
+});
+
+test('resolveShortLink sends /generic and /generaliste to the generic CV PDF', () => {
+  assert.equal(resolveShortLink('/generic'), GENERIC_CV_PDF);
+  assert.equal(resolveShortLink('/Generaliste/'), GENERIC_CV_PDF);
+  assert.ok(GENERIC_CV_PDF.endsWith('.pdf'));
 });
 
 test('resolveShortLink returns null for unknown or empty paths', () => {
